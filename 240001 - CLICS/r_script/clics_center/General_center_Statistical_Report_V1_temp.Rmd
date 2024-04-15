@@ -1,0 +1,564 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+params:
+  center_name: !r NULL
+  CLICS_data: !r NULL
+  CLICS_data_unlabeld: !r NULL
+  center_pop: !r NULL
+  dup_data: !r NULL
+  dup_data_unlabeld: !r NULL
+  center_code: !r NULL
+editor_options:
+  chunk_output_type: console
+  always_allow_html: TRUE
+  numbersections: true
+  header-includes:
+   - "\\usepackage{float}"
+   - "\\usepackage{graphicx}"
+---
+
+```{r setup, include=FALSE}
+setwd("C:/Users/user/Desktop/STAT/2023/230017 - CLICS/r_script/clics_center/")
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$get('label')
+
+```
+
+```{r read data}
+library("lubridate")
+library("dplyr")
+library("labelled")
+library("tableone")
+library("knitr")
+library("kableExtra")
+library("gt")
+library("gtsummary")
+library("janitor")
+
+```
+
+```{r}
+center_name <- params$center_name
+center_pop <- params$center_pop
+CLICS_data <- params$CLICS_data
+CLICS_data_unlabeld <- params$CLICS_data_unlabeld
+dup_data <- params$dup_data
+dup_data_unlabeld <- params$dup_data_unlabeld
+center_code <- params$center_code
+```
+
+```{r transformed variables and labeling}
+# Define a function to transform and label the data
+process_data <- function(data) {
+    data$age_at_procedure <- year(as.Date(data$procedure_date, "%Y-%m-%d")) - data$year_birth
+
+    data <- data %>%
+        mutate(
+            age_group = case_when(
+                age_at_procedure < 50 ~ "Age < 50",
+                age_at_procedure >= 50 & age_at_procedure < 70 ~ "50 <= Age < 70",
+                age_at_procedure >= 70 ~ "Age >= 70"
+            ),
+            age_group = as.factor(age_group),
+            gender_ch = factor(
+                ifelse(gender == 1, "Male", ifelse(gender == 2, "Female", "Unknown")),
+                levels = c("Unknown", "Male", "Female")
+            ),
+            heart_failure = factor(
+                heart_failure, 
+                levels = c("Yes", "No", "Unknown")
+            ),
+            chronic_dialysis = factor(
+                ifelse(chronic_dialysis == "1", "Yes", ifelse(chronic_dialysis == "2", "No", "Unknown")),
+                levels = c("Yes", "No", "Unknown")
+            )
+        )
+
+    # Add variable labels
+    var_label(data$redcap_data_access_group) <- "medical center"
+    var_label(data$age_at_procedure) <- "Age"
+    var_label(data$age_group) <- "Age group"
+    var_label(data$gender_ch) <- "Gender"
+    var_label(data$gender) <- "Gender"
+    var_label(data$dm) <- "Diabetes"
+    var_label(data$copd) <- "COPD"
+    var_label(data$renal_failure_dialysis) <- "Chronic renal failure"
+    var_label(data$chronic_dialysis) <- "Chronic dialysis"
+    var_label(data$prior_stroke) <- "Prior stroke or TIA"
+    var_label(data$prior_pci) <- "Prior PCI"
+    var_label(data$prior_cabg) <- "Prior CABG or valve surgery"
+    var_label(data$heart_failure) <- "Heart failure"
+    var_label(data$lv_ejection_fraction) <- "% LV ejection fraction"
+    var_label(data$atrial_fibrillation) <- "Atrial fibrillation"
+
+    return(data)
+}
+
+```
+
+# Cath Lab and Interventional Survey (CLICS) 2024 - `r center_code` report
+
+```{r table 1}
+
+attach(CLICS_data)
+attach(center_pop)
+attach(dup_data)
+
+# Apply the function to both CLICS_data and center_pop
+CLICS_data <- process_data(CLICS_data)
+center_pop <- process_data(center_pop)
+dup_data <- process_data(dup_data)
+
+tab1_vars <- c("age_at_procedure", "age_group", "gender", 
+               "dm","copd", "renal_failure_dialysis", "chronic_dialysis", "prior_stroke",
+                "prior_pci", "prior_cabg", "heart_failure", "lv_ejection_fraction",
+                 "atrial_fibrillation")
+
+# tab1 <- print(CreateTableOne(vars = tab1_vars, factorVars = tab1_vars[-c(1,12)], data = CLICS_data), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+# 
+# tab1_center <- print(CreateTableOne(vars = tab1_vars, factorVars = tab1_vars[-c(1,12)], data = center_pop), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+tab_1_all <- print(CreateTableOne(vars = tab1_vars, factorVars = tab1_vars[-c(1,12)],strata= "pop",data = dup_data), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F, test=F)
+
+# tab_1_all <-  cbind(tab1, tab1_center)
+colnames(tab_1_all) <- c("Overall",paste0(center_code,", n (%)"))
+#   
+ 
+ kable(tab_1_all, booktabs = T, caption = "Patients charcteristics") %>% kable_styling(latex_options = c("hold_position", "scale_down")) %>% add_indent(c(4:6,16:18))
+
+detach(CLICS_data)
+detach(center_pop)
+detach(dup_data)
+```
+
+```{r  table 2}
+
+tab_1_2_vars <- c("procedure_type___1", 
+                                 "procedure_type___2",
+                                 "procedure_type___3",
+                                 "procedure_type___4",
+                                 "procedure_type___5")
+
+tab_1_2 <- print(CreateTableOne(vars = tab_1_2_vars, factorVars = tab_1_2_vars, strata = "pop", data = dup_data_unlabeld), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+tab_1_2 <- tab_1_2[,1:2]
+row.names(tab_1_2) <- c("N", "Coronary","Structural - Valvular","Structural - non valvular","Peripheral","Other")
+colnames(tab_1_2) <- c("Overall n (%)",paste0(center_code,",n (%)"))
+
+  
+kable(tab_1_2, booktab = T, caption = "Procedure type distribution") %>% kable_styling(latex_options = c("hold_position"))
+
+```
+
+```{r table 3}
+
+pop1 <- dup_data %>% filter(procedure_type___1=="Checked")
+
+t_2_1 <-  pop1 %>% tabyl(patient_admission_type,pop) %>% 
+                adorn_totals("row") %>%  
+                    adorn_percentages("col") %>% 
+                      adorn_pct_formatting(rounding = "half up", digits = 0) %>%
+                        adorn_ns() %>% 
+                          adorn_title("combined")
+
+colnames(t_2_1) <- c("Patient admission type" , "Overall" ,center_code)
+
+kable(t_2_1, booktab = T, caption = "Procedure type distribution among coronary procedure patients") %>%  kable_styling(latex_options = c("hold_position", "scale_down")) %>% row_spec(nrow(t_2_1), bold = T, color = "black") 
+
+```
+
+
+```{r table 4}
+
+pop1$time_of_procedure <- factor(pop1$time_of_procedure, levels = c("Regular working hours","Off-working hours / weekend"))
+
+
+t_2_2 <-  pop1 %>% tabyl(time_of_procedure,pop) %>% 
+                adorn_totals("row") %>%  
+                    adorn_percentages("col") %>% 
+                      adorn_pct_formatting(rounding = "half up", digits = 2) %>%
+                        adorn_ns() %>% 
+                          adorn_title("combined")
+
+
+t_2_2 <-  t_2_2 %>% 
+            mutate(`time_of_procedure/pop` = 
+                     ifelse(is.na(`time_of_procedure/pop`)==T, "Missing", `time_of_procedure/pop`))
+
+
+
+
+colnames(t_2_2) <- c("Time of procedure" , "Overall" ,center_code)
+
+t_2_2 <- t_2_2[,2:3] 
+
+rownames(t_2_2) <- c("Regular working hours", "Off-working hours / weekend","Missing", "Total")
+  
+kable(t_2_2, booktab =T, caption = "Time of procedure distribution") %>% kable_styling(latex_options = c("hold_position", "scale_down")) %>% row_spec(nrow(t_2_2), bold = T, color = "black") 
+
+```
+
+
+```{r table 5}
+
+coronary_pop <- dup_data %>% filter(procedure_type___1=="Checked")
+
+t_2_3 <-  coronary_pop %>% tabyl(indication_for_procedure,pop) %>% 
+                adorn_totals("row") %>%  
+                    adorn_percentages("col") %>% 
+                      adorn_pct_formatting(rounding = "half up", digits = 0) %>%
+                        adorn_ns() %>% 
+                          adorn_title("combined")
+
+colnames(t_2_3) <- c("Indication for procedure" , "Overall" ,center_code)
+
+kable(t_2_3, booktab = T , caption = "Indication for coronary procedure distribution") %>% kable_styling(latex_options = c("hold_position", "scale_down")) %>% row_spec(nrow(t_2_3), bold = T, color = "black") 
+
+```
+
+```{r table 6}
+to_factor_L <- function(x){
+  x <- factor(x, levels = c("Unchecked","Checked"))
+}
+
+t_2_4_vars <- c("arterial_access___1", 
+                                 "arterial_access___2",
+                                 "arterial_access___3",
+                                 "arterial_access___4",
+                                 "arterial_access___5", 
+                                  "arterial_access___8")
+
+coronary_pop[,t_2_4_vars] <- lapply(coronary_pop[,t_2_4_vars], to_factor_L)
+
+var_label(coronary_pop$arterial_access___1) <- "Right radial artery"
+var_label(coronary_pop$arterial_access___2) <- "Left radial artery"
+var_label(coronary_pop$arterial_access___3) <- "Femoral artery"
+var_label(coronary_pop$arterial_access___4) <- "Brachial artery"
+var_label(coronary_pop$arterial_access___5) <- "Planned dual arterial access"
+var_label(coronary_pop$arterial_access___8) <- "Other"
+
+t_2_4 <- print(CreateTableOne(vars = t_2_4_vars, data = coronary_pop, strata = "pop", test = F), 
+                            varLabels= TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+t_2_4 <- as.data.frame(t_2_4)
+
+adorn_custom_format <- function(df) {
+  df %>%
+    mutate(across(where(is.character), ~ gsub("(.*) \\((.*)\\)", "\\2% (\\1)", .)))
+}
+
+# Assuming your table is stored in a variable named t_2_4
+t_2_4 <- t_2_4 %>%
+  adorn_custom_format()
+colnames(t_2_4) <- c( "Overall" ,center_code)
+rownames(t_2_4) <- c("N", "Right radial artery","Left radial artery","Femoral artery","Brachial artery", "Planned dual arterial access", "Other")
+kable(t_2_4, booktab = T , caption = "Arterial access distribution among coronary procedure patient") %>% kable_styling(latex_options = c("hold_position", "scale_down")) #%>% row_spec(c(1), bold = T, color = "black") 
+
+```
+
+
+```{r table 7}
+coronary_pop$type_of_coronary_procedure <- factor(coronary_pop$type_of_coronary_procedure, 
+                                          levels = c("Diagnostic angiography only (no PCI done)",
+                                                              "Percutaneous coronary intervention (PCI)",
+                                                              "Coronary fistulae closure"))
+
+t_3_1 <-  coronary_pop %>% tabyl(type_of_coronary_procedure,pop) %>% 
+                adorn_totals("row") %>%  
+                    adorn_percentages("col") %>% 
+                      adorn_pct_formatting(rounding = "half up", digits = 2) %>%
+                        adorn_ns() %>% 
+                          adorn_title("combined")
+
+colnames(t_3_1) <- c("Type of coronary procedure" , "Overall" ,center_code)
+
+kable(t_3_1, booktab = T, caption = "Type of coronary procedure") %>% kable_styling(latex_options = c("hold_position", "scale_down")) %>% row_spec(nrow(t_3_1), bold = T, color = "black") 
+
+```
+
+
+```{r table 8}
+
+stable_pop <- dup_data %>% filter(procedure_type___1=="Checked" ,indication_for_procedure=="Stable angina")
+
+
+t_3_2 <-  stable_pop %>% tabyl(clinical_reccomendation,pop) %>% 
+                adorn_totals("row") %>%  
+                    adorn_percentages("col") %>% 
+                      adorn_pct_formatting(rounding = "half up", digits = 0) %>%
+                        adorn_ns() %>% 
+                          adorn_title("combined")
+
+colnames(t_3_2) <- c("clinical reccomendation" , "Overall" ,center_code)
+
+kable(t_3_2, booktab = T, caption = "Clinical reccomendation among stable angina patient") %>% kable_styling(latex_options = c("hold_position", "scale_down")) %>% row_spec(nrow(t_3_2), bold = T, color = "black") 
+
+```
+
+```{r table 9}
+
+urgent_pop <- dup_data %>% filter(procedure_type___1=="Checked" ,
+                                     indication_for_procedure %in% c("Unstable angina (troponin negative ACS)",
+                                                                     "Non STEMI",
+                                                                     "STEMI","STEMI - Late arrival (>12 hrs)",
+                                                                     "LBBB of unknown age",
+                                                                     "Out of hospital sudden death"))
+
+
+
+t_3_3 <-  urgent_pop %>% tabyl(clinical_reccomendation,pop) %>% 
+                adorn_totals("row") %>%  
+                    adorn_percentages("col") %>% 
+                      adorn_pct_formatting(rounding = "half up", digits = 0) %>%
+                        adorn_ns() %>% 
+                          adorn_title("combined")
+
+colnames(t_3_3) <- c("clinical reccomendation" , "Overall" ,center_code)
+
+ footnote(kable(t_3_3, booktabs = T, caption = "Clinical reccomendation among *urgent patient") %>%
+            row_spec(nrow(t_3_3), bold = T, color = "black") %>%
+    column_spec(1, width = "30em"), "*patients with one of the following indication: Unstable angina (troponin negative ACS)/ Non STEMI/ STEMI/ STEMI - Late arrival (>12 hrs)/ LBBB of unknown age/ Out of hospital sudden death", threeparttable = T) %>%
+    kable_styling(latex_options = c("hold_position", "scale_down"))
+```
+
+
+```{r table 10}
+
+intervention_stable_pop <-  dup_data_unlabeld %>% filter(procedure_type___1==1,           # coronary
+                                                            type_of_coronary_procedure==2,  # PCI
+                                                            indication_for_procedure==1)    # Stable angina
+                      
+                
+attach(intervention_stable_pop)
+
+intervention_stable_pop$functional <- non_invasive_test_ischemia*type_of_non_invasive_stres___1
+intervention_stable_pop$anatomical <- non_invasive_test_ischemia*type_of_non_invasive_stres___2
+
+t_3_4_vars <- c("non_invasive_test_ischemia", "functional", "anatomical", "ffr_ifr_used", "ivus", "oct")
+
+t_3_4 <- print(CreateTableOne(vars = t_3_4_vars, factorVars = t_3_4_vars, strata = "pop" , data = intervention_stable_pop), varLabels = TRUE, missing=T, printToggle = F, showAllLevels = F)
+
+row.names(t_3_4) <- c("N",
+                      "Non invasive test ischemia = Yes (%)",
+                      "Functional (e.g. Ergometry, stress echo, SPECT) = Yes (%)",
+                      "Anatomical - Coronary CT angiography",
+                      "FFR / IFR used  = Yes (%)",
+                      "IVUS used = Yes (%)",
+                      "OCT used = Yes (%)")
+
+t_3_4 <- t_3_4[,1:2]
+colnames(t_3_4) <- c("Overall" ,center_code)
+
+
+kable(t_3_4, booktab =T, caption = "Ischemia evaluation among patients with stable angina who underwent PCI") %>% kable_styling(latex_options = c("hold_position", "scale_down")) %>% add_indent(c(3,4))
+
+detach(intervention_stable_pop)
+
+```
+
+
+```{r table 11}
+intervention_stable_pop$vessel_type___4 <- factor(intervention_stable_pop$vessel_type___4 , levels = c("0","1"))
+intervention_stable_pop$vessel_type___3 <- factor(intervention_stable_pop$vessel_type___3, levels = c("0","1"))
+
+tab_3_5_vars <- c("multivessel_pci", "n_lesions_treated", "vessel_type___1", "vessel_type___2", "vessel_type___3", "vessel_type___4")
+
+tab_3_5 <- print(CreateTableOne(vars = tab_3_5_vars, factorVars = tab_3_5_vars[-length(tab_3_5_vars)], strata = "pop",data = intervention_stable_pop), varLabels = TRUE, missing=T, printToggle = F, showAllLevels = F)
+
+row.names(tab_3_5) <- c("N",
+                        "Multivessel pci = Yes",
+                        "Number of lesions treated",
+                        "0",
+                        "1",
+                        "2",
+                        "3",
+                        "Native coronary =  Yes",
+                        "SVG = Yes",
+                        "LIMA/RIMA = Yes",
+                        "Other arterial conduit = Yes")
+
+tab_3_5 <- tab_3_5[,1:2]
+
+colnames(tab_3_5) <- c("Overall, n (%)",paste0(center_code,", n (%)"))
+
+kable(tab_3_5,  booktabs = T, 
+      caption = "Patients with stable angina who underwent PCI charcteristics")  %>% 
+  kable_styling(latex_options = c("hold_position", "scale_down")) %>% add_indent(c(4:7))
+```
+
+```{r table 12}
+pop_tab11 <- CLICS_data %>% filter(procedure_type___1=="Checked" ,
+                                     indication_for_procedure %in% c("Stable angina",
+                                                                     "Unstable angina (troponin negative ACS)",
+                                                                     "Non STEMI",
+                                                                     "STEMI","STEMI - Late arrival (>12 hrs)",
+                                                                     "LBBB of unknown age",
+                                                                     "Out of hospital sudden death"))
+
+int_stable_urgent_pop <-  dup_data_unlabeld %>% filter(procedure_type___1==1,           # coronary
+                                                            type_of_coronary_procedure==2,  # PCI
+                                                            indication_for_procedure %in% c(1,2,3,4,5,6,7))    # Stable angina , Unstable angina (troponin negative ACS), Non STEMI, STEMI, STEMI - Late arrival (>12 hrs),  LBBB of unknown age,  Out of hospital sudden death
+                      
+
+t_3_6_vars <- c("stent_type_used___1", "stent_type_used___2", "stent_type_used___3", "stent_type_used___4",                                  "stent_type_used___5", "stent_type_used___6", "stent_type_used___7",                                                "stent_type_used___8","stent_type_used___9")
+
+to_factor <- function(x){
+  x <- factor(x, levels = c("0","1"))
+}
+
+int_stable_urgent_pop[,t_3_6_vars] <- lapply(int_stable_urgent_pop[,t_3_6_vars], to_factor)
+
+# class(pop_intervention_stable$stent_type_used___1)
+
+
+t_3_6 <- print(CreateTableOne(vars = t_3_6_vars, strata = "pop", data = int_stable_urgent_pop), varLabels = TRUE,  printToggle = F, showAllLevels = F)
+
+row.names(t_3_6) <- c("N",
+                      "Drug eluting stent",
+                      "Bare metal stent",
+                      "Biodergadable scaffold",
+                      "Covered stent (stent graft)",
+                      "Drug coated balloon",
+                      "Cutting balloon",
+                      "Scoring balloon",
+                      "POBA",
+                      "None")
+
+t_3_6 <- t_3_6[,1:2]
+
+colnames(t_3_6) <- c("Overall, n (%)",paste0(center_code,", n (%)"))
+
+ footnote(kable(t_3_6, booktab = T, caption = "Device types used among patients with stable angina who underwent PCI") %>% kable_styling(latex_options = c("hold_position", "scale_down")) %>% row_spec(nrow(t_3_6), bold = T, color = "black") ,"*it is possible to have more then one stend per patient")
+```
+
+
+
+```{r}
+
+to_factor_L <- function(x){
+  x <- factor(x, levels = c("Unchecked","Checked"))
+}
+
+
+dup_data_diagnostoc_vs_pci <- dup_data %>% filter(type_of_coronary_procedure %in% c("Diagnostic angiography only (no PCI done)",
+                                                              "Percutaneous coronary intervention (PCI)"))
+
+
+fig15_vars <- c("procedural_complication___1", "procedural_complication___2",
+                "procedural_complication___3", "procedural_complication___4", 
+                "procedural_complication___5", "procedural_complication___6", 
+                "procedural_complication___7", "procedural_complication___8", 
+                "procedural_complication___9")
+
+dup_data_diagnostoc_vs_pci[,fig15_vars] <- lapply(dup_data_diagnostoc_vs_pci[,fig15_vars], to_factor_L)
+
+var_label(dup_data_diagnostoc_vs_pci$procedural_complication___1) <- "Coronary artery dissection"
+var_label(dup_data_diagnostoc_vs_pci$procedural_complication___2) <- "Coronary artery perforation"
+var_label(dup_data_diagnostoc_vs_pci$procedural_complication___3) <- "No reflow / distal embolization"
+var_label(dup_data_diagnostoc_vs_pci$procedural_complication___4) <- "Significant (>1.5 mm) side branch occlusion"
+var_label(dup_data_diagnostoc_vs_pci$procedural_complication___5) <- "Tamponade"
+var_label(dup_data_diagnostoc_vs_pci$procedural_complication___6) <- "Ventricular arrhythmia"
+var_label(dup_data_diagnostoc_vs_pci$procedural_complication___7) <- "Significant conduction abnormality requiriung
+pacing"
+var_label(dup_data_diagnostoc_vs_pci$procedural_complication___8) <- "CPR"
+var_label(dup_data_diagnostoc_vs_pci$procedural_complication___9) <- "Urgent cardiac surgery"
+
+
+fig15_all_coronary <- print(CreateTableOne(vars = fig15_vars, data = dup_data_diagnostoc_vs_pci, strata = "pop", test = F), 
+                            varLabels= TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+# row.names(fig15_all_coronary) <-  gsub("= Checked", "", row.names(fig15_all_coronary))
+colnames(fig15_all_coronary) <- c("Overall",center_code)
+
+# kable(fig15_all_coronary,  booktabs = T, 
+#       caption = "Procedural complications")  %>% 
+#   kable_styling(latex_options = c("hold_position", "scale_down")) 
+#   
+```
+
+
+
+
+```{r}
+
+dup_data_diagnostic <- dup_data %>% filter(type_of_coronary_procedure %in% c("Diagnostic angiography only (no PCI done)"))
+
+
+dup_data_diagnostic[,fig15_vars] <- lapply(dup_data_diagnostic[,fig15_vars], to_factor_L)
+
+var_label(dup_data_diagnostic$procedural_complication___1) <- "Coronary artery dissection"
+var_label(dup_data_diagnostic$procedural_complication___2) <- "Coronary artery perforation"
+var_label(dup_data_diagnostic$procedural_complication___3) <- "No reflow / distal embolization"
+var_label(dup_data_diagnostic$procedural_complication___4) <- "Significant (>1.5 mm) side branch occlusion"
+var_label(dup_data_diagnostic$procedural_complication___5) <- "Tamponade"
+var_label(dup_data_diagnostic$procedural_complication___6) <- "Ventricular arrhythmia"
+var_label(dup_data_diagnostic$procedural_complication___7) <- "Significant conduction abnormality requiriung
+pacing"
+var_label(dup_data_diagnostic$procedural_complication___8) <- "CPR"
+var_label(dup_data_diagnostic$procedural_complication___9) <- "Urgent cardiac surgery"
+
+
+fig15_diagnostic <- print(CreateTableOne(vars = fig15_vars, data = dup_data_diagnostic, strata = "pop", test = F), 
+                            varLabels= TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+# row.names(fig15_diagnostic) <-  gsub("= Checked", "", row.names(fig15_diagnostic))
+colnames(fig15_diagnostic) <- c("Overall",center_code)
+# 
+# kable(fig15_diagnostic,  booktabs = T, 
+#       caption = "Procedural complications")  %>% 
+#   kable_styling(latex_options = c("hold_position", "scale_down")) 
+#   
+```
+
+
+
+
+```{r}
+dup_data_pci <- dup_data %>% filter(type_of_coronary_procedure %in% c("Percutaneous coronary intervention (PCI)"))
+
+
+dup_data_pci[,fig15_vars] <- lapply(dup_data_pci[,fig15_vars], to_factor_L)
+
+var_label(dup_data_pci$procedural_complication___1) <- "Coronary artery dissection"
+var_label(dup_data_pci$procedural_complication___2) <- "Coronary artery perforation"
+var_label(dup_data_pci$procedural_complication___3) <- "No reflow / distal embolization"
+var_label(dup_data_pci$procedural_complication___4) <- "Significant (>1.5 mm) side branch occlusion"
+var_label(dup_data_pci$procedural_complication___5) <- "Tamponade"
+var_label(dup_data_pci$procedural_complication___6) <- "Ventricular arrhythmia"
+var_label(dup_data_pci$procedural_complication___7) <- "Significant conduction abnormality requiriung
+pacing"
+var_label(dup_data_pci$procedural_complication___8) <- "CPR"
+var_label(dup_data_pci$procedural_complication___9) <- "Urgent cardiac surgery"
+
+
+fig15_pci<- print(CreateTableOne(vars = fig15_vars, data = dup_data_pci, strata = "pop", test = F), 
+                            varLabels= TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+# row.names(fig15_pci) <-  gsub("= Checked", "", row.names(fig15_all_coronary))
+colnames(fig15_pci) <- c("Overall",center_code)
+
+# kable(fig15_pci,  booktabs = T, 
+#        caption = "Procedural complications")  %>% 
+#    kable_styling(latex_options = c("hold_position", "scale_down")) 
+  
+```
+
+
+
+```{r table 13 }
+
+tab_1_all <-  cbind(fig15_all_coronary, fig15_diagnostic, fig15_pci)
+row.names(tab_1_all) <-  gsub("= Checked", "", row.names(tab_1_all))
+
+
+kable(tab_1_all,  booktabs = T, 
+      caption = "Procedural complications")  %>% 
+          add_header_above(c(" "=1 ,"All coronary procedurers" = 2, "Diagnostic procedures" = 2, "PCI procedures" = 2)) %>%
+            kable_styling(latex_options = c("hold_position", "scale_down")) 
+
+```
+
+

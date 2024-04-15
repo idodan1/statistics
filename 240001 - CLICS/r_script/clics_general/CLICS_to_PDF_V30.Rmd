@@ -1,0 +1,2199 @@
+---
+title: "Cath Lab and Interventional Survey (CLICS)"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+editor_options:
+  chunk_output_type: console
+  always_allow_html: TRUE
+  numbersections: true
+  header-includes:
+   - "\\usepackage{float}"
+   - "\\usepackage{graphicx}"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$get('label')
+```
+
+
+```{r ignore, include=FALSE}
+# update.packages(ask = FALSE, checkBuilt = TRUE)
+# tinytex::tlmgr_update()
+# tinytex::reinstall_tinytex()
+# tinytex:: install_tinytex()
+
+```
+
+
+```{r read data}
+library("lubridate")
+library("tidyr")
+library("dplyr")
+library("labelled")
+library("tableone")
+library("knitr")
+library("kableExtra")
+library("gt")
+library("gtsummary")
+library("janitor")
+library("ggplot2")
+library("plotrix")
+library("circlize")
+
+ CLICS_data_unlabeld <- read.csv("../../data/CLICS2024_DATA.csv",                                                                                                                   stringsAsFactors = T, fileEncoding="latin1")
+ 
+ CLICS_data <- read.csv("../../data/CLICS2024_DATA_LABELS.csv",                                                                                           stringsAsFactors = T, na.strings = c(" ",""), fileEncoding="latin1")
+
+
+names(CLICS_data) <- names(CLICS_data_unlabeld)
+
+CLICS_data_unlabeld <- subset(CLICS_data_unlabeld, redcap_data_access_group!="test")
+
+CLICS_data <- subset(CLICS_data, redcap_data_access_group!="test")
+  
+# nrow(CLICS_data_unlabeld)
+# nrow(CLICS_data)
+
+
+to_factor_L <- function(x){
+  x <- factor(x, levels = c("Unchecked","Checked"))
+}
+
+```
+
+```{r}
+tab_c <- CLICS_data_unlabeld %>% tabyl(redcap_data_access_group, dm) %>% adorn_totals("row")
+tab_c$percent_missing <- tab_c$NA_*100/4475
+```
+
+```{r transformed variables and labeling}
+# Age
+
+attach(CLICS_data)
+
+CLICS_data$age_at_procedure <- year(as.Date(procedure_date, "%Y-%m-%d")) - year_birth
+
+CLICS_data <- CLICS_data %>% 
+                mutate(age_group = case_when(age_at_procedure < 50 ~ "Age < 50",
+                                             age_at_procedure >= 50 & age_at_procedure < 70 ~ "50 <= Age < 70",
+                                             age_at_procedure >= 70 ~ "Age >= 70"
+                                             )
+                       )
+  
+CLICS_data$age_group <- as.factor(CLICS_data$age_group)
+
+CLICS_data$redcap_data_access_group <- tolower(CLICS_data$redcap_data_access_group)
+
+CLICS_data <-  CLICS_data  %>%  
+                mutate(redcap_data_access_group = 
+                         case_when(redcap_data_access_group=="afl" ~ "1",
+                                   redcap_data_access_group=="asf" ~ "2",
+                                   redcap_data_access_group=="asta"~ "3",
+                                   redcap_data_access_group=="astr"~ "4",
+                                   redcap_data_access_group=="bar"~ "5",
+                                   redcap_data_access_group=="car"~ "6",
+                                   redcap_data_access_group=="has"~ "7",
+                                   redcap_data_access_group=="hly"~ "8",
+                                   redcap_data_access_group=="hmc"~ "9",
+                                   redcap_data_access_group=="hse"~ "10",
+                                   redcap_data_access_group=="hsh"~ "11",
+                                   redcap_data_access_group=="ich"~ "12",
+                                   redcap_data_access_group=="kap"~ "13",
+                                   redcap_data_access_group=="lan"~ "14",
+                                   redcap_data_access_group=="mcb"~ "15",
+                                   redcap_data_access_group=="mhi"~ "16",
+                                   redcap_data_access_group=="mir"~"17",
+                                   redcap_data_access_group=="nah"~ "18",
+                                   redcap_data_access_group=="naz"~ "19",
+                                   redcap_data_access_group=="por"~ "20",
+                                   redcap_data_access_group=="ram"~ "21",
+                                   redcap_data_access_group=="rot"~ "22",
+                                   redcap_data_access_group=="smc"~ "23",
+                                   redcap_data_access_group=="szj"~ "24",
+                                   redcap_data_access_group=="tel"~ "25",
+                                   redcap_data_access_group=="wol"~ "26",
+                                   redcap_data_access_group=="zft"~ "27"
+                                   ))
+
+CLICS_data$redcap_data_access_group <- factor(CLICS_data$redcap_data_access_group, 
+                                              levels = c("1", "2", "3", "4", "5", "6", "7", "8", "9",
+                                                         "10","11", "12", "13", "14", "15", "16", "17", "18",
+                                                         "19", "20", "21", "22", "23", "24", "25", "26",                                                               "27"))
+
+
+CLICS_data_unlabeld <-  CLICS_data_unlabeld  %>%  
+                mutate(redcap_data_access_group = 
+                         case_when(redcap_data_access_group=="afl" ~ "1",
+                                   redcap_data_access_group=="asf" ~ "2",
+                                   redcap_data_access_group=="asta"~ "3",
+                                   redcap_data_access_group=="astr"~ "4",
+                                   redcap_data_access_group=="bar"~ "5",
+                                   redcap_data_access_group=="car"~ "6",
+                                   redcap_data_access_group=="has"~ "7",
+                                   redcap_data_access_group=="hly"~ "8",
+                                   redcap_data_access_group=="hmc"~ "9",
+                                   redcap_data_access_group=="hse"~ "10",
+                                   redcap_data_access_group=="hsh"~ "11",
+                                   redcap_data_access_group=="ich"~ "12",
+                                   redcap_data_access_group=="kap"~ "13",
+                                   redcap_data_access_group=="lan"~ "14",
+                                   redcap_data_access_group=="mcb"~ "15",
+                                   redcap_data_access_group=="mhi"~ "16",
+                                   redcap_data_access_group=="mir"~"17",
+                                   redcap_data_access_group=="nah"~ "18",
+                                   redcap_data_access_group=="naz"~ "19",
+                                   redcap_data_access_group=="por"~ "20",
+                                   redcap_data_access_group=="ram"~ "21",
+                                   redcap_data_access_group=="rot"~ "22",
+                                   redcap_data_access_group=="smc"~ "23",
+                                   redcap_data_access_group=="szj"~ "24",
+                                   redcap_data_access_group=="tel"~ "25",
+                                   redcap_data_access_group=="wol"~ "26",
+                                   redcap_data_access_group=="zft"~ "27"
+                                   ))
+
+  
+CLICS_data_unlabeld$redcap_data_access_group <- factor(CLICS_data_unlabeld$redcap_data_access_group, 
+                                              levels = c("1", "2", "3", "4", "5", "6", "7", "8", "9",
+                                                         "10","11", "12", "13", "14", "15", "16", "17", "18",
+                                                         "19", "20", "21", "22", "23", "24", "25", "26",
+                                                         "27"))
+ 
+# gender
+
+CLICS_data$gender_ch <- ifelse(gender==1,"Male", ifelse(gender==2,"Female","unknown"))
+
+CLICS_data$gender_ch <- as.factor(CLICS_data$gender_ch)
+
+CLICS_data$heart_failure <- factor(CLICS_data$heart_failure, levels = c("Yes","No","Unknown"))
+
+CLICS_data$chronic_dialysis_p <- ifelse(is.na(CLICS_data$chronic_dialysis),0,CLICS_data$chronic_dialysis)
+
+# table(CLICS_data$chronic_dialysis)
+
+CLICS_data$chronic_dialysis[is.na(CLICS_data$chronic_dialysis)] <- "No"
+
+# table(CLICS_data$chronic_dialysis)
+
+# labels
+
+var_label(CLICS_data_unlabeld$redcap_data_access_group) <- "medical center"
+var_label(CLICS_data$age_at_procedure) <- "Age"
+var_label(CLICS_data$age_group) <- "Age group"
+var_label(CLICS_data$gender_ch) <- "Gender"
+var_label(CLICS_data$dm) <- "Diabetes"
+var_label(CLICS_data$copd) <- "COPD"
+
+var_label(CLICS_data$renal_failure_dialysis) <- "Chronic renal failure"
+var_label(CLICS_data$chronic_dialysis) <- "Chronic dialysis"
+
+var_label(CLICS_data$prior_stroke) <- "Prior stroke or TIA"
+var_label(CLICS_data$prior_pci) <- "Prior PCI"
+var_label(CLICS_data$prior_cabg) <- "Prior CABG or valve surgey"
+var_label(CLICS_data$heart_failure) <- "Heart failure"
+var_label(CLICS_data$lv_ejection_fraction) <- "% LV ejection fraction"
+var_label(CLICS_data$atrial_fibrillation) <- "Atrial fibrillation"
+
+detach(CLICS_data)
+```
+
+\tableofcontents
+\clearpage 
+
+# Chapter 1
+## 1.1 Cohort characteristics
+
+```{r table 1}
+
+attach(CLICS_data)
+  
+tab1_vars <- c("age_at_procedure", "age_group", "gender", 
+               "dm","copd", "renal_failure_dialysis", "chronic_dialysis", "prior_stroke",
+                "prior_pci", "prior_cabg", "heart_failure", "lv_ejection_fraction",
+                 "atrial_fibrillation")
+
+tab1 <- print(CreateTableOne(vars = tab1_vars, factorVars = tab1_vars[-c(1,12)], data = CLICS_data), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+kable(tab1, booktabs = T, caption = "Basline charcteristics (All patients)") %>% kable_styling(latex_options = c("hold_position")) #add_indent(c(4:6,16:18)
+
+detach(CLICS_data)
+```
+
+\clearpage
+
+```{r table 2}
+
+attach(CLICS_data_unlabeld)
+
+Procedures_by_center <- CLICS_data_unlabeld %>% 
+                          select(procedure_type___1, 
+                                 procedure_type___2,
+                                 procedure_type___3,
+                                 procedure_type___4,
+                                 procedure_type___5,
+                                 redcap_data_access_group) %>%
+                            group_by(redcap_data_access_group) %>% 
+                              summarise_all(list(sum=sum))
+                              #summarise_all(funs(sum))
+
+
+Procedures_by_center <- Procedures_by_center %>% 
+                              mutate(sum_all_procedures=sum(procedure_type___1, 
+                                                        procedure_type___2,
+                                                        procedure_type___3,
+                                                        procedure_type___4,
+                                                        procedure_type___5))
+
+Procedures_by_center <- Procedures_by_center %>% 
+                            rowwise() %>%  
+                              mutate(sum_center_procedures=sum(procedure_type___1, 
+                                                       procedure_type___2,
+                                                       procedure_type___3,
+                                                       procedure_type___4,
+                                                       procedure_type___5))
+
+
+Procedures_by_center <- Procedures_by_center %>% 
+                            mutate(procedure_percent=round(100*sum_center_procedures/sum_all_procedures, digits = 4))
+
+
+Procedures_by_center <- subset(Procedures_by_center, sum_center_procedures!=0, select = -sum_all_procedures)
+
+var_label(Procedures_by_center$redcap_data_access_group) <- "medical center"
+var_label(Procedures_by_center$sum_center_procedures) <- "n"
+var_label(Procedures_by_center$procedure_type___1_sum) <- "Coronary"
+var_label(Procedures_by_center$procedure_type___2_sum) <- "Structural - Valvular"
+var_label(Procedures_by_center$procedure_type___3_sum) <- "Structural - non valvular"
+var_label(Procedures_by_center$procedure_type___4_sum) <- "Peripheral"
+var_label(Procedures_by_center$procedure_type___5_sum) <- "Other"
+var_label(Procedures_by_center$procedure_percent) <- "%"
+
+total <- data.frame(redcap_data_access_group="Total")
+
+last_line <- cbind(total,t(colSums(Procedures_by_center[,-1])))
+
+tab2 <- rbind(Procedures_by_center,last_line)
+
+tab2$procedure_percent <- round(tab2$procedure_percent, digits = 2)
+
+              
+ kable(tab2, booktabs = T, col.names=var_label(Procedures_by_center), caption = "Procedure type by center",
+      align = "cccccccc") %>%
+  row_spec(nrow(tab2), bold = T, color = "black")  %>% 
+    column_spec(c(ncol(tab2)-1,ncol(tab2)),bold = T, color = "black") %>%
+      column_spec(1:ncol(tab2), width = "8em") %>% 
+        kable_styling(latex_options = c("hold_position", "scale_down"))
+
+detach(CLICS_data_unlabeld)
+```
+
+```{r, echo = FALSE, message=FALSE, fig.align='center',out.width='0.75\\linewidth', fig.pos='H', fig.cap="Percentage of total procedures by center", out.width="150%"}
+tab2 <- tab2[tab2$redcap_data_access_group != "Total", ]
+ggplot(data=tab2, aes(x=reorder(redcap_data_access_group, -procedure_percent) , y=procedure_percent)) +
+  geom_bar(stat="identity", fill="#00BFC4") +
+  geom_text(aes(label=procedure_percent), vjust=1.5, color="white", size=2) +
+  theme_minimal() + labs(y = "Percent (%)") + labs(x = "Medical center")+ ylim(c(0, 20)) +
+  theme_minimal() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+
+```
+\clearpage 
+
+```{r, echo = FALSE, message=FALSE, fig.align='center',fig.width="80%", fig.height=8, fig.pos='H', fig.cap="Patients per procedure type by center", out.width="400%", dpi = 1800, fig.retina=2}
+set.seed(8)
+
+tab2plot <- tab2[, -c(1,7,8)]
+
+colnames(tab2plot) <- c("Coronary","Str-Valvular", "Str-nonValvular","Peripheral", "Other")
+rownames(tab2plot) <- gsub("R", "", rownames(tab2plot))
+
+
+tab2plot <- as.matrix(tab2plot)
+
+circos.clear()
+circos.par(gap.degree = 5)
+chordDiagram(tab2plot, annotationTrack = "grid", 
+             preAllocateTracks = 1, 
+             directional = 1, 
+             direction.type = c("diffHeight", "arrows"), 
+             link.arr.type = "big.arrow")
+
+
+circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) {
+  xlim = get.cell.meta.data("xlim")
+  ylim = get.cell.meta.data("ylim")
+  sector.name = get.cell.meta.data("sector.index")
+  circos.text(mean(xlim), 
+              ylim[1] + .1, 
+              sector.name, 
+              facing = "clockwise", 
+              niceFacing = TRUE, 
+              adj = c(-0.5, 0.5),
+              cex = 0.5)
+  circos.axis(h = "top", 
+              labels.cex = 0.3,
+              major.at = seq(0, 5000, by = 200), 
+              minor.ticks = 0,
+              sector.index = sector.name, 
+              track.index = 2,
+              col = "grey")
+}, bg.border = NA)
+```
+
+## 1.2 Coronary procedures 
+
+```{r, table 3}
+pop1 <- CLICS_data %>% filter(procedure_type___1=="Checked")
+pop1$type_of_coronary_procedure <- factor(pop1$type_of_coronary_procedure, 
+                                          levels = c("Diagnostic angiography only (no PCI done)",
+                                                              "Percutaneous coronary intervention (PCI)",
+                                                              "Coronary fistulae closure"))
+
+fig7 <- pop1 %>% tabyl(type_of_coronary_procedure) %>% adorn_totals("row")
+
+other_fig_7 <-fig7 %>% select(type_of_coronary_procedure,n,percent) %>%
+            filter(type_of_coronary_procedure %in% c("Other", NA, "Total"))
+
+fig7 <-fig7 %>% select(type_of_coronary_procedure,n,percent) %>% 
+  filter(!type_of_coronary_procedure %in% c("Other","Total") & !is.na(type_of_coronary_procedure))
+
+fig_7 <- rbind(fig7,other_fig_7)
+
+fig_7$valid_percent <- round(fig_7$percent*100, digits = 2)
+
+fig_7 <- fig_7[-c(3),]
+fig_7$percent <- NULL 
+rownames(fig_7) <- NULL
+
+ kable(fig_7, booktabs = T, col.names=c( "Indication for procedure", "n", "%"),
+      caption = "Type of coronary procedure distribution") %>%
+  row_spec(nrow(fig_7), bold = T, color = "black")  %>%
+      kable_styling(latex_options = c("hold_position")) %>% 
+      footnote(general= "One fitulae case, one missing data case")
+
+```
+
+
+```{r Table 4}
+prop9 <- pop1 %>% tabyl(redcap_data_access_group, type_of_coronary_procedure) %>%
+                    adorn_totals(c("row", "col")) %>%
+                      adorn_percentages("row") %>% 
+                        adorn_pct_formatting(rounding = "half up", digits = 0) %>%
+                          adorn_ns()
+
+prop9 <- prop9 %>% select(`redcap_data_access_group`, 
+                           `Diagnostic angiography only (no PCI done)`, 
+                           `Percutaneous coronary intervention (PCI)`,
+                           `Coronary fistulae closure`)  
+
+# View(prop9)
+# names(prop9)
+
+prop9_total <- pop1 %>% tabyl(redcap_data_access_group, type_of_coronary_procedure) %>%
+                         adorn_totals(c("row", "col")) %>%
+                            adorn_percentages("all") %>% 
+                              adorn_pct_formatting(rounding = "half up", digits = 0) %>%
+                                adorn_ns()
+
+
+# View(prop9_total)
+# names(prop9_total)
+
+all <- prop9_total$Total
+
+tab9 <- cbind(prop9,all)
+
+# View(tab9)
+
+var_label(tab9$redcap_data_access_group) <- "medical center"
+var_label(tab9$`Diagnostic angiography only (no PCI done)`) <- "Diagnostic angiography only (no PCI done)"
+var_label(tab9$`Percutaneous coronary intervention (PCI)`) <- "Percutaneous coronary intervention (PCI)"
+var_label(tab9$`Coronary fistulae closure`) <- "Coronary fistulae closure"
+var_label(tab9$all) <- "Total"
+
+# drop_col = c("Coronary fistulae closure")
+# tab9[, !(names(tab9) %in% drop_col)]
+tab9 = within(tab9, rm("Coronary fistulae closure"))
+
+ 
+ kable(tab9, booktabs = T, col.names=var_label(tab9), caption = "Coronary procedure by center",
+      align = "clllc") %>% 
+    row_spec(nrow(tab9), bold = T, color = "black") %>% 
+      column_spec(ncol(tab9),bold = T, color = "black") %>%
+        column_spec(1:ncol(tab9), width = "8em") %>% 
+         kable_styling(latex_options = c("hold_position", "scale_down"))
+ #%>% footnote(general= " ")
+```
+
+\clearpage
+
+```{r, echo = FALSE, message=FALSE, fig.align='center',out.width='0.75\\linewidth', fig.pos='H', fig.cap="Ratio of diagnostic versus PCI procedures according to center", out.width="100%"}
+tab9$`Diagnostic angiography only (no PCI done)` <-  gsub("([0-9]+)%.*", "\\1", tab9$`Diagnostic angiography only (no PCI done)`)
+
+tab9$`Percutaneous coronary intervention (PCI)` <- gsub("([0-9]+)%.*", "\\1", tab9$`Percutaneous coronary intervention (PCI)`) 
+
+tab9 <- tab9[-c(28),]
+
+tab9_long <- tab9 %>%
+  pivot_longer(cols = c("Diagnostic angiography only (no PCI done)", "Percutaneous coronary intervention (PCI)"),
+               names_to = "Procedure",
+               values_to = "Count")
+
+tab9_long$Count <- as.numeric(tab9_long$Count)
+tab9_long <- tab9_long %>%
+  group_by(redcap_data_access_group) %>%
+  mutate(Percentage = Count / sum(Count) * 100)
+
+average_percentage <- mean(tab9_long$Count, na.rm = TRUE)
+
+ggplot(data = tab9_long, aes(x = redcap_data_access_group, y = Percentage, fill = Procedure)) +
+# ggplot(data = tab9_long, aes(x = seq(1, 28), y = Percentage, fill = Procedure)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Percentage (%)", x = "Medical center", fill = "Procedure Type") +
+  geom_hline(yintercept = average_percentage, linetype="dashed", color = "white", size = 0.5) +
+  scale_fill_discrete(labels = c("Diagnostic Angio", "PCI")) +
+  theme_minimal() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  ) 
+```
+
+## 1.3 Valvular interventions 
+
+```{r table 5}
+
+pop2 <- CLICS_data %>% filter(procedure_type___2=="Checked")
+
+pop2$type_of_valvular_intervent <- factor(pop2$type_of_valvular_intervent, 
+                                          levels = c("Aortic - Balloon valvuloplasty",
+                                                     "Aortic - Transcatheter valve implantation (TAVI)",
+                                                     "Mitral - Balloon valvuloplasty",
+                                                     "Mitral - Transcatheter valve implantation (TMVI)",
+                                                     "Mitral - Mitral clip",
+                                                     "Mitral - Other interventions",
+                                                     "Pulmonic - Transcatheter valve implantation",
+                                                     "Tricuspid - Transcatheter valve implantation",
+                                                     "Tricuspid - Other interventions"))
+
+
+prop3 <- pop2 %>% tabyl(type_of_valvular_intervent) %>% adorn_totals("row")
+
+
+other3 <- prop3 %>% select(type_of_valvular_intervent, n, percent) %>%
+            filter(type_of_valvular_intervent %in% c("Other", NA,"Total"))
+
+prop3 <-prop3 %>% select(type_of_valvular_intervent,n,percent) %>% 
+  filter(!type_of_valvular_intervent %in% c("Other","Total") & !is.na(type_of_valvular_intervent)) # %>% arrange(-n)
+
+tab3 <- rbind(prop3,other3)
+
+tab3$percent <- round(tab3$percent*100, digits = 2)
+
+ kable(tab3, booktabs = T, col.names=c( "Type of valvular intervention", "n", "%"), 
+      caption = "Valvular intervention distribution") %>%
+  row_spec(nrow(tab3), bold = T, color = "black")  %>%
+      kable_styling(latex_options = c("hold_position"))  
+```
+
+```{r table 6}
+pop2 <- CLICS_data %>% filter(procedure_type___2=="Checked")
+
+# nrow(pop2)
+
+
+pop2$type_of_valvular_intervent <- factor(pop2$type_of_valvular_intervent, 
+                                          levels = c("Aortic - Balloon valvuloplasty",
+                                                     "Aortic - Transcatheter valve implantation (TAVI)",
+                                                     "Mitral - Balloon valvuloplasty",
+                                                     "Mitral - Transcatheter valve implantation (TMVI)",
+                                                     "Mitral - Mitral clip",
+                                                     "Mitral - Other interventions",
+                                                     "Pulmonic - Transcatheter valve implantation",
+                                                     "Tricuspid - Transcatheter valve implantation",
+                                                     "Tricuspid - Other interventions"))
+
+
+
+prop3 <- pop2 %>% tabyl(redcap_data_access_group ,type_of_valvular_intervent) 
+
+
+prop3 <- prop3 %>% mutate(sum_all_procedures=
+                            sum(`Aortic - Balloon valvuloplasty`,
+                                `Aortic - Transcatheter valve implantation (TAVI)`,
+                                `Mitral - Balloon valvuloplasty`,
+                                `Mitral - Transcatheter valve implantation (TMVI)`,
+                                `Mitral - Mitral clip`,
+                                `Mitral - Other interventions`,
+                                `Pulmonic - Transcatheter valve implantation`,
+                                `Tricuspid - Transcatheter valve implantation`,
+                                `Tricuspid - Other interventions`))
+
+prop3 <- prop3 %>% rowwise() %>%mutate(sum_center_procedures=
+                                       sum(`Aortic - Balloon valvuloplasty`,
+                                           `Aortic - Transcatheter valve implantation (TAVI)`,
+                                           `Mitral - Balloon valvuloplasty`,
+                                           `Mitral - Transcatheter valve implantation (TMVI)`,
+                                           `Mitral - Mitral clip`,
+                                           `Mitral - Other interventions`,
+                                           `Pulmonic - Transcatheter valve implantation`,
+                                           `Tricuspid - Transcatheter valve implantation`,
+                                           `Tricuspid - Other interventions`))
+
+prop3 <- prop3 %>%  mutate(procedure_percent=round(100*sum_center_procedures/sum_all_procedures, digits = 4))
+
+
+prop3 <- subset(prop3, sum_center_procedures!=0, select = -sum_all_procedures)
+
+
+var_label(prop3$redcap_data_access_group) <- "medical center"
+var_label(prop3$`Aortic - Balloon valvuloplasty`) <- "Balloon valvuloplasty"
+var_label(prop3$`Aortic - Transcatheter valve implantation (TAVI)`) <- "Transcatheter valve implantation (TAVI)"
+var_label(prop3$`Mitral - Balloon valvuloplasty`) <- "Balloon valvuloplasty"
+var_label(prop3$`Mitral - Mitral clip`) <- "Mitral clip"
+var_label(prop3$`Mitral - Other interventions`) <- "Other interventions"
+var_label(prop3$`Mitral - Transcatheter valve implantation (TMVI)`) <- "Transcatheter valve implantation (TMVI)"
+var_label(prop3$`Pulmonic - Transcatheter valve implantation`) <- "Transcatheter valve implantation"
+var_label(prop3$`Tricuspid - Transcatheter valve implantation`) <- "Transcatheter valve implantation"
+var_label(prop3$`Tricuspid - Other interventions`) <- "Other interventions"
+
+var_label(prop3$sum_center_procedures) <- "n"
+var_label(prop3$procedure_percent) <- "%"
+
+
+total <- data.frame(redcap_data_access_group="Total")
+
+last_line <- cbind(total,t(colSums(prop3[,-1])))
+
+tab3 <- rbind(prop3,last_line)
+
+tab3$procedure_percent <- round(tab3$procedure_percent, digits = 2)
+tab3$NA_ <- NULL
+
+var_label(tab3$redcap_data_access_group) <- "medical center"  
+#tab3 <- tab3[,-c(10,11,12)] #remove after up data 
+
+ kable(tab3, booktabs = T, col.names=var_label(tab3), caption = "Valvular intervention by center",
+      align = "cccccccccccc") %>%
+ row_spec(nrow(tab3), bold = T, color = "black")  %>% 
+  column_spec(c(ncol(tab3)-1,ncol(tab3)),bold = T, color = "black") %>%
+        column_spec(1:ncol(tab3), width = "5em") %>% 
+          add_header_above(c(" " = 1, "Aortic" = 2, "Mitral" = 4, "Pulmonic" = 1, "Tricuspid" = 2, " "= 2)) %>%
+            kable_styling(latex_options = c("hold_position", "scale_down"))
+
+```
+
+\clearpage
+## 1.4 Structural, non-valvular procedures
+
+```{r `table 7` }
+pop3 <- CLICS_data %>% filter(procedure_type___3=="Checked")
+
+prop4 <- pop3 %>% tabyl(type_of_non_valvular_inter) %>% adorn_totals("row")
+
+other4 <-prop4 %>% select(type_of_non_valvular_inter, n, percent) %>%
+            filter(type_of_non_valvular_inter %in% c("Other structural non valvular intervention", NA,"Total"))
+
+prop4 <-prop4 %>% select(type_of_non_valvular_inter, n, percent) %>% 
+  filter(!type_of_non_valvular_inter %in% c("Other structural non valvular intervention","Total") & !is.na(type_of_non_valvular_inter))  %>% arrange(-n)
+
+tab4 <- rbind(prop4,other4)
+
+tab4$percent <- round(tab4$percent*100, digits = 2)
+ kable(tab4, booktabs = T, 
+      caption = "Structural non valvular intervention distribution" ,
+      col.names=c("intervention", "n", "%")) %>%
+  row_spec(nrow(tab4), bold = T, color = "black") %>% 
+   kable_styling(latex_options = c("hold_position")) %>% 
+   footnote(general= c("PFO - Patent foramen ovale", 
+                       "LAAO - Left atrial appendage occlusion", 
+                       "ASD - Atrial septal defect",
+                       "VSD - Ventricular septal defect", 
+                       "PVL - Paravalvular leak"))
+```
+
+
+```{r table 8}
+
+pop3 <- CLICS_data %>% filter(procedure_type___3=="Checked")
+
+# nrow(pop3)
+
+pop3$type_of_non_valvular_inter <- factor(pop3$type_of_non_valvular_inter,
+                                          levels = c( "LAAO",
+                                                      "PFO closure",
+                                                      "ASD closure",
+                                                      "VSD closure",
+                                                      "Mitral PVL closure",
+                                                      "Aortic PVL closure"))
+
+prop4 <- pop3 %>% tabyl(redcap_data_access_group, type_of_non_valvular_inter)
+
+# View(prop4)
+# names(prop4)
+# class(prop4)
+
+prop4 <- prop4 %>% mutate(sum_all_procedures= 
+                            sum(`LAAO`,
+                                `PFO closure`,
+                                `ASD closure`,
+                                `VSD closure`,
+                                `Mitral PVL closure`,
+                                `Aortic PVL closure`,
+                                 na.rm = T)) #`NA_` # To knowledge what we do with miss values 
+
+prop4 <- prop4 %>% rowwise() %>% mutate(sum_center_procedures=
+                                       sum(`LAAO`,
+                                           `PFO closure`,
+                                           `ASD closure`,
+                                           `VSD closure`,
+                                           `Mitral PVL closure`,
+                                           `Aortic PVL closure`,
+                                            na.rm = T)) #`NA_`
+
+prop4 <- prop4 %>%  mutate(procedure_percent=round(100*sum_center_procedures/sum_all_procedures, digits = 4))
+
+
+prop4 <- subset(prop4, sum_center_procedures!=0, select = -sum_all_procedures)
+
+# View(prop4)
+
+var_label(prop4$redcap_data_access_group) <- "Medical center"
+
+var_label(prop4$`LAAO`) <- "LAAO"
+var_label(prop4$`PFO closure`) <- "PFO closure"
+var_label(prop4$`ASD closure`) <- "ASD closure"
+var_label(prop4$`VSD closure`) <- "VSD closure"
+var_label(prop4$`Mitral PVL closure`) <- "Mitral PVL closure"
+var_label(prop4$`Aortic PVL closure`) <- "Aortic PVL closure"
+#var_label(prop4$`NA_`) <- "missing"
+
+var_label(prop4$sum_center_procedures) <- "n"
+var_label(prop4$procedure_percent) <- "%"
+
+
+total <- data.frame(redcap_data_access_group="Total")
+
+last_line <- cbind(total,t(colSums(prop4[,-1])))
+
+prop4 <- rbind(prop4,last_line)
+
+var_label(prop4)$redcap_data_access_group <- "Medical center"
+
+prop4$procedure_percent <- round(prop4$procedure_percent, digits = 2)
+
+
+ kable(prop4, booktabs = T,  col.names=var_label(prop4), align = "cccccccccc", 
+      caption = "Structural non valvular intervention by center") %>%  
+  row_spec(nrow(prop4), bold = T, color = "black") %>% 
+    column_spec(1:ncol(prop4), width = "5em") %>% 
+      kable_styling(latex_options = c("hold_position", "scale_down"))  %>% 
+   footnote(general= c("PFO - Patent foramen ovale", 
+                       "LAAO - Left atrial appendage occlusion", 
+                       "ASD - Atrial septal defect",
+                       "VSD - Ventricular septal defect", 
+                       "PVL - Paravalvular leak"))
+```
+\clearpage
+## 1.5 Peripheral procedures 
+
+```{r table 9}
+
+pop4 <- CLICS_data_unlabeld  %>% filter(procedure_type___4==1)
+
+
+peripheral_Procedures <- pop4 %>%
+                          select(peripheral_procedure_type___1,
+                                 peripheral_procedure_type___2,
+                                 peripheral_procedure_type___3,
+                                 peripheral_procedure_type___4,
+                                 peripheral_procedure_type___5,
+                                 peripheral_procedure_type___6,
+                                 peripheral_procedure_type___7,
+                                 peripheral_procedure_type___8,
+                                 peripheral_procedure_type___9) %>%
+                              summarise_all(list(sum=sum))
+                              #summarise_all(funs(sum))
+
+
+peripheral_dist <- t(peripheral_Procedures)
+peripheral_dist <-  as.data.frame(peripheral_dist)
+
+
+peripheral_dist_pct <- peripheral_dist %>% 
+                        mutate(allp = sum(V1), pct=100*V1/allp)
+
+
+total5add <-  peripheral_dist_pct  %>% summarise_all(list(sum=sum))
+
+colnames(peripheral_dist_pct) = colnames(total5add)
+peripheral_dist_pct <-  rbind(peripheral_dist_pct, total5add)
+
+# peripheral_dist_pct$pct <- round(peripheral_dist_pct$pct , digits = 2)
+peripheral_dist_pct$pct_sum <- round(peripheral_dist_pct$pct_sum , digits = 2)
+
+# peripheral_dist_pct <- peripheral_dist_pct %>% select(V1, pct)
+peripheral_dist_pct <- peripheral_dist_pct %>% select(V1_sum, pct_sum)
+
+
+colnames(peripheral_dist_pct) <-  c("n","%")
+
+row.names(peripheral_dist_pct) <-  c("Carotid - diagnostic", 
+                                "Carotid - intervention", 
+                                "Subclavian intervention", 
+                                "Ilio-femoral - diagnostic", 
+                                "Ilio-femoral - intervention", 
+                                "Renal - diagnostic",
+                                "Renal - intervention", 
+                                "Renal nerve denervation", 
+                                "Other", 
+                                "Total")
+
+ kable(peripheral_dist_pct,  booktabs = T,  caption = "Peripheral procedure distribution") %>%
+  row_spec(nrow(peripheral_dist_pct), bold = T, color = "black") %>% 
+      kable_styling(latex_options = c("hold_position"))
+```
+
+
+```{r table 10 }
+peripheral_procedure_by_center <- pop4 %>% 
+                                    select(peripheral_procedure_type___1,
+                                           peripheral_procedure_type___2,
+                                           peripheral_procedure_type___3,
+                                           peripheral_procedure_type___4,
+                                           peripheral_procedure_type___5,
+                                           peripheral_procedure_type___6,
+                                           peripheral_procedure_type___7,
+                                           peripheral_procedure_type___8,
+                                           peripheral_procedure_type___9,
+                                           redcap_data_access_group) %>%
+                                      group_by(redcap_data_access_group) %>% 
+                                        summarise_all(list(sum=sum))
+
+peripheral_procedure_by_center <- peripheral_procedure_by_center %>% 
+                              mutate(sum_all_procedures=sum(peripheral_procedure_type___1_sum,
+                                           peripheral_procedure_type___2_sum,
+                                           peripheral_procedure_type___3_sum,
+                                           peripheral_procedure_type___4_sum,
+                                           peripheral_procedure_type___5_sum,
+                                           peripheral_procedure_type___6_sum,
+                                           peripheral_procedure_type___7_sum,
+                                           peripheral_procedure_type___8_sum,
+                                           peripheral_procedure_type___9_sum))
+
+peripheral_procedure_by_center <- peripheral_procedure_by_center %>% 
+                            rowwise() %>%  
+                              mutate(sum_center_procedures=sum(peripheral_procedure_type___1_sum,
+                                           peripheral_procedure_type___2_sum,
+                                           peripheral_procedure_type___3_sum,
+                                           peripheral_procedure_type___4_sum,
+                                           peripheral_procedure_type___5_sum,
+                                           peripheral_procedure_type___6_sum,
+                                           peripheral_procedure_type___7_sum,
+                                           peripheral_procedure_type___8_sum,
+                                           peripheral_procedure_type___9_sum))
+
+peripheral_procedure_by_center <- peripheral_procedure_by_center %>% 
+                                    mutate(procedure_percent=
+                                             round(100*sum_center_procedures/sum_all_procedures, digits = 4)) %>% select(-sum_all_procedures)
+
+total5 <- data.frame(redcap_data_access_group="Total")
+
+last_line_5 <- cbind(total5, t(colSums(peripheral_procedure_by_center[,-1])))
+
+tab5 <- rbind(peripheral_procedure_by_center,last_line_5)
+
+
+var_label(tab5$redcap_data_access_group) <- "medical center"
+var_label(tab5$sum_center_procedures) <- "Total"
+var_label(tab5$procedure_percent) <- "%"
+var_label(tab5$peripheral_procedure_type___1_sum) <- "Carotid - diagnostic"
+var_label(tab5$peripheral_procedure_type___2_sum) <- "Carotid - intervention"
+var_label(tab5$peripheral_procedure_type___3_sum) <- "Subclavian intervention"
+var_label(tab5$peripheral_procedure_type___4_sum) <- "Ilio-femoral - diagnostic"
+var_label(tab5$peripheral_procedure_type___5_sum) <- "Ilio-femoral - intervention"
+var_label(tab5$peripheral_procedure_type___6_sum) <- "Renal - diagnostic"
+var_label(tab5$peripheral_procedure_type___7_sum) <- "Renal - intervention"
+var_label(tab5$peripheral_procedure_type___8_sum) <- "Renal nerve denervation"
+var_label(tab5$peripheral_procedure_type___9_sum) <- "Other"
+
+
+tab5 <- tab5[,-9]
+
+ kable(tab5, booktabs = T, 
+    caption = "Peripheral procedure type by center", 
+    col.names=var_label(tab5),
+    align = "cccccccccccc") %>% 
+column_spec(c(ncol(tab5)-1,ncol(tab5)),bold = T, color = "black") %>%
+  column_spec(1:ncol(tab5), width = "6em") %>%
+    row_spec(nrow(tab5), bold = T, color = "black") %>% 
+      kable_styling(latex_options = c("hold_position", "scale_down"))
+
+```
+
+
+## 1.6 Other procedures 
+
+```{r table 11}
+
+other_Procedures <- CLICS_data_unlabeld %>%
+                          select(procedure_type_other___1, 
+                                 procedure_type_other___2,
+                                 procedure_type_other___3,
+                                 procedure_type_other___4,
+                                 procedure_type_other___5,
+                                 procedure_type_other___6,
+                                 procedure_type_other___7,
+                                 procedure_type_other___8,
+                                 procedure_type_other___9,
+                                 procedure_type_other___10,
+                                 procedure_type_other___11,
+                                 procedure_type_other___12) %>%
+                              summarise_all(list(sum=sum))
+
+
+other_dist <- t(other_Procedures)
+other_dist <-  as.data.frame(other_dist)
+
+# other_dist_pct <- other_dist %>% 
+                      # mutate(allp = sum(V1), pct=100*V1/allp)
+other_dist_pct <- other_dist %>% 
+                      mutate(allp = sum(V1))
+
+
+
+total6 <-  other_dist_pct  %>% summarise_all(list(sum=sum))
+
+names(other_dist_pct) <- names(total6) 
+
+other_dist_pct <-  rbind(other_dist_pct,total6)
+# 
+# other_dist_pct$pct <- round(other_dist_pct$pct , digits = 2)
+
+# other_dist_pct <- other_dist_pct %>% select(V1_sum, pct_sum)
+other_dist_pct <- other_dist_pct %>% select(V1_sum)
+
+
+# colnames(other_dist_pct) <-  c("n","%")
+colnames(other_dist_pct) <-  c("n")
+
+other_dist_pct
+row.names(other_dist_pct) <-  c("Right heart study", "Myocardial biopsy", 
+                                "Pulmonary artery intervention", 
+                                "Coronary sinus reducer", 
+                                "Heart failure interventions (inter-atrial shunt, PAP monitor, etc.)", 
+                                "IABP insertion", 
+                                "Impella insertion",
+                                "ECMO", 
+                                "Pericardiocentesis", 
+                                "Mechanical valve fluoroscopy", 
+                                "Temporary pacemaker", 
+                                "Other",
+                                "Total")
+
+
+kable(other_dist_pct, booktabs = T, caption = "Table 6: Other procedure distribution") %>%
+  row_spec(nrow(other_dist_pct), bold = T, color = "black") %>% 
+      kable_styling(latex_options = c("hold_position")) 
+
+```
+
+
+```{r table 12}
+attach(CLICS_data_unlabeld)
+
+other_Procedures_by_center <- CLICS_data_unlabeld %>% 
+                          select(procedure_type_other___1, 
+                                 procedure_type_other___2,
+                                 procedure_type_other___3,
+                                 procedure_type_other___4,
+                                 procedure_type_other___5,
+                                 procedure_type_other___6,
+                                 procedure_type_other___7,
+                                 procedure_type_other___8,
+                                 procedure_type_other___9,
+                                 procedure_type_other___10,
+                                 procedure_type_other___11,
+                                 procedure_type_other___12,
+                                 redcap_data_access_group) %>%
+                            group_by(redcap_data_access_group) %>% 
+                              summarise_all(list(sum=sum))
+
+
+other_Procedures_by_center <- other_Procedures_by_center %>% 
+                              mutate(sum_all_procedures=sum(procedure_type_other___1, 
+                                                        procedure_type_other___2,
+                                                        procedure_type_other___3,
+                                                        procedure_type_other___4,
+                                                        procedure_type_other___5,
+                                                        procedure_type_other___6,
+                                                        procedure_type_other___7,
+                                                        procedure_type_other___8,
+                                                        procedure_type_other___9,
+                                                        procedure_type_other___10,
+                                                        procedure_type_other___11,
+                                                        procedure_type_other___12))
+
+other_Procedures_by_center <- other_Procedures_by_center %>% 
+                            rowwise() %>%  
+                              mutate(sum_center_procedures=sum(procedure_type_other___1, 
+                                                       procedure_type_other___2,
+                                                       procedure_type_other___3,
+                                                       procedure_type_other___4,
+                                                       procedure_type_other___5,
+                                                       procedure_type_other___6,
+                                                       procedure_type_other___7,
+                                                       procedure_type_other___8,
+                                                       procedure_type_other___9,
+                                                       procedure_type_other___10,
+                                                       procedure_type_other___11,
+                                                       procedure_type_other___12))
+
+
+other_Procedures_by_center <- other_Procedures_by_center %>% 
+                            mutate(procedure_percent=round(100*sum_center_procedures/sum_all_procedures, digits = 4))
+
+
+other_Procedures_by_center <- subset(other_Procedures_by_center, sum_center_procedures!=0, select = -sum_all_procedures)
+
+var_label(other_Procedures_by_center$redcap_data_access_group) <- "medical center"
+var_label(other_Procedures_by_center$sum_center_procedures) <- "n"
+var_label(other_Procedures_by_center$procedure_type_other___1_sum) <- "Right heart study"
+var_label(other_Procedures_by_center$procedure_type_other___2_sum) <- "Myocardial biopsy"
+var_label(other_Procedures_by_center$procedure_type_other___3_sum) <- "Pulmonary artery intervention"
+var_label(other_Procedures_by_center$procedure_type_other___4_sum) <- "Coronary sinus reducer"
+var_label(other_Procedures_by_center$procedure_type_other___5_sum) <- "Heart failure interventions"
+# var_label(other_Procedures_by_center$procedure_type_other___5_sum) <- "Heart failure interventions (inter-atrial shunt,
+# PAP monitor, etc.)"
+var_label(other_Procedures_by_center$procedure_type_other___6_sum) <- "IABP insertion"
+var_label(other_Procedures_by_center$procedure_type_other___7_sum) <- "Impella insertion"
+var_label(other_Procedures_by_center$procedure_type_other___8_sum) <- "ECMO"
+var_label(other_Procedures_by_center$procedure_type_other___9_sum) <- "Pericardiocentesis"
+var_label(other_Procedures_by_center$procedure_type_other___10_sum) <- "Mechanical valve fluoroscopy"
+var_label(other_Procedures_by_center$procedure_type_other___11_sum) <- "Temporary pacemaker"
+var_label(other_Procedures_by_center$procedure_type_other___12_sum) <- "Other"
+var_label(other_Procedures_by_center$procedure_percent) <- "%"
+
+total <- data.frame(redcap_data_access_group="Total")
+
+last_line <- cbind(total,t(colSums(other_Procedures_by_center[,-1])))
+
+tab_other <- rbind(other_Procedures_by_center,last_line)
+
+tab_other$procedure_percent <- round(tab_other$procedure_percent, digits = 2)
+              
+
+ kable(tab_other, booktabs = T, col.names=var_label(other_Procedures_by_center), 
+      caption = "Other procedure types by center",  align = "ccccccccccccc",) %>%
+  row_spec(nrow(tab_other), bold = T, color = "black") %>% 
+    column_spec(c(ncol(tab_other)-1,ncol(tab_other)),bold = T, color = "black") %>% 
+     column_spec(1:ncol(tab_other), width = "5em") %>%
+      kable_styling(latex_options = c("hold_position", "scale_down")) %>%
+        footnote("* inter-atrial shunt, PAP monitor, etc.")
+        
+detach(CLICS_data_unlabeld)
+
+```
+\clearpage
+
+# Chapter 2 - Coronary procedures
+
+## 2.1 Procedure indication and time of procedure
+
+```{r table 13}
+
+pop1 <- CLICS_data %>% filter(procedure_type___1=="Checked")
+
+prop6 <- pop1 %>% tabyl(indication_for_procedure) %>% adorn_totals("row")
+
+other6 <-prop6 %>% select(indication_for_procedure,n,percent) %>%
+            filter(indication_for_procedure %in% c("Other", NA,"Total"))
+
+prop6 <-prop6 %>% select(indication_for_procedure,n,percent) %>% 
+  filter(!indication_for_procedure %in% c("Other","Total") & !is.na(indication_for_procedure))  %>% arrange(-n)
+
+tab6 <- rbind(prop6,other6)
+
+tab6$percent <- round(tab6$percent*100, digits = 2)
+
+tab6$indication_for_procedure <- as.character(tab6$indication_for_procedure)
+
+tab6$indication_for_procedure[14] <- "Missing"
+
+tab6$indication_for_procedure <- as.factor(tab6$indication_for_procedure)
+
+
+ kable(tab6, booktabs = T, col.names=c( "Indication for procedure", "n", "%"), 
+      caption =  "Indication for procedure distribution") %>%
+        row_spec(nrow(tab6), bold = T, color = "black") %>%
+          kable_styling(latex_options = c("hold_position"))
+```
+
+\clearpage
+
+```{r table 14}
+pop1$time_of_procedure <- factor(pop1$time_of_procedure, levels = c("Regular working hours","Off-working hours / weekend"))
+
+fig4 <- pop1 %>% tabyl(time_of_procedure) %>% adorn_totals("row")
+
+
+fig4$percent <- round(fig4$percent*100, digits = 2)
+
+fig4 <- fig4 %>% select(time_of_procedure,n,percent)
+
+fig4$time_of_procedure <- as.character(fig4$time_of_procedure)
+
+fig4$time_of_procedure[3] <- "Missing"
+
+fig4$time_of_procedure <- as.factor(fig4$time_of_procedure)
+
+
+ kable(fig4, booktabs = T, col.names=c("Time of procedure", "n", "%"),
+      caption ="Procedure time distribution (All coronary procedures)") %>%
+ row_spec(nrow(fig4), bold = T, color = "black") %>%
+     kable_styling(latex_options = c("hold_position"))
+
+```
+
+```{r, echo = FALSE, message=FALSE, fig.align='center',out.width='0.75\\linewidth', fig.pos='H',out.width="100%", fig.cap="Procedure time (All coronary procedures)"}
+
+data <- fig4[-c(3,4),]
+fig2plot <- data$percent
+lab <- paste0(data$percent, "%")
+
+colors <- c("#F8766D","#00BFC4")
+
+# Create 3D pie chart with custom colors and labels on the plot
+pie3D(fig2plot, 
+      col = colors[1:length(fig2plot)],  # Use the custom colors
+      labels = lab,
+      labelcex = 0.8)
+
+legend("top", legend = c("Regular working hours", "Off-working hours / weekend"), fill = colors, bty = "n", cex = 0.4, horiz = TRUE )
+
+```
+\clearpage
+
+```{r table 15}
+pop_stable <- CLICS_data %>% filter(procedure_type___1=="Checked" ,indication_for_procedure=="Stable angina")
+
+pop_stable$time_of_procedure <- factor(pop_stable$time_of_procedure, levels = c("Regular working hours","Off-working hours / weekend"))
+
+fig4a <- pop_stable %>% tabyl(time_of_procedure) %>% adorn_totals("row")
+
+fig4a$percent <- round(fig4a$percent*100, digits = 2)
+
+fig4a <-fig4a %>% select(time_of_procedure,n,percent) 
+
+
+ kable(fig4a, booktabs = T, col.names=c("Time of procedure", "n", "%"), 
+      caption = "Procedure Time among Stable angina patients") %>% 
+  row_spec(nrow(fig4a), bold = T, color = "black") %>%
+     kable_styling(latex_options = c("hold_position"))
+
+```
+
+```{r, echo = FALSE, message=FALSE, fig.align='center',out.width='0.75\\linewidth', fig.pos='H', fig.cap="Procedure time (Stable angina patients)", out.width="100%"}
+
+
+data <- fig4a[-c(3),]
+fig2plot <- data$percent
+lab <- paste0(data$percent, "%")
+
+colors <- c("#F8766D","#00BFC4")
+
+# Create 3D pie chart with custom colors and labels on the plot
+pie3D(fig2plot, 
+      col = colors[1:length(fig2plot)],  # Use the custom colors
+      labels = lab,
+      labelcex = 0.8)
+
+legend("top", legend = c("Regular working hours", "Off-working hours / weekend"), fill = colors, bty = "n", cex = 0.4, horiz = TRUE)
+
+```
+\clearpage
+
+```{r table 16}
+
+pop_urgent <- CLICS_data %>% filter(procedure_type___1=="Checked" ,
+                                     indication_for_procedure %in% c("Unstable angina (troponin negative ACS)",
+                                                                     "Non STEMI",
+                                                                     "STEMI","STEMI - Late arrival (>12 hrs)",
+                                                                     "LBBB of unknown age",
+                                                                     "Out of hospital sudden death"))
+
+pop_urgent$time_of_procedure <- factor(pop_urgent$time_of_procedure, 
+                                        levels = c("Regular working hours","Off-working hours / weekend"))
+
+fig4b <- pop_urgent %>% tabyl(time_of_procedure) %>% adorn_totals("row")
+
+fig4b$percent <- round(fig4b$percent*100, digits = 2)
+
+fig4b <- fig4b %>% select(time_of_procedure,n,percent) # %>% filter(!is.na(time_of_procedure)) 
+
+fig4b$time_of_procedure <- as.character(fig4b$time_of_procedure)
+
+fig4b$time_of_procedure[3] <- "Missing"
+
+fig4b$time_of_procedure <- as.factor(fig4b$time_of_procedure)
+ 
+ kable(fig4b, booktabs = T, col.names=c( "Time of procedure", "n", "%"), 
+                caption = "Procedure Time among urgent patients*") %>%
+  row_spec(nrow(fig4b), bold = T, color = "black") %>%
+    column_spec(1:ncol(fig4b), width = "8em") %>%
+      kable_styling(latex_options = c("hold_position")) %>%
+        footnote("urgent patients = patients with one of the following indication: Unstable angina (troponin negative ACS)/ Non STEMI/ STEMI/ STEMI - Late arrival (>12 hrs)/ LBBB of unknown age/ Out of hospital sudden death", threeparttable = T)
+```
+
+```{r, echo = FALSE, message=FALSE, fig.align='center',out.width='0.75\\linewidth', fig.pos='H', fig.cap="Procedure time (Urgent patients)", out.width="100%"}
+
+data <- fig4b[-c(3,4),]
+fig2plot <- data$percent
+lab <- paste0(data$percent, "%")
+
+colors <- c("#F8766D","#00BFC4")
+
+# Create 3D pie chart with custom colors and labels on the plot
+pie3D(fig2plot, 
+      col = colors[1:length(fig2plot)],  # Use the custom colors
+      labels = lab,
+      labelcex = 0.8)
+
+legend("top", legend = c("Regular working hours", "Off-working hours / weekend"), fill = colors, bty = "n", cex = 0.4, horiz = TRUE)
+
+```
+\clearpage
+
+```{r table 17}
+
+pop_primary_PCI <- CLICS_data %>% filter(procedure_type___1=="Checked" ,indication_for_procedure=="STEMI")
+pop_primary_PCI$time_of_procedure <- factor(pop_primary_PCI$time_of_procedure, levels = c("Regular working hours","Off-working hours / weekend"))
+
+fig4c <- pop_primary_PCI %>% tabyl(time_of_procedure) %>% adorn_totals("row")
+
+fig4c$percent <- round(fig4c$percent*100, digits = 2)
+
+fig4c <-fig4c %>% select(time_of_procedure,n,percent) 
+
+ kable(fig4c, booktabs = T, col.names=c("Time of procedure", "n", "%"), 
+     caption = "fig4c: Procedure Time among primary PCI patients") %>%
+  row_spec(nrow(fig4c), bold = T, color = "black")  %>%
+     kable_styling(latex_options = c("hold_position"))
+
+```
+
+## 2.2 Arterial access and hemostasis
+
+```{r}
+# Function to create multiple rows for each non-NA value
+create_multiple_rows <- function(dataframe, cols, name_new_col) {
+  new_rows <- lapply(1:nrow(dataframe), function(i) {
+    non_na_values <- dataframe[i, cols][!is.na(dataframe[i, cols])]
+    if (length(non_na_values) > 0) {
+      return(setNames(as.data.frame(non_na_values, stringsAsFactors = FALSE), name_new_col))
+    }
+  })
+  new_rows <- new_rows[!sapply(new_rows, is.null)]  # Remove NULL entries
+  return(do.call(rbind, new_rows))
+}
+
+# Main function to process the dataframe
+process_dataframe <- function(df, name_map, name_new_col) {
+  # Apply the name mapping and conversion logic
+  df <- df %>% mutate(across(all_of(names(name_map)), 
+                             ~ifelse(. == "Checked", name_map[cur_column()], NA_character_)))
+
+  # Create multiple rows for each non-NA value
+  new_rows <- create_multiple_rows(df, names(name_map), name_new_col)
+  
+  return(new_rows)
+}
+
+# Mapping for column names
+name_map <- c("arterial_access___1" = "Right radial artery",
+              "arterial_access___2" = "Left radial artery",
+              "arterial_access___3" = "Femoral artery",
+              "arterial_access___4" = "Brachial artery",
+              "arterial_access___5" = "Planned dual arterial access",
+              "arterial_access___8" = "Other")
+
+# Process the dataframe
+arterial_access <- process_dataframe(pop1, name_map, "arterial_access")
+```
+
+```{r table 18}
+### need to replace the columns from check to multiply choice 
+arterial_access$arterial_access <- factor(arterial_access$arterial_access, levels = c("Right radial artery","Left radial artery","Femoral artery","Brachial artery" ,"Planned dual arterial access","Other") )
+
+fig6 <- arterial_access %>% tabyl(arterial_access) %>% adorn_totals("row")
+
+fig6$percent <- round(fig6$percent*100, digits = 2)
+
+fig6 <-fig6 %>% select(arterial_access,n,percent)
+
+fig6$arterial_access <- as.character(fig6$arterial_access)
+
+fig6$arterial_access[7] <- "Total"
+
+fig6$arterial_access <- as.factor(fig6$arterial_access)
+
+ kable(fig6, booktabs = T, col.names=c( "Arterial access", "n", "%"), 
+       caption = "Arterial access among Coronary Procedures") %>%
+   row_spec(nrow(fig6), bold = T, color = "black")  %>%
+       kable_styling(latex_options = c("hold_position"))
+
+```
+
+
+<!-- ```{r figure 6 a - old} -->
+<!-- prop6a <- pop1 %>% tabyl(redcap_data_access_group, arterial_access) -->
+
+<!-- # View(prop4) -->
+<!-- # names(prop4) -->
+<!-- # class(prop4) -->
+
+<!-- prop6a <- prop6a %>% mutate(sum_all_procedures=  -->
+<!--                             sum(`Right radial artery`, -->
+<!--                                 `Left radial artery`, -->
+<!--                                 `Femoral artery`, -->
+<!--                                 `Brachial artery`, -->
+<!--                                 `Other`, -->
+<!--                                  `NA_`)) -->
+
+<!-- prop6a <- prop6a %>% rowwise() %>%mutate(sum_center_procedures= -->
+<!--                                        sum(`Right radial artery`, -->
+<!--                                            `Left radial artery`, -->
+<!--                                            `Femoral artery`, -->
+<!--                                            `Brachial artery`, -->
+<!--                                            `Other`, -->
+<!--                                            `NA_`)) -->
+
+<!-- prop6a  <- prop6a %>% rowwise() %>% mutate(p1= round(100*`Right radial artery`/sum_center_procedures, digits = 2), -->
+<!--                                             p2= round(100*`Left radial artery`/sum_center_procedures, digits = 2), -->
+<!--                                             p3= round(100*`Femoral artery`/sum_center_procedures, digits = 2), -->
+<!--                                             p4= round(100*`Brachial artery`/sum_center_procedures, digits = 2), -->
+<!--                                             p5= round(100*`Other`/sum_center_procedures, digits = 2) -->
+<!--                                             ) -->
+
+
+
+<!-- prop6a <- prop6a %>%  mutate(procedure_percent=round(100*sum_center_procedures/sum_all_procedures, digits = 4)) -->
+
+
+<!-- prop6a <- subset(prop6a, sum_center_procedures!=0, select = -sum_all_procedures) -->
+
+<!-- # -->
+<!-- total <- data.frame(redcap_data_access_group="Total") -->
+
+<!-- last_line <- cbind(total,t(colSums(prop6a[,-1]))) -->
+
+<!-- prop6a <- rbind(prop6a,last_line) -->
+
+
+<!-- prop6a <- prop6a %>% rowwise() %>% mutate(`Right radial artery` = paste(`Right radial artery` ,"(",p1,")"), -->
+<!--                                             `Left radial artery` = paste(`Left radial artery` ,"(",p2,")"), -->
+<!--                                             `Femoral artery` = paste(`Femoral artery` ,"(",p3,")"), -->
+<!--                                             `Brachial artery` = paste(`Brachial artery` ,"(",p4,")"), -->
+<!--                                             `Other` = paste(`Other` ,"(",p5,")")) -->
+
+<!-- prop6a <- prop6a[,-c(9:13)] -->
+
+
+<!-- var_label(prop6a$redcap_data_access_group) <- "Medical center" -->
+
+<!-- var_label(prop6a$`Right radial artery`) <- "Right radial artery" -->
+<!-- var_label(prop6a$`Left radial artery`) <- "Left radial artery" -->
+<!-- var_label(prop6a$`Femoral artery`) <- "Femoral artery" -->
+<!-- var_label(prop6a$`Brachial artery`) <- "Brachial artery" -->
+<!-- var_label(prop6a$`Other`) <- "Other" -->
+<!-- var_label(prop6a$`NA_`) <- "missing" -->
+
+<!-- var_label(prop6a$sum_center_procedures) <- "n" -->
+<!-- var_label(prop6a$procedure_percent) <- "%" -->
+
+
+<!-- var_label(prop6a)$redcap_data_access_group <- "Medical center" -->
+
+<!-- prop6a$procedure_percent <- round(prop6a$procedure_percent, digits = 2) -->
+
+
+<!--  kable(prop6a, booktabs = T, col.names=var_label(prop6a), align = "ccccccccc",  -->
+<!--        caption = "fig 6a: Arterial access by center") %>%  -->
+<!--    row_spec(nrow(prop6a), bold = T, color = "black")  %>% -->
+<!--     kable_styling(latex_options = c("hold_position", "scale_down")) -->
+
+<!-- # ggplot(pop1) + geom_bar(aes(x = redcap_data_access_group, fill = arterial_access), na.rm = TRUE) -->
+
+<!-- ``` -->
+
+
+```{r table 19}
+# add % to each cell from row total #########################
+name_map <- c("arterial_access___1" = "Right radial artery",
+              "arterial_access___2" = "Left radial artery",
+              "arterial_access___3" = "Femoral artery",
+              "arterial_access___4" = "Brachial artery",
+              "arterial_access___5" = "Planned dual arterial access",
+              "arterial_access___8" = "Other")
+
+prop6 <- pop1 
+prop6 <- rename_with(prop6, ~name_map[.x], names(name_map))
+
+
+prop6a <- prop6 %>%
+  pivot_longer(cols = c("Right radial artery", "Left radial artery", "Femoral artery", "Brachial artery", "Planned dual arterial access", "Other"), 
+               names_to = "Artery", 
+               values_to = "Status") %>%
+  filter(Status == "Checked") %>%
+  tabyl(redcap_data_access_group, Artery)
+
+
+prop6a <- prop6a %>%
+              mutate(sum_all_procedures=
+                       sum(`Right radial artery`,`Left radial artery`, `Femoral artery`,`Brachial artery`,`Other`))
+
+
+
+prop6a <- prop6a %>%
+            rowwise() %>%
+              mutate(radial_artery= sum(`Right radial artery`,`Left radial artery`),
+                     Other= sum(`Brachial artery`,`Other`)) %>%
+                select(redcap_data_access_group, radial_artery, `Femoral artery`, Other,  sum_all_procedures)
+
+
+prop6a <- prop6a %>%
+              mutate(center_tot= sum(radial_artery, `Femoral artery`, Other))
+
+
+prop6a  <- prop6a %>% rowwise() %>% mutate(p1= round(100*radial_artery/center_tot, digits = 2),
+                                            p2= round(100*`Femoral artery`/center_tot, digits = 2),
+                                            p3= round(100*Other/center_tot, digits = 2)
+                                           )
+
+# replace NA to zero 
+for(i in seq_along(prop6a)) {
+    # Check if the element is numeric
+    if(is.numeric(prop6a[[i]])) {
+        # Replace NaN with 0
+        prop6a[[i]][is.nan(prop6a[[i]])] <- 0
+    }
+}
+
+prop6a <- prop6a %>%  mutate(procedure_percent=round(100*center_tot/sum_all_procedures, digits = 4))
+
+
+# prop6a <- subset(prop6a, center_tot!=0, select = -sum_all_procedures)
+
+#
+total <- data.frame(redcap_data_access_group="Total")
+
+last_line <- cbind(total,t(colSums(prop6a[,-1])))
+
+prop6a <- rbind(prop6a,last_line)
+
+
+prop6a <- prop6a %>% rowwise() %>% mutate(radial_artery = paste(radial_artery ,"(",p1,")"),
+                                            `Femoral artery` = paste(`Femoral artery`,"(",p2,")"),
+                                             Other = paste(Other ,"(",p3,")"))
+
+
+prop6a <- prop6a %>%
+            select(redcap_data_access_group, radial_artery, `Femoral artery`, Other, center_tot, procedure_percent)
+
+
+var_label(prop6a$redcap_data_access_group) <- "Medical center"
+var_label(prop6a$radial_artery) <- "Radial artery"
+var_label(prop6a$`Femoral artery`) <- "Femoral artery"
+var_label(prop6a$`Other`) <- "Other"
+var_label(prop6a$center_tot) <- "n"
+var_label(prop6a$procedure_percent) <- "%"
+#var_label(prop6a$NA_) <- "Missing"
+
+prop6a$procedure_percent <- round(prop6a$procedure_percent, digits = 2)
+
+#prop6a <- prop6a[,-c(5,6)]
+
+ kable(prop6a, booktabs = T, col.names=var_label(prop6a), align = "ccccccccc", 
+       caption = "Arterial access by center") %>% 
+   row_spec(nrow(prop6a), bold = T, color = "black")  %>%
+    kable_styling(latex_options = c("hold_position", "scale_down"))
+```
+\clearpage
+
+```{r table 20}
+pop_femoral_artery <- CLICS_data %>% filter(procedure_type___1=="Checked", arterial_access___3 =="Checked") # arterial_access___3 == "Femoral artery"
+
+# nrow(pop_femoral_artery)
+pop_femoral_artery$femoral_artery_hemostasis <- factor(pop_femoral_artery$femoral_artery_hemostasis, levels = c("Angioseal","Manual compression","Mynx","Perclose/Proglide/Prostyle","Exoseal","Other") )
+
+prop7 <- pop_femoral_artery %>% tabyl(femoral_artery_hemostasis) %>% adorn_totals("row")
+
+
+other7 <- prop7 %>% select(femoral_artery_hemostasis,n,percent) %>%
+            filter(femoral_artery_hemostasis %in% c("Other", NA,"Total"))
+
+prop7 <-prop7 %>% select(femoral_artery_hemostasis,n,percent) %>%
+  filter(!femoral_artery_hemostasis %in% c("Other","Total") & !is.na(femoral_artery_hemostasis))  %>% arrange(-n)
+
+tab7 <- rbind(prop7,other7)
+
+tab7$percent <- round(100*tab7$percent, digits = 2)
+
+tab7$femoral_artery_hemostasis <- as.character(tab7$femoral_artery_hemostasis)
+
+# tab7$femoral_artery_hemostasis[6] <- "Missing"
+tab7$femoral_artery_hemostasis[7] <- "Total"
+
+tab7$femoral_artery_hemostasis <- as.factor(tab7$femoral_artery_hemostasis)
+
+ kable(tab7, booktabs = T, col.names=c( " ", "n", "%"), 
+       caption = "Femoral artery hemostasis") %>%
+   row_spec(nrow(tab7), bold = T, color = "black")  %>%
+       kable_styling(latex_options = c("hold_position"))
+```
+
+## 2.3 Characteristics of coronary anatomy and clinical recommendations
+
+```{r table 21}
+
+pop1$num_ves_dis <- factor(pop1$num_ves_dis, levels = c("No vessel disease","One vessel disease","Two vessel disease","Three vessel disease"))
+
+# View(pop1)
+
+prop8 <- pop1 %>% tabyl(num_ves_dis) %>% adorn_totals("row")
+
+prop8$percent <- round(prop8$percent*100, digits = 2)
+
+prop8 <-prop8 %>% select(num_ves_dis,n,percent)
+
+prop8$num_ves_dis <- as.character(prop8$num_ves_dis)
+
+prop8$num_ves_dis[5] <- "Missing"
+
+prop8$num_ves_dis <- as.factor(prop8$num_ves_dis)
+
+ kable(prop8, booktabs = T, col.names=c( " ", "n", "%"), 
+       caption = "Number vessel disease") %>%
+   row_spec(nrow(prop8), bold = T, color = "black")  %>%
+       kable_styling(latex_options = c("hold_position"))
+
+```
+
+```{r table 22}
+pop1$lm_disease1  <- factor(pop1$lm_disease1, levels = c("Yes","No"))
+
+
+prop8_LM <- pop1 %>% tabyl(lm_disease1) %>% adorn_totals("row")
+
+prop8_LM$percent <- round(prop8_LM$percent*100, digits = 2)
+
+prop8_LM <-prop8_LM %>% select(lm_disease1,n,percent)
+
+prop8_LM$lm_disease1 <- as.character(prop8_LM$lm_disease1)
+
+prop8_LM$lm_disease1[3] <- "Missing"
+
+prop8_LM$lm_disease1 <- as.factor(prop8_LM$lm_disease1)
+
+
+ kable(prop8_LM, booktabs = T, col.names=c( " ", "n", "%"), 
+       caption = "LM disease (>50% stenosis by angiography)") %>%
+   row_spec(nrow(prop8_LM), bold = T, color = "black")  %>%
+       kable_styling(latex_options = c("hold_position"))
+
+
+```
+
+
+```{r table 23}
+
+pop_stable <- CLICS_data %>% filter(procedure_type___1=="Checked" ,indication_for_procedure=="Stable angina")
+
+pop_stable$clinical_reccomendation <- factor(pop_stable$clinical_reccomendation,
+                                             levels = c("Conservative/medical treatment",
+                                                        "Immediate PCI",
+                                                        "Heart team discussion",
+                                                        "Cardiac surgery",
+                                                        "Immediate PCI with staged PCI procedure (Partial revascularization with planned additional PCI)",
+                                                        "Planned PCI at future time",
+                                                        "Other structural heart intervention",
+                                                        "TAVI"))
+
+
+fig8 <- pop_stable %>% tabyl(clinical_reccomendation) %>% adorn_totals("row")
+
+other8 <- fig8 %>% select(clinical_reccomendation,n,percent) %>%
+            filter(clinical_reccomendation %in% c("Other", NA,"Total"))
+
+fig8 <- fig8 %>% select(clinical_reccomendation,n,percent) %>%
+  filter(!clinical_reccomendation %in% c("Other","Total") & !is.na(clinical_reccomendation))  %>% arrange(-n)
+
+fig_8 <- rbind(fig8,other8)
+
+fig_8$percent <- round(fig_8$percent*100, digits = 2)
+
+
+kable(fig_8,  booktabs = T, col.names=c( "Clinical recommendation", "n", "%"), 
+      caption = "Clinical recommendation after diagnostic angiogram among stable angina patients") %>%
+  row_spec(nrow(fig_8), bold = T, color = "black") %>%
+    kable_styling(latex_options = c("hold_position")) 
+
+```
+
+
+```{r table 24}
+
+fig9 <- pop_urgent %>% tabyl(clinical_reccomendation) %>% adorn_totals("row")
+
+other9 <- fig9 %>% select(clinical_reccomendation,n,percent) %>%
+            filter(clinical_reccomendation %in% c("Other", NA,"Total"))
+
+fig9 <- fig9 %>% select(clinical_reccomendation,n,percent) %>%
+  filter(!clinical_reccomendation %in% c("Other","Total") & !is.na(clinical_reccomendation))  %>% arrange(-n)
+
+fig_9 <- rbind(fig9,other9)
+
+# Convert factor to character (if necessary)
+if(is.factor(fig_9$clinical_reccomendation)) {
+    fig_9$clinical_reccomendation <- as.character(fig_9$clinical_reccomendation)
+}
+
+# Replace NA values with "Missing"
+fig_9$clinical_reccomendation[is.na(fig_9$clinical_reccomendation)] <- "Missing"
+
+
+fig_9$percent <- round(fig_9$percent*100, digits = 2)
+
+kable(fig_9,  booktabs = T, col.names=c( "Clinical recommendation", "n", "%"), 
+      caption = "Clinical recommendation after diagnostic angiogram among urgent patients") %>%
+  row_spec(nrow(fig_9), bold = T, color = "black") %>%
+    kable_styling(latex_options = c("hold_position")) %>%
+      footnote("urgent patients = patients with one of the following indication: Unstable angina (troponin negative ACS)/ Non STEMI/ STEMI/ STEMI - Late arrival (>12 hrs)/ LBBB of unknown age/ Out of hospital sudden death", threeparttable = T)
+
+```
+\clearpage 
+
+# Chapter 3 - Percutaneous coronary interventions
+## 3.1 General characteristics
+
+```{r table 25}
+pop_intervention <-  CLICS_data %>% filter(procedure_type___1=="Checked",
+                                           type_of_coronary_procedure=="Percutaneous coronary intervention (PCI)")
+
+pop_intervention$urgent_stable <- ifelse(pop_intervention$indication_for_procedure %in% c("Unstable angina (troponin negative ACS)",
+                                                                     "Non STEMI",
+                                                                     "STEMI","STEMI - Late arrival (>12 hrs)",
+                                                                     "LBBB of unknown age",
+                                                                     "Out of hospital sudden death"),"Urgent", "Stable")
+
+chap_3_tab <- pop_intervention %>%
+                select(redcap_data_access_group, urgent_stable) %>%
+                        group_by(redcap_data_access_group, urgent_stable) %>%
+                          count()
+
+
+categories <- c("Stable", "Urgent")
+
+single_entries <- chap_3_tab %>%
+  group_by(redcap_data_access_group) %>%
+  filter(n() == 1) %>%
+  ungroup()
+
+for(i in seq_along(single_entries$redcap_data_access_group)) {
+  current_id <- single_entries$redcap_data_access_group[i]
+  existing_category <- single_entries$urgent_stable[i]
+  missing_category <- setdiff(categories, existing_category)
+  new_row <- data.frame(redcap_data_access_group = current_id, 
+                        urgent_stable = missing_category, 
+                        n = 0)
+  chap_3_tab <- rbind(chap_3_tab, new_row)
+}
+
+# chap_3_tab$redcap_data_access_group <- gsub("[[:space:]]", "", chap_3_tab$redcap_data_access_group)
+
+urgent_stable_wide <- pivot_wider(chap_3_tab, names_from = urgent_stable, values_from= n)
+
+urgent_stable_wide$Stable <- ifelse(is.na(urgent_stable_wide$Stable)==T, 0, urgent_stable_wide$Stable)
+
+urgent_stable_wide <-  urgent_stable_wide %>% mutate(PCI = sum(Stable, Urgent))
+
+total <- data.frame(redcap_data_access_group="Total")
+
+last_line <- cbind(total,t(colSums(urgent_stable_wide[,-1])))
+
+urgent_stable_wide <- rbind(urgent_stable_wide,last_line)
+
+urgent_stable_wide <-  urgent_stable_wide  %>%
+                        mutate(stable_pct = 100*Stable/PCI,
+                               urgent_pct = 100*Urgent/PCI)
+
+
+urgent_stable_wide$stable_pct <- round(urgent_stable_wide$stable_pct, digits = 1)
+urgent_stable_wide$urgent_pct <- round(urgent_stable_wide$urgent_pct, digits = 1)
+
+urgent_stable_wide <- urgent_stable_wide %>%
+                        rowwise() %>%
+                          mutate(Stable = paste(Stable, "(", stable_pct, ")"),
+                                 Urgent= paste(Urgent, "(", urgent_pct, ")")
+                                 )
+
+urgent_stable_wide <-  urgent_stable_wide  %>% select(redcap_data_access_group, PCI, Stable, Urgent)
+
+
+colnames(urgent_stable_wide) <- c("Medical center",
+                                  "PCI	- Total",
+                                  "Stable, n (%)",
+                                  "Urgent, n (%)")
+
+kable(urgent_stable_wide, booktabs = T, 
+      caption = "Percutaneous coronary intervention (PCI) - count per center", align="llrr") %>%
+  row_spec(nrow(urgent_stable_wide), bold = T, color = "black") %>%
+    kable_styling(latex_options = c("hold_position")) %>%
+      footnote("urgent patients = patients with one of the following indication: Unstable angina (troponin negative ACS)/ Non STEMI/ STEMI/ STEMI - Late arrival (>12 hrs)/ LBBB of unknown age/ Out of hospital sudden death", threeparttable = T)
+
+
+```
+\clearpage 
+
+```{r table 26}
+
+
+pop_intervention <- pop_intervention %>% 
+                      mutate(patient_admission_type_transformed = 
+                              if_else(indication_for_procedure %in% c("Non STEMI",
+                                                                      "Unstable angina (troponin negative ACS)", 
+                                                                      "LBBB of unknown age",
+                                                                      "STEMI"),
+                                                                      
+                                      
+                                      "Hospitalized (including urgent admission from emergency department - primary PCI, unstable NSTEMI etc.)",
+                                      as.character(pop_intervention$patient_admission_type)
+                                      ))
+
+fig10 <- pop_intervention %>% tabyl(patient_admission_type_transformed) %>% adorn_totals("row")
+
+fig10$percent <- round(fig10$percent*100, digits = 2)
+
+fig10$patient_admission_type_transformed[3] <- "Missing"
+fig10$valid_percent <- NULL
+
+kable(fig10, booktabs = T,  col.names=c( " ", "n", "%"), 
+      caption = "Admission type among percutaneous coronary intervention") %>%
+  row_spec(nrow(fig10), bold = T, color = "black") %>%
+    column_spec(1, width = "14em") %>%
+      kable_styling(latex_options = c("hold_position")) 
+
+```
+
+
+```{r table 27}
+
+pop_intervention_stable <-  CLICS_data_unlabeld %>% filter(procedure_type___1==1,           # coronary
+                                                            type_of_coronary_procedure==2,  # PCI
+                                                            indication_for_procedure==1)    # Stable angina
+
+
+n <- nrow(pop_intervention_stable)
+
+attach(pop_intervention_stable)
+pop_intervention_stable$functional <- non_invasive_test_ischemia*type_of_non_invasive_stres___1
+pop_intervention_stable$anatomical <- non_invasive_test_ischemia*type_of_non_invasive_stres___2
+detach(pop_intervention_stable)
+
+
+tab10_vars <- c("non_invasive_test_ischemia", "functional", "anatomical", "ffr_ifr_used", "ivus", "oct")
+
+tab10 <- print(CreateTableOne(vars = tab10_vars, factorVars = tab10_vars, data = pop_intervention_stable), varLabels = TRUE, missing=T, printToggle = F, showAllLevels = F)
+
+row.names(tab10) <- c("N",
+                      "Non invasive test ischemia = Yes",
+                      "Functional (e.g. Ergometry, stress echo, SPECT) = Yes",
+                      "Anatomical - Coronary CT angiography = Yes",
+                      "FFR / IFR used  = Yes",
+                      "IVUS used = Yes",
+                      "OCT used = Yes")
+tab10 <- tab10[,-2]
+
+
+fig10 <- pop_intervention %>% tabyl(patient_admission_type_transformed) %>% adorn_totals("row")
+
+fig10$percent <- round(fig10$percent*100, digits = 2)
+
+
+
+kable(tab10, booktabs = T, col.names = "n (%)", 
+      caption = "Physiology and anatomy assessment in patients with stable angina undergoing PCI") %>%
+  add_indent(c(3,4)) %>%
+    kable_styling(latex_options = c("hold_position")) %>%
+      footnote("10/15 FFR patients also underwent non invasive test for ischemia")
+
+
+```
+
+```{r table 28 }
+
+pop_intervention_unlab <-  CLICS_data_unlabeld %>% filter(procedure_type___1==1,           # coronary
+                                                            type_of_coronary_procedure==2)  # PCI
+
+
+fig11 <- pop_intervention_unlab %>% tabyl(n_vessels_treated) %>% adorn_totals("row")
+
+fig11$percent <- round(fig11$percent*100, digits = 2)
+
+fig11$n_vessels_treated[7] <- "Missing"
+fig11$valid_percent <- NULL
+
+kable(fig11, booktabs = T, col.names=c( "", "n", "%"), 
+      caption = "Number of vessels treated during index PCI procedure") %>% 
+  row_spec(nrow(fig11), bold = T, color = "black") %>%
+    kable_styling(latex_options = c("hold_position")) 
+```
+
+```{r table 29}
+
+fig12 <- pop_intervention_unlab %>% tabyl(n_lesions_treated) %>% adorn_totals("row")
+
+fig12$percent <- round(fig12$percent*100, digits = 2)
+
+
+fig12$n_lesions_treated[7] <- "Missing"
+fig12$valid_percent <- NULL
+
+kable(fig12,  booktabs = T, col.names=c( " ", "n", "%"), 
+      caption = "Number of lesions treated during index PCI procedure") %>% 
+  row_spec(nrow(fig12), bold = T, color = "black") %>%
+    kable_styling(latex_options = c("hold_position")) 
+
+```
+
+
+```{r table 30}
+
+pop_intervention_L <- CLICS_data %>% filter(procedure_type___1=="Checked",
+                                                    type_of_coronary_procedure=="Percutaneous coronary intervention (PCI)")
+
+                  # pop_intervention_stable_L$n_lesions_treated
+                  # pop_intervention_stable$n_lesions_treated
+
+fig13 <- pop_intervention_L %>% tabyl(number_of_stents) %>% adorn_totals("row")
+
+fig13$percent <- round(fig13$percent*100, digits = 2)
+
+fig13 <- fig13[,1:3]
+
+kable(fig13, booktabs = T, col.names=c( "", "n", "%"), 
+      caption = "Number of stents used during index PCI procedure") %>%
+  row_spec(nrow(fig13), bold = T, color = "black") %>%
+    kable_styling(latex_options = c("hold_position")) 
+
+```
+
+
+```{r table 31}
+
+fig14_vars <- c("stent_type_used___1", "stent_type_used___2", "stent_type_used___3", "stent_type_used___4", "stent_type_used___5", "stent_type_used___6",
+                "stent_type_used___7", "stent_type_used___8","stent_type_used___9","stent_type_used___10","stent_type_used___11")
+
+
+# pop_intervention_stable$x <- factor(pop_intervention_stable$stent_type_used___1, levels = c("1","0"))
+# pop_intervention_stable$x <- factor(pop_intervention_stable$x, levels = c("0","1"))
+
+to_factor <- function(x){
+  x <- factor(x, levels = c("0","1"))
+}
+
+pop_intervention_unlab[,fig14_vars] <- lapply(pop_intervention_unlab[,fig14_vars], to_factor)
+
+# class(pop_intervention_unlab$stent_type_used___1)
+
+
+fig14 <- print(CreateTableOne(vars = fig14_vars, data = pop_intervention_unlab), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+row.names(fig14) <- c("N",
+                      "Drug eluting stent",
+                      "Bare metal stent",
+                      "Biodergadable scaffold",
+                      "Covered stent (stent graft)",
+                      "Drug coated balloon  - paclitaxel",
+                      "Drug coated balloon  - sirolimus",
+                      "Cutting balloon",
+                      "Scoring balloon",
+                      "POBA",
+                      "OPN balloon",
+                      "None")
+
+kable(fig14,  booktabs = T, 
+      caption = "Device types used during index PCI procedure") %>% 
+  kable_styling(latex_options = c("hold_position")) %>%
+    footnote("It is possible to have more then one device per patient")
+
+```
+
+
+```{r table 32}
+
+
+pop_intervention_L$urgent_stable <- ifelse(pop_intervention_L$indication_for_procedure =="Stable angina","Stable","Urgent")
+
+tab11_vars <- c("ivus", "oct", "ffr_ifr_used", "rotablator_of_orbital_athe")
+
+tab11 <- print(CreateTableOne(vars = tab11_vars, factorVars = tab11_vars, strata = "urgent_stable", data = pop_intervention_L), varLabels = TRUE, missing=T, printToggle = F, showAllLevels = F)
+
+# colnames(tab11)
+
+tab11 <- subset(tab11, select=-c(p, test))
+
+row.names(tab11) <- c("N",
+                      "IVUS used = Yes (%)",
+                      "OCT used = Yes (%)",
+                      "FFR / IFR used  = Yes (%)",
+                      "Rotablator or orbital atherectomy used  = Yes (%)")
+
+kable(tab11,  booktabs = T, 
+      caption = "Advanced imaging and rotablator among PCI patients") %>% 
+  kable_styling(latex_options = c("hold_position"))
+
+```
+
+## 3.2 Multi-vessel PCI
+
+```{r table 33}
+
+pop_intervention_L$multivessel_pci <- factor(pop_intervention_L$multivessel_pci, levels = c("Single vessel PCI","Multivessel PCI"))
+
+tab12 <- print(CreateTableOne(vars = tab1_vars, factorVars = tab1_vars[-c(1,12)], data = pop_intervention_L,
+                strata = "multivessel_pci"), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+tab12 <- tab12[,-c(3,4)]
+
+kable(tab12,  booktabs = T, 
+      caption = "Patient characteristics according to single versus multivessel PCI") %>% 
+  add_indent(c(4:6,16:18))  %>% 
+    kable_styling(latex_options = c("hold_position"))
+```
+\clearpage 
+
+## 3.3 Left main coronary artery PCI
+
+```{r table 34}
+
+pop_intervention_L$lm_pci <- factor(pop_intervention_L$lm_pci, levels = c("Yes","No"))
+
+
+
+tab13 <- print(CreateTableOne(vars = tab1_vars, factorVars = tab1_vars[-c(1,12)], data = pop_intervention_L,
+                strata = "lm_pci"), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+tab13 <- tab13[,-c(3,4)]
+
+colnames(tab13) <- c("Left main coronary intervention", "Other intervention")
+
+kable(tab13,  booktabs = T, 
+      caption = "Patient characteristics according to left main versus non-left main PCI") %>% 
+  add_indent(c(4:6,16:18))  %>% 
+    kable_styling(latex_options = c("hold_position"))
+
+```
+
+\clearpage 
+## 3.4 Chronic total occlusion (CTO) PCI
+```{r table 35}
+
+pop_intervention_L$pci_to_cto <- factor(pop_intervention_L$pci_to_cto, levels = c("Yes","No"))
+
+tab14 <- print(CreateTableOne(vars = tab1_vars, factorVars = tab1_vars[-c(1,12)], data = pop_intervention_L,
+                strata = "pci_to_cto"), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+tab14 <- tab14[,-c(3,4)]
+
+colnames(tab14) <- c("PCI to CTO", "Non-CTO PCI")
+
+kable(tab14, booktabs = T, 
+      caption = "Patient characteristics according to chronic total occlusion (CTO) versus non-CTO") %>% 
+  add_indent(c(4:6,16:18)) %>% 
+    kable_styling(latex_options = c("hold_position"))
+```
+
+```{r table 36}
+
+pop14 <- pop_intervention_L %>% filter(pci_to_cto=="Yes")
+
+pop14$successful_cto_pci <- factor(pop14$successful_cto_pci, levels = c("Yes","No"))
+
+
+tab14a <- pop14 %>% tabyl(successful_cto_pci) %>% adorn_totals("row")
+
+tab14a$valid_percent <- NULL
+
+# Convert factor to character (if necessary)
+if(is.factor(tab14a$successful_cto_pci)) {
+    tab14a$successful_cto_pci <- as.character(tab14a$successful_cto_pci)
+}
+
+# Replace NA values with "Missing"
+tab14a$successful_cto_pci[is.na(tab14a$successful_cto_pci)] <- "Missing"
+
+tab14a$percent <- round(tab14a$percent*100, digits = 2)
+
+
+kable(tab14a,  booktabs = T, col.names=c( "", "n", "%"), 
+      caption = "Success rates of chronic total occlusion (CTO) intervention") %>% 
+  row_spec(nrow(tab14a), bold = T, color = "black") %>% 
+    kable_styling(latex_options = c("hold_position"))
+```
+
+
+```{r table 37}
+
+pop14$cto_strategy___1 <- factor(pop14$cto_strategy___1, levels = c("Unchecked","Checked"))
+pop14$cto_strategy___2 <- factor(pop14$cto_strategy___2, levels = c("Unchecked","Checked"))
+
+tab14b_vars <- c("cto_strategy___1", "cto_strategy___2")
+
+tab14b <- print(CreateTableOne(vars = tab14b_vars, data = pop14), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+colnames(tab14b) <- "n (%)"
+row.names(tab14b) <- c("n","Retrograde","Anterograde")
+
+kable(tab14b,  booktabs = T, caption = "Chronic total occlusion (CTO) strategy utilized") %>% 
+    kable_styling(latex_options = c("hold_position"))
+```
+\clearpage
+## 3.5 Bifurcation lesion PCI
+```{r table 38}
+
+pop_intervention_L$bifurcation_lesion <- factor(pop_intervention_L$pci_to_cto, levels = c("Yes","No"))
+
+tab15 <- print(CreateTableOne(vars = tab1_vars, factorVars = tab1_vars[-c(1,12)], data = pop_intervention_L,
+                strata = "bifurcation_lesion"), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+tab15 <- tab15[,-c(3,4)]
+
+colnames(tab15) <- c("PCI to bifurcation lesion", "Non bifurcation lesion PCI")
+
+kable(tab15,  booktabs = T, 
+      caption = "Patients characteristics according to bifurcation versus non-bifurcation PCI") %>% 
+  add_indent(c(4:6,16:18)) %>% 
+    kable_styling(latex_options = c("hold_position"))
+
+```
+
+
+```{r table 39} 
+Bifurcation_pop <- CLICS_data %>% filter(bifurcation_lesion=="Yes")
+
+# Bifurcation_pop$bifurcation_lesion
+
+# Bifurcation_pop$bifurcation_pci_approach
+
+tab14c <- Bifurcation_pop %>% tabyl(bifurcation_pci_approach) %>% adorn_totals("row")
+
+tab14c$valid_percent <- NULL
+
+# Convert factor to character (if necessary)
+if(is.factor(tab14c$bifurcation_pci_approach)) {
+    tab14c$bifurcation_pci_approach <- as.character(tab14c$bifurcation_pci_approach)
+}
+
+# Replace NA values with "Missing"
+tab14c$bifurcation_pci_approach[is.na(tab14c$bifurcation_pci_approach)] <- "Missing"
+
+tab14c$percent <- round(100*tab14c$percent, digits = 2)
+
+colnames(tab14c) <-  c("" , "n", "%")
+
+kable(tab14c,  booktabs = T,
+      caption = "Initial bifurcation approach") %>% 
+    kable_styling(latex_options = c("hold_position"))
+```
+
+
+```{r table 40}
+# Bifurcation_pop$final_bif_approach
+
+tab14d <- Bifurcation_pop %>% tabyl(final_bif_approach) %>% adorn_totals("row")
+
+tab14d$percent <- round(100*tab14d$percent, digits = 2)
+
+tab14d <-tab14d %>% select(final_bif_approach,n,percent)
+
+colnames(tab14d) <-  c("" , "n", "%")
+
+kable(tab14d, booktabs = T, caption = "Final bifurcation PCI approach") %>% 
+    kable_styling(latex_options = c("hold_position")) 
+
+```
+\clearpage 
+
+## 3.6 Saphneous vein graft (SVG) PCI
+
+```{r table 41}
+
+pop16 <- pop_intervention_L %>% filter(vessel_type___2=="Checked") # Vessel types treated = SVG
+
+pop16$age_of_surgey <- 2020 - pop16$year_of_surgery
+
+pop16 <- pop16 %>% mutate(balloon_used = if_else(stent_type_used___5=="Checked" |
+                                                 stent_type_used___6=="Checked" |
+                                                 stent_type_used___7=="Checked" |
+                                                 stent_type_used___8=="Checked" , "Yes", "No" ),
+
+                          stent_used = if_else(stent_type_used___1=="Checked" |
+                                                 stent_type_used___2=="Checked" ,"Yes", "No"))
+
+tab16_vars <- c("age_of_surgey", "use_of_embolic_protection","balloon_used","stent_used")
+
+tab16 <- print(CreateTableOne(vars = tab16_vars,factorVars = tab1_vars[-1], data = pop16), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+row.names(tab16) <-  c("n", "Age of surgey, mean (SD)", "embolic protection used = Yes , n (%)", "balloon used = Yes, n (%)", "stent used = Yes, n (%)")
+
+kable(tab16, booktabs = T, 
+      caption = "Interventions among SVG patients") %>% 
+    kable_styling(latex_options = c("hold_position"))
+```
+
+
+```{r table 42}
+pop1_diagnostoc_vs_pci <- pop1 %>% filter(type_of_coronary_procedure %in% c("Diagnostic angiography only (no PCI done)",
+                                                              "Percutaneous coronary intervention (PCI)"))
+
+pop1_all <- pop1_diagnostoc_vs_pci %>%  mutate(type_of_coronary_procedure = "all")
+
+pop1_diagnostoc_vs_pci_all <- rbind(pop1_all, pop1_diagnostoc_vs_pci)
+
+
+fig15_vars <- c("procedural_complication___1", "procedural_complication___2",
+                "procedural_complication___3", "procedural_complication___4", 
+                "procedural_complication___5", "procedural_complication___6", 
+                "procedural_complication___7", "procedural_complication___8", 
+                "procedural_complication___9", "procedural_complication___10",
+                "procedural_complication___11", "procedural_complication___12")
+
+pop1_diagnostoc_vs_pci_all[fig15_vars] <- lapply(pop1_diagnostoc_vs_pci_all[fig15_vars], function(x) factor(x, levels = c("Unchecked", "Checked")))
+
+
+var_label(pop1_diagnostoc_vs_pci_all$procedural_complication___1) <- "Coronary artery dissection"
+var_label(pop1_diagnostoc_vs_pci_all$procedural_complication___2) <- "Coronary artery perforation"
+var_label(pop1_diagnostoc_vs_pci_all$procedural_complication___3) <- "No reflow / distal embolization"
+var_label(pop1_diagnostoc_vs_pci_all$procedural_complication___4) <- "Significant (>1.5 mm) side branch occlusion"
+var_label(pop1_diagnostoc_vs_pci_all$procedural_complication___5) <- "Tamponade"
+var_label(pop1_diagnostoc_vs_pci_all$procedural_complication___6) <- "Ventricular arrhythmia"
+var_label(pop1_diagnostoc_vs_pci_all$procedural_complication___7) <- "Significant conduction abnormality requiriung
+pacing"
+var_label(pop1_diagnostoc_vs_pci_all$procedural_complication___8) <- "CPR"
+var_label(pop1_diagnostoc_vs_pci_all$procedural_complication___9) <- "Urgent cardiac surgery"
+var_label(pop1_diagnostoc_vs_pci_all$procedural_complication___10) <- "Vascular access complication"
+var_label(pop1_diagnostoc_vs_pci_all$procedural_complication___11) <- "Ascending aorta dissection"
+var_label(pop1_diagnostoc_vs_pci_all$procedural_complication___12) <- "Device related complication (wire/stent/balloon/rorablator etc.)"
+
+
+fig15 <- print(CreateTableOne(vars = fig15_vars, factorVars = fig15_vars, data = pop1_diagnostoc_vs_pci_all, strata = "type_of_coronary_procedure", test = F), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+row.names(fig15) <-  gsub("= Checked", "", row.names(fig15))
+colnames(fig15) <- c("All coronary procedurers","Diagnostic procedures", "PCI procedures")
+
+kable(fig15,  booktabs = T, 
+      caption = "Procedural complications")  %>% 
+  kable_styling(latex_options = c("hold_position", "scale_down")) 
+```
+
+## 3.7 Post-procedural anti-platelet and anticoagulation
+```{r table 43}
+
+tab_17_pop <- pop_intervention_L %>% filter(atrial_fibrillation=="No")
+
+tab17_vars <- c("recommended_post_procedure","post_procedural_aniplatelet")  # recommended_post_procedure = Aspirin
+                                                                            # post_procedural_aniplatelet = Second anti-platelet
+
+tab_17_pop$post_procedural_aniplatelet <- factor(tab_17_pop$post_procedural_aniplatelet, levels = c("Clopidogrel","Ticagrelor","Prasugrel","None"))
+
+tab17 <- print(CreateTableOne(vars = tab17_vars, factorVars = tab17_vars, data = tab_17_pop, 
+                strata = "urgent_stable"), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+tab17 <- tab17[,-c(3,4)]
+
+colnames(tab17) <- c("Stable, n (%)" , "Urgent, n (%)")
+row.names(tab17)[2:3] <- c("Aspirin recommendation = Yes", "Second anti-platelet recommendation" )
+
+
+kable(tab17,  booktabs = T, caption = "Post procedure anti-platelet recommendations") %>% 
+  add_indent(c(4:7)) %>%   
+    kable_styling(latex_options = c("hold_position")) %>%
+      footnote("Patients with Atrial fibrillation were excluded")
+```
+
+
+
+```{r table 44}
+
+tab_17a_pop <- pop_intervention_L # %>% filter(atrial_fibrillation=="No")
+
+tab17a_vars <- c("lipid_low_disch___1","lipid_low_disch___2", "lipid_low_disch___3", "lipid_low_disch___4", "lipid_low_disch___5", "lipid_low_disch___6", "lipid_low_disch___0")  
+
+tab_17a_pop[,tab17a_vars] <- lapply(tab_17a_pop[,tab17a_vars], to_factor_L)
+
+tab17a <- print(CreateTableOne(vars = tab17a_vars, factorVars = tab17a_vars, data = tab_17a_pop, 
+                strata = "urgent_stable"), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+tab17a <- tab17a[,-c(3,4)]
+
+colnames(tab17a) <- c("Stable, n (%)" , "Urgent, n (%)")
+
+row.names(tab17a) <- c("n","Statin","Ezetemibe","PCSk9i","Bempedoic acid","Icosapent Ethyl (Vazcepa)","Bezafibrate", "No lipid lowering therapy")
+
+
+kable(tab17a,  booktabs = T, caption = "Lipid lowering therapy at discharge")  %>%   
+    kable_styling(latex_options = c("hold_position"))# %>%
+#footnote("Patients with Atrial fibrillation were excluded")
+```
+
+
+```{r table 45}
+tab_18_pop <- pop_intervention_L %>% filter(atrial_fibrillation=="Yes")
+
+
+tab18_vars <- c("post_proced_anticoag___1","post_proced_anticoag___2","post_proced_anticoag___3",
+                "post_proced_anticoag___4","post_proced_anticoag___5","post_proced_anticoag___6")
+
+
+tab_18_pop[,tab18_vars] <- lapply(tab_18_pop[,tab18_vars], to_factor_L)
+
+
+tab18 <- print(CreateTableOne(vars = tab18_vars, factorVars = tab18_vars, data = tab_18_pop, 
+                strata = "urgent_stable"), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+tab18 <- tab18[,-c(3,4)]
+
+colnames(tab18) <- c("Stable, n (%)" , "Urgent, n (%)")
+
+row.names(tab18) <- c("n","Coumadin","Xarelto (Rivaroxaban)","Eliquis (Apixaban)","Pradaxa (Dabigatran)","Other","None")
+
+kable(tab18,  booktabs = T, 
+      caption = "Recommended anticoagulants  after PCI in patients with atrial fibrillation") %>%
+  kable_styling(latex_options = c("hold_position")) 
+```
+
+
+```{r table 46}
+n_day_discharge <- pop_intervention_L 
+
+tab19 <- print(CreateTableOne(vars = "days_from_proc_disch", factorVars = "days_from_proc_disch", data = n_day_discharge, 
+                strata = "urgent_stable"), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+tab19 <- tab19[,-c(3,4)]
+
+colnames(tab19) <- c("Stable, n (%)" , "Urgent, n (%)")
+
+row.names(tab19)[2:2] <- "Number of days from procedure to discharge"
+
+kable(tab19,  booktabs = T, 
+      caption = "Number of days from procedure to discharge") %>%
+  add_indent(c(3:6)) %>%
+  kable_styling(latex_options = c("hold_position")) 
+```

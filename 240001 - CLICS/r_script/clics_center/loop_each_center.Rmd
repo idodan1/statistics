@@ -1,0 +1,142 @@
+---
+title: "Cath Lab and Interventional Survey (CLICS) 2024"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+editor_options:
+  chunk_output_type: console
+  always_allow_html: TRUE
+  numbersections: true
+  header-includes:
+   - "\\usepackage{float}"
+   - "\\usepackage{graphicx}"
+---
+
+```{r setup, include=FALSE}
+setwd("C:/Users/user/Desktop/STAT/2024/240001 - CLICS/r_script/clics_center/")
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$get('label')
+
+```
+
+```{r read data}
+
+library("lubridate")
+library("dplyr")
+library("labelled")
+library("tableone")
+library("knitr")
+library("kableExtra")
+library("gt")
+library("gtsummary")
+library("janitor")
+library("rmarkdown")
+
+CLICS_data_unlabeld <- read.csv("/Users/user/Desktop/STAT/2024/240001 - CLICS/data/CLICS2024_DATA.csv",                                                                                                                   stringsAsFactors = T)
+ 
+CLICS_data <- read.csv("/Users/user/Desktop/STAT/2024/240001 - CLICS/data/CLICS2024_DATA_LABELS.csv",                                                                                           stringsAsFactors = T, na.strings = c(" ",""))
+
+
+names(CLICS_data) <- names(CLICS_data_unlabeld)
+
+CLICS_data_unlabeld <- subset(CLICS_data_unlabeld, redcap_data_access_group!="test")
+
+CLICS_data <- subset(CLICS_data, redcap_data_access_group!="test")
+  
+
+```
+
+```{r}
+
+# CENTER <- unique(CLICS_data$redcap_data_access_group)
+# 
+
+CENTER <- c("AFL"= "Emek",
+            "ASF" = "Shamir",
+            "ASTA"="Assuta-Ashdod",
+            "ASTR"="Assuta-Ramat-HaHayal",
+            "BAR"="Barzilai",
+            "CAR"="Carmel",
+            "HAS"="HaSharon",
+            "HLY"="Hillel-Yaffe",
+            "HMC"="Herzliya-Medical-Center",
+            "HSE"= "Hadasa-Ein-Karem",
+            "HSH"= "Hadasa-Mount-Scopus",
+            "ICH"="Sourasky",
+            "KAP"= "Kaplan",
+            "LAN"= "Laniado",
+            "MCB"="Beilinson",
+            "MHI"= "Mayanei-Hayeshua",
+            "MIR"= "Meir",
+            "NAH"= "Galilee",
+            "NAZ"="Nazareth",
+            "POR"= "Poriya",
+            "RAM"= "Rambam",
+            "ROT" = "Bnei-Zion",
+            "SMC"="Soroka",
+            "SZJ"="Shaare-Zedek",
+            "TEL"="Sheba",
+            "WOL"="Wolfson",
+            "ZFT"="Ziv"
+            )
+
+#centers_low <- tolower(centers)
+CLICS_data_unlabeld$redcap_data_access_group <- toupper(CLICS_data_unlabeld$redcap_data_access_group)
+
+
+# Loop through each center
+for(center_name in names(CENTER)) {
+    center_code = CENTER[[center_name]]
+    
+    i_code <- center_name
+    i_code_low <- center_name
+    i_name <- center_code
+    
+    center_pop <- subset(CLICS_data, redcap_data_access_group == i_code)
+    center_pop_unlabeld <- subset(CLICS_data_unlabeld, redcap_data_access_group == i_code_low)
+    
+    CLICS_data$pop <- "all_pop"
+    CLICS_data_unlabeld$pop <- "all_pop" 
+    
+    center_pop$pop <- "center_pop" 
+    center_pop_unlabeld$pop <- "center_pop"
+    
+
+    # Create dup_data and dup_data_unlabeld for each center
+    dup_data <- rbind.data.frame(CLICS_data, center_pop)
+    dup_data_unlabeld <- rbind.data.frame(CLICS_data_unlabeld, center_pop_unlabeld)
+    print(center_code)
+    # Set the output file name
+    output_file <- paste0("C:/Users/user/Desktop/STAT/2024/240001 - CLICS/r_script/clics_center/Reports/Statistical_report_", center_code, ".pdf")
+    
+    params_list = list(
+    center_name = center_name, 
+    CLICS_data = CLICS_data, 
+    CLICS_data_unlabeld = CLICS_data_unlabeld,
+    center_pop = center_pop,
+    dup_data = dup_data, 
+    dup_data_unlabeld = dup_data_unlabeld,
+    center_code = center_code)
+    
+    # Render the R Markdown file
+    xfun::Rscript_call(
+        rmarkdown::render, 
+        list(
+            input = "C:/Users/user/Desktop/STAT/2024/240001 - CLICS/r_script/clics_center/General_center_Statistical_Report_V1_temp.Rmd", 
+            output_format = "pdf_document", 
+            output_file = output_file,
+            params = params_list
+        )
+    )
+}
+
+#C:/Users/user/Desktop/STAT/2021/21003 CLICS registry/R scripts/all-medical-centers-report-V1.Rmd
+#C:/Users/user/Desktop/STAT/2024/240001 - CLICS/r_script/clics_center/General_center_Statistical_Report_V1_temp.Rmd
+```
+
+```{r}
+
+```
+
+
