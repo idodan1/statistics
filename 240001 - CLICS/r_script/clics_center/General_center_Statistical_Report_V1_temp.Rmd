@@ -21,7 +21,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-setwd("C:/Users/user/Desktop/STAT/2023/230017 - CLICS/r_script/clics_center/")
+# setwd("C:/Users/user/Desktop/STAT/2023/230017 - CLICS/r_script/clics_center/")
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 knitr::opts_chunk$get('label')
 
@@ -125,7 +125,8 @@ tab_1_all <- print(CreateTableOne(vars = tab1_vars, factorVars = tab1_vars[-c(1,
 
 # tab_1_all <-  cbind(tab1, tab1_center)
 colnames(tab_1_all) <- c("Overall",paste0(center_code,", n (%)"))
-#   
+
+# cast into df, look for sd in index, if find find in val the ( index and add +- after it.
  
  kable(tab_1_all, booktabs = T, caption = "Patients charcteristics") %>% kable_styling(latex_options = c("hold_position", "scale_down")) %>% add_indent(c(4:6,16:18))
 

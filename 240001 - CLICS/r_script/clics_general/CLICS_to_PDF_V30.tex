@@ -1,0 +1,1239 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Cath Lab and Interventional Survey (CLICS)},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Cath Lab and Interventional Survey (CLICS)}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\clearpage
+
+\hypertarget{chapter-1}{%
+\section{Chapter 1}\label{chapter-1}}
+
+\hypertarget{cohort-characteristics}{%
+\subsection{1.1 Cohort characteristics}\label{cohort-characteristics}}
+
+\begin{longtable}[t]{ll}
+\caption{\label{tab:table 1}Basline charcteristics (All patients)}\\
+\toprule
+ & Overall\\
+\midrule
+n & 3226\\
+Age (mean (SD)) & 67.59 (12.45)\\
+Age group (\%) & \\
+50 <= Age < 70 & 1454 (45.2)\\
+Age < 50 & 246 ( 7.6)\\
+\addlinespace
+Age >= 70 & 1520 (47.2)\\
+gender = Male (\%) & 2299 (71.3)\\
+Diabetes = Yes (\%) & 1131 (41.3)\\
+COPD = Yes (\%) & 203 ( 7.4)\\
+Chronic renal failure = Yes (\%) & 293 (10.7)\\
+\addlinespace
+Chronic dialysis = Yes (\%) & 52 ( 1.6)\\
+Prior stroke or TIA = Yes (\%) & 199 ( 7.3)\\
+Prior PCI = Yes (\%) & 1018 (37.2)\\
+Prior CABG or valve surgey = Yes (\%) & 226 ( 8.3)\\
+Heart failure (\%) & \\
+\addlinespace
+Yes & 429 (15.7)\\
+No & 1925 (70.4)\\
+Unknown & 380 (13.9)\\
+\% LV ejection fraction (mean (SD)) & 50.58 (11.77)\\
+Atrial fibrillation = Yes (\%) & 239 ( 8.7)\\
+\bottomrule
+\end{longtable}
+
+\clearpage
+
+\begin{longtable}[t]{>{\centering\arraybackslash}p{8em}>{\centering\arraybackslash}p{8em}>{\centering\arraybackslash}p{8em}>{\centering\arraybackslash}p{8em}>{\centering\arraybackslash}p{8em}>{\centering\arraybackslash}p{8em}>{\centering\arraybackslash}p{8em}>{\centering\arraybackslash}p{8em}}
+\caption{\label{tab:table 2}Procedure type by center}\\
+\toprule
+medical center & Coronary & Structural - Valvular & Structural - non valvular & Peripheral & Other & n & \%\\
+\midrule
+1 & 175 & 6 & 2 & 4 & 7 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+2 & 169 & 0 & 3 & 0 & 3 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+3 & 75 & 1 & 0 & 0 & 2 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+4 & 3 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+5 & 94 & 1 & 0 & 0 & 0 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+\addlinespace
+6 & 22 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+7 & 67 & 0 & 0 & 0 & 2 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+8 & 70 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+9 & 220 & 36 & 1 & 0 & 0 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+10 & 34 & 7 & 2 & 0 & 22 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+\addlinespace
+11 & 68 & 0 & 0 & 0 & 1 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+12 & 253 & 41 & 8 & 0 & 19 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+13 & 1 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+14 & 75 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+15 & 179 & 27 & 3 & 0 & 46 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+\addlinespace
+16 & 37 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+17 & 227 & 7 & 2 & 1 & 10 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+18 & 118 & 0 & 0 & 0 & 1 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+19 & 79 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+20 & 81 & 7 & 0 & 0 & 0 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+\addlinespace
+21 & 77 & 7 & 1 & 0 & 6 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+22 & 36 & 0 & 0 & 0 & 1 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+23 & 206 & 5 & 1 & 0 & 7 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+24 & 153 & 30 & 5 & 0 & 81 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+25 & 206 & 34 & 10 & 13 & 36 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+\addlinespace
+26 & 5 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+27 & 35 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{3274}} & \textcolor{black}{\textbf{100}}\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{2765}} & \textcolor{black}{\textbf{209}} & \textcolor{black}{\textbf{38}} & \textcolor{black}{\textbf{18}} & \textcolor{black}{\textbf{244}} & \textcolor{black}{\textbf{\textbf{88398}}} & \textcolor{black}{\textbf{\textbf{2700}}}\\
+\bottomrule
+\end{longtable}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1.5\linewidth]{CLICS_to_PDF_V30_files/figure-latex/unnamed-chunk-2-1} 
+
+}
+
+\caption{Percentage of total procedures by center}\label{fig:unnamed-chunk-2}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=4\linewidth]{CLICS_to_PDF_V30_files/figure-latex/unnamed-chunk-3-1} 
+
+}
+
+\caption{Patients per procedure type by center}\label{fig:unnamed-chunk-3}
+\end{figure}
+
+\hypertarget{coronary-procedures}{%
+\subsection{1.2 Coronary procedures}\label{coronary-procedures}}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 3}Type of coronary procedure distribution}\\
+\toprule
+Indication for procedure & n & \%\\
+\midrule
+Diagnostic angiography only (no PCI done) & 1279 & 46.26\\
+Percutaneous coronary intervention (PCI) & 1477 & 53.42\\
+NA & 6 & 0.22\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{2765}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\multicolumn{3}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{3}{l}{\rule{0pt}{1em}One fitulae case, one missing data case}\\
+\end{longtable}
+
+\begin{longtable}[t]{>{\centering\arraybackslash}p{8em}>{\raggedright\arraybackslash}p{8em}>{\raggedright\arraybackslash}p{8em}>{\raggedright\arraybackslash}p{8em}}
+\caption{\label{tab:Table 4}Coronary procedure by center}\\
+\toprule
+medical center & Diagnostic angiography only (no PCI done) & Percutaneous coronary intervention (PCI) & Total\\
+\midrule
+1 & 62\%   (108) & 38\%    (67) & \textcolor{black}{\textbf{6\%   (175)}}\\
+2 & 32\%    (54) & 68\%   (115) & \textcolor{black}{\textbf{6\%   (169)}}\\
+3 & 36\%    (27) & 64\%    (48) & \textcolor{black}{\textbf{3\%    (75)}}\\
+4 & 33\%     (1) & 0\%     (0) & \textcolor{black}{\textbf{0\%     (3)}}\\
+5 & 39\%    (37) & 61\%    (57) & \textcolor{black}{\textbf{3\%    (94)}}\\
+\addlinespace
+6 & 73\%    (16) & 9\%     (2) & \textcolor{black}{\textbf{1\%    (22)}}\\
+7 & 36\%    (24) & 64\%    (43) & \textcolor{black}{\textbf{2\%    (67)}}\\
+8 & 33\%    (23) & 67\%    (47) & \textcolor{black}{\textbf{3\%    (70)}}\\
+9 & 59\%   (130) & 41\%    (90) & \textcolor{black}{\textbf{8\%   (220)}}\\
+10 & 38\%    (13) & 62\%    (21) & \textcolor{black}{\textbf{1\%    (34)}}\\
+\addlinespace
+11 & 40\%    (27) & 57\%    (39) & \textcolor{black}{\textbf{2\%    (68)}}\\
+12 & 50\%   (126) & 50\%   (126) & \textcolor{black}{\textbf{9\%   (253)}}\\
+13 & 100\%     (1) & 0\%     (0) & \textcolor{black}{\textbf{0\%     (1)}}\\
+14 & 47\%    (35) & 53\%    (40) & \textcolor{black}{\textbf{3\%    (75)}}\\
+15 & 42\%    (75) & 58\%   (104) & \textcolor{black}{\textbf{6\%   (179)}}\\
+\addlinespace
+16 & 49\%    (18) & 51\%    (19) & \textcolor{black}{\textbf{1\%    (37)}}\\
+17 & 45\%   (103) & 55\%   (124) & \textcolor{black}{\textbf{8\%   (227)}}\\
+18 & 43\%    (51) & 57\%    (67) & \textcolor{black}{\textbf{4\%   (118)}}\\
+19 & 48\%    (38) & 52\%    (41) & \textcolor{black}{\textbf{3\%    (79)}}\\
+20 & 54\%    (44) & 46\%    (37) & \textcolor{black}{\textbf{3\%    (81)}}\\
+\addlinespace
+21 & 60\%    (46) & 40\%    (31) & \textcolor{black}{\textbf{3\%    (77)}}\\
+22 & 58\%    (21) & 42\%    (15) & \textcolor{black}{\textbf{1\%    (36)}}\\
+23 & 39\%    (80) & 61\%   (126) & \textcolor{black}{\textbf{7\%   (206)}}\\
+24 & 45\%    (69) & 55\%    (84) & \textcolor{black}{\textbf{6\%   (153)}}\\
+25 & 48\%    (98) & 52\%   (108) & \textcolor{black}{\textbf{7\%   (206)}}\\
+\addlinespace
+26 & 60\%     (3) & 40\%     (2) & \textcolor{black}{\textbf{0\%     (5)}}\\
+27 & 31\%    (11) & 69\%    (24) & \textcolor{black}{\textbf{1\%    (35)}}\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{46\% (1,279)}} & \textcolor{black}{\textbf{53\% (1,477)}} & \textcolor{black}{\textbf{\textbf{100\% (2,765)}}}\\
+\bottomrule
+\end{longtable}
+
+\clearpage
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth]{CLICS_to_PDF_V30_files/figure-latex/unnamed-chunk-4-1} 
+
+}
+
+\caption{Ratio of diagnostic versus PCI procedures according to center}\label{fig:unnamed-chunk-4}
+\end{figure}
+
+\hypertarget{valvular-interventions}{%
+\subsection{1.3 Valvular interventions}\label{valvular-interventions}}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 5}Valvular intervention distribution}\\
+\toprule
+Type of valvular intervention & n & \%\\
+\midrule
+Aortic - Balloon valvuloplasty & 5 & 2.39\\
+Aortic - Transcatheter valve implantation (TAVI) & 170 & 81.34\\
+Mitral - Balloon valvuloplasty & 3 & 1.44\\
+Mitral - Transcatheter valve implantation (TMVI) & 3 & 1.44\\
+Mitral - Mitral clip & 25 & 11.96\\
+\addlinespace
+Mitral - Other interventions & 0 & 0.00\\
+Pulmonic - Transcatheter valve implantation & 1 & 0.48\\
+Tricuspid - Transcatheter valve implantation & 0 & 0.00\\
+Tricuspid - Other interventions & 1 & 0.48\\
+NA & 1 & 0.48\\
+\addlinespace
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{209}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}}
+\caption{\label{tab:table 6}Valvular intervention by center}\\
+\toprule
+\multicolumn{1}{c}{ } & \multicolumn{2}{c}{Aortic} & \multicolumn{4}{c}{Mitral} & \multicolumn{1}{c}{Pulmonic} & \multicolumn{2}{c}{Tricuspid} & \multicolumn{2}{c}{ } \\
+\cmidrule(l{3pt}r{3pt}){2-3} \cmidrule(l{3pt}r{3pt}){4-7} \cmidrule(l{3pt}r{3pt}){8-8} \cmidrule(l{3pt}r{3pt}){9-10}
+medical center & Balloon valvuloplasty & Transcatheter valve implantation (TAVI) & Balloon valvuloplasty & Transcatheter valve implantation (TMVI) & Mitral clip & Other interventions & Transcatheter valve implantation & Transcatheter valve implantation & Other interventions & n & \%\\
+\midrule
+1 & 1 & 4 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{6}} & \textcolor{black}{\textbf{2.88}}\\
+3 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{1}} & \textcolor{black}{\textbf{0.48}}\\
+9 & 0 & 35 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{36}} & \textcolor{black}{\textbf{17.31}}\\
+10 & 0 & 7 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{7}} & \textcolor{black}{\textbf{3.37}}\\
+12 & 0 & 39 & 0 & 0 & 2 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{41}} & \textcolor{black}{\textbf{19.71}}\\
+\addlinespace
+15 & 0 & 20 & 0 & 0 & 6 & 0 & 1 & 0 & 0 & \textcolor{black}{\textbf{27}} & \textcolor{black}{\textbf{12.98}}\\
+17 & 0 & 7 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{7}} & \textcolor{black}{\textbf{3.37}}\\
+20 & 0 & 7 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{7}} & \textcolor{black}{\textbf{3.37}}\\
+21 & 1 & 4 & 0 & 0 & 2 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{7}} & \textcolor{black}{\textbf{3.37}}\\
+23 & 0 & 4 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{5}} & \textcolor{black}{\textbf{2.40}}\\
+\addlinespace
+24 & 1 & 18 & 1 & 1 & 9 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{30}} & \textcolor{black}{\textbf{14.42}}\\
+25 & 1 & 25 & 1 & 1 & 5 & 0 & 0 & 0 & 1 & \textcolor{black}{\textbf{34}} & \textcolor{black}{\textbf{16.35}}\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{5}} & \textcolor{black}{\textbf{170}} & \textcolor{black}{\textbf{3}} & \textcolor{black}{\textbf{3}} & \textcolor{black}{\textbf{25}} & \textcolor{black}{\textbf{0}} & \textcolor{black}{\textbf{1}} & \textcolor{black}{\textbf{0}} & \textcolor{black}{\textbf{1}} & \textcolor{black}{\textbf{\textbf{208}}} & \textcolor{black}{\textbf{\textbf{100.00}}}\\
+\bottomrule
+\end{longtable}
+
+\clearpage
+
+\hypertarget{structural-non-valvular-procedures}{%
+\subsection{1.4 Structural, non-valvular
+procedures}\label{structural-non-valvular-procedures}}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:`table 7`}Structural non valvular intervention distribution}\\
+\toprule
+intervention & n & \%\\
+\midrule
+PFO closure & 17 & 44.74\\
+LAAO & 13 & 34.21\\
+ASD closure & 2 & 5.26\\
+Mitral PVL closure & 1 & 2.63\\
+VSD closure & 1 & 2.63\\
+\addlinespace
+Other structural non valvular intervention & 4 & 10.53\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{38}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\multicolumn{3}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{3}{l}{\rule{0pt}{1em}PFO - Patent foramen ovale}\\
+\multicolumn{3}{l}{\rule{0pt}{1em}LAAO - Left atrial appendage occlusion}\\
+\multicolumn{3}{l}{\rule{0pt}{1em}ASD - Atrial septal defect}\\
+\multicolumn{3}{l}{\rule{0pt}{1em}VSD - Ventricular septal defect}\\
+\multicolumn{3}{l}{\rule{0pt}{1em}PVL - Paravalvular leak}\\
+\end{longtable}
+
+\begin{longtable}[t]{>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}}
+\caption{\label{tab:table 8}Structural non valvular intervention by center}\\
+\toprule
+Medical center & LAAO & PFO closure & ASD closure & VSD closure & Mitral PVL closure & Aortic PVL closure & NULL & n & \%\\
+\midrule
+1 & 0 & 2 & 0 & 0 & 0 & 0 & 0 & 2 & 5.88\\
+2 & 0 & 2 & 0 & 1 & 0 & 0 & 0 & 3 & 8.82\\
+9 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 2.94\\
+10 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 2 & 5.88\\
+12 & 2 & 2 & 1 & 0 & 0 & 0 & 3 & 5 & 14.71\\
+\addlinespace
+15 & 2 & 0 & 1 & 0 & 0 & 0 & 0 & 3 & 8.82\\
+17 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 2 & 5.88\\
+23 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 2.94\\
+24 & 1 & 4 & 0 & 0 & 0 & 0 & 0 & 5 & 14.71\\
+25 & 6 & 4 & 0 & 0 & 0 & 0 & 0 & 10 & 29.41\\
+\addlinespace
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{13}} & \textcolor{black}{\textbf{17}} & \textcolor{black}{\textbf{2}} & \textcolor{black}{\textbf{1}} & \textcolor{black}{\textbf{1}} & \textcolor{black}{\textbf{0}} & \textcolor{black}{\textbf{3}} & \textcolor{black}{\textbf{34}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\multicolumn{10}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{10}{l}{\rule{0pt}{1em}PFO - Patent foramen ovale}\\
+\multicolumn{10}{l}{\rule{0pt}{1em}LAAO - Left atrial appendage occlusion}\\
+\multicolumn{10}{l}{\rule{0pt}{1em}ASD - Atrial septal defect}\\
+\multicolumn{10}{l}{\rule{0pt}{1em}VSD - Ventricular septal defect}\\
+\multicolumn{10}{l}{\rule{0pt}{1em}PVL - Paravalvular leak}\\
+\end{longtable}
+\clearpage
+
+\hypertarget{peripheral-procedures}{%
+\subsection{1.5 Peripheral procedures}\label{peripheral-procedures}}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 9}Peripheral procedure distribution}\\
+\toprule
+ & n & \%\\
+\midrule
+Carotid - diagnostic & 2 & 11.11\\
+Carotid - intervention & 11 & 61.11\\
+Subclavian intervention & 1 & 5.56\\
+Ilio-femoral - diagnostic & 3 & 16.67\\
+Ilio-femoral - intervention & 0 & 0.00\\
+\addlinespace
+Renal - diagnostic & 1 & 5.56\\
+Renal - intervention & 0 & 0.00\\
+Renal nerve denervation & 0 & 0.00\\
+Other & 0 & 0.00\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{18}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{>{\centering\arraybackslash}p{6em}>{\centering\arraybackslash}p{6em}>{\centering\arraybackslash}p{6em}>{\centering\arraybackslash}p{6em}>{\centering\arraybackslash}p{6em}>{\centering\arraybackslash}p{6em}>{\centering\arraybackslash}p{6em}>{\centering\arraybackslash}p{6em}>{\centering\arraybackslash}p{6em}>{\centering\arraybackslash}p{6em}>{\centering\arraybackslash}p{6em}}
+\caption{\label{tab:table 10}Peripheral procedure type by center}\\
+\toprule
+medical center & Carotid - diagnostic & Carotid - intervention & Subclavian intervention & Ilio-femoral - diagnostic & Ilio-femoral - intervention & Renal - diagnostic & Renal - intervention & Other & Total & \%\\
+\midrule
+1 & 0 & 0 & 0 & 3 & 0 & 1 & 0 & 0 & \textcolor{black}{\textbf{4}} & \textcolor{black}{\textbf{22.2222}}\\
+17 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{1}} & \textcolor{black}{\textbf{5.5556}}\\
+25 & 2 & 11 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{13}} & \textcolor{black}{\textbf{72.2222}}\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{2}} & \textcolor{black}{\textbf{11}} & \textcolor{black}{\textbf{1}} & \textcolor{black}{\textbf{3}} & \textcolor{black}{\textbf{0}} & \textcolor{black}{\textbf{1}} & \textcolor{black}{\textbf{0}} & \textcolor{black}{\textbf{0}} & \textcolor{black}{\textbf{\textbf{18}}} & \textcolor{black}{\textbf{\textbf{100.0000}}}\\
+\bottomrule
+\end{longtable}
+
+\hypertarget{other-procedures}{%
+\subsection{1.6 Other procedures}\label{other-procedures}}
+
+\begin{verbatim}
+##                                 n
+## procedure_type_other___1_sum   98
+## procedure_type_other___2_sum   33
+## procedure_type_other___3_sum    5
+## procedure_type_other___4_sum    2
+## procedure_type_other___5_sum    0
+## procedure_type_other___6_sum   11
+## procedure_type_other___7_sum    2
+## procedure_type_other___8_sum    2
+## procedure_type_other___9_sum   13
+## procedure_type_other___10_sum   5
+## procedure_type_other___11_sum  37
+## procedure_type_other___12_sum  60
+## 1                             268
+\end{verbatim}
+
+\begin{longtable}[t]{lr}
+\caption{\label{tab:table 11}Table 6: Other procedure distribution}\\
+\toprule
+ & n\\
+\midrule
+Right heart study & 98\\
+Myocardial biopsy & 33\\
+Pulmonary artery intervention & 5\\
+Coronary sinus reducer & 2\\
+Heart failure interventions (inter-atrial shunt, PAP monitor, etc.) & 0\\
+\addlinespace
+IABP insertion & 11\\
+Impella insertion & 2\\
+ECMO & 2\\
+Pericardiocentesis & 13\\
+Mechanical valve fluoroscopy & 5\\
+\addlinespace
+Temporary pacemaker & 37\\
+Other & 60\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{268}}\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}>{\centering\arraybackslash}p{5em}}
+\caption{\label{tab:table 12}Other procedure types by center}\\
+\toprule
+medical center & Right heart study & Myocardial biopsy & Pulmonary artery intervention & Coronary sinus reducer & Heart failure interventions & IABP insertion & Impella insertion & ECMO & Pericardiocentesis & Mechanical valve fluoroscopy & Temporary pacemaker & Other & n & \%\\
+\midrule
+1 & 3 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 3 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+2 & 0 & 0 & 0 & 0 & 0 & 1 & 2 & 0 & 0 & 0 & 1 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+3 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+4 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+5 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+\addlinespace
+6 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+7 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+8 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+9 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+10 & 21 & 3 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+\addlinespace
+11 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+12 & 4 & 2 & 0 & 2 & 0 & 1 & 0 & 2 & 6 & 0 & 1 & 3 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+13 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+14 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+15 & 36 & 13 & 0 & 0 & 0 & 4 & 0 & 0 & 1 & 0 & 0 & 3 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+\addlinespace
+16 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+17 & 7 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+18 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+19 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+20 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+\addlinespace
+21 & 5 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+22 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+23 & 2 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 4 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+24 & 0 & 0 & 0 & 0 & 0 & 2 & 0 & 0 & 1 & 0 & 29 & 49 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+25 & 17 & 15 & 3 & 0 & 0 & 0 & 0 & 0 & 3 & 1 & 1 & 3 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+\addlinespace
+26 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+27 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \textcolor{black}{\textbf{268}} & \textcolor{black}{\textbf{100}}\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{98}} & \textcolor{black}{\textbf{33}} & \textcolor{black}{\textbf{5}} & \textcolor{black}{\textbf{2}} & \textcolor{black}{\textbf{0}} & \textcolor{black}{\textbf{11}} & \textcolor{black}{\textbf{2}} & \textcolor{black}{\textbf{2}} & \textcolor{black}{\textbf{13}} & \textcolor{black}{\textbf{5}} & \textcolor{black}{\textbf{37}} & \textcolor{black}{\textbf{60}} & \textcolor{black}{\textbf{\textbf{7236}}} & \textcolor{black}{\textbf{\textbf{2700}}}\\
+\bottomrule
+\multicolumn{15}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{15}{l}{\rule{0pt}{1em}* inter-atrial shunt, PAP monitor, etc.}\\
+\end{longtable}
+\clearpage
+
+\hypertarget{chapter-2---coronary-procedures}{%
+\section{Chapter 2 - Coronary
+procedures}\label{chapter-2---coronary-procedures}}
+
+\hypertarget{procedure-indication-and-time-of-procedure}{%
+\subsection{2.1 Procedure indication and time of
+procedure}\label{procedure-indication-and-time-of-procedure}}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 13}Indication for procedure distribution}\\
+\toprule
+Indication for procedure & n & \%\\
+\midrule
+Non STEMI & 666 & 24.09\\
+Stable angina & 548 & 19.82\\
+Unstable angina (troponin negative ACS) & 511 & 18.48\\
+STEMI & 317 & 11.46\\
+Planned PCI (Staged PCI, after Heart-team discussion etc.) & 169 & 6.11\\
+\addlinespace
+Heart failure symptoms & 101 & 3.65\\
+Diagnostic cath before structural percutaneous intervention (e.g. TAVI) & 95 & 3.44\\
+Diagnostic cath before cardiac surgery & 52 & 1.88\\
+STEMI - Late arrival (>12 hrs) & 32 & 1.16\\
+Pre / Post organ transplant & 21 & 0.76\\
+\addlinespace
+Out of hospital sudden death & 8 & 0.29\\
+LBBB of unknown age & 1 & 0.04\\
+Other & 218 & 7.88\\
+Missing & 26 & 0.94\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{2765}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\clearpage
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 14}Procedure time distribution (All coronary procedures)}\\
+\toprule
+Time of procedure & n & \%\\
+\midrule
+Regular working hours & 2386 & 86.29\\
+Off-working hours / weekend & 370 & 13.38\\
+Missing & 9 & 0.33\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{2765}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth]{CLICS_to_PDF_V30_files/figure-latex/unnamed-chunk-5-1} 
+
+}
+
+\caption{Procedure time (All coronary procedures)}\label{fig:unnamed-chunk-5}
+\end{figure}
+\clearpage
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 15}Procedure Time among Stable angina patients}\\
+\toprule
+Time of procedure & n & \%\\
+\midrule
+Regular working hours & 501 & 91.42\\
+Off-working hours / weekend & 47 & 8.58\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{548}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth]{CLICS_to_PDF_V30_files/figure-latex/unnamed-chunk-6-1} 
+
+}
+
+\caption{Procedure time (Stable angina patients)}\label{fig:unnamed-chunk-6}
+\end{figure}
+\clearpage
+
+\begin{ThreePartTable}
+\begin{TableNotes}
+\item \textit{Note: } 
+\item urgent patients = patients with one of the following indication: Unstable angina (troponin negative ACS)/ Non STEMI/ STEMI/ STEMI - Late arrival (>12 hrs)/ LBBB of unknown age/ Out of hospital sudden death
+\end{TableNotes}
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{8em}>{\raggedleft\arraybackslash}p{8em}>{\raggedleft\arraybackslash}p{8em}}
+\caption{\label{tab:table 16}Procedure Time among urgent patients*}\\
+\toprule
+Time of procedure & n & \%\\
+\midrule
+Regular working hours & 1278 & 83.26\\
+Off-working hours / weekend & 255 & 16.61\\
+Missing & 2 & 0.13\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{1535}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\insertTableNotes
+\end{longtable}
+\end{ThreePartTable}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth]{CLICS_to_PDF_V30_files/figure-latex/unnamed-chunk-7-1} 
+
+}
+
+\caption{Procedure time (Urgent patients)}\label{fig:unnamed-chunk-7}
+\end{figure}
+\clearpage
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 17}fig4c: Procedure Time among primary PCI patients}\\
+\toprule
+Time of procedure & n & \%\\
+\midrule
+Regular working hours & 121 & 38.17\\
+Off-working hours / weekend & 195 & 61.51\\
+NA & 1 & 0.32\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{317}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\hypertarget{arterial-access-and-hemostasis}{%
+\subsection{2.2 Arterial access and
+hemostasis}\label{arterial-access-and-hemostasis}}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 18}Arterial access among Coronary Procedures}\\
+\toprule
+Arterial access & n & \%\\
+\midrule
+Right radial artery & 2250 & 80.50\\
+Left radial artery & 292 & 10.45\\
+Femoral artery & 217 & 7.76\\
+Brachial artery & 6 & 0.21\\
+Planned dual arterial access & 3 & 0.11\\
+\addlinespace
+Other & 27 & 0.97\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{2795}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{cccccc}
+\caption{\label{tab:table 19}Arterial access by center}\\
+\toprule
+Medical center & Radial artery & Femoral artery & Other & n & \%\\
+\midrule
+1 & 169 ( 96.57 ) & 5 ( 2.86 ) & 1 ( 0.57 ) & 175 & 6.27\\
+2 & 151 ( 85.8 ) & 25 ( 14.2 ) & 0 ( 0 ) & 176 & 6.30\\
+3 & 64 ( 90.14 ) & 5 ( 7.04 ) & 2 ( 2.82 ) & 71 & 2.54\\
+4 & 1 ( 100 ) & 0 ( 0 ) & 0 ( 0 ) & 1 & 0.04\\
+5 & 85 ( 87.63 ) & 12 ( 12.37 ) & 0 ( 0 ) & 97 & 3.47\\
+\addlinespace
+6 & 6 ( 85.71 ) & 0 ( 0 ) & 1 ( 14.29 ) & 7 & 0.25\\
+7 & 63 ( 95.45 ) & 3 ( 4.55 ) & 0 ( 0 ) & 66 & 2.36\\
+8 & 64 ( 91.43 ) & 6 ( 8.57 ) & 0 ( 0 ) & 70 & 2.51\\
+9 & 218 ( 99.09 ) & 1 ( 0.45 ) & 1 ( 0.45 ) & 220 & 7.88\\
+10 & 29 ( 82.86 ) & 6 ( 17.14 ) & 0 ( 0 ) & 35 & 1.25\\
+\addlinespace
+11 & 62 ( 91.18 ) & 4 ( 5.88 ) & 2 ( 2.94 ) & 68 & 2.44\\
+12 & 235 ( 92.52 ) & 16 ( 6.3 ) & 3 ( 1.18 ) & 254 & 9.10\\
+13 & 1 ( 100 ) & 0 ( 0 ) & 0 ( 0 ) & 1 & 0.04\\
+14 & 66 ( 88 ) & 8 ( 10.67 ) & 1 ( 1.33 ) & 75 & 2.69\\
+15 & 169 ( 87.11 ) & 18 ( 9.28 ) & 7 ( 3.61 ) & 194 & 6.95\\
+\addlinespace
+16 & 34 ( 91.89 ) & 2 ( 5.41 ) & 1 ( 2.7 ) & 37 & 1.33\\
+17 & 213 ( 91.42 ) & 15 ( 6.44 ) & 5 ( 2.15 ) & 233 & 8.35\\
+18 & 111 ( 93.28 ) & 8 ( 6.72 ) & 0 ( 0 ) & 119 & 4.26\\
+19 & 79 ( 100 ) & 0 ( 0 ) & 0 ( 0 ) & 79 & 2.83\\
+20 & 75 ( 88.24 ) & 10 ( 11.76 ) & 0 ( 0 ) & 85 & 3.04\\
+\addlinespace
+21 & 65 ( 84.42 ) & 8 ( 10.39 ) & 4 ( 5.19 ) & 77 & 2.76\\
+22 & 36 ( 94.74 ) & 2 ( 5.26 ) & 0 ( 0 ) & 38 & 1.36\\
+23 & 182 ( 87.08 ) & 27 ( 12.92 ) & 0 ( 0 ) & 209 & 7.49\\
+24 & 140 ( 89.17 ) & 15 ( 9.55 ) & 2 ( 1.27 ) & 157 & 5.62\\
+25 & 186 ( 89.42 ) & 21 ( 10.1 ) & 1 ( 0.48 ) & 208 & 7.45\\
+\addlinespace
+26 & 5 ( 100 ) & 0 ( 0 ) & 0 ( 0 ) & 5 & 0.18\\
+27 & 33 ( 94.29 ) & 0 ( 0 ) & 2 ( 5.71 ) & 35 & 1.25\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{2542 ( 2477.44 )}} & \textcolor{black}{\textbf{217 ( 177.86 )}} & \textcolor{black}{\textbf{33 ( 44.69 )}} & \textcolor{black}{\textbf{2792}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+\clearpage
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 20}Femoral artery hemostasis}\\
+\toprule
+ & n & \%\\
+\midrule
+Angioseal & 120 & 55.30\\
+Manual compression & 58 & 26.73\\
+Perclose/Proglide/Prostyle & 16 & 7.37\\
+Mynx & 9 & 4.15\\
+Exoseal & 1 & 0.46\\
+\addlinespace
+Other & 13 & 5.99\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{217}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\hypertarget{characteristics-of-coronary-anatomy-and-clinical-recommendations}{%
+\subsection{2.3 Characteristics of coronary anatomy and clinical
+recommendations}\label{characteristics-of-coronary-anatomy-and-clinical-recommendations}}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 21}Number vessel disease}\\
+\toprule
+ & n & \%\\
+\midrule
+No vessel disease & 619 & 22.39\\
+One vessel disease & 789 & 28.54\\
+Two vessel disease & 626 & 22.64\\
+Three vessel disease & 683 & 24.70\\
+Missing & 48 & 1.74\\
+\addlinespace
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{2765}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 22}LM disease (>50% stenosis by angiography)}\\
+\toprule
+ & n & \%\\
+\midrule
+Yes & 208 & 7.52\\
+No & 2522 & 91.21\\
+Missing & 35 & 1.27\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{2765}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 23}Clinical recommendation after diagnostic angiogram among stable angina patients}\\
+\toprule
+Clinical recommendation & n & \%\\
+\midrule
+Conservative/medical treatment & 257 & 46.90\\
+Immediate PCI & 214 & 39.05\\
+Cardiac surgery & 38 & 6.93\\
+Immediate PCI with staged PCI procedure (Partial revascularization with planned additional PCI) & 25 & 4.56\\
+Heart team discussion & 6 & 1.09\\
+\addlinespace
+Planned PCI at future time & 4 & 0.73\\
+TAVI & 3 & 0.55\\
+Other structural heart intervention & 0 & 0.00\\
+NA & 1 & 0.18\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{548}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\begin{ThreePartTable}
+\begin{TableNotes}
+\item \textit{Note: } 
+\item urgent patients = patients with one of the following indication: Unstable angina (troponin negative ACS)/ Non STEMI/ STEMI/ STEMI - Late arrival (>12 hrs)/ LBBB of unknown age/ Out of hospital sudden death
+\end{TableNotes}
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 24}Clinical recommendation after diagnostic angiogram among urgent patients}\\
+\toprule
+Clinical recommendation & n & \%\\
+\midrule
+Immediate PCI & 881 & 57.39\\
+Conservative/medical treatment & 385 & 25.08\\
+Cardiac surgery & 108 & 7.04\\
+Immediate PCI with staged PCI procedure (Partial revascularization with planned additional PCI) & 99 & 6.45\\
+Heart team discussion & 30 & 1.95\\
+\addlinespace
+Planned PCI at future time & 17 & 1.11\\
+Other structural heart intervention & 4 & 0.26\\
+TAVI & 3 & 0.20\\
+Missing & 8 & 0.52\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{1535}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\insertTableNotes
+\end{longtable}
+\end{ThreePartTable}
+\clearpage
+
+\hypertarget{chapter-3---percutaneous-coronary-interventions}{%
+\section{Chapter 3 - Percutaneous coronary
+interventions}\label{chapter-3---percutaneous-coronary-interventions}}
+
+\hypertarget{general-characteristics}{%
+\subsection{3.1 General characteristics}\label{general-characteristics}}
+
+\begin{ThreePartTable}
+\begin{TableNotes}
+\item \textit{Note: } 
+\item urgent patients = patients with one of the following indication: Unstable angina (troponin negative ACS)/ Non STEMI/ STEMI/ STEMI - Late arrival (>12 hrs)/ LBBB of unknown age/ Out of hospital sudden death
+\end{TableNotes}
+\begin{longtable}[t]{llrr}
+\caption{\label{tab:table 25}Percutaneous coronary intervention (PCI) - count per center}\\
+\toprule
+Medical center & PCI    - Total & | Stable, n (\% & | Urgent, n (\%\\
+\midrule
+1 & 67 & 22 ( 32.8 ) & 45 ( 67.2 )\\
+2 & 115 & 27 ( 23.5 ) & 88 ( 76.5 )\\
+3 & 48 & 15 ( 31.2 ) & 33 ( 68.8 )\\
+5 & 57 & 0 ( 0 ) & 57 ( 100 )\\
+6 & 2 & 2 ( 100 ) & 0 ( 0 )\\
+\addlinespace
+7 & 43 & 26 ( 60.5 ) & 17 ( 39.5 )\\
+8 & 47 & 15 ( 31.9 ) & 32 ( 68.1 )\\
+9 & 90 & 90 ( 100 ) & 0 ( 0 )\\
+10 & 21 & 14 ( 66.7 ) & 7 ( 33.3 )\\
+11 & 39 & 7 ( 17.9 ) & 32 ( 82.1 )\\
+\addlinespace
+12 & 126 & 26 ( 20.6 ) & 100 ( 79.4 )\\
+14 & 40 & 10 ( 25 ) & 30 ( 75 )\\
+15 & 104 & 26 ( 25 ) & 78 ( 75 )\\
+16 & 19 & 2 ( 10.5 ) & 17 ( 89.5 )\\
+17 & 124 & 50 ( 40.3 ) & 74 ( 59.7 )\\
+\addlinespace
+18 & 67 & 24 ( 35.8 ) & 43 ( 64.2 )\\
+19 & 41 & 20 ( 48.8 ) & 21 ( 51.2 )\\
+20 & 37 & 3 ( 8.1 ) & 34 ( 91.9 )\\
+21 & 31 & 3 ( 9.7 ) & 28 ( 90.3 )\\
+22 & 15 & 9 ( 60 ) & 6 ( 40 )\\
+\addlinespace
+23 & 126 & 21 ( 16.7 ) & 105 ( 83.3 )\\
+24 & 84 & 30 ( 35.7 ) & 54 ( 64.3 )\\
+25 & 108 & 29 ( 26.9 ) & 79 ( 73.1 )\\
+26 & 2 & 0 ( 0 ) & 2 ( 100 )\\
+27 & 24 & 10 ( 41.7 ) & 14 ( 58.3 )\\
+\addlinespace
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{1477}} & \textcolor{black}{\textbf{481 ( 32.6 )}} & \textcolor{black}{\textbf{996 ( 67.4 )}}\\
+\bottomrule
+\insertTableNotes
+\end{longtable}
+\end{ThreePartTable}
+\clearpage
+
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{14em}rr}
+\caption{\label{tab:table 26}Admission type among percutaneous coronary intervention}\\
+\toprule
+ & n & \%\\
+\midrule
+Elective (from home) & 370 & 25.05\\
+Hospitalized (including urgent admission from emergency department - primary PCI, unstable NSTEMI etc.) & 1106 & 74.88\\
+Missing & 1 & 0.07\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{1477}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{ll}
+\caption{\label{tab:table 27}Physiology and anatomy assessment in patients with stable angina undergoing PCI}\\
+\toprule
+ & n (\%)\\
+\midrule
+N & 245\\
+Non invasive test ischemia = Yes & 178 ( 72.7)\\
+\hspace{1em}Functional (e.g. Ergometry, stress echo, SPECT) = Yes & 156 ( 63.7)\\
+\hspace{1em}Anatomical - Coronary CT angiography = Yes & 30 ( 12.2)\\
+FFR / IFR used  = Yes & 12 (  4.9)\\
+\addlinespace
+IVUS used = Yes & 8 (  3.3)\\
+OCT used = Yes & 245 (100.0)\\
+\bottomrule
+\multicolumn{2}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{2}{l}{\rule{0pt}{1em}10/15 FFR patients also underwent non invasive test for ischemia}\\
+\end{longtable}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 28}Number of vessels treated during index PCI procedure}\\
+\toprule
+ & n & \%\\
+\midrule
+0 & 25 & 1.69\\
+1 & 1146 & 77.59\\
+2 & 211 & 14.29\\
+3 & 64 & 4.33\\
+4 & 13 & 0.88\\
+\addlinespace
+5 & 9 & 0.61\\
+Missing & 1 & 0.07\\
+NA & 8 & 0.54\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{1477}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 29}Number of lesions treated during index PCI procedure}\\
+\toprule
+ & n & \%\\
+\midrule
+0 & 48 & 3.25\\
+1 & 1005 & 68.04\\
+2 & 313 & 21.19\\
+3 & 86 & 5.82\\
+4 & 9 & 0.61\\
+\addlinespace
+5 & 5 & 0.34\\
+Missing & 1 & 0.07\\
+NA & 10 & 0.68\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{1477}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 30}Number of stents used during index PCI procedure}\\
+\toprule
+ & n & \%\\
+\midrule
+1 & 851 & 57.62\\
+2 & 326 & 22.07\\
+3 & 101 & 6.84\\
+4 & 12 & 0.81\\
+5 & 12 & 0.81\\
+\addlinespace
+6 & 2 & 0.14\\
+None & 163 & 11.04\\
+NA & 10 & 0.68\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{1477}} & \textcolor{black}{\textbf{100.00}}\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{ll}
+\caption{\label{tab:table 31}Device types used during index PCI procedure}\\
+\toprule
+ & Overall\\
+\midrule
+N & 1477\\
+Drug eluting stent & 1309 (88.6)\\
+Bare metal stent & 1 ( 0.1)\\
+Biodergadable scaffold & 0 ( 0.0)\\
+Covered stent (stent graft) & 1 ( 0.1)\\
+\addlinespace
+Drug coated balloon  - paclitaxel & 119 ( 8.1)\\
+Drug coated balloon  - sirolimus & 28 ( 1.9)\\
+Cutting balloon & 19 ( 1.3)\\
+Scoring balloon & 93 ( 6.3)\\
+POBA & 39 ( 2.6)\\
+\addlinespace
+OPN balloon & 22 ( 1.5)\\
+None & 1 ( 0.1)\\
+\bottomrule
+\multicolumn{2}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{2}{l}{\rule{0pt}{1em}It is possible to have more then one device per patient}\\
+\end{longtable}
+
+\begin{longtable}[t]{llll}
+\caption{\label{tab:table 32}Advanced imaging and rotablator among PCI patients}\\
+\toprule
+ & Stable & Urgent & Missing\\
+\midrule
+N & 245 & 1228 & \\
+IVUS used = Yes (\%) & 8 (3.3) & 26 (2.1) & 0.5\\
+OCT used = Yes (\%) & 0 (0.0) & 6 (0.5) & 0.5\\
+FFR / IFR used  = Yes (\%) & 12 (4.9) & 44 (3.6) & 0.9\\
+Rotablator or orbital atherectomy used  = Yes (\%) & 0 (0.0) & 7 (0.6) & 0.5\\
+\bottomrule
+\end{longtable}
+
+\hypertarget{multi-vessel-pci}{%
+\subsection{3.2 Multi-vessel PCI}\label{multi-vessel-pci}}
+
+\begin{longtable}[t]{lll}
+\caption{\label{tab:table 33}Patient characteristics according to single versus multivessel PCI}\\
+\toprule
+ & Single vessel PCI & Multivessel PCI\\
+\midrule
+n & 1268 & 201\\
+Age (mean (SD)) & 66.61 (11.78) & 68.69 (11.10)\\
+Age group (\%) &  & \\
+\hspace{1em}50 <= Age < 70 & 627 (49.4) & 95 (47.3)\\
+\hspace{1em}Age < 50 & 99 ( 7.8) & 8 ( 4.0)\\
+\addlinespace
+\hspace{1em}Age >= 70 & 542 (42.7) & 98 (48.8)\\
+gender = Male (\%) & 1010 (79.7) & 161 (80.1)\\
+Diabetes = Yes (\%) & 522 (41.2) & 94 (46.8)\\
+COPD = Yes (\%) & 74 ( 5.8) & 16 ( 8.0)\\
+Chronic renal failure = Yes (\%) & 131 (10.3) & 24 (12.0)\\
+\addlinespace
+Chronic dialysis = Yes (\%) & 22 ( 1.7) & 4 ( 2.0)\\
+Prior stroke or TIA = Yes (\%) & 95 ( 7.5) & 16 ( 8.0)\\
+Prior PCI = Yes (\%) & 566 (44.7) & 84 (41.8)\\
+Prior CABG or valve surgey = Yes (\%) & 108 ( 8.5) & 13 ( 6.5)\\
+Heart failure (\%) &  & \\
+\addlinespace
+\hspace{1em}Yes & 182 (14.4) & 39 (19.5)\\
+\hspace{1em}No & 912 (72.1) & 127 (63.5)\\
+\hspace{1em}Unknown & 171 (13.5) & 34 (17.0)\\
+\% LV ejection fraction (mean (SD)) & 50.03 (11.12) & 48.09 (12.69)\\
+Atrial fibrillation = Yes (\%) & 86 ( 6.8) & 17 ( 8.5)\\
+\bottomrule
+\end{longtable}
+\clearpage
+
+\hypertarget{left-main-coronary-artery-pci}{%
+\subsection{3.3 Left main coronary artery
+PCI}\label{left-main-coronary-artery-pci}}
+
+\begin{longtable}[t]{lll}
+\caption{\label{tab:table 34}Patient characteristics according to left main versus non-left main PCI}\\
+\toprule
+ & Left main coronary intervention & Other intervention\\
+\midrule
+n & 77 & 1392\\
+Age (mean (SD)) & 73.30 (9.39) & 66.56 (11.70)\\
+Age group (\%) &  & \\
+\hspace{1em}50 <= Age < 70 & 22 (28.6) & 700 (50.3)\\
+\hspace{1em}Age < 50 & 1 ( 1.3) & 105 ( 7.5)\\
+\addlinespace
+\hspace{1em}Age >= 70 & 54 (70.1) & 587 (42.2)\\
+gender = Male (\%) & 54 (70.1) & 1117 (80.2)\\
+Diabetes = Yes (\%) & 37 (48.7) & 580 (41.7)\\
+COPD = Yes (\%) & 6 ( 7.8) & 84 ( 6.0)\\
+Chronic renal failure = Yes (\%) & 15 (19.7) & 140 (10.1)\\
+\addlinespace
+Chronic dialysis = Yes (\%) & 2 ( 2.6) & 24 ( 1.7)\\
+Prior stroke or TIA = Yes (\%) & 6 ( 7.8) & 105 ( 7.5)\\
+Prior PCI = Yes (\%) & 37 (48.1) & 613 (44.1)\\
+Prior CABG or valve surgey = Yes (\%) & 18 (23.4) & 103 ( 7.4)\\
+Heart failure (\%) &  & \\
+\addlinespace
+\hspace{1em}Yes & 21 (27.6) & 200 (14.4)\\
+\hspace{1em}No & 43 (56.6) & 996 (71.7)\\
+\hspace{1em}Unknown & 12 (15.8) & 193 (13.9)\\
+\% LV ejection fraction (mean (SD)) & 45.73 (14.37) & 49.99 (11.12)\\
+Atrial fibrillation = Yes (\%) & 12 (15.8) & 91 ( 6.5)\\
+\bottomrule
+\end{longtable}
+
+\clearpage
+
+\hypertarget{chronic-total-occlusion-cto-pci}{%
+\subsection{3.4 Chronic total occlusion (CTO)
+PCI}\label{chronic-total-occlusion-cto-pci}}
+
+\begin{longtable}[t]{lll}
+\caption{\label{tab:table 35}Patient characteristics according to chronic total occlusion (CTO) versus non-CTO}\\
+\toprule
+ & PCI to CTO & Non-CTO PCI\\
+\midrule
+n & 49 & 1413\\
+Age (mean (SD)) & 67.84 (12.42) & 66.87 (11.70)\\
+Age group (\%) &  & \\
+\hspace{1em}50 <= Age < 70 & 23 (46.9) & 694 (49.1)\\
+\hspace{1em}Age < 50 & 3 ( 6.1) & 104 ( 7.4)\\
+\addlinespace
+\hspace{1em}Age >= 70 & 23 (46.9) & 615 (43.5)\\
+gender = Male (\%) & 38 (77.6) & 1127 (79.8)\\
+Diabetes = Yes (\%) & 22 (44.9) & 591 (41.9)\\
+COPD = Yes (\%) & 2 ( 4.1) & 87 ( 6.2)\\
+Chronic renal failure = Yes (\%) & 7 (14.3) & 145 (10.3)\\
+\addlinespace
+Chronic dialysis = Yes (\%) & 0 ( 0.0) & 26 ( 1.8)\\
+Prior stroke or TIA = Yes (\%) & 1 ( 2.0) & 110 ( 7.8)\\
+Prior PCI = Yes (\%) & 27 (55.1) & 619 (43.8)\\
+Prior CABG or valve surgey = Yes (\%) & 7 (14.3) & 113 ( 8.0)\\
+Heart failure (\%) &  & \\
+\addlinespace
+\hspace{1em}Yes & 12 (24.5) & 209 (14.8)\\
+\hspace{1em}No & 31 (63.3) & 1002 (71.1)\\
+\hspace{1em}Unknown & 6 (12.2) & 199 (14.1)\\
+\% LV ejection fraction (mean (SD)) & 43.73 (13.12) & 49.99 (11.24)\\
+Atrial fibrillation = Yes (\%) & 5 (10.2) & 98 ( 6.9)\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 36}Success rates of chronic total occlusion (CTO) intervention}\\
+\toprule
+ & n & \%\\
+\midrule
+Yes & 27 & 55.1\\
+No & 22 & 44.9\\
+\textcolor{black}{\textbf{Total}} & \textcolor{black}{\textbf{49}} & \textcolor{black}{\textbf{100.0}}\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{ll}
+\caption{\label{tab:table 37}Chronic total occlusion (CTO) strategy utilized}\\
+\toprule
+ & n (\%)\\
+\midrule
+n & 49\\
+Retrograde & 4 ( 8.2)\\
+Anterograde & 22 (44.9)\\
+\bottomrule
+\end{longtable}
+\clearpage
+
+\hypertarget{bifurcation-lesion-pci}{%
+\subsection{3.5 Bifurcation lesion PCI}\label{bifurcation-lesion-pci}}
+
+\begin{longtable}[t]{lll}
+\caption{\label{tab:table 38}Patients characteristics according to bifurcation versus non-bifurcation PCI}\\
+\toprule
+ & PCI to bifurcation lesion & Non bifurcation lesion PCI\\
+\midrule
+n & 49 & 1413\\
+Age (mean (SD)) & 67.84 (12.42) & 66.87 (11.70)\\
+Age group (\%) &  & \\
+\hspace{1em}50 <= Age < 70 & 23 (46.9) & 694 (49.1)\\
+\hspace{1em}Age < 50 & 3 ( 6.1) & 104 ( 7.4)\\
+\addlinespace
+\hspace{1em}Age >= 70 & 23 (46.9) & 615 (43.5)\\
+gender = Male (\%) & 38 (77.6) & 1127 (79.8)\\
+Diabetes = Yes (\%) & 22 (44.9) & 591 (41.9)\\
+COPD = Yes (\%) & 2 ( 4.1) & 87 ( 6.2)\\
+Chronic renal failure = Yes (\%) & 7 (14.3) & 145 (10.3)\\
+\addlinespace
+Chronic dialysis = Yes (\%) & 0 ( 0.0) & 26 ( 1.8)\\
+Prior stroke or TIA = Yes (\%) & 1 ( 2.0) & 110 ( 7.8)\\
+Prior PCI = Yes (\%) & 27 (55.1) & 619 (43.8)\\
+Prior CABG or valve surgey = Yes (\%) & 7 (14.3) & 113 ( 8.0)\\
+Heart failure (\%) &  & \\
+\addlinespace
+\hspace{1em}Yes & 12 (24.5) & 209 (14.8)\\
+\hspace{1em}No & 31 (63.3) & 1002 (71.1)\\
+\hspace{1em}Unknown & 6 (12.2) & 199 (14.1)\\
+\% LV ejection fraction (mean (SD)) & 43.73 (13.12) & 49.99 (11.24)\\
+Atrial fibrillation = Yes (\%) & 5 (10.2) & 98 ( 6.9)\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 39}Initial bifurcation approach}\\
+\toprule
+ & n & \%\\
+\midrule
+Provisional & 167 & 80.68\\
+Two stent technique & 38 & 18.36\\
+Missing & 2 & 0.97\\
+Total & 207 & 100.00\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table 40}Final bifurcation PCI approach}\\
+\toprule
+ & n & \%\\
+\midrule
+Provisional with DCB to SB and DES to main branch & 10 & 4.83\\
+Provisional with DES to side branch and DCB to main branch & 7 & 3.38\\
+Provisional with POBA/no device to Side branch & 125 & 60.39\\
+Two DCB technique & 7 & 3.38\\
+Two stent technique & 53 & 25.60\\
+\addlinespace
+NA & 5 & 2.42\\
+Total & 207 & 100.00\\
+\bottomrule
+\end{longtable}
+\clearpage
+
+\hypertarget{saphneous-vein-graft-svg-pci}{%
+\subsection{3.6 Saphneous vein graft (SVG)
+PCI}\label{saphneous-vein-graft-svg-pci}}
+
+\begin{longtable}[t]{ll}
+\caption{\label{tab:table 41}Interventions among SVG patients}\\
+\toprule
+ & Overall\\
+\midrule
+n & 16\\
+Age of surgey, mean (SD) & 12.00 (9.82)\\
+embolic protection used = Yes , n (\%) & 2 (12.5)\\
+balloon used = Yes, n (\%) & 2 (12.5)\\
+stent used = Yes, n (\%) & 13 (81.2)\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{llll}
+\caption{\label{tab:table 42}Procedural complications}\\
+\toprule
+ & All coronary procedurers & Diagnostic procedures & PCI procedures\\
+\midrule
+n & 2756 & 1279 & 1477\\
+Coronary artery dissection  (\%) & 17 (  0.6) & 3 (  0.2) & 14 (  0.9)\\
+Coronary artery perforation  (\%) & 3 (  0.1) & 0 (  0.0) & 3 (  0.2)\\
+No reflow / distal embolization  (\%) & 18 (  0.7) & 0 (  0.0) & 18 (  1.2)\\
+Significant (>1.5 mm) side branch occlusion  (\%) & 4 (  0.1) & 0 (  0.0) & 4 (  0.3)\\
+\addlinespace
+Tamponade  (\%) & 2 (  0.1) & 0 (  0.0) & 2 (  0.1)\\
+Ventricular arrhythmia  (\%) & 6 (  0.2) & 0 (  0.0) & 6 (  0.4)\\
+Significant conduction abnormality requiriung
+pacing  (\%) & |2 (  0.1) & |0 (  0.0) & |2 (  0.1)\\
+CPR  (\%) & 6 (  0.2) & 0 (  0.0) & 6 (  0.4)\\
+Urgent cardiac surgery  (\%) & 2 (  0.1) & 0 (  0.0) & 2 (  0.1)\\
+\addlinespace
+Vascular access complication  (\%) & 2 (  0.1) & 0 (  0.0) & 2 (  0.1)\\
+Ascending aorta dissection = Unchecked (\%) & 2756 (100.0) & 1279 (100.0) & 1477 (100.0)\\
+Device related complication (wire/stent/balloon/rorablator etc.)  (\%) & 4 (  0.1) & 0 (  0.0) & 4 (  0.3)\\
+\bottomrule
+\end{longtable}
+
+\hypertarget{post-procedural-anti-platelet-and-anticoagulation}{%
+\subsection{3.7 Post-procedural anti-platelet and
+anticoagulation}\label{post-procedural-anti-platelet-and-anticoagulation}}
+
+\begin{longtable}[t]{lll}
+\caption{\label{tab:table 43}Post procedure anti-platelet recommendations}\\
+\toprule
+ & Stable, n (\%) & Urgent, n (\%)\\
+\midrule
+n & 234 & 1132\\
+Aspirin recommendation = Yes & 214 (92.6) & 1064 (95.6)\\
+Second anti-platelet recommendation &  & \\
+\hspace{1em}Clopidogrel & 170 (72.6) & 482 (42.9)\\
+\hspace{1em}Ticagrelor & 11 ( 4.7) & 252 (22.4)\\
+\addlinespace
+\hspace{1em}Prasugrel & 6 ( 2.6) & 312 (27.8)\\
+\hspace{1em}None & 47 (20.1) & 77 ( 6.9)\\
+\bottomrule
+\multicolumn{3}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{3}{l}{\rule{0pt}{1em}Patients with Atrial fibrillation were excluded}\\
+\end{longtable}
+
+\begin{longtable}[t]{lll}
+\caption{\label{tab:table 44}Lipid lowering therapy at discharge}\\
+\toprule
+ & Stable, n (\%) & Urgent, n (\%)\\
+\midrule
+n & 245 & 1228\\
+Statin & 168 ( 68.6) & 981 ( 79.9)\\
+Ezetemibe & 12 (  4.9) & 128 ( 10.4)\\
+PCSk9i & 1 (  0.4) & 5 (  0.4)\\
+Bempedoic acid & 245 (100.0) & 1228 (100.0)\\
+\addlinespace
+Icosapent Ethyl (Vazcepa) & 245 (100.0) & 1228 (100.0)\\
+Bezafibrate & 0 (  0.0) & 6 (  0.5)\\
+No lipid lowering therapy & 22 (  9.0) & 33 (  2.7)\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{lll}
+\caption{\label{tab:table 45}Recommended anticoagulants  after PCI in patients with atrial fibrillation}\\
+\toprule
+ & Stable, n (\%) & Urgent, n (\%)\\
+\midrule
+n & 11 & 92\\
+Coumadin & 0 ( 0.0) & 1 ( 1.1)\\
+Xarelto (Rivaroxaban) & 1 ( 9.1) & 6 ( 6.5)\\
+Eliquis (Apixaban) & 7 (63.6) & 54 (58.7)\\
+Pradaxa (Dabigatran) & 0 ( 0.0) & 1 ( 1.1)\\
+\addlinespace
+Other & 0 ( 0.0) & 1 ( 1.1)\\
+None & 0 ( 0.0) & 1 ( 1.1)\\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[t]{lll}
+\caption{\label{tab:table 46}Number of days from procedure to discharge}\\
+\toprule
+ & Stable, n (\%) & Urgent, n (\%)\\
+\midrule
+n & 245 & 1228\\
+Number of days from procedure to discharge &  & \\
+\hspace{1em}>4 days post procedure & 7 ( 3.6) & 178 (19.0)\\
+\hspace{1em}2-3 days post procedure & 18 ( 9.2) & 261 (27.8)\\
+\hspace{1em}Day post procedure & 92 (47.2) & 411 (43.8)\\
+\addlinespace
+\hspace{1em}Procedure day & 78 (40.0) & 89 ( 9.5)\\
+\bottomrule
+\end{longtable}
+
+\end{document}

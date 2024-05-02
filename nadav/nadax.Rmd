@@ -1,0 +1,380 @@
+---
+title: "Nadav report"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+editor_options:
+  chunk_output_type: console
+  always_allow_html: TRUE
+  numbersections: true
+  header-includes:
+   - "\\usepackage{float}"
+   - "\\usepackage{graphicx}"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$get('label')
+```
+
+
+```{r read data}
+setwd("C:/Users/ido/sheba stats/nadav")
+library("lubridate")
+library("tidyr")
+library("dplyr")
+library("labelled")
+library("tableone")
+library("knitr")
+library("kableExtra")
+library("gt")
+library("gtsummary")
+library("janitor")
+library("ggplot2")
+library("plotrix")
+library("circlize")
+library("readxl")
+```
+
+\tableofcontents
+\clearpage 
+
+# Norton 18
+```{r norton}
+before = read_excel('נורטון 18 לפני ירידה למרתף.xlsx', sheet='Norton')
+before = before[-(1:6),]
+after = read_excel('נורטון 18 אחרי חזרה מהמרתף.xlsx', sheet='Norton')
+after = after[-(1:6),]
+
+before$Norton = as.integer(before[['...7']])
+after$Norton = as.integer(after[['...7']])
+
+combined <- data.frame(Before = before$Norton, After = after$Norton)
+```
+
+### Before
+```{r}
+summary(before$Norton)
+
+```
+### after
+```{r}
+summary(after$Norton)
+
+```
+### P value is larger than 0.05, groups are **not** statistically different
+
+```{r}
+
+# 4. Statistical Tests
+# Example: t-test for a continuous variable 'variable_of_interest'
+t_test_result <- t.test(before$Norton, after$Norton)
+print(t_test_result)
+```
+
+
+```{r}
+# Scatter plot
+plot(combined$Before, combined$After, xlab = "Before", ylab = "After", main = "Scatter plot of Norton values Before and After")
+abline(0, 1, col = "red")  # Add a diagonal line for comparison
+
+# Box plot
+boxplot(combined, col = c("blue", "green"), names = c("Before", "After"), main = "Box plot of Before and After", xlab = "Group")
+
+# Bar plot
+mean_before <- mean(combined$Before)
+mean_after <- mean(combined$After)
+sd_before <- sd(combined$Before)
+sd_after <- sd(combined$After)
+
+# Create bar plot
+means <- c(mean_before, mean_after)
+stds <- c(sd_before, sd_after)
+barplot(means, names.arg = c("Before", "After"), ylab = "Measurement", main = "Bar plot of Norton Means with Std Deviations", col = "blue", ylim = c(0, max(means) + max(stds) + 5))
+arrows(x0 = c(0.7, 1.9), y0 = means - stds, y1 = means + stds, angle = 90, code = 3, length = 0.1)
+
+```
+
+# Norton 18א
+```{r norton A}
+before = read_excel('נורטון 18א לפני ירידה למרתף.xlsx', sheet='Norton')
+before = before[-(1:6),]
+after = read_excel('נורטון 18א אחרי חזרה מהמרתף.xlsx', sheet='Norton')
+after = after[-(1:6),]
+
+before$Norton = as.integer(before[['...7']])
+after$Norton = as.integer(after[['...7']])
+
+combined <- data.frame(Before = before$Norton, After = after$Norton)
+```
+
+### Before
+```{r}
+summary(before$Norton)
+
+```
+### after
+```{r}
+summary(after$Norton)
+
+```
+
+### P value is larger than 0.05, groups are **not** statistically different
+```{r}
+
+# 4. Statistical Tests
+# Example: t-test for a continuous variable 'variable_of_interest'
+t_test_result <- t.test(before$Norton, after$Norton)
+print(t_test_result)
+```
+
+
+```{r}
+# Scatter plot
+plot(combined$Before, combined$After, xlab = "Before", ylab = "After", main = "Scatter plot of Norton values Before and After")
+abline(0, 1, col = "red")  # Add a diagonal line for comparison
+
+# Box plot
+boxplot(combined, col = c("blue", "green"), names = c("Before", "After"), main = "Box plot of Before and After", xlab = "Group")
+
+# Bar plot
+mean_before <- mean(combined$Before)
+mean_after <- mean(combined$After)
+sd_before <- sd(combined$Before)
+sd_after <- sd(combined$After)
+
+# Create bar plot
+means <- c(mean_before, mean_after)
+stds <- c(sd_before, sd_after)
+barplot(means, names.arg = c("Before", "After"), ylab = "Measurement", main = "Bar plot of Norton Means with Std Deviations", col = "blue", ylim = c(0, max(means) + max(stds) + 5))
+arrows(x0 = c(0.7, 1.9), y0 = means - stds, y1 = means + stds, angle = 90, code = 3, length = 0.1)
+
+```
+
+# Morse 18
+```{r morse}
+before = read_excel('מורס 18 לפני ירידה למרתף .xlsx', sheet='Morse')
+before = before[27,]
+before <- unlist(before[grep("^\\d+$", before)])
+before <- as.integer(before)
+
+after = read_excel('מורס 18 אחרי חזרה לשגרה .xlsx', sheet='Morse')
+after = after[27,]
+after <- unlist(after[grep("^\\d+$", after)])
+after <- as.integer(after)
+
+combined <- data.frame(Before = before, After = after)
+```
+
+### Before
+```{r}
+summary(before)
+
+```
+### after
+```{r}
+summary(after)
+
+```
+### P value is larger than 0.05, groups are **not** statistically different
+
+```{r}
+
+# 4. Statistical Tests
+# Example: t-test for a continuous variable 'variable_of_interest'
+t_test_result <- t.test(before, after)
+print(t_test_result)
+```
+
+
+```{r}
+# Scatter plot
+plot(combined$Before, combined$After, xlab = "Before", ylab = "After", main = "Scatter plot of Norton values Before and After")
+abline(0, 1, col = "red")  # Add a diagonal line for comparison
+
+# Box plot
+boxplot(combined, col = c("blue", "green"), names = c("Before", "After"), main = "Box plot of Before and After", xlab = "Group")
+
+# Bar plot
+mean_before <- mean(combined$Before)
+mean_after <- mean(combined$After)
+sd_before <- sd(combined$Before)
+sd_after <- sd(combined$After)
+
+# Create bar plot
+means <- c(mean_before, mean_after)
+stds <- c(sd_before, sd_after)
+barplot(means, names.arg = c("Before", "After"), ylab = "Measurement", main = "Bar plot of Norton Means with Std Deviations", col = "blue", ylim = c(0, max(means) + max(stds) + 5))
+arrows(x0 = c(0.7, 1.9), y0 = means - stds, y1 = means + stds, angle = 90, code = 3, length = 0.1)
+
+```
+
+# Morse 18א
+```{r}
+before = read_excel('מורס 18א לפני ירידה למרתף .xlsx', sheet='Morse')
+before = before[27,]
+before <- unlist(before[grep("^\\d+$", before)])
+before <- as.integer(before)
+
+after = read_excel('מורס 18א אחרי חזרה לשגרה .xlsx', sheet='Morse')
+after = after[27,]
+after <- unlist(after[grep("^\\d+$", after)])
+after <- as.integer(after)
+
+combined <- data.frame(Before = before, After = after)
+```
+
+### Before
+```{r}
+summary(before)
+
+```
+### after
+```{r}
+summary(after)
+
+```
+### P value is larger than 0.05, groups are **not** statistically different
+
+```{r}
+
+# 4. Statistical Tests
+# Example: t-test for a continuous variable 'variable_of_interest'
+t_test_result <- t.test(before, after)
+print(t_test_result)
+```
+
+```{r}
+# Scatter plot
+plot(combined$Before, combined$After, xlab = "Before", ylab = "After", main = "Scatter plot of Norton values Before and After")
+abline(0, 1, col = "red")  # Add a diagonal line for comparison
+
+# Box plot
+boxplot(combined, col = c("blue", "green"), names = c("Before", "After"), main = "Box plot of Before and After", xlab = "Group")
+
+# Bar plot
+mean_before <- mean(combined$Before)
+mean_after <- mean(combined$After)
+sd_before <- sd(combined$Before)
+sd_after <- sd(combined$After)
+
+# Create bar plot
+means <- c(mean_before, mean_after)
+stds <- c(sd_before, sd_after)
+barplot(means, names.arg = c("Before", "After"), ylab = "Measurement", main = "Bar plot of Norton Means with Std Deviations", col = "blue", ylim = c(0, max(means) + max(stds) + 5))
+arrows(x0 = c(0.7, 1.9), y0 = means - stds, y1 = means + stds, angle = 90, code = 3, length = 0.1)
+
+```
+
+# Bartel 18
+```{r bartel}
+before = read_excel('ברטל 18 לפני ירידה לקומת המרתף .xlsx')
+after = read_excel('ברטל 18 אחרי חזרה לשגרה .xlsx')
+
+
+combined <- data.frame(Before = before$`ציון ברטל`, After = after$`ציון ברטל`)
+```
+
+### Before
+```{r}
+summary(before$`ציון ברטל`)
+
+```
+### after
+```{r}
+summary(after$`ציון ברטל`)
+
+```
+### P value is larger than 0.05, groups are **not** statistically different
+
+```{r}
+
+# 4. Statistical Tests
+# Example: t-test for a continuous variable 'variable_of_interest'
+t_test_result <- t.test(before, after)
+print(t_test_result)
+```
+
+
+```{r}
+# Scatter plot
+plot(combined$Before, combined$After, xlab = "Before", ylab = "After", main = "Scatter plot of Bartel values Before and After")
+abline(0, 1, col = "red")  # Add a diagonal line for comparison
+
+# Box plot
+boxplot(combined, col = c("blue", "green"), names = c("Before", "After"), main = "Box plot of Before and After", xlab = "Group")
+
+# Bar plot
+mean_before <- mean(combined$Before)
+mean_after <- mean(combined$After)
+sd_before <- sd(combined$Before)
+sd_after <- sd(combined$After)
+
+# Create bar plot
+means <- c(mean_before, mean_after)
+stds <- c(sd_before, sd_after)
+barplot(means, names.arg = c("Before", "After"), ylab = "Measurement", main = "Bar plot of Bartel Means with Std Deviations", col = "blue", ylim = c(0, max(means) + max(stds) + 5))
+arrows(x0 = c(0.7, 1.9), y0 = means - stds, y1 = means + stds, angle = 90, code = 3, length = 0.1)
+
+```
+
+# Bartel 18א
+```{r}
+before = read_excel('ברטל 18א לפני ירידה למרתף -.xlsx', sheet='manual inputs')
+before = before[-(1:6),]
+before$...12 <- as.integer(before$...12)
+
+
+after = read_excel('ברטל 18א אחרי חזרה לשגרה.xlsx', sheet='manual inputs')
+after = after[-(1:6),]
+after$...12 <- as.integer(after$...12)
+
+
+
+combined <- data.frame(Before = before$...12, After = after$...12)
+```
+
+### Before
+```{r}
+summary(before$...12)
+
+```
+### After 
+
+```{r}
+summary(after$...12)
+
+```
+### P value is larger than 0.05, groups are **not** statistically different
+
+```{r}
+# 4. Statistical Tests
+# Example: t-test for a continuous variable 'variable_of_interest'
+t_test_result <- t.test(before$...12, after$...12)
+print(t_test_result)
+```
+
+
+```{r}
+# Scatter plot
+plot(combined$Before, combined$After, xlab = "Before", ylab = "After", main = "Scatter plot of Bartel values Before and After")
+abline(0, 1, col = "red")  # Add a diagonal line for comparison
+
+# Box plot
+boxplot(combined, col = c("blue", "green"), names = c("Before", "After"), main = "Box plot of Before and After", xlab = "Group")
+
+# Bar plot
+mean_before <- mean(combined$Before)
+mean_after <- mean(combined$After)
+sd_before <- sd(combined$Before)
+sd_after <- sd(combined$After)
+
+# Create bar plot
+means <- c(mean_before, mean_after)
+stds <- c(sd_before, sd_after)
+barplot(means, names.arg = c("Before", "After"), ylab = "Measurement", main = "Bar plot of Bartel Means with Std Deviations", col = "blue", ylim = c(0, max(means) + max(stds) + 5))
+arrows(x0 = c(0.7, 1.9), y0 = means - stds, y1 = means + stds, angle = 90, code = 3, length = 0.1)
+
+```
+

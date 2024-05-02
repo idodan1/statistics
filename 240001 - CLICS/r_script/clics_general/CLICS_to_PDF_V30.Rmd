@@ -19,16 +19,8 @@ knitr::opts_chunk$get('label')
 ```
 
 
-```{r ignore, include=FALSE}
-# update.packages(ask = FALSE, checkBuilt = TRUE)
-# tinytex::tlmgr_update()
-# tinytex::reinstall_tinytex()
-# tinytex:: install_tinytex()
-
-```
-
-
 ```{r read data}
+setwd("C:/Users/ido/sheba stats/240001 - CLICS/r_script/clics_general")
 library("lubridate")
 library("tidyr")
 library("dplyr")
@@ -44,8 +36,10 @@ library("plotrix")
 library("circlize")
 
  CLICS_data_unlabeld <- read.csv("../../data/CLICS2024_DATA.csv",                                                                                                                   stringsAsFactors = T, fileEncoding="latin1")
- 
+ # CLICS_data_unlabeld <- read.csv("../../data/CLICS2024_DATA_2024-04-16_0621.csv",                                                                                                                   stringsAsFactors = T, fileEncoding="latin1")
+ # 
  CLICS_data <- read.csv("../../data/CLICS2024_DATA_LABELS.csv",                                                                                           stringsAsFactors = T, na.strings = c(" ",""), fileEncoding="latin1")
+ # CLICS_data <- read.csv("../../data/CLICS2024_DATA_LABELS_2024-04-16_0621.csv",                                                                                           stringsAsFactors = T, na.strings = c(" ",""), fileEncoding="latin1")
 
 
 names(CLICS_data) <- names(CLICS_data_unlabeld)
@@ -217,6 +211,12 @@ tab1_vars <- c("age_at_procedure", "age_group", "gender",
 
 tab1 <- print(CreateTableOne(vars = tab1_vars, factorVars = tab1_vars[-c(1,12)], data = CLICS_data), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
 
+tab1 <- as.data.frame(tab1)
+tab1 <- tab1 %>%
+  mutate(Overall = ifelse(grepl("SD", rownames(tab1)), 
+                          gsub("\\(([^)]+)\\)", "(±\\1)", Overall), Overall))
+
+
 kable(tab1, booktabs = T, caption = "Basline charcteristics (All patients)") %>% kable_styling(latex_options = c("hold_position")) #add_indent(c(4:6,16:18)
 
 detach(CLICS_data)
@@ -305,46 +305,47 @@ ggplot(data=tab2, aes(x=reorder(redcap_data_access_group, -procedure_percent) , 
 ```
 \clearpage 
 
-```{r, echo = FALSE, message=FALSE, fig.align='center',fig.width="80%", fig.height=8, fig.pos='H', fig.cap="Patients per procedure type by center", out.width="400%", dpi = 1800, fig.retina=2}
-set.seed(8)
+<!-- ```{r, echo = FALSE, message=FALSE, fig.align='center',fig.width="80%", fig.height=8, fig.pos='H', fig.cap="Patients per procedure type by center", out.width="400%", dpi = 1800, fig.retina=2} -->
+<!-- set.seed(8) -->
 
-tab2plot <- tab2[, -c(1,7,8)]
+<!-- tab2plot <- tab2[, -c(1,7,8)] -->
 
-colnames(tab2plot) <- c("Coronary","Str-Valvular", "Str-nonValvular","Peripheral", "Other")
-rownames(tab2plot) <- gsub("R", "", rownames(tab2plot))
-
-
-tab2plot <- as.matrix(tab2plot)
-
-circos.clear()
-circos.par(gap.degree = 5)
-chordDiagram(tab2plot, annotationTrack = "grid", 
-             preAllocateTracks = 1, 
-             directional = 1, 
-             direction.type = c("diffHeight", "arrows"), 
-             link.arr.type = "big.arrow")
+<!-- colnames(tab2plot) <- c("Coronary","Str-Valvular", "Str-nonValvular","Peripheral", "Other") -->
+<!-- rownames(tab2plot) <- gsub("R", "", rownames(tab2plot)) -->
 
 
-circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) {
-  xlim = get.cell.meta.data("xlim")
-  ylim = get.cell.meta.data("ylim")
-  sector.name = get.cell.meta.data("sector.index")
-  circos.text(mean(xlim), 
-              ylim[1] + .1, 
-              sector.name, 
-              facing = "clockwise", 
-              niceFacing = TRUE, 
-              adj = c(-0.5, 0.5),
-              cex = 0.5)
-  circos.axis(h = "top", 
-              labels.cex = 0.3,
-              major.at = seq(0, 5000, by = 200), 
-              minor.ticks = 0,
-              sector.index = sector.name, 
-              track.index = 2,
-              col = "grey")
-}, bg.border = NA)
-```
+<!-- tab2plot <- as.matrix(tab2plot) -->
+
+<!-- circos.clear() -->
+<!-- circos.par(gap.degree = 5) -->
+<!-- chordDiagram(tab2plot, annotationTrack = "grid",  -->
+<!--              preAllocateTracks = 1,  -->
+<!--              directional = 1,  -->
+<!--              direction.type = c("diffHeight", "arrows"),  -->
+<!--              link.arr.type = "big.arrow") -->
+
+
+<!-- circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) { -->
+<!--   xlim = get.cell.meta.data("xlim") -->
+<!--   ylim = get.cell.meta.data("ylim") -->
+<!--   sector.name = get.cell.meta.data("sector.index") -->
+<!--   circos.text(mean(xlim),  -->
+<!--               ylim[1] + .1,  -->
+<!--               sector.name,  -->
+<!--               facing = "clockwise",  -->
+<!--               niceFacing = TRUE,  -->
+<!--               adj = c(-0.5, 0.5), -->
+<!--               cex = 0.5) -->
+<!--   circos.axis(h = "top",  -->
+<!--               labels.cex = 0.3, -->
+<!--               major.at = seq(0, 5000, by = 200),  -->
+<!--               minor.ticks = 0, -->
+<!--               sector.index = sector.name,  -->
+<!--               track.index = 2, -->
+<!--               col = "grey") -->
+<!-- }, bg.border = NA) -->
+<!-- ``` -->
+
 
 ## 1.2 Coronary procedures 
 
@@ -598,14 +599,32 @@ pop3 <- CLICS_data %>% filter(procedure_type___3=="Checked")
 prop4 <- pop3 %>% tabyl(type_of_non_valvular_inter) %>% adorn_totals("row")
 
 other4 <-prop4 %>% select(type_of_non_valvular_inter, n, percent) %>%
-            filter(type_of_non_valvular_inter %in% c("Other structural non valvular intervention", NA,"Total"))
+            filter(type_of_non_valvular_inter %in% c("Other structural non valvular intervention", NA))
+
+total4 <-prop4 %>% select(type_of_non_valvular_inter, n, percent) %>%
+            filter(type_of_non_valvular_inter %in% c("Total"))
 
 prop4 <-prop4 %>% select(type_of_non_valvular_inter, n, percent) %>% 
   filter(!type_of_non_valvular_inter %in% c("Other structural non valvular intervention","Total") & !is.na(type_of_non_valvular_inter))  %>% arrange(-n)
 
-tab4 <- rbind(prop4,other4)
+x <- print(CreateTableOne(vars = "other_structural_non_valvu", data = pop3), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+
+x = as.data.frame(x)
+x <- x %>%
+  separate(Overall, into = c("n", "percent"), sep = " \\(", remove = FALSE) %>%
+  mutate(percent = sub("\\)", "", percent))  # Remove the closing parenthesis
+x$Overall = NULL
+x = x[-(1:2),]
+x$percent = as.numeric(x$percent)
+x$percent = x$percent/1000
+x$type_of_non_valvular_inter = rownames(x)
+tab4 <- rbind(prop4,other4, x, total4)
+
+
+tab4$percent = as.numeric(tab4$percent)
 
 tab4$percent <- round(tab4$percent*100, digits = 2)
+rownames(tab4) = NULL
  kable(tab4, booktabs = T, 
       caption = "Structural non valvular intervention distribution" ,
       col.names=c("intervention", "n", "%")) %>%
@@ -615,7 +634,11 @@ tab4$percent <- round(tab4$percent*100, digits = 2)
                        "LAAO - Left atrial appendage occlusion", 
                        "ASD - Atrial septal defect",
                        "VSD - Ventricular septal defect", 
-                       "PVL - Paravalvular leak"))
+                       "PVL - Paravalvular leak")) %>% add_indent(c(7:9))
+
+ # the row with missing Other structural non valvular intervention	turn into null
+    
+
 ```
 
 
@@ -1868,9 +1891,10 @@ kable(tab11,  booktabs = T,
 pop_intervention_L$multivessel_pci <- factor(pop_intervention_L$multivessel_pci, levels = c("Single vessel PCI","Multivessel PCI"))
 
 tab12 <- print(CreateTableOne(vars = tab1_vars, factorVars = tab1_vars[-c(1,12)], data = pop_intervention_L,
-                strata = "multivessel_pci"), varLabels = TRUE, missing=F, printToggle = F, showAllLevels = F)
+                strata = "multivessel_pci"), varLabels = TRUE, missing=F, test =T, printToggle = F, showAllLevels = F)
 
-tab12 <- tab12[,-c(3,4)]
+tab12 <- tab12[,-c(4)]
+colnames(tab12)[3] = 'P value'
 
 kable(tab12,  booktabs = T, 
       caption = "Patient characteristics according to single versus multivessel PCI") %>% 
