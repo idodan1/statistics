@@ -1,0 +1,3320 @@
+---
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: true
+    latex_engine: pdflatex
+    toc: yes
+  html_document:
+    theme: cerulean
+header-includes:
+    - \usepackage{caption}
+    - \usepackage{fancyhdr}
+    - \pagestyle{fancy}
+    - \fancyhead{} % clear all header fields
+    - \fancyhead[C]{\nouppercase{\leftmark}}
+    - \fancyfoot{}
+    - \fancyfoot[C]{\thepage}
+    - \usepackage{float}
+    - \usepackage{threeparttable}
+    - \usepackage{titling}
+    - \pretitle{\begin{center}\LARGE\includegraphics[width=18cm,height=20.5cm,keepaspectratio]{cover_21.png}\\[\bigskipamount]}
+    - \posttitle{\end{center}}
+editor_options: 
+  chunk_output_type: console
+---
+
+\captionsetup[table]{labelformat=empty}
+
+```{r results='hide', echo=FALSE}
+Sys.setlocale("LC_TIME", "C")
+```
+
+---
+title: "Booklet ACSIS 2021"
+
+date: "`r format(Sys.Date(), "%B %Y")`"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = F, message = F)
+options(knitr.table.format = "latex")
+
+# source('W:/Users/Shared_Files/STAT/2021/ACSIS 2021 booklet/Data_ACSIS_2021.R')
+source('C:/Users/talco/Documents/Statistics/ACSIS_21_PDF/Data_ACSIS_2021.R')
+
+
+
+```
+
+\pagebreak
+
+# Introduction
+
+We are proud to present you with the ACSIS 2021 survey results. This survey, is a biennial tradition since it was launched in 1992 by Prof. Shlomo Behar.
+
+The ACSIS survey provides a state-of-the-art representation of the characteristics, management, and outcome of patients presenting with an acute coronary syndrome (ACS) in Israel. This survey is a source of pride for the Israeli cardiology community.
+
+ACSIS 2021 was carried out during March-April 2021 by the Israeli working group on Acute Cardiac Care of the Israel Heart Society, and the Israeli Center for Cardiovascular Research (ICCR) in cooperation with the Israeli Center for Disease Control (ICDC) and Israel Society of Intensive Care Nursing.  
+
+During this 2-month period, detailed data was collected in all intensive cardiac care units (ICCU) and cardiology wards in all public hospitals in Israel, and included `r dim(dat)[1]` consecutive ACS patients admitted and diagnosed with ACS.
+
+The ACSIS 2021 findings expand on prior surveys by showing a continuous improvement in in-hospital, 1 month, as well as 1-year mortality throughout the last decade.  
+
+ACSIS data is used continuously for high-quality scientific research which is published in the major journals in the field. 
+
+We thank the Israeli Center for Disease Control (ICDC) as well as the pharmaceutical industry in their continuing unconditional support of this important survey.  
+
+Finally, we would like to thank and recommend the dedication of all the study coordinators and staff members of all ICCU’s and Cardiology wards for their dedicated time and effort in collecting the data. 
+
+\  
+
+\  
+
+```{r results='asis'}
+df_names1 <- data.frame(Beigel="Chairman", Katia="Secretary")
+kable(df_names1,col.names = c("Prof. Roy Beigel","Dr. Katia Orvin"), booktabs=T) %>%
+  kable_styling(full_width = T) %>%
+  column_spec(1, width = "13cm")
+```
+
+*Israeli working-group on Acute Cardiac Care*
+
+\pagebreak
+
+# Message from the Israel Heart Society
+
+The Israel Heart Society is proud to present the final results of the ACSIS 2021 survey.  
+
+ACSIS is a biannual survey conducted over a 2 months period in all coronary care units operating in Israel and includes all ACS patients admitted during the survey period. The survey has been conducted since 2000. Over this long period it has provided invaluable insights into the characteristics, management and outcome of our patients. The survey allows quality indicators for individual centers, has produced numerous scientific papers and allows important analyses of long-term trends in ACS.  
+The 2021 ACSIS survey follows in the footsteps of previous surveys and extends the observations yet more. The data presented here are of great interest to anyone interested in the epidemiology and management of ACS in Israel and globally. 
+We would like to thank the ACSIS steering committee, led by the ACC WG for their very thorough work in organizing this survey and preparing the data for presentation and for our many industry partners who supported this great effort. 
+
+We trust you will find these data important and interesting. 
+
+
+\  
+
+\  
+
+
+```{r results='asis'}
+df_names2 <- data.frame(Zahger="President", Wolak="Secretary General")
+kable(df_names2,col.names = c("Prof. Ofer Amir","Dr. Arik Wolak"), booktabs=T) %>%
+  kable_styling(full_width = T, latex_options = "HOLD_position") %>%
+  column_spec(1, width = "9cm")
+```
+
+*The Israel Heart Society*
+
+
+\pagebreak
+
+The ACSIS 2021 survey was  generously supported by an unrestricted grant by the following companies:
+
+```{r, echo=FALSE, fig.cap="", out.width = '120%'}
+knitr::include_graphics("updated logo page.png")
+```
+
+\pagebreak
+
+# Chapter 1: Acute Coronary Syndrome (ACS) in Cardiology
+
+
+## 1.1 Distribution of Patients with ACS by Electrocardiogram (ECG) on Admission
+
+\  
+
+```{r fig.height=8}
+par(mfrow=c(1,1))
+par(mar=c(0,0,1,0))
+openplotmat()
+elpos <- coordinates(c(1, 2, 1,1,1,1,1))
+treearrow(from=elpos[1,],to=elpos[2:3,],lwd=4) 
+treearrow(from=elpos[3,],to=elpos[3:8,],lwd=4, path = "V") 
+labels <- vector(length = 10)
+labels[1] <- paste("Total Number of Patients \n n =",nrow(dat))
+
+labels[2] <- paste0("ST elevation \n n = ",table(dat$ST_ELEV_adm=="Yes")["TRUE"]," (",round(100*(table(dat$ST_ELEV_adm=="Yes")["TRUE"]/nrow(dat)),1),"%)")
+
+labels[3] <- paste0("Non ST elevation \n n = ", table(dat$ST_ELEV_adm=="No")["TRUE"], " (",round(100*(table(dat$ST_ELEV_adm=="No")["TRUE"]/nrow(dat)),1),"%)")
+
+dat_nst_adm <- subset(dat,ST_ELEV_adm=="No")
+
+labels[4] <- paste0("New onset of LBBB \n n =",table(dat$S21ADMECG=="New onset of LBBB")["TRUE"], " (",round(100*(table(dat$S21ADMECG=="New onset of LBBB")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+labels[5] <- paste0("No new ST-T changes \n n =",table(dat$S21ADMECG=="No new ST-T changes")["TRUE"], " (",round(100*(table(dat$S21ADMECG=="No new ST-T changes")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+labels[6] <- paste0("Normal \n n =",table(dat$S21ADMECG=="Normal")["TRUE"], " (",round(100*(table(dat$S21ADMECG=="Normal")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+labels[7] <- paste0("ST-Depression \n n =",table(dat$S21ADMECG=="ST depression")["TRUE"], " (",round(100*(table(dat$S21ADMECG=="ST depression")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+labels[8] <- paste0("T inversion \n n =",table(dat$S21ADMECG=="T inversion")["TRUE"], " (",round(100*(table(dat$S21ADMECG=="T inversion")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+#v12 Roy asked to remove these:
+# labels[9] <- paste0("New onset of RBBB \n n =",table(dat$S21ADMECG=="New onset of RBBB")["TRUE"], " (",round(100*(table(dat$S21ADMECG=="New onset of RBBB")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+# labels[10] <- paste0("Undetermined ECG findings \n (LBBB, Pacing, Severe LVH) \n n =",table(dat$S21ADMECG=="Undetermined ECG findings (LBBB, Pacing, Severe LVH)")["TRUE"], " (",round(100*(table(dat$S21ADMECG=="Undetermined ECG findings (LBBB, Pacing, Severe LVH)")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+for (i in 1:8) textround(elpos[i,],radx=0.15,rady=0.04,lab=labels[i], shadow.col = "mediumpurple", box.col = "aliceblue")
+title("Figure 1.1.a: Distribution of Patients with ACS by ECG on Admission", cex.main=1, font.main=1)
+```
+
+\pagebreak
+
+\  
+
+```{r fig.width=8}
+par(mfrow=c(1,1))
+par(mar=c(0,0,1,0))
+openplotmat()
+elpos <- coordinates(c(1,2))
+treearrow(from=elpos[1,],to=elpos[2:3,],lwd=4) 
+labels <- vector(length = 3)
+labels[1] <- paste("Total Number of Patients \n n =",nrow(dat))
+
+#updated in v12 according to Roy
+
+#missing in S21DISDIA - take from ARR_DIAG:
+dat$S21DISDIA_new <- factor(ifelse(is.na(dat$S21DISDIA), as.character(dat$ARR_DIAG), as.character(dat$S21DISDIA) ))
+
+labels[2] <- paste0("ST elevation MI (STEMI) \n n = ",table(dat$S21DISDIA_new=="STE MI")["TRUE"]," (",round(100*(table(dat$S21DISDIA_new=="STE MI")["TRUE"]/nrow(dat)),1),"%)")
+
+labels[3] <- paste0("Non ST elevation MI (Non STEMI) \n n = ",table(dat$S21DISDIA_new%in%c("NSTEMI", "Thromboembolic", "UAP", "MINOCA - VASOSPASTIC,","Microvascular"))["TRUE"]," (",round(100*(table(dat$S21DISDIA_new%in%c("NSTEMI", "Thromboembolic", "UAP", "MINOCA - VASOSPASTIC,","Microvascular" ))["TRUE"]/nrow(dat)),1),"%)")
+
+# labels[4] <- paste0("UAP \n n = ",table(dat$S21DISDIA_new=="UAP")["TRUE"]," (",round(100*(table(dat$S21DISDIA_new=="UAP")["TRUE"]/nrow(dat)),1),"%)")
+
+# labels[5] <- paste0("MINOCA/Microvascular\n n = ",table(dat$S21DISDIA_new%in%c("MINOCA - VASOSPASTIC,","Microvascular" ))["TRUE"]," (",round(100*(table(dat$S21DISDIA_new%in%c("MINOCA - VASOSPASTIC,","Microvascular" ))["TRUE"]/nrow(dat)),1),"%)")
+
+# labels[6] <- paste0("Thromboembolic \n n = ",table(dat$S21DISDIA=="Thromboembolic")["TRUE"]," (",round(100*(table(dat$S21DISDIA=="Thromboembolic")["TRUE"]/nrow(dat)),1),"%)")
+
+# labels[7] <- paste0("Microvascular \n n = ",table(dat$S21DISDIA=="Microvascular")["TRUE"]," (",round(100*(table(dat$S21DISDIA=="Microvascular")["TRUE"]/nrow(dat)),1),"%)")
+
+
+
+for (i in 1:3) textround(elpos[i,],radx=0.18,rady=0.07,lab=labels[i], shadow.col = "mediumpurple", box.col = "aliceblue")
+title("Figure 1.1.b: Distribution of Patients with ACS by Discharge Diagnosis", cex.main=1.2, font.main=1.2)
+```
+
+\pagebreak
+
+\  
+
+```{r fig.height=6}
+par(mfrow=c(1,1))
+par(mar=c(0,0,1,0))
+openplotmat()
+elpos <- coordinates(c(2,2,2,2))
+treearrow(from=elpos[1,],to=elpos[c(3,5,7),],lwd=4) 
+treearrow(from=elpos[2,],to=elpos[c(4,6,8),],lwd=4) 
+
+labels <- vector(length = 8)
+
+#STEMI
+labels[1] <- paste("Admission ECG: ST elevation \n n =",table(dat$ST_ELEV_adm=="Yes")["TRUE"])
+
+dat_st_adm <- subset(dat, ST_ELEV_adm=="Yes")
+
+labels[3] <- paste0("Disch: STEMI \n n = ",table(dat_st_adm$S21DISDIA_new=="STE MI")["TRUE"]," (",round(100*(table(dat_st_adm$S21DISDIA_new=="STE MI")["TRUE"]/nrow(dat_st_adm)),1),"%)")
+
+labels[5] <- paste0("Disch: Non STEMI \n n = ",table(dat_st_adm$S21DISDIA_new%in%c("NSTEMI", "MINOCA - VASOSPASTIC,","Thromboembolic", "Microvascular"))["TRUE"]," (",round(100*(table(dat_st_adm$S21DISDIA_new%in%c("NSTEMI", "MINOCA - VASOSPASTIC,","Thromboembolic", "Microvascular"))["TRUE"]/nrow(dat_st_adm)),1),"%)")
+
+labels[7] <- paste0("Disch: Unstable angina pectoris (UAP) \n n = ",table(dat_st_adm$S21DISDIA_new=="UAP")["TRUE"]," (",round(100*(table(dat_st_adm$S21DISDIA_new=="UAP")["TRUE"]/nrow(dat_st_adm)),1),"%)")
+
+# labels[9] <- paste0("MINOCA\n n = ",table(dat_st_adm$S21DISDIA=="MINOCA - VASOSPASTIC,")["TRUE"]," (",round(100*(table(dat_st_adm$S21DISDIA=="MINOCA - VASOSPASTIC,")["TRUE"]/nrow(dat_st_adm)),1),"%)")
+
+# labels[11] <- paste0("Thromboembolic \n n = ",table(dat_st_adm$S21DISDIA=="Thromboembolic")["TRUE"]," (",round(100*(table(dat_st_adm$S21DISDIA=="Thromboembolic")["TRUE"]/nrow(dat_st_adm)),1),"%)")
+
+# labels[13] <- paste0("Microvascular \n n = ", 0
+                     # table(dat_st_adm$S21DISDIA=="Microvascular")["TRUE"]," (",round(100*(table(dat_st_adm$S21DISDIA=="Microvascular")["TRUE"]/nrow(dat_st_adm)),1),"%)"
+                     # )
+
+
+
+#NSTEMI
+labels[2] <- paste("Admission ECG: Non ST elevation \n n =",table(dat$ST_ELEV_adm=="No")["TRUE"])
+
+dat_nst_adm <- subset(dat, ST_ELEV_adm=="No")
+
+labels[4] <- paste0("Disch: STEMI \n n = ",table(dat_nst_adm$S21DISDIA_new=="STE MI")["TRUE"]," (",round(100*(table(dat_nst_adm$S21DISDIA_new=="STE MI")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+labels[6] <- paste0("Disch: Non STEMI \n n = ",table(dat_nst_adm$S21DISDIA_new%in%c("NSTEMI", "MINOCA - VASOSPASTIC,","Thromboembolic", "Microvascular"))["TRUE"]," (",round(100*(table(dat_nst_adm$S21DISDIA_new%in%c("NSTEMI", "MINOCA - VASOSPASTIC,","Thromboembolic", "Microvascular"))["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+labels[8] <- paste0("Disch: UAP \n n = ",table(dat_nst_adm$S21DISDIA_new=="UAP")["TRUE"]," (",round(100*(table(dat_nst_adm$S21DISDIA_new=="UAP")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+# labels[10] <- paste0("MINOCA\n n = ",table(dat_nst_adm$S21DISDIA=="MINOCA - VASOSPASTIC,")["TRUE"]," (",round(100*(table(dat$S21DISDIA=="MINOCA - VASOSPASTIC,")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+# labels[12] <- paste0("Thromboembolic \n n = ",table(dat_nst_adm$S21DISDIA=="Thromboembolic")["TRUE"]," (",round(100*(table(dat_nst_adm$S21DISDIA=="Thromboembolic")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+# labels[14] <- paste0("Microvascular \n n = ",table(dat_nst_adm$S21DISDIA=="Microvascular")["TRUE"]," (",round(100*(table(dat_nst_adm$S21DISDIA=="Microvascular")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+
+
+
+for (i in 1:8) textround(elpos[i,],radx=0.2,rady=0.04,lab=labels[i], shadow.col = "mediumpurple", box.col = "aliceblue")
+title("Figure 1.1.c: Admission versus Discharge Diagnosis", cex.main=1, font.main=1)
+```
+
+\pagebreak
+
+## 1.2 Demographic Characteristics
+
+
+
+### 1.2.1 Age Distribution by ECG on Admission
+
+\  
+
+Patients with ST elevation were younger (mean age: `r round(mean2(dat[dat$ST_ELEV_adm=="Yes","AGE"]),1)` $\pm$ `r round(sd(dat[dat$ST_ELEV_adm=="Yes","AGE"], na.rm=T),1)`) than those with
+non ST elevation (mean age: `r round(mean2(dat[dat$ST_ELEV_adm=="No","AGE"]),1)` $\pm$ `r round(sd(dat[dat$ST_ELEV_adm=="No","AGE"], na.rm=T),1)`), and the age distribution of patients with ST
+elevation indicated a greater proportion of younger patients (`r round(100*prop.table(table(dat$AGE<65, dat$ST_ELEV_adm),2),1)["TRUE","Yes"]`% were aged < 65
+years) than that of patients with non ST elevation (`r round(100*prop.table(table(dat$AGE<65, dat$ST_ELEV_adm),2),1)["TRUE","No"]`% aged < 65 years).
+
+\  
+
+```{r results='hide'}
+tab_age_st <- print(CreateTableOne(vars = c("age5080","AGE"), strata = "ST_ELEV_adm", data = dat))
+tab_age <- print(CreateTableOne(vars = c("age5080","AGE"), data = dat))
+t_age <- cbind(tab_age, tab_age_st)[,-5]
+row.names(t_age) <- c("n","Age groups ($\\%$)","< 50","50-64","65-79","$\\geq$ 80", "Age (mean(sd))")
+colnames(t_age) <- c("Total","Non ST elevation", "ST elevation","p-value")
+```
+
+```{r}
+kable(t_age, align = "c", caption = "Table 1.1: Age Distribution by ECG on Admission", booktabs=T, escape = F, linesep="") %>%
+  kable_styling(full_width = F,latex_options = c("HOLD_position", "striped")) %>%
+  add_indent(3:6) %>%
+  column_spec(1:4,width = "3cm") %>% 
+  column_spec(5,width = "2.5cm") %>%
+  footnote(general = "Percentages are calculated out of available data", general_title = "")
+```
+
+
+\  
+
+```{r fig.width=8}
+par(mar=c(4,4,5,2))
+mydata_n <- round(100*table(dat$ST_ELEV_adm,dat$age5080)[1,]/(length(dat[dat$ST_ELEV_adm=="No","age5080"])),1)
+mydata_y <- round(100*table(dat$ST_ELEV_adm,dat$age5080)[2,]/(length(dat[dat$ST_ELEV_adm=="Yes","age5080"])-nmis(dat$age5080)),1)
+mydata <- rbind(mydata_n, mydata_y)
+colnames(mydata) <- c("<50","50-64","65-79","$\\geq$ 80")
+row.names(mydata) <- c("Non STEMI","STEMI")
+xx <- barplot(as.matrix(mydata), main="Figure 1.2: Age Distribution by ECG on Admission", ylab="Percent (%)", beside=TRUE,
+        col=c("cadetblue2","mediumpurple"), ylim = c(0,50), xlab = "Age group", xaxt="n", font.main=1, cex.main=1.1)
+legend("topright", c("Non ST elevation","ST elevation"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx, y = as.matrix(mydata), label = as.matrix(mydata), pos = 3, cex = 0.8)
+axis(1, at = (xx[1,]+xx[2,])/2, labels = c(expression(""<"50"),"50-64","65-79",expression("">="80")), tick = F)
+```
+
+\pagebreak
+
+### 1.2.2 Age Distribution by Gender
+
+\  
+
+The age distribution of male patients was significantly different from that of female patients. The majority of men (`r round(100*prop.table(table(dat$AGE<65, dat$S21SEX),2),1)["TRUE","Male"]`%) were in the younger age groups (< 65) and only
+`r round(100*prop.table(table(dat$AGE>=80, dat$S21SEX),2),1)["TRUE","Male"]`% were aged 80 or above. `r round(100*prop.table(table(dat$AGE<50, dat$S21SEX),2),1)["TRUE","Male"]`% of men were less than 50 years old. By contrast,
+the majority of the female patients were in the older age groups $\geq 65$ (`r round(100*prop.table(table(dat$AGE>=65, dat$S21SEX),2),1)["TRUE","Female"]`%). The
+number of women under the age of 50 was significantly lower than of their male
+counterparts (`r round(100*prop.table(table(dat$AGE<50, dat$S21SEX),2),1)["TRUE","Female"]`%), and `r round(100*prop.table(table(dat$AGE>=80, dat$S21SEX),2),1)["TRUE","Female"]`% were aged 80 or above.
+
+\  
+
+```{r results='hide'}
+tab_age_g <- print(CreateTableOne(vars = c("age5080","AGE"), strata = "S21SEX", data = dat))
+t_age_g <- cbind(tab_age, tab_age_g)[,-5]
+row.names(t_age_g) <- c("n","Age groups ($\\%$)","< 50","50-64","65-79","$\\geq$ 80", "Age (mean(sd))")
+colnames(t_age_g) <- c("Total","Women", "Men","p-value")
+```
+
+```{r}
+kable(t_age_g, align = "c", caption = "Table 1.2: Age Distribution by Gender", booktabs=T, escape = F, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position", "striped")) %>%
+  add_indent(3:6) %>%
+  column_spec(1:4,width = "3cm") %>% 
+  column_spec(5,width = "2.5cm") %>%
+  footnote(general = "Percentages are calculated out of available data", general_title = "")
+```
+
+
+\  
+
+```{r fig.width=8}
+mydata_f <- round(100*table(dat$S21SEX,dat$age5080)[1,]/(length(dat[dat$S21SEX=="Female","age5080"])-1),1)
+mydata_m <- round(100*table(dat$S21SEX,dat$age5080)[2,]/(length(dat[dat$S21SEX=="Male","age5080"])-2),1)
+mydata_g <- rbind(mydata_f, mydata_m)
+colnames(mydata_g) <- c("<50", "50-64","65-79","$\\geq$ 80")
+row.names(mydata_g) <- c("Women","Men")
+xx <- barplot(as.matrix(mydata), main="Figure 1.3: Age Distribution by Gender", ylab="Percent (%)", beside=TRUE,
+        col=c("cadetblue2","mediumpurple"), ylim = c(0,50), xlab = "Age group", xaxt="n", font.main=1, cex.main=1.1)
+legend("topright", c("Women","Men"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx, y = as.matrix(mydata), label = as.matrix(mydata_g), pos = 3, cex = 0.8)
+axis(1, at = (xx[1,]+xx[2,])/2, labels = c(expression(""<"50"),"50-64","65-79",expression("">="80")), tick = F)
+```
+
+\pagebreak
+
+### 1.2.3 Gender Distribution
+
+\  
+
+For both STEMI and Non STEMI patients we observed a clear male predominance.
+
+\  
+
+```{r results='hide'}
+tab_gen_st <- print(CreateTableOne(vars = "S21SEX", strata = "ST_ELEV", data = dat), showAllLevels = T)
+tab_gen <- print(CreateTableOne(vars = "S21SEX", data = dat), showAllLevels = T)
+t_gen_st <- cbind(tab_gen, tab_gen_st)[,-c(1,3,7)]
+row.names(t_gen_st) <- c("n","Women (%)","Men (%)")
+colnames(t_gen_st) <- c("Total","Non STEMI","STEMI","p-value")
+```
+
+```{r}
+kable(t_gen_st, align = "c", caption = "Table 1.3: Gender Distribution", booktabs=T) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position", "striped")) %>%
+  column_spec(1:4,width = "3cm") %>% 
+  column_spec(5,width = "2.5cm") %>%
+  footnote(general = "Percentages are calculated out of available data", general_title = "")
+```
+
+\  
+
+\  
+
+```{r fig.width=8}
+par(mfrow=c(1,2), oma=c(0,0,3,0))
+slices_st <- c(table(dat$ST_ELEV=="Yes" & dat$S21SEX=="Female")["TRUE"],
+               table(dat$ST_ELEV=="Yes" & dat$S21SEX=="Male")["TRUE"])
+lbls <- c("Women", "Men")
+pct_st <- round(slices_st/sum(slices_st)*100)
+lbls_st <- paste(lbls, "\n  ",pct_st,"%") # add percents to labels
+pie(slices_st,labels = lbls_st, col=c("cadetblue2","mediumpurple"),	main="Patients with STEMI", radius = 0.8, cex.main=1)
+
+slices_nst <- c(table(dat$ST_ELEV=="No" & dat$S21SEX=="Female")["TRUE"],
+               table(dat$ST_ELEV=="No" & dat$S21SEX=="Male")["TRUE"])
+pct_nst <- round(slices_nst/sum(slices_nst)*100)
+lbls_nst <- paste(lbls,"\n  ", pct_nst,"%") # add percents to labels
+pie(slices_nst,labels = lbls_nst, col=c("cadetblue2","mediumpurple"), main = "Patients with non STEMI", radius = 0.8, cex.main=1)
+
+mtext("Figure 1.4: Gender Distribution", side = 3, outer = TRUE, line = 1.5, cex = 1.1)
+```
+
+\pagebreak
+
+## 1.3 Cardiovascular History
+
+
+
+### 1.3.1 Cardiovascular History
+
+A history of ACS, cardiomyopathy, congestive heart failure (CHF), chronic renal failure, peripheral artery disease (PAD) and atrial fibrillation was significantly more frequent among patients with non STEMI. Similarly, more patients with non STEMI had undergone percutaneous coronary intervention (PCI) or coronary artery bypass grafting (CABG) prior to hospitalization.
+
+\  
+
+```{r results='hide'}
+vars_hist <- c("S21PRIOR_ACS","S21PRIOR_CABG","S21PRIOR_PCI","S21PRIOR_CARDIOMYOPATHY","S21PRIOR_CHF","S21PRIOR_RENAL","S21PRIOR_PVD","S21PRIOR_CVA","S21PRIOR_COPD","S21PRIOR_AFIB","S21PRIOR_AICD","S21PRIOR_CANC","S21THYROID")
+tab_hist_st <- print(CreateTableOne(vars = vars_hist, strata = "ST_ELEV", data = dat))
+tab_hist <- print(CreateTableOne(vars = vars_hist, data = dat))
+t_hist <- cbind(tab_hist, tab_hist_st)[,-5]
+colnames(t_hist) <- c("Total", "Non STEMI", "STEMI", "p-value")
+row.names(t_hist) <- c("n","ACS ($\\%$)","CABG ($\\%$)", "PCI ($\\%$)","Cardiomyopathy ($\\%$)","CHF ($\\%$)","Chronic Kidney Disease (CKD) ($\\%$)","PAD ($\\%$)","Stroke/Transient ischemic attack (TIA) ($\\%$)","Chronic Obstructive Pulmonary Disease (COPD) ($\\%$)","Atrial fibrillation/Flutter ($\\%$)","Implantable cardioverter-defibrillators (ICD)/Cardiac resynchronization therapy (CRT) implant ($\\%$)","Any malignancy ($\\%$)","Thyroid disease ($\\%$)")
+```
+
+```{r}
+kable(t_hist, align = "c", caption = "Table 1.4: Prior Cardiovascular History", booktabs=T, escape = F, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position", "striped")) %>%
+  column_spec(1, width = "7cm") %>%
+  column_spec(2:4,width = "2cm") %>% 
+  column_spec(5,width = "2cm") %>%
+  footnote(general = "Percentages are calculated out of available data", general_title = "")
+```
+
+
+
+
+```{r fig.width=10, fig.height=8}
+par(mar=c(10,4,5,2))
+par(mfrow=c(1,1))
+
+per_nst <- as.numeric(out_of_par(as.character(t_hist[-1,2])))
+per_st <- as.numeric(out_of_par(as.character(t_hist[-1,3])))
+mydata1 <- cbind(per_nst,per_st)[-c(length(per_nst)),]
+row.names(mydata1) <- c("ACS","CABG","PCI","Cardiomyopathy","CHF","CKD", "PAD", "Stroke/TIA", "COPD", "Atrial fibrillation/Flutter","ICD/CRT implant","Any malignancy")
+mydata1 <- mydata1[order(-mydata1[,1]),]
+xx <- barplot(as.matrix(t(mydata1)), main="Figure 1.5: Cardiovascular history", ylab="Percent (%)", beside=TRUE,     col=c("cadetblue2","mediumpurple"), ylim = c(0,50), las=2, axisnames = F, font.main=1, cex.main=1.4)
+legend("topright", c("Non STEMI","STEMI"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx, y = as.matrix(t(mydata1)), label = as.matrix(t(mydata1)), pos = 3, cex = 0.8)
+text(cex=1, x=xx[2,], y=-1.25, labels = row.names(mydata1), xpd=TRUE, srt=30, pos=2)
+```
+
+\pagebreak
+
+### 1.3.2 Risk Factors
+
+Current smoking was more prevalent among patients presenting with STEMI, while other risk factors were generally more prevalent among patients
+presenting with non STEMI. The rates of newly diagnosed diabetes were higher among those with STEMI. No difference was found in the prevalence of family history of coronary artery disease (CAD).
+
+\  
+
+```{r results='hide'}
+vars_risk <- c("S21HT","S21PDIAB","S21NEW_DIAB","S21DYSLIP","CURSMOK","PASTSMOK","S21FAM_HIST")
+tab_risk_st <- print(CreateTableOne(vars = vars_risk, strata = "ST_ELEV", data = dat))
+tab_risk <- print(CreateTableOne(vars = vars_risk, data = dat))
+t_risk <- cbind(tab_risk, tab_risk_st)[,-5]
+row.names(t_risk) <- c("n","Hypertension (%)", "Diabetes (%)", "* Newly diagnosed (%)", "Dyslipidemia (%)",  "Current smoker (%)", "Past smoker (%)", "Family history of CAD (%)")
+colnames(t_risk) <- c("Total","Non STEMI","STEMI","p-value")
+```
+
+```{r}
+kable(t_risk, align = "c", caption = "Table 1.5: Risk Factors", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  add_indent(c(4)) %>%
+  column_spec(1, width = "5cm") %>%
+  column_spec(2:4,width = "2.5cm") %>% 
+  column_spec(5,width = "2cm") %>%
+  footnote(general = c("Percentages are calculated out of available data", "Newly diagnosed expressed as percentage of total patients with specific risk factor"), general_title = "")
+```
+
+
+```{r fig.height=7, fig.width=8}
+par(mar=c(9,4,4,2))
+per_nst_risk <- as.numeric(out_of_par(t_risk[-c(1,4),2]))
+per_st_risk <- as.numeric(out_of_par(t_risk[-c(1,4),3]))
+mydata_risk <- t(cbind(per_nst_risk,per_st_risk))
+colnames(mydata_risk) <- c("Hypertension","Diabetes","Dyslipidemia","Current smoker","Past smoker","Family history of CAD")
+mydata_risk <- mydata_risk[,order(-mydata_risk[1,])]
+xx_risk <- barplot(as.matrix(mydata_risk), main="Figure 1.6: Risk Factors", ylab="Percent (%)", beside=TRUE,        col=c("cadetblue2","mediumpurple"), ylim = c(0,100), las=2, axisnames = F, font.main=1, cex.main=1.1)
+legend("topright", c("Non STEMI","STEMI"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx_risk, y = as.matrix(mydata_risk), label = as.matrix(mydata_risk), pos = 3, cex = 0.8)
+text(cex=1, x=xx_risk[2,], y=-1.25, colnames(mydata_risk), xpd=TRUE, srt=30, pos=2)
+```
+
+\pagebreak
+
+## 1.4 Prior Chronic Treatment
+
+
+Prior to the index hospitalization, a higher proportion of patients with non STEMI (`r round(100*prop.table(table(dat$S21C1, dat$ST_ELEV),2),1)["YES","No"]`%) were being treated with aspirin compared to those with STEMI
+(`r round(100*prop.table(table(dat$S21C1, dat$ST_ELEV),2),1)["YES","Yes"]`%). Other drugs in common use were Angiotensin-Converting-Enzyme (ACE) Inhibitors and Angiotensin Receptor Blockers (ARB), Beta Blockers,
+lipid-lowering drugs (primarily statins) and diuretics all of which were in
+use more frequently among patients presenting with non STEMI. `r round(100*prop.table(table(dat$S21C2, dat$ST_ELEV),2),1)["YES","No"]`% of
+patients with non STEMI and `r round(100*prop.table(table(dat$S21C2, dat$ST_ELEV),2),1)["YES","Yes"]`% of those with STEMI were being
+treated with clopidogrel.
+
+
+\  
+
+```{r results='hide'}
+vars_chr_treat <- c("S21C1", "CP2Y12", "S21C2","S21C3","S21C4","chr_oral_anticoag","NOAC_CHR","S21C6","S21C7","S21C8","S21C9",
+                    # "S21C10", #no LMWH in 2021
+                    "S21C14","S21C15","chr_ACEI_ARB","S21C17","S21C19","S21C22","S21C23","antihyperglycemic","chr_STAT","S21C52")
+
+
+# #change missing to no (beacuse in 2021 there is no missing data):
+# vars_chr_treat_imp <- paste0(vars_chr_treat, "_imp")
+# dat[,vars_chr_treat_imp] <- dat[,vars_chr_treat]
+# fillna_no_NO <- function(x) {x <- factor(ifelse("YES" %in% levels(factor(x)) & is.na(x),"NO",ifelse("Yes" %in% levels(factor(x)) & is.na(x), "No", as.character(x))))}
+# dat[,vars_chr_treat_imp] <- lapply(dat[,vars_chr_treat_imp], as.character)
+# dat[,vars_chr_treat_imp] <- lapply(dat[,vars_chr_treat_imp], fillna_no_NO)
+
+tab_chr_treat <- print(CreateTableOne(vars = vars_chr_treat, data = dat))
+tab_chr_treat_st <- print(CreateTableOne(vars = vars_chr_treat, strata = "ST_ELEV", data = dat))
+t_chr_treat <- cbind(tab_chr_treat,tab_chr_treat_st)[,-5]
+
+row.names(t_chr_treat) <- c("n","Aspirin ($\\%$)",
+                            "P2Y12 ($\\%$)",
+                            "Clopidogrel ($\\%$)","Prasugrel ($\\%$)","Ticagrelor ($\\%$)",paste0("Oral anticoagulants",footnote_marker_number(1) ,"($\\%$)"),paste0("Direct oral anticoagulation (DOAC)", footnote_marker_number(2),"($\\%$)"),"Warfarin ($\\%$)","Dabigatran ($\\%$)","Rivaroxaban ($\\%$)","Apixaban ($\\%$)",
+                            # "LMWH ($\\%$)",
+                            "ACE-I ($\\%$)","ARB ($\\%$)","ACE-I/ARB ($\\%$)","Beta Blockers ($\\%$)","Calcium channel blockers (CCB) ($\\%$)","Nitrates ($\\%$)","Diuretics ($\\%$)" ,paste0("Antihyperglycemic drugs",footnote_marker_number(3)," ($\\%$)"), paste0("Statins",footnote_marker_number(4)," ($\\%$)"),"Ezetimibe ($\\%$)")
+colnames(t_chr_treat) <- c("Total","Non STEMI","STEMI","p-value")
+```
+
+```{r}
+kable(t_chr_treat[-15,], align = "c", caption = "Table 1.6: Prior Chronic Treatment", booktabs=T, escape = F, longtable=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "5cm") %>%
+  column_spec(2:4,width = "2.5cm") %>% 
+  column_spec(5,width = "2cm") %>%
+  pack_rows("Anti-platelets", 2,6) %>% 
+  pack_rows("Anticoagulants", 7,12) %>%
+  pack_rows("Other",13,21) %>%
+  footnote(symbol = "Percentages are calculated out of available data", 
+           number = c("Oral anticoagulants include: Warfarin, Dabigatran, Rivaroxaban, Apixaban", "Direct Oral anticoagulants include: Dabigatran, Rivaroxaban, Apixaban","Antihyperglycemic drugs include: Glibenclamide, Glipizide, Glimepiride, Metformin, Sitagliptine, Saxagliptine, Vidagliptine, Linagliptine, Exenatide, Liraglutide, Dapagliflozin, Acarbose, Meglinitides, TZDs, Rosiglitazone","Statins include: Simvastatin, Pravastatin, Atorvastatin, Rosuvastatin"), threeparttable = T)
+#should we write that the Antihyperglycemic is only relevant for the diabetic? (I changed NA to NO, as it was in 2018. The NA are the non-diabetec patients.)
+# missing values: in 2018 there were many missing values in the medications, but here there are not at all, this is a mistake
+```
+
+
+```{r fig.height=7, fig.width=8}
+par(mar=c(11,5,4,2))
+per_nst_chr_tr <- as.numeric(out_of_par(t_chr_treat[c("Aspirin ($\\%$)",
+                                                      "Clopidogrel ($\\%$)",
+                                                      "ACE-I/ARB ($\\%$)",
+                                                      "Beta Blockers ($\\%$)",
+                                                      paste0("Antihyperglycemic drugs",footnote_marker_number(3)," ($\\%$)"),
+                                                      paste0("Statins",footnote_marker_number(4)," ($\\%$)")
+                                                      ),2]))
+per_st_chr_tr <- as.numeric(out_of_par(t_chr_treat[c("Aspirin ($\\%$)",
+                                                      "Clopidogrel ($\\%$)",
+                                                      "ACE-I/ARB ($\\%$)",
+                                                      "Beta Blockers ($\\%$)",
+                                                        paste0("Antihyperglycemic drugs",footnote_marker_number(3)," ($\\%$)"),
+                                                      paste0("Statins",footnote_marker_number(4)," ($\\%$)")),3]))
+mydata_chr_tr <- t(cbind(per_nst_chr_tr,per_st_chr_tr))
+colnames(mydata_chr_tr) <- c("Aspirin","Clopidogrel","ACE-I/ARB","Beta Blockers","Antihyperglycemic drugs","Statins")
+mydata_chr_tr <- mydata_chr_tr[,order(mydata_chr_tr[1,], decreasing = T)]
+xx_chr_tr <- barplot(as.matrix(mydata_chr_tr), main="Figure 1.7: Prior Chronic Treatment", ylab="Percent (%)", beside=TRUE,        col=c("cadetblue2","mediumpurple"), ylim = c(0,100), las=2, axisnames = F, font.main=1, cex.main=1.1)
+legend("topright", c("Non STEMI","STEMI"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx_chr_tr, y = as.matrix(mydata_chr_tr), label = as.matrix(mydata_chr_tr), pos = 3, cex = 0.8)
+text(cex=1, x=xx_chr_tr[2,], y=-1.25, colnames(mydata_chr_tr), xpd=TRUE, srt=30, pos=2)
+```
+
+\pagebreak
+
+## 1.5 Transportation, Pre-Admission and Admission Information
+
+
+
+### 1.5.1 Mode of Transportation by ECG on Admission
+
+`r round(100*prop.table(table(droplevels(dat[dat$S21TMODE!="Not relevant (e.g. in-patient)",])$S21TMODE)),1)["Private car / independently"]`% of all patients arrived at the hospital by means of private transportation.
+Patients with ST elevation were more frequently transported to hospital with mobile intensive care unit (MICU), and patients with non ST elevation arrived more frequently by means of private
+transportation.
+
+\  
+
+```{r results='hide'}
+
+#150 NA's! 
+tab_trans <- print(CreateTableOne(vars = "S21TMODE", data = droplevels(dat[!is.na(dat$S21TMODE) & dat$S21TMODE!="Not relevant (e.g. in-patient)",])))
+tab_trans_st <- print(CreateTableOne(vars = "S21TMODE", strata = "ST_ELEV_adm", data = droplevels(dat[!is.na(dat$S21TMODE) & dat$S21TMODE!="Not relevant (e.g. in-patient)",])))
+t_trans <- cbind(tab_trans, tab_trans_st)[-2,-(4:5)]
+row.names(t_trans) <- c(paste0("n",footnote_marker_number(1)),"MICU ($\\%$)","Private car/ independently ($\\%$)","Regular ambulance ($\\%$)")
+colnames(t_trans) <- c("Total","Non ST elevation","ST elevation")
+```
+
+```{r}
+kable(t_trans, align = "c", caption = "Table 1.7: Mode of Transportation by ECG on Admission", booktabs=T, escape = F) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  footnote(number = "Excluded in-patients", general = paste("p-value",tab_trans_st[2,3]), general_title = "") %>% 
+  column_spec(1, width = "4.9cm") %>% 
+  column_spec(2:4,width = "3.2cm") 
+```
+
+\  
+
+```{r  fig.width=8}
+trans_nst <- as.numeric(substr(t_trans[-1,2],6,9))
+trans_st <- as.numeric(substr(t_trans[-1,3],6,9))
+mydata_trans <- t(cbind(trans_nst,trans_st))
+colnames(mydata_trans) <- c("MICU","Private car/ independently","Regular ambulance")
+xx_trans <- barplot(as.matrix(mydata_trans), main="Figure 1.8: Mode of Transportation by ECG on Admission", ylab="Percent (%)", beside=TRUE, col=c("cadetblue2","mediumpurple"), ylim = c(0,80), las=1, font.main=1, cex.main=1.1)
+legend("topright", c("Non ST elevation","ST elevation"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx_trans, y = as.matrix(mydata_trans), label = as.matrix(mydata_trans), pos = 3, cex = 0.8)
+```
+
+\pagebreak
+
+### 1.5.2 Mode of Transportation by Gender
+
+`r round(100*prop.table(table(droplevels(dat[dat$S21TMODE!="Not relevant (e.g. in-patient)",])$S21TMODE)),1)["Mobile ICCU"]`% of patients, both men and women, arrived by means of a MICU.
+Women were more frequently transported to hospital with regular ambulance and men arrived more frequently by means of  private transportation.
+
+\  
+
+```{r results='hide'}
+tab_trans_gen <- print(CreateTableOne(vars = "S21TMODE", strata = "S21SEX", data = droplevels(dat[dat$S21TMODE!="Not relevant (e.g. in-patient)",])))
+t_trans_gen <- cbind(tab_trans, tab_trans_gen)[-2,-(4:5)]
+row.names(t_trans_gen) <- c(paste0("n",footnote_marker_number(1)),"MICU ($\\%$)","Private car/ independently ($\\%$)","Regular ambulance ($\\%$)")
+colnames(t_trans_gen) <- c("Total","Women","Men")
+```
+
+```{r}
+kable(t_trans_gen, align = "c", caption = "Table 1.8: Mode of Transportation by Gender", booktabs=T, escape = F) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  footnote(number = "Excluded in-patients", general = paste0("p-value =",tab_trans_gen[2,3]), general_title = "") %>%
+  column_spec(1, width = "4.9cm") %>% 
+  column_spec(2:4,width = "3.2cm") 
+```
+
+
+\  
+
+```{r fig.width=8}
+trans_gen_w <- as.numeric(substr(t_trans_gen[-1,2],6,9))
+trans_gen_m <- as.numeric(substr(t_trans_gen[-1,3],7,10))
+mydata_trans_gen <- t(cbind(trans_gen_w,trans_gen_m))
+colnames(mydata_trans_gen) <- c("MICU","Private car/ independently","Regular ambulance")
+xx_trans_gen <- barplot(as.matrix(mydata_trans_gen), main="Figure 1.9: Mode of Transportation by gender", ylab="Percent (%)", beside=TRUE, col=c("cadetblue2","mediumpurple"), ylim = c(0,80), las=1, font.main=1, cex.main=1.1)
+legend("topright", c("Women","Men"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx_trans_gen, y = as.matrix(mydata_trans_gen), label = as.matrix(mydata_trans_gen), pos = 3, cex = 0.8)
+```
+
+\pagebreak
+
+### 1.5.3 Drugs administered at the Emergency Department (ED)
+
+\  
+
+```{r results='hide'}
+#28% missing in all medicines
+vars_eddr <- c("S21ERMED1","S21ERMED2","S21ERMED3","S21ERMED4","S21ERMED5","S21ERMED6")
+tab_eddr <- print(CreateTableOne(vars = vars_eddr, data = dat))
+tab_eddr_st <- print(CreateTableOne(vars = vars_eddr, strata = "ST_ELEV_adm", data = dat))
+t_eddr <- cbind(tab_eddr, tab_eddr_st)[,-5]
+colnames(t_eddr) <- c("Total","Non ST elevation","ST elevation","p-value")
+row.names(t_eddr) <- c("n","Aspirin (%)","Clopidogrel (%)","Prasugrel (%)","Ticagrelor (%)","Heparin (%)","Low Molecular Weight Heparin (LMWH) (%)")
+```
+
+```{r}
+kable(t_eddr, align = "c", caption = "Table 1.9: Drugs administered at the ED", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>% 
+  column_spec(1, width = "8cm") %>%
+  column_spec(2:4,width = "2cm") %>% 
+  column_spec(5,width = "2cm")
+```
+
+\  
+
+```{r fig.width=8}
+par(mfrow=c(1,1))
+eddr_nst <- as.numeric(out_of_par(t_eddr[-1,2]))
+eddr_st <- as.numeric(out_of_par(t_eddr[-1,3]))
+mydata_eddr <- t(cbind(eddr_nst,eddr_st))
+colnames(mydata_eddr) <- c("Aspirin","Clopidogrel","Prasugrel","Ticagrelor","Heparin","LMWH")
+mydata_eddr <- mydata_eddr[,order(-mydata_eddr[1,])]
+xx_eddr <- barplot(as.matrix(mydata_eddr), main="Figure 1.10: Drugs administered at the ED", ylab="Percent (%)", beside=TRUE, col=c("cadetblue2","mediumpurple"), ylim = c(0,80), las=1, font.main=1, cex.main=1.1)
+legend("topright", c("Non ST elevation","ST elevation"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx_eddr, y = as.matrix(mydata_eddr), label = as.matrix(mydata_eddr), pos = 3, cex = 0.8)
+```
+
+\pagebreak
+
+### 1.5.4 Ward of First Arrival by ECG on Admission
+
+Most patients with ACS present to the ED. However, a higher
+number of patients with ST elevation presented directly to the intensive cardiac care unit
+(ICCU) and the catheterization laboratory than those with non ST elevation.
+
+\  
+
+```{r results='hide'}
+dat$S21FIRST <- factor(ifelse(dat$S21FIRST=="Directly to CCU", "Directly to ICCU", as.character(dat$S21FIRST))) 
+tab_first <- print(CreateTableOne(vars = "S21FIRST", data = dat))
+tab_first_st <- print(CreateTableOne(vars = "S21FIRST", strata = "ST_ELEV_adm", data = dat))
+t_first <- cbind(tab_first,tab_first_st)[-2,-(4:5)]
+colnames(t_first) <- c("Total","Non ST elevation","ST elevation")
+row.names(t_first) <- c("n",paste0(levels(dat$S21FIRST)," (%)"))
+# rownames(t_first)[which(rownames(t_first)=="ER (%)")] <-"ED (%)"
+
+#added in version 9:
+#Beigel asked to see the patients who arrived by MICU:
+tab_micu <- print(CreateTableOne(vars = "S21FIRST", data = subset(dat, S21TMODE=="Mobile ICCU")))
+tab_micu_st <- print(CreateTableOne(vars = "S21FIRST", strata = "ST_ELEV_adm", data = subset(dat, S21TMODE=="Mobile ICCU")))
+t_micu <- cbind(tab_micu,tab_micu_st)[-2,-(4:5)]
+row.names(t_micu) <- c("n",paste0(levels(subset(dat, S21TMODE=="Mobile ICCU")$S21FIRST)," (%)"))
+
+t_all <- rbind(t_first, t_micu)
+```
+
+```{r}
+kable(t_all, align = "c", caption = "Table 1.10: Ward of First Arrival by ECG on Admission", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position", "striped"))%>%
+  column_spec(1, width = "5.5cm") %>%
+  column_spec(2:4,width = "3cm") %>% 
+  pack_rows("Patients arrived by MICU",6,nrow(t_all)) %>%
+  footnote(general = paste("Difference in ward of first arrival, ST elevation vs. non ST elevation, p",tab_first_st[2,3]), general_title = "")
+```
+
+
+\  
+
+\  
+
+
+\pagebreak
+
+### 1.5.5 First Ward of Admission
+
+As expected, the majority of patients presenting with ST elevation were hospitalized
+in the ICCU (`r round(100*prop.table(table(dat$S21WARD1, dat$ST_ELEV_adm),2),1)["CCU","Yes"]`%). `r round(100*prop.table(table(dat$S21WARD1, dat$ST_ELEV_adm),2),1)["CCU","No"]`% of the patients who presented
+with non ST elevation were admitted to the ICCU and an additional `r round(100*prop.table(table(dat$S21WARD1, dat$ST_ELEV_adm),2),1)["Cardiology","No"]`% to a
+cardiology department, with the remaining `r round(100*prop.table(table(dat$S21WARD1, dat$ST_ELEV_adm),2),1)["Internal medicine","No"]`% being admitted to internal
+medicine departments.
+
+
+
+
+\  
+
+```{r results='hide'}
+dat$S21WARD1 <- factor(ifelse(dat$S21WARD1=="CCU","ICCU", as.character(dat$S21WARD1)), levels = c(  "ICCU","Cardiology" ,"Internal medicine" , "Chest pain unit","Other"  ))
+tab_Ihosp <- print(CreateTableOne(vars = "S21WARD1", data = dat))
+tab_Ihosp_st <- print(CreateTableOne(vars = "S21WARD1", strata = "ST_ELEV_adm", data = dat))
+t_Ihosp <- cbind(tab_Ihosp, tab_Ihosp_st)[-2,-(4:5)]
+colnames(t_Ihosp) <- c("Total","Non ST elevation","ST elevation")
+row.names(t_Ihosp) <- c("n",paste0(levels(dat$S21WARD1)," (%)"))
+```
+
+```{r}
+kable(t_Ihosp, align = "c", caption = "Table 1.11: First Ward of Hospitalization", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position", "striped")) %>%
+  footnote(general = paste("Difference in first ward of hospitalization, ST elevation vs. non ST elevation, p",cbind(tab_Ihosp, tab_Ihosp_st)[2,4]), general_title = "") %>% 
+  column_spec(1, width = "4.9cm") %>%
+  column_spec(2:4,width = "3.2cm") 
+```
+
+
+\  
+
+```{r fig.width=9}
+par(mfrow=c(1,1))
+Ihosp_nst <- as.numeric(out_of_par(t_Ihosp[-1,2]))
+Ihosp_st <- as.numeric(out_of_par(t_Ihosp[-1,3]))
+mydata_Ihosp <- t(cbind(Ihosp_nst,Ihosp_st))
+# colnames(mydata_Ihosp) <- c("Cardiology","CCU","Chest pain unit","Internal medicine \ndepartment","Other")
+colnames(mydata_Ihosp) <- levels(dat$S21WARD1)
+xx_Ihosp <- barplot(as.matrix(mydata_Ihosp), main="Figure 1.11: First Ward of Hospitalization", ylab="Percent (%)", beside=TRUE, col=c("cadetblue2","mediumpurple"), ylim = c(0,100), las=1, font.main=1, cex.main=1.1)
+legend("topright", c("Non ST elevation","ST elevation"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx_Ihosp, y = as.matrix(mydata_Ihosp), label = as.matrix(mydata_Ihosp), pos = 3, cex = 0.8, xpd=T)
+```
+
+\pagebreak
+
+### 1.5.6 Time from Symptom Onset to Hospital Arrival, by ECG on Admission
+
+All time frames were significantly shorter for patients with ST elevation. Patients with
+ST elevation sought help earlier when compared to patients with non ST
+elevation.
+
+\  
+
+```{r results='hide'}
+
+#8.7.21: I did a trimming at 98% and at 0, but nees to check with lizie the data itself.
+
+vars_heft <- c("HEFT1_trim","HEFT2_trim","HEFT4_trim")
+tab_heft <- print(CreateTableOne(vars = vars_heft, data = dat[!(dat$S21MEASAT %in% c("ED","In-patient")),]), nonnormal = vars_heft)
+tab_heft_st <- print(CreateTableOne(vars = vars_heft, strata = "ST_ELEV_adm", data = dat[!(dat$S21MEASAT %in% c("ED","In-patient")),]), nonnormal = vars_heft)
+t_heft <- cbind(tab_heft, tab_heft_st)[,-5]
+colnames(t_heft) <- c("Total", "Non ST elevation", "ST elevation", "p-value")
+row.names(t_heft) <- c(paste0("n",footnote_marker_number(1)),"Onset to first medical contact, minutes (median [IQR])","First medical contact to arrival, minutes (median [IQR])","Onset to arrival, minutes (median [IQR])")
+```
+
+```{r}
+kable(t_heft, align = "c", caption = "Table 1.12: Time (minutes) from Symptom Onset to Admission, by ECG on Admission", booktabs=T, escape = F, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  footnote(number = "Excluded in-patients or patients whose first medical contact was in ED") %>% 
+  column_spec(1,width = "3.7cm") %>%  
+  column_spec(2:4,width = "3.5cm") %>%  
+  column_spec(5,width = "1.2cm") 
+```
+
+\  
+
+```{r fig.width=8}
+par(mfrow=c(1,1))
+par(mar=c(5,8,4,4))
+heft_t <- as.numeric(substr(t_heft[-c(1,4),1],1,6))
+heft_nst <- as.numeric(substr(t_heft[-c(1,4),2],1,6))
+heft_st <- as.numeric(substr(t_heft[-c(1,4),3],1,6))
+mydata_heft <- cbind(heft_t,heft_nst,heft_st)
+row.names(mydata_heft) <- c("Onset to contact","Contact to arrival")
+colnames(mydata_heft) <- c("Total","Non ST elevation", "ST elevation")
+mydata_heft1 <- t(as.matrix(mydata_heft))[,c(2,1)]
+xx_heft <- barplot(as.matrix(mydata_heft), main="Figure 1.12: Median Length of Time from Symptom Onset to Admission",  col=c("cadetblue2","mediumpurple"), las=1, horiz = T, xlim = c(0,250), font.main=1, cex.main=1.1, xlab = "Minutes")
+legend("topright", c("Onset to contact","Contact to arrival"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = matrix(nrow = 3, byrow = F, c((mydata_heft1[,2]/2)+10,mydata_heft1[,2]+(mydata_heft1[,1]/2)+10)), y = xx_heft, label = t(as.matrix(mydata_heft)), pos =2, cex = 1)
+```
+
+\pagebreak
+
+### 1.5.7 Time from Symptom Onset to Hospital Arrival, by gender
+
+<!-- Men were more likely to seek help earlier than women. Men also arrived faster to the emergency room (ER) after seeking for help. -->
+
+\  
+
+```{r results='hide'}
+tab_heft_gen <- print(CreateTableOne(vars = vars_heft, strata = "S21SEX", data = dat[!(dat$S21MEASAT %in% c("ED","In-patient")),]), nonnormal = vars_heft)
+t_heft_gen <- cbind(tab_heft, tab_heft_gen)[,-5]
+colnames(t_heft_gen) <- c("Total", "Women", "Men", "p-value")
+row.names(t_heft_gen) <- c(paste0("n",footnote_marker_number(1)),"Onset to first medical contact, minutes (median [IQR])","First medical contact to arrival, minutes (median [IQR])","Onset to arrival, minutes (median [IQR])")
+```
+
+```{r}
+kable(t_heft_gen, align = "c", caption = "Table 1.13: Time (minutes) from Symptom Onset to Admission by gender", booktabs=T, escape = F, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  footnote(number = "Excluded in-patients or patients whose first medical contact was in ED") %>% 
+  column_spec(1,width = "3.7cm") %>%  
+  column_spec(2:4,width = "3.3cm") %>%  
+  column_spec(5,width = "1.5cm") 
+```
+
+\  
+
+```{r fig.width=8}
+par(mar=c(5,6,4,2))
+heft_gen_t <- as.numeric(substr(t_heft_gen[-c(1,4),1],1,6))
+heft_gen_nst <- as.numeric(substr(t_heft_gen[-c(1,4),2],1,6))
+heft_gen_st <- as.numeric(substr(t_heft_gen[-c(1,4),3],1,6))
+mydata_heft_gen <- cbind(heft_gen_t,heft_gen_nst,heft_gen_st)
+row.names(mydata_heft_gen) <- c("Onset to contact","Contact to arrival")
+colnames(mydata_heft_gen) <- c("Total","Women","Men")
+mydata_heft_gen1 <- t(as.matrix(mydata_heft_gen))[,c(2,1)]
+xx_heft_gen <- barplot(as.matrix(mydata_heft_gen), main="Figure 1.13: Median Length of Time from Symptom Onset to Admission",  col=c("cadetblue2","mediumpurple"), las=1, horiz = T, xlim = c(0,250), font.main=1, cex.main=1.1, xlab = "Minutes")
+legend("topright", c("Onset to contact","Contact to arrival"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = matrix(nrow = 3, byrow = F,  c((mydata_heft_gen1[,2]/2)+10,mydata_heft_gen1[,2]+(mydata_heft_gen1[,1]/2)+10)), y = xx_heft_gen, label = t(as.matrix(mydata_heft_gen)), pos =2, cex = 1)
+```
+
+\pagebreak
+
+### 1.5.8 First Medical Contact
+
+
+`r round(100*prop.table(table(dat$S21MEASAT)),1)["ED"]`% of patients had the first medical contact at the ED and about `r round(100*prop.table(table(dat$S21MEASAT)),1)[2]`% at a Health maintenance organization (HMO) primary clinic/"Moked". For an additional `r round(100*prop.table(table(dat$S21MEASAT)),1)["Mobile ICCU"]`% the primary medical contact was with MICU.
+Patients with ST elevation were more likely to have their first medical contact with a MICU (`r round(100*prop.table(table(dat$S21MEASAT, dat$ST_ELEV_adm),2),1)["Mobile ICCU","Yes"]`%) than those with non ST elevation (`r round(100*prop.table(table(dat$S21MEASAT, dat$ST_ELEV_adm),2),1)["Mobile ICCU","No"]`%).
+
+
+
+
+\  
+
+```{r results='hide'}
+tab_fmed <- print(CreateTableOne(vars = "S21MEASAT", data = dat))
+tab_fmed_st <- print(CreateTableOne(vars = "S21MEASAT", strata = "ST_ELEV_adm", data = dat))
+t_fmed <- cbind(tab_fmed, tab_fmed_st)[-2,-(4:5)]
+row.names(t_fmed) <- c("n",paste0(levels(dat$S21MEASAT)," (%)"))
+row.names(t_fmed)[which(row.names(t_fmed)=="Mobile ICCU (%)")] <- "MICU (%)"
+colnames(t_fmed) <- c("Total","Non ST elevation","ST elevation")
+```
+
+```{r}
+kable(t_fmed, align = "c", caption = "Table 1.14: First Medical Contact", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1,width = "5.5cm") %>%
+  column_spec(2:4,width = "3cm") %>% 
+  footnote(general = paste("Difference in location of first medical contact, ST elevation vs. non ST elevation, p",cbind(tab_fmed, tab_fmed_st)[2,4]), general_title = "")
+```
+
+
+```{r fig.width=9}
+par(mfrow=c(1,1))
+t_nst <- as.numeric(out_of_par(t_fmed[-1,2]))
+t_st <- as.numeric(out_of_par(t_fmed[-1,3]))
+mydata_t <- t(cbind(t_nst,t_st))
+# colnames(mydata_Ihosp) <- c("Cardiology","CCU","Chest pain unit","Internal medicine \ndepartment","Other")
+colnames(mydata_t) <- levels(dat$S21MEASAT)
+colnames(mydata_t)[2] <- "HMO Out Pts. clinic /\n 'Moked'"
+xx_Ihosp <- barplot(as.matrix(mydata_t), main="Figure 1.14: First Medical Contact", ylab="Percent (%)", beside=TRUE, col=c("cadetblue2","mediumpurple"), ylim = c(0,100), las=1, font.main=1, cex.main=1.1, axisnames = F) 
+legend("topright", c("Non ST elevation","ST elevation"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx_Ihosp, y = as.matrix(mydata_t), label = as.matrix(mydata_t), pos = 3, cex = 0.6, xpd=T)
+text(cex=1,x=xx_Ihosp[2,], y=-1.35, colnames(mydata_t), xpd=TRUE, srt=30, pos=2) 
+
+```
+
+
+\pagebreak
+
+### 1.5.9 Presenting Symptoms and Killip Class
+
+
+Typical angina was significantly more frequent in patients presenting with ST elevation (`r round(100*prop.table(table(dat$S21ADMSY1, dat$ST_ELEV_adm),2),1)["YES","Yes"]`%) than those presenting with non ST elevation (`r round(100*prop.table(table(dat$S21ADMSY1, dat$ST_ELEV_adm),2),1)["YES","No"]`%). However, atypical chest pain was more common in patients presenting with non ST elevation (`r round(100*prop.table(table(dat$S21ADMSY3, dat$ST_ELEV_adm),2),1)["YES","No"]`%) than in those with ST elevation (`r round(100*prop.table(table(dat$S21ADMSY3, dat$ST_ELEV_adm),2),1)["YES","Yes"]`%).
+Also dyspnea was more common in patients with non ST elevation (`r round(100*prop.table(table(dat$S21ADMSY2, dat$ST_ELEV_adm),2),1)["YES","No"]`%) than those with ST elevation (`r round(100*prop.table(table(dat$S21ADMSY2, dat$ST_ELEV_adm),2),1)["YES","Yes"]`%).
+
+
+
+
+\  
+
+```{r results='hide'}
+vars_symp <- c("S21ADMSY1","S21ADMSY3","S21ADMSY4","S21ADMSY7","S21ADMSY5","S21ADMSY2","S21ADMSY6")
+tab_symp <- print(CreateTableOne(vars = vars_symp, data = dat))
+tab_symp_St <- print(CreateTableOne(vars = vars_symp, strata = "ST_ELEV_adm", data = dat))
+t_symp <- cbind(tab_symp, tab_symp_St)[,-5]
+colnames(t_symp) <- c("Total","Non ST elevation","ST elevation","p-value")
+row.names(t_symp) <- c("n","Typical angina (%)","Atypical chest pain (%)","Syncope (%)","Aborted Sudden Cardiac Death (SCD) (%)","Palpitations (%)","Dyspnea (%)","Abdominal pain (%)")
+
+tab_killip <- print(CreateTableOne(vars = "S21ADMKLP", strata = "ST_ELEV_adm", data = dat, factorVars = "S21ADMKLP"))
+t_killip <- cbind(tab_killip)
+```
+
+```{r}
+kable(t_symp, align = "c", caption = "Table 1.15: Presenting Symptoms at First Medical Contact", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "6cm") %>% 
+  column_spec(2:4, width = "3cm") %>%
+  column_spec(5,width = "1.5cm") 
+```
+
+\  
+
+```{r fig.width=8}
+t_killip_nst <- as.numeric(out_of_par(t_killip[-(1:2),1]))
+t_killip_st <- as.numeric(out_of_par(t_killip[-(1:2),2]))
+mydata_killip <- cbind(t_killip_nst,t_killip_st)
+colnames(mydata_killip) <- c("Non ST elevation","ST elevation")
+row.names(mydata_killip) <- levels(as.factor(dat$S21ADMKLP))
+xx_killip <- barplot(t(as.matrix(mydata_killip)), main = "Figure 1.15: Killip Class on Admission", col=c("cadetblue2","mediumpurple"), beside = T, ylim = c(0,100), ylab = "Percent (%)", xlab = "Killip class", font.main=1, cex.main=1.1)
+legend("topright", c("Non ST elevation","ST elevation"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx_killip, y = t(as.matrix(mydata_killip)), label = t(as.matrix(mydata_killip)), pos =3, cex = 1)
+```
+
+\pagebreak
+
+### 1.5.10 Pre-Hospital Treatment (before ED arrival)
+
+At first medical contact, patients with ST elevation were significantly more likely to receive therapy with aspirin and heparin than patients
+with non ST elevation.
+
+\  
+
+```{r results='hide'}
+vars_bhosp_tr <- c("S21TMED1","S21TMED2","S21TMED3","S21TMED4","S21TMED5","S21TMED6")
+tab_bhosp_tr <- print(CreateTableOne(vars = vars_bhosp_tr, data = subset(dat, S21TMODE %in% c("Mobile ICCU","Regular ambulance"))))
+tab_bhosp_tr_st <- print(CreateTableOne(vars = vars_bhosp_tr, strata = "ST_ELEV_adm", data = subset(dat, S21TMODE %in% c("Mobile ICCU","Regular ambulance"))))
+t_bhosp_tr <- cbind(tab_bhosp_tr, tab_bhosp_tr_st)[,-5]
+colnames(t_bhosp_tr) <- c("Total","Non ST elevation","ST elevation","p-value")
+row.names(t_bhosp_tr) <- c(paste0("n", footnote_marker_number(1)),"Aspirin ($\\%$)","Clopidogrel ($\\%$)","Prasugrel ($\\%$)","Ticagrelor ($\\%$)","Heparin ($\\%$)","LMWH ($\\%$)")
+```
+
+```{r}
+kable(t_bhosp_tr, align = "c", caption = "Table 1.16 Pre-Hospitalization Treatment", booktabs=T, escape = F, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  footnote(number = "Only MICU and regular ambulance patients were included") %>% 
+  column_spec(1, width = "4cm") %>% 
+  column_spec(2:4, width = "3cm") %>%
+  column_spec(5,width = "1.5cm") 
+```
+
+\  
+
+```{r fig.width=8}
+t_bhosp_nst <- as.numeric(out_of_par(t_bhosp_tr[-1,2]))
+t_bhosp_st <- as.numeric(out_of_par(t_bhosp_tr[-1,3]))
+mydata_bhosp <- cbind(t_bhosp_nst,t_bhosp_st)
+colnames(mydata_bhosp) <- c("Non ST elevation","ST elevation")
+row.names(mydata_bhosp) <- c("Aspirin","Clopidogrel","Prasugrel","Ticagrelor","Heparin","LMWH")
+xx_bhosp <- barplot(t(as.matrix(mydata_bhosp)), main = "Figure 1.16: Pre-Hospitalization Treatment", col=c("cadetblue2","mediumpurple"), beside = T, ylim = c(0,100), ylab = "Percent (%)", font.main=1, cex.main=1.1)
+legend("top", c("Non ST elevation","ST elevation"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n", xpd=T)
+text(x = xx_bhosp, y = t(as.matrix(mydata_bhosp)), label = t(as.matrix(mydata_bhosp)), pos =3, cex = 1)
+```
+
+\pagebreak
+
+## 1.6 First Recorded ECG
+
+
+
+### 1.6.1 Location of First ECG Recording
+
+
+`r round(100*prop.table(table(dat$S21ECGLOC, dat$ST_ELEV_adm),2),1)["ED","No"]`% of patients presenting with non ST elevation and `r round(100*prop.table(table(dat$S21ECGLOC, dat$ST_ELEV_adm),2),1)["ED","Yes"]`% of patients
+presenting with ST elevation had their first ECG recorded in the emergency department (ED).
+With respect to the remaining patients, `r round(100*prop.table(table(dat$S21ECGLOC, dat$ST_ELEV_adm),2),1)["Home","Yes"]+round(100*prop.table(table(dat$S21ECGLOC, dat$ST_ELEV_adm),2),1)["Ambulance","Yes"]`% of patients with ST elevation and
+`r round(100*prop.table(table(dat$S21ECGLOC, dat$ST_ELEV_adm),2),1)["Home","No"]+round(100*prop.table(table(dat$S21ECGLOC, dat$ST_ELEV_adm),2),1)["Ambulance","No"]`% of those with non ST elevation had the first ECG performed either at home or in
+an ambulance, and about 15% in both groups had it performed in a primary clinic.
+
+
+
+
+\  
+
+```{r fig.width=8}
+par(mar=c(4,4,4,2))
+t_ecgloc <- addmargins(table(dat$S21ECGLOC, dat$ST_ELEV_adm))
+t_ecgloc_nst <- round(t_ecgloc[1:5,1]/t_ecgloc[6,1]*100,1)
+t_ecgloc_st <- round(t_ecgloc[1:5,2]/t_ecgloc[6,2]*100,1)
+mydata_ecgloc <- cbind(t_ecgloc_nst,t_ecgloc_st)
+colnames(mydata_ecgloc) <- c("Non ST elevation","ST elevation")
+mydata_ecgloc <- mydata_ecgloc[order(-mydata_ecgloc[,1]),]
+xx_ecgloc <- barplot(t(as.matrix(mydata_ecgloc)), main = "Figure 1.17: Location of First ECG Recording", col=c("cadetblue2","mediumpurple"), beside = T, ylim = c(0,80), ylab = "Percent (%)", font.main=1, cex.main=1.1, cex.names = 0.9)
+legend("topright", c("Non ST elevation","ST elevation"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx_ecgloc, y = t(as.matrix(mydata_ecgloc)), label = t(as.matrix(mydata_ecgloc)), pos =3, cex = 1, xpd=T)
+
+# print(CreateTableOne(vars = "S21ECGLOC",strata = "ST_ELEV", data = dat)) #check
+```
+
+\pagebreak
+
+### 1.6.2 First ECG Rhythm
+
+
+About `r round(100*prop.table(table(dat$S21ECGRHY)))["NSR"]`%  of patients presented with a normal sinus rhythm (NSR). `r round(100*prop.table(table(dat$S21ECGRHY, dat$ST_ELEV_adm),2),1)["AF","Yes"]`% of patients with ST elevation and `r round(100*prop.table(table(dat$S21ECGRHY, dat$ST_ELEV_adm),2),1)["AF","No"]`% of those without ST elevation, presented with atrial fibrillation.
+
+
+
+
+\  
+
+```{r results='hide'}
+tab_ecgrhy <- print(CreateTableOne(vars = "S21ECGRHY", data = dat))
+tab_ecgrhy_st <- print(CreateTableOne(vars = "S21ECGRHY", strata = "ST_ELEV_adm", data = dat))
+t_ecgrhy <- cbind(tab_ecgrhy, tab_ecgrhy_st)[c(1,3:length(rownames(tab_ecgrhy))),-(4:5)]
+colnames(t_ecgrhy) <- c("Total","Non ST elevation","ST elevation")
+row.names(t_ecgrhy) <- c("n","NSR (%)","Atrial fibrillation (%)","Sinus Tachycardia (%)","Sinus Bradycardia (%)","Ventricular Tachycardia (VT)/ Ventricular Fibrillation (VF) (%)","High degree (2nd / 3rd) Atrioventricular (AV) Block (%)","Asystole (%)","Other (%)")
+```
+
+```{r}
+kable(t_ecgrhy, align = "c", caption = "Table 1.17: First ECG Rhythm", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  footnote(general = paste("Difference in first ECG rhythm, ST elevation vs. non ST elevation, p", tab_ecgrhy_st[2,3]), general_title = "") %>% 
+  column_spec(1, width = "5cm") %>% 
+  column_spec(2:4, width = "3cm")
+```
+
+
+\pagebreak
+
+## 1.7 Primary Reperfusion
+
+
+
+### 1.7.1 Primary Reperfusion Therapy in Patients with STEMI
+
+
+`r round(100*(table(dat$ST_ELEV,dat$S21REP)[2,2])/table(dat$ST_ELEV)[2],1)`% of patients with STEMI underwent primary reperfusion within 12 hours from onset of symptoms, mainly primary PCI. In `r round(100*(table(dat_st_rep$S21PCISTENT,dat_st_rep$REP=="PRIMARY PCI")[2,2])/table(dat_st_rep$REP=="PRIMARY PCI")[2],1)`% of these cases, stents were deployed. Of the remaining `r 100-(round(100*(table(dat$ST_ELEV,dat$S21REP)[2,2])/table(dat$ST_ELEV)[2],1))``% which did not undergo primary reperfusion, `r round(100*(table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes")["TRUE"]/table(dat_st$S21REP=="No")["TRUE"]),1)`% eventually underwent coronary angiography. Of these, `r round(round(100*(table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes" & dat_st$S21HPCI=="Yes")["TRUE"]/table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes")["TRUE"]),1) + round(100*(table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes" & dat_st$S21HCABG=="Yes")["TRUE"]/table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes")["TRUE"]),1))`% underwent revascularization.
+
+
+
+
+\  
+
+```{r fig.height=8, fig.width=9}
+par(mar=c(2,0,2,0))
+openplotmat()
+elpos <- coordinates(c(1, 2, 5, 3,1))
+treearrow(from=elpos[1,],to=elpos[2:3,],lwd=4)
+treearrow(from=elpos[2,],to=elpos[4:7,],lwd=4)
+treearrow(from=elpos[5,],to=elpos[9,],lwd=4)
+treearrow(from=elpos[3,],to=elpos[8,],lwd=4)
+treearrow(from=elpos[8,],to=elpos[10:11,],lwd=4)
+treearrow(from=elpos[10,],to=elpos[12,],lwd=4)
+labels <- vector(length =12)
+labels[1] <- paste("STEMI \n n =",length(dat[dat$ST_ELEV=="Yes","ST_ELEV"]))
+
+labels[2] <- paste0("Primary \n reperfusion \n n = ",table(dat$ST_ELEV,dat$S21REP)[2,2]," (",round(100*(table(dat$ST_ELEV,dat$S21REP)[2,2])/table(dat$ST_ELEV)[2],1),"%)")
+labels[3] <- paste0("No primary \n reperfusion \n n = ", table(dat$ST_ELEV,dat$S21REP)[2,1], " (",round(100*(table(dat$ST_ELEV,dat$S21REP)[2,1])/table(dat$ST_ELEV)[2],1),"%)")
+
+labels[4] <- paste0("Coronary\n angiography\n without PCI \n n =",table(dat_st$REP=="ANGIO WITHOUT PCI",dat_st$S21REP)[2,2], " (",round(100*(table(dat_st$REP=="ANGIO WITHOUT PCI",dat_st$S21REP)[2,2])/table(dat_st$S21REP)[2],1),"%)")
+labels[5] <- paste0("Primary PCI \n n =",table(dat_st$REP=="PRIMARY PCI",dat_st$S21REP)[2,2], " (",round(100*(table(dat_st$REP=="PRIMARY PCI",dat_st$S21REP)[2,2])/table(dat_st$S21REP)[2],1),"%)")
+labels[6] <- paste0("Thrombolysis \n n =",table(dat_st$REP=="TLX",dat_st$S21REP)[2,2], " (",round(100*(table(dat_st$REP=="TLX",dat_st$S21REP)[2,2])/table(dat_st$S21REP)[2],1),"%)")
+labels[7] <- paste0("Urgent CABG \n n =",table(dat_st$REP=="URGENT CABG",dat_st$S21REP)[2,2], " (",round(100*(table(dat_st$REP=="URGENT CABG",dat_st$S21REP)[2,2])/table(dat_st$S21REP)[2],1),"%)")
+
+labels[9] <- paste0("Stent \n n =",table(dat_st_rep$S21PCISTENT,dat_st_rep$REP=="PRIMARY PCI")[2,2], " (",round(100*(table(dat_st_rep$S21PCISTENT,dat_st_rep$REP=="PRIMARY PCI")[2,2])/table(dat_st_rep$REP=="PRIMARY PCI")[2],1),"%)")
+
+#out of "no primary rep":
+labels[8] <- paste0("Coronary\n angiography\n n = ", table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes")["TRUE"], " (",round(100*(table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes")["TRUE"]/table(dat_st$S21REP=="No")["TRUE"]),1),"%)")
+
+labels[10] <- paste0("PCI\n n = ", table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes" & dat_st$S21HPCI=="Yes")["TRUE"], " (",round(100*(table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes" & dat_st$S21HPCI=="Yes")["TRUE"]/table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes")["TRUE"]),1),"%)")
+
+labels[11] <- paste0("CABG\n n = ", table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes" & dat_st$S21HCABG=="Yes")["TRUE"], " (",round(100*(table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes" & dat_st$S21HCABG=="Yes")["TRUE"]/table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes")["TRUE"]),1),"%)")
+
+labels[12] <- paste0("Stent\n n = ", table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes" & dat_st$S21HPCI=="Yes" & dat_st$S21HASTENT=="Yes")["TRUE"], " (",round(100*(table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes" & dat_st$S21HPCI=="Yes" & dat_st$S21HASTENT=="Yes")["TRUE"]/table(dat_st$S21REP=="No" & dat_st$S21ANGIO=="Yes" & dat_st$S21HPCI=="Yes")["TRUE"]),1),"%)")
+
+#Not exist in ACSIS 21:
+# labels[9] <- paste0("Drug eluting only \n (DES) \n n =",table(dat_st_rep$S18PCIDES, dat_st_rep$S18PCIBMS, dat_st_rep$REP=="PRIMARY PCI")[2,1,2], " (",round(100*(table(dat_st_rep$S18PCIDES, dat_st_rep$S18PCIBMS, dat_st_rep$REP=="PRIMARY PCI")[2,1,2])/table(dat_st_rep$S21PCISTENT,dat_st_rep$REP=="PRIMARY PCI")[2,2],1),"%)")
+# labels[10] <- paste0("Bare metal only \n (BMS) \n n =",table(dat_st_rep$S18PCIBMS, dat_st_rep$S18PCIDES, dat_st_rep$REP=="PRIMARY PCI")[2,1,2], " (",round(100*(table(dat_st_rep$S18PCIBMS, dat_st_rep$S18PCIDES, dat_st_rep$REP=="PRIMARY PCI")[2,1,2])/table(dat_st_rep$S21PCISTENT,dat_st_rep$REP=="PRIMARY PCI")[2,2],2),"%)")
+
+for (i in 1:12) textround(elpos[i,],radx=0.036,rady=0.07,lab=labels[i], shadow.col = "mediumpurple", box.col = "aliceblue")
+title("Figure 1.18: Primary Reperfusion in Patients with ST Elevation", font.main=1, cex.main=1)
+```
+
+\pagebreak
+
+### 1.7.2 Length of Time from Arrival to Primary Reperfusion
+
+```{r results='hide'}
+#8.7.21: I trimmed outliers. 
+#v12 Roy asked to remove time to reperfusion because it is the same as time to prim.PCI
+
+vars_arr_rep <- c(#"HEFT9_trim",
+                  "ARR_TLX_trim","ARR_PPCI_trim")
+tab_arr_rep <- print(CreateTableOne(vars = vars_arr_rep, data = dat_st_rep), nonnormal = vars_arr_rep)
+n_arr_rep <- c(#length(na.omit(dat_st_rep$HEFT9)),
+               length(na.omit(dat_st_rep$ARR_TLX)),length(na.omit(dat_st_rep$ARR_PPCI)))
+t_arr_rep <- cbind(n_arr_rep,tab_arr_rep[-1,])
+colnames(t_arr_rep) <- c("N","Time in minutes (median [IQR])")
+row.names(t_arr_rep) <- c(#"From arrival to reperfusion",
+                          "From arrival to  thrombolysis (TLx)","From arrival to primary PCI (PPCI)")
+
+mydata_arr_rep <- as.numeric(substr(t_arr_rep[,2],1,5))
+```
+
+
+The median time from arrival to primary reperfusion was less than one hour (`r mydata_arr_rep[1]` minutes).
+
+\  
+
+
+```{r}
+kable(t_arr_rep, align = "c",caption = "Table 1.18: Length of Time (minutes) from Arrival to Reperfusion", booktabs=T) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>% 
+  column_spec(1, width = "5.9cm") %>% 
+  column_spec(2:3, width = "4.3cm")
+```
+
+\  
+
+```{r fig.width=8}
+par(mar=c(4,8,5,2))
+mydata_arr_rep <- as.numeric(substr(t_arr_rep[,2],1,5))
+mydata_arr_rep_l <- as.numeric(substr(t_arr_rep[,2],8,12))
+mydata_arr_rep_u <- as.numeric(substr(t_arr_rep[,2],15,19))
+xx_arr_rep <- barplot(t(as.matrix(mydata_arr_rep)), main="Figure 1.19: Length of Time from Arrival to Reperfusion \n(Median, 25%-75%)",  col=c("cadetblue2", "mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,100), names.arg = c(#"Arrival-Rep",
+                                                                                                                                                                                                                                           "Arrival-TLx","Arrival-PPCI"), xlab = "Time (minutes)", font.main=1, cex.main=1.1)
+segments(mydata_arr_rep_l,xx_arr_rep,mydata_arr_rep_u,xx_arr_rep, lwd = 3, col = "mediumpurple")
+segments(c(mydata_arr_rep_l,mydata_arr_rep_u),xx_arr_rep-0.05,c(mydata_arr_rep_l,mydata_arr_rep_u),xx_arr_rep+0.05, lwd = 3, col = "mediumpurple")
+text(x = mydata_arr_rep+3, y = xx_arr_rep, label = t(as.matrix(mydata_arr_rep)), pos =3, cex = 1, font = 2, col = "mediumpurple")
+```
+
+\pagebreak
+
+### 1.7.3 Length of Time from Arrival to Primary Reperfusion, by Gender
+
+The time delay from arrival to primary reperfusion was shorter for men compared to women.
+
+\  
+
+```{r results='hide', warning=FALSE}
+tab_arr_rep_gen <- print(CreateTableOne(vars = vars_arr_rep, strata = "S21SEX", data = dat), nonnormal = vars_arr_rep)
+
+tab_arr_rep_gen <- gsub(".00"," ", tab_arr_rep_gen)
+tab_arr_rep_gen <- gsub(".50",".5 ", tab_arr_rep_gen)
+
+n_arr_rep_w <- c(#length(na.omit(dat[dat$S21SEX=="Female","HEFT9"])),
+                 length(na.omit(dat[dat$S21SEX=="Female","ARR_TLX"])),length(na.omit(dat[dat$S21SEX=="Female","ARR_PPCI"])))
+n_arr_rep_m <- c(#length(na.omit(dat[dat$S21SEX=="Male","HEFT9"])),
+                 length(na.omit(dat[dat$S21SEX=="Male","ARR_TLX"])),length(na.omit(dat[dat$S21SEX=="Male","ARR_PPCI"])))
+t_arr_rep_gen <- cbind(tab_arr_rep_gen[-1,1],n_arr_rep_w,tab_arr_rep_gen[-1,2],n_arr_rep_m,tab_arr_rep_gen[-1,3])
+row.names(t_arr_rep_gen) <- c(#"From arrival to reperfusion",
+                              "From arrival to  thrombolysis","From arrival to primary PCI")
+colnames(t_arr_rep_gen) <- c("Time in minutes (median [IQR])","N","Time in minutes (median [IQR])","N","p-value")
+```
+
+```{r}
+kable(t_arr_rep_gen, align = "c",caption = "Table 1.19: Length of Time (minutes) from Arrival to Reperfusion, by gender", booktabs=T) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  add_header_above(c("", "Women"=2, "Men"=2,"")) %>%
+  column_spec(1, width = "4.5cm") %>% 
+  column_spec(c(2,4), width = "3.5cm") %>% 
+  column_spec(c(3,5,6), width = "1cm")
+```
+
+\  
+
+\  
+
+```{r fig.width=8, warning=FALSE}
+par(mfrow=c(1,2), oma=c(0,0,3,0),mar=c(4,8,5,2))
+mydata_arr_rep_w <- as.numeric(substr(t_arr_rep_gen[,1],1,3))
+mydata_arr_rep_l_w <- as.numeric(substr(t_arr_rep_gen[,1],6,10))
+mydata_arr_rep_u_w <- as.numeric(substr(t_arr_rep_gen[,1],13,18))
+xx_arr_rep_w <- barplot(t(as.matrix(mydata_arr_rep_w)), main="Women",  col=c("cadetblue2","mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,140), names.arg = c(#"Arrival-Rep",
+                                                                                                                                                                         "Arrival-TLx","Arrival-PPCI"), xlab = "Time (minutes)")
+segments(mydata_arr_rep_l_w,xx_arr_rep_w,mydata_arr_rep_u_w,xx_arr_rep_w, lwd = 3, col = "mediumpurple")
+segments(c(mydata_arr_rep_l_w,mydata_arr_rep_u_w),xx_arr_rep_w-0.05,c(mydata_arr_rep_l_w,mydata_arr_rep_u_w),xx_arr_rep_w+0.05, lwd = 3, col = "mediumpurple")
+text(x = mydata_arr_rep_w+15, y = xx_arr_rep_w, label = t(as.matrix(mydata_arr_rep_w)), pos =3, cex = 1, font = 2, col = "mediumpurple")
+
+mydata_arr_rep_m <- as.numeric(substr(t_arr_rep_gen[,3],1,4))
+mydata_arr_rep_l_m <- as.numeric(c(substr(t_arr_rep_gen[1,3],8,10),
+                                 substr(t_arr_rep_gen[2,3],6,7))
+                                 )
+mydata_arr_rep_u_m <- as.numeric(c(substr(t_arr_rep_gen[1,3],13,17),
+                                 substr(t_arr_rep_gen[2,3],11,14))
+                                 )
+xx_arr_rep_m <- barplot(t(as.matrix(mydata_arr_rep_m)), main="Men",  col=c("cadetblue2","mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,140), names.arg = c(#"Arrival-Rep",
+                                                                                                                                                                       "Arrival-TLx","Arrival-PPCI"), xlab = "Time (minutes)")
+segments(mydata_arr_rep_l_m,xx_arr_rep_m,mydata_arr_rep_u_m,xx_arr_rep_m, lwd = 3, col = "mediumpurple")
+segments(c(mydata_arr_rep_l_m,mydata_arr_rep_u_m),xx_arr_rep_m-0.05,c(mydata_arr_rep_l_m,mydata_arr_rep_u_m),xx_arr_rep_m+0.05, lwd = 3, col = "mediumpurple")
+text(x = mydata_arr_rep_m+15, y = xx_arr_rep_m, label = t(as.matrix(mydata_arr_rep_m)), pos =3, cex = 1, font = 2, col = "mediumpurple")
+
+mtext("Figure 1.20: Length of Time from Arrival to Reperfusion by gender \n(Median, 25%-75%)", side = 3, outer = TRUE, line = 0.5, cex.main=1.1)
+```
+
+\pagebreak
+
+### 1.7.4 Use of drugs and protective devices during Primary PCI
+
+
+```{r results='hide'}
+vars_drugs_pci <- c("pci2b","pciac3","pcipd")
+tab_drugs_pci <- print(CreateTableOne(vars = vars_drugs_pci, data = dat_st_rep))
+row.names(tab_drugs_pci) <- c("n","IIb/IIIa antagonists (%)","Bivalirudin (%)","Aspiration device (%)")
+```
+
+\  
+
+```{r}
+kable(tab_drugs_pci, align = "c", caption = "Table 1.20: Drugs and Protective Devices during Primary Reperfusion", booktabs=T) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>% 
+  column_spec(1, width = "8cm") %>% 
+  column_spec(2, width = "6.5cm")
+```
+
+\  
+
+\  
+
+### 1.7.5 Primary PCI / Coronary Angiography
+
+```{r results='hide'}
+dat_st_rep$S21PCIVA <- factor(dat_st_rep$S21PCIVA, levels = c("Femoral","Radial","Both"))
+tab_radial_ppci <- print(CreateTableOne(vars = "S21PCIVA", data = dat_st_rep))
+row.names(tab_radial_ppci) <- c("n","Vascular access",levels(dat_st_rep$S21PCIVA))
+```
+
+```{r}
+kable(tab_radial_ppci, align = "c", caption = "Table 1.21: Vascular access during Primary Reperfusion", booktabs=T) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>% 
+  column_spec(1, width = "8cm") %>% 
+  column_spec(2, width = "6.5cm") %>% 
+  add_indent(3:5)
+```
+
+\  
+
+\  
+
+### 1.7.6 Thrombolysis in Myocardial Infarction (TIMI) Grade Flow of Infarct-Related Artery (IRA) During Primary PCI
+
+In `r round(100*prop.table(table(subset(dat_st_rep_ppci,!is.na(S21BTIMI))$S21BTIMI)),1)["0"]`% of cases, a TIMI flow grade of zero was observed on first injection to the Infarct Related Artery (IRA). Following revascularization, a TIMI grade flow of 3 was achieved
+in the majority of patients (`r round(100*prop.table(table(subset(dat_st_rep_ppci,!is.na(S21FTIMI))$S21FTIMI)),1)["3"]`%).
+
+\  
+
+```{r results='hide'}
+tab_btimi <- print(CreateTableOne(vars = "S21BTIMI", data = subset(dat_st_rep_ppci,!is.na(S21BTIMI)), factorVars = "S21BTIMI"))
+tab_ftimi <- print(CreateTableOne(vars = "S21FTIMI", data = subset(dat_st_rep_ppci,!is.na(S21FTIMI)), factorVars = "S21FTIMI"))
+t_timi <- cbind(tab_btimi,tab_ftimi)[-2,]
+colnames(t_timi) <- c("Before revascularization ($\\%$)","After revascularization ($\\%$)")
+```
+
+```{r}
+kable(t_timi, align = "c", caption = "Table 1.22: TIMI Grade Flow of IRA Before and After Revascularization", booktabs=T, escape = F) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>% 
+  column_spec(1, width = "5.5cm") %>% 
+  column_spec(2:3, width = "5.5cm") %>%
+  add_indent(2:5, level_of_indent = 2)
+```
+
+\pagebreak
+
+### 1.7.7 Reasons for Not Performing Primary Reperfusion
+
+
+`r round(100*(table(dat$ST_ELEV,dat$S21REP)[2,1])/table(dat$ST_ELEV)[2],1)`% of patients presenting with STEMI did not receive primary reperfusion therapy. In `r round(100*prop.table(table(dat$S21NOREP1, dat$ST_ELEV),2),1)["YES","Yes"]`% the reason was spontaneous reperfusion, in `r round(100*prop.table(table(dat$S21NOREP2, dat$ST_ELEV),2),1)["YES","Yes"]`% the reason was late arrival at the hospital, and in `r round(100*prop.table(table(dat$S21NOREP5, dat$ST_ELEV),2),1)["YES","Yes"]`% of cases primary reperfusion was considered not indicated.
+
+
+
+
+\  
+
+```{r results='hide'}
+
+# S21NOREP1	Spontaneous reperfusion
+# S21NOREP2	Late arrival at hospital
+# S21NOREP3	Died before decision
+# S21NOREP4	Contraindication to TLx
+# S21NOREP5	PPCI considered not indicated / justified
+# S21NOREP6	Patient refusal
+# S21NOREP8	Takotsubo syndrome 
+# S21NOREP9	Normal coronaries
+
+vars_norep <- c("S21NOREP2",
+                  "S21NOREP_other",
+                 "S21NOREP1",
+               
+                "S21NOREP5",
+   "S21NOREP3", "S21NOREP8"
+                # "S21NOREP6", #all NO
+                # "S21NOREP4", #all NO
+               
+                 
+                )
+tab_norep <- print(CreateTableOne(vars = vars_norep, data = dat_st_nrep))
+t_norep <- tab_norep[-1]
+```
+
+```{r fig.height=6, fig.width=9}
+par(mfrow=c(1,1))
+par(mar=c(5,13.5,5,2))
+# mydata_norep <- round((as.numeric(substr(t_norep,1,3))/nrow(dat_st_nrep))*100,1)
+mydata_norep <- out_of_par(t_norep)
+xx_norep <- barplot(mydata_norep, horiz = T, xlim = c(0,50), xlab = "Percent (%)", names.arg = c(
+   "Late arrival at hospital",
+    "Other",
+    "Spontaneous reperfusion",
+    "Considered not indicated/justified",
+   "Died before decision",
+   "Takotsubo syndrome"
+  # "Patient refusal",
+  # "Contraindication to thrombolysis",
+  
+   ),las=1, main = paste0("Figure 1.21: Reasons for Not Performing Primary Reperfusion \n Number of Patients = ", length(dat_st_nrep[,1])),  col="cadetblue2", font.main=1, cex.main=1.1)
+text(x = mydata_norep, y = xx_norep, label = mydata_norep, pos =4, cex = 1, font = 1, xpd=T)
+```
+
+* There were no patients with contraindication to thrombolysis or patient refusal.
+
+\pagebreak
+
+## 1.8 Coronary Interventions and Procedures during Hospitalization
+
+<br>
+
+### 1.8.1 Coronary Angiography and Interventions
+
+Patients with STEMI were more likely than those with non STEMI to
+undergo coronary angiography and PCI. CABG during hospitalization was performed
+more frequently in patients with non STEMI.
+
+\  
+
+
+```{r fig.width=9.5, fig.height=6}
+par(mfrow=c(1,2),mar=c(0,0.5,0,0.5), oma=c(0,0,3,0))
+openplotmat()
+elpos_st <- coordinates(c(1, 1, 3))
+treearrow(from=elpos_st[1,],to=elpos_st[2,],lwd=4)
+treearrow(from=elpos_st[2,],to=elpos_st[3:5,],lwd=4)
+
+labels_st <- vector(length = 5)
+labels_st[1] <- paste("STEMI\n n =",length(dat[dat$ST_ELEV%in%"Yes","ST_ELEV"]))
+
+labels_st[2] <- paste0("Coronary\n angiography \n  n = ",table(dat$ST_ELEV,dat$ANGIO)[2,2],"\n  (",round(100*(table(dat$ST_ELEV,dat$ANGIO)[2,2])/table(dat$ST_ELEV)[2],1),"%)")
+
+labels_st[3] <- paste0("CABG* \n n = ", table(dat$ST_ELEV,dat$ANGIO,dat$ANYCABG)[2,2,2], "\n  (",round(100*(table(dat$ST_ELEV,dat$ANGIO,dat$ANYCABG)[2,2,2])/table(dat$ST_ELEV,dat$ANGIO)[2,2],1),"%)")
+labels_st[4] <- paste0("Any PCI* \n n = ",table(dat$ST_ELEV,dat$ANGIO,dat$ANYPCI)[2,2,2], "\n  (",round(100*(table(dat$ST_ELEV,dat$ANGIO,dat$ANYPCI)[2,2,2])/table(dat$ST_ELEV,dat$ANGIO)[2,2],1),"%)")
+labels_st[5] <- paste0("Only \n coronary\n angiography \n n = ",table(dat$ST_ELEV,dat$ANGIO,dat$st_only_angio)[2,2,2], "\n  (",round(100*(table(dat$ST_ELEV,dat$ANGIO,dat$st_only_angio)[2,2,2])/table(dat$ST_ELEV,dat$ANGIO)[2,2],1),"%)")
+
+for (i in 1:5) textround(elpos_st[i,],radx=0.065,rady=0.1,lab=labels_st[i], shadow.col = "mediumpurple", box.col = "aliceblue")
+
+openplotmat()
+elpos_nst <- coordinates(c(1, 1, 3))
+treearrow(from=elpos_nst[1,],to=elpos_nst[2,],lwd=4)
+treearrow(from=elpos_nst[2,],to=elpos_nst[3:5,],lwd=4)
+
+labels_nst <- vector(length = 5)
+labels_nst[1] <- paste("Non STEMI\n n =",length(dat[dat$ST_ELEV%in%"No","ST_ELEV"]))
+
+labels_nst[2] <- paste0("Coronary\n angiography \n  n = ",table(dat$ST_ELEV,dat$S21ANGIO)[1,2],"\n  (",round(100*(table(dat$ST_ELEV,dat$ANGIO)[1,2])/table(dat$ST_ELEV)[1],1),"%)")
+
+labels_nst[3] <- paste0("CABG** \n n = ", table(dat$ST_ELEV,dat$S21ANGIO,dat$S21HCABG)[1,2,2], "\n  (",round(100*(table(dat$ST_ELEV,dat$S21ANGIO,dat$S21HCABG)[1,2,2])/table(dat$ST_ELEV,dat$S21ANGIO)[1,2],1),"%)")
+labels_nst[4] <- paste0("Any PCI** \n n = ",table(dat$ST_ELEV,dat$S21ANGIO,dat$S21HPCI)[1,2,2], "\n  (",round(100*(table(dat$ST_ELEV,dat$S21ANGIO,dat$S21HPCI)[1,2,2])/table(dat$ST_ELEV,dat$S21ANGIO)[1,2],1),"%)")
+labels_nst[5] <- paste0("Only \n coronary\n angiography \n n = ",table(dat$ST_ELEV,dat$S21ANGIO,dat$nst_only_angio)[1,2,2], "\n  (",round(100*(table(dat$ST_ELEV,dat$S21ANGIO,dat$nst_only_angio)[1,2,2])/table(dat$ST_ELEV,dat$S21ANGIO)[1,2],1),"%)")
+
+for (i in 1:5) textround(elpos_nst[i,],radx=0.065,rady=0.1,lab=labels_nst[i], shadow.col = "mediumpurple", box.col = "aliceblue")
+
+mtext("Figure 1.22: In-Hospital Cardiac Interventions and Procedures", side = 3, outer = TRUE, line = 0.5, cex = 1.1)
+```
+
+*`r table(dat$ST_ELEV, dat$ANGIO, dat$ANYCABG, dat$ANYPCI)[2,2,2,2]` patients underwent both CABG and PCI;  
+** `r table(dat$ST_ELEV, dat$S21ANGIO, dat$S21HCABG, dat$S21HPCI)[1,2,2,2]` patients underwent both CABG and PCI.
+
+\pagebreak
+
+### 1.8.2 Coronary Angiography (***excluding*** *primary PCI*)
+
+
+```{r results='hide'}
+dat_fit <- subset(dat, PPCI=="NO")
+dat_fit$S21HAVA <- factor(dat_fit$S21HAVA, levels = c("Femoral","Radial","Both"))
+tab_angio <- print(CreateTableOne(vars = "S21ANGIO", data = dat_fit))
+tab_radial_angio <- print(CreateTableOne(vars = "S21HAVA", data = subset(dat_fit, S21ANGIO=="Yes")))
+
+t_radial_angio <- as.matrix(rbind(tab_angio, tab_radial_angio)[-3,])
+row.names(t_radial_angio) <- c("n","Coronary angiography","Vascular access:",levels(dat_fit$S21HAVA))
+colnames(t_radial_angio) <- "Overall"
+```
+
+```{r}
+kable(t_radial_angio, align = "c", caption = "Table 1.23: Vascular access during coronary angiography", booktabs=T) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>% 
+  column_spec(1, width = "8cm") %>% 
+  column_spec(2, width = "6.5cm") %>% 
+  add_indent(c(3,4:6,4:6))
+```
+
+\  
+
+\  
+
+### 1.8.3 Other Procedures During Hospitalization
+
+```{r, eval=F}
+#the following text is not relevant because there is no echo in ACSIS21 (in the part of "other procedures")
+
+# `r round(100*prop.table(table(dat$S18HECHO, dat$ST_ELEV),2),1)["Yes","Yes"]`% of patients with ST elevation and `r round(100*prop.table(table(dat$S18HECHO, dat$ST_ELEV),2),1)["Yes","No"]`% of those with non-ST elevation
+# underwent echocardiography.
+```
+
+
+
+Patients with STEMI were more likely to receive Direct-Current (DC) shocks, resuscitation and therapeutic hypothermia than those with non STEMI.
+
+
+\  
+
+```{r results='hide'}
+# s21hdcs	DC shock
+# s21hresuc	Ressuscitaion (chest compression)
+# s21hvent	Mechanical ventilation
+# s21hiob	IABP
+# s21htpm	Temporary pacemaker
+# s21hypot	Targeted temperature management
+# s21hdial	Dialysis
+# s21hstres	Stress test / SPECT
+# s21crdct	Cardiac CT
+# s21haicd	AICD/CRT
+# s21heps	EPS
+# s21hpace	Permanent pacemaker
+
+
+vars_proc <- c("S21HDCS","S21HRESUC","S21HVENT","S21HIOB","S21HDIAL","S21HAICD","S21HPACE","S21HTPM","S21HYPOT")
+tab_proc <- print(CreateTableOne(vars = vars_proc, data = dat))
+tab_proc_st <- print(CreateTableOne(vars = vars_proc, strata = "ST_ELEV", data = dat))
+t_proc <- cbind(tab_proc,tab_proc_st)[,-5]
+t_proc <- t_proc[-6,] #remove the "no" of ventilation
+colnames(t_proc) <- c("Total","Non STEMI","STEMI","p-value")
+row.names(t_proc) <- c("n","DC shock (%)","Resuscitation (%)","Mechanical ventilation (%)","Invasive","Non invasive",
+                       "Intra-Aortic Balloon Pump (IABP) (%)","Dialysis (%)","ICD/CRT (%)","Permanent pacemaker (%)","Temporary pacemaker (%)","Temperature control (%)")
+```
+
+```{r}
+kable(t_proc, align = "c", caption = "Table 1.24: Other Procedures", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  add_indent(5:6) %>%
+  column_spec(1, width = "5.2cm") %>% 
+  column_spec(2:4, width = "2.5cm") %>% 
+  column_spec(5, width = "1.5cm")
+```
+
+\pagebreak
+
+## 1.9 Ejection Fraction
+
+
+Ejection fraction (EF) was determined in `r round(100*prop.table(table(dat$S21HOSEF, dat$ST_ELEV),2),1)["Yes","Yes"]`% of patients with STEMI and in
+`r round(100*prop.table(table(dat$S21HOSEF, dat$ST_ELEV),2),1)["Yes","No"]`% of those with non STEMI. EF was normal in a larger proportion of patients
+with non STEMI (`r round(100*prop.table(table(dat$S21HOSEFR, dat$ST_ELEV),2),1)["Normal (55-65%)","No"]`%) than in patients with STEMI (`r round(100*prop.table(table(dat$S21HOSEFR, dat$ST_ELEV),2),1)["Normal (55-65%)","Yes"]`%). `r round(100*prop.table(table(dat$S21HOSEFR, dat$ST_ELEV),2),1)["Severe (< 30%)","Yes"]+round(100*prop.table(table(dat$S21HOSEFR, dat$ST_ELEV),2),1)["Moderate (30-39%)","Yes"]`% of
+patients with STEMI and `r round(100*prop.table(table(dat$S21HOSEFR, dat$ST_ELEV),2),1)["Severe (< 30%)","No"]+round(100*prop.table(table(dat$S21HOSEFR, dat$ST_ELEV),2),1)["Moderate (30-39%)","No"]`% of patients with non STEMI presented with an EF < 40%.
+
+
+
+
+\  
+
+```{r results='hide'}
+
+tab_efd <- print(CreateTableOne(vars = c("S21HOSEF"), data = dat))
+tab_efr <- print(CreateTableOne(vars = c("S21HOSEFR"), data = subset(dat,S21HOSEF=="Yes")))
+tab_ef <- rbind(tab_efd, tab_efr)
+
+tab_efd_st <- print(CreateTableOne(vars = c("S21HOSEF"), strata = "ST_ELEV", data = dat))
+tab_efr_st <- print(CreateTableOne(vars = c("S21HOSEFR"), strata = "ST_ELEV", data = subset(dat,S21HOSEF=="Yes")))
+tab_ef_st <- rbind(tab_efd_st,tab_efr_st)
+
+t_ef <- cbind(tab_ef, tab_ef_st)[-3,-5]
+colnames(t_ef) <- c("Total","Non STEMI","STEMI","p-value")
+row.names(t_ef) <- c("n","EF determined ($\\%$)","EF (range) ($\\%$)","Normal (55-65$\\%$)", "Preserved (50-54$\\%$)", "Mild (40-49$\\%$)","Moderate (30-39$\\%$)","Severe (< 30$\\%$)")
+```
+
+```{r}
+kable(t_ef, align = "c", caption = "Table 1.25: Ejection Fraction", booktabs=T, escape = F, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  add_indent(c(3), level_of_indent = 0.6) %>%
+  add_indent(c(4:8), level_of_indent = 1.2) %>%
+  column_spec(1, width = "4.9cm") %>% 
+  column_spec(2:4, width = "2.7cm") %>% 
+  column_spec(5, width = "1.5cm") %>% 
+  footnote(general = "EF range percentages are calculated out of patients who had documented EF")
+  
+```
+
+\pagebreak
+
+## 1.10 In-Hospital Complications
+
+Cardiogenic shock, CHF mild-moderate, hemodynamically significant Right Ventricular (RV) infarction, ventricular fibrillation (VF), new Atrial fibrillation (AF) and high degree (2nd / 3rd) Atrioventricular Block (AVB) were more frequent in patients with STEMI.
+  
+\  
+
+```{r results='hide'}
+# s21comp1	CHF mild-moderate *(Killip 2)
+# s21comp2	Pulmonary edema *(Killip 3)
+# s21comp3	Cardiogenic shock *(Killip 4)
+# s21comp4	Hemodynamically significant RVI
+# s21comp5	Re-MI
+# s21comp6	Post MI angina/re-ischemia
+# s21comp7	Stent thrombosis (definite/probable/possible)
+# s21comp31	Apical thrombus
+# s21comp19	TIA
+# s21comp20	Stroke
+# s21comp20t	Stroke type
+# s21comp8	Free wall rupture
+# s21comp9	Tamponade
+# s21comp10	VSD
+# s21comp11	New MR moderate - severe
+# s21comp12	Pericarditis
+# s21comp13	Sustained VT (> 125 bpm)
+# s21comp14	Primary VF
+# s21comp15	Secondary VF
+# s21comp16	New atrial fibrillation
+# s21comp17	High degree (2-3<sup>o</sup>) AVB
+# s21comp18	Asystole
+# s21comp21	Acute renal failure
+# s21comp22	Sepsis
+# s21comp23	Bleeding
+# s21comp24	Minor bleeding
+# s21comp25	Any transfusion
+# s21comp26	Blood transfusions
+
+#Roy asked:
+dat$S21COMP24 <- factor(ifelse(is.na(dat$S21COMP23), NA, ifelse(dat$S21COMP24%in%"Yes","Yes","No")))
+dat$S21COMP26 <- factor(ifelse(is.na(dat$S21COMP23), NA, ifelse(dat$S21COMP26%in%"Yes","Yes","No")))
+
+
+vars_comp <- c("S21COMP1","S21COMP2","S21COMP3","S21COMP4","S21COMP5","S21COMP6","S21COMP7","S21COMP8","S21COMP9","S21COMP11","S21COMP12","S21COMP13","vf","S21COMP16","S21COMP17","S21COMP18","S21COMP19","S21COMP20","CVA_TIA","S21COMP21","S21COMP22","S21COMP23","S21COMP24","S21COMP26")
+tab_comp <- print(CreateTableOne(vars = vars_comp, data = dat))
+tab_comp_st <- print(CreateTableOne(vars = vars_comp, strata = "ST_ELEV", data = dat))
+t_comp <- cbind(tab_comp, tab_comp_st)[,-5]
+colnames(t_comp) <- c("Total","Non STEMI","STEMI","p-value")
+row.names(t_comp) <- c("n","CHF mild-moderate (Killip-2) (%)","Pulmonary edema (Killip-3) (%)","Cardiogenic shock (Killip-4) (%)","Hemodynamically significant RV infarction (%)","Re-MI (%)","Post MI angina/re-ischemia (%)","Stent thrombosis (definite/probable/possible) (%)","Free wall rupture (%)","Tamponade (%)","MR Moderate-severe (%)","Pericarditis (%)","Sustained VT (>125 bpm) (%)","VF (%)","New AF (%)","High degree (2nd / 3rd) AVB (%)","Asystole (%)","TIA (%)","Stroke (%)","CVA/TIA in hospital (%)","Acute renal injury (%)","Sepsis (%)","Bleeding (%)","Minor bleeding (%)","Blood transfusions (%)")
+```
+
+```{r}
+kable(t_comp, align = "c", caption = "Table 1.26: In-Hospital Complications", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "8cm") %>% 
+  column_spec(2:4, width = "1.7cm") %>% 
+  column_spec(5, width = "1.4cm") #%>%
+  # add_indent(24:25)# %>%
+  # footnote(general = "Minor bleeding and blood transfusions percentages are calculated out of patients who had bleeding only")
+```
+
+\pagebreak
+
+## 1.11 In-Hospital Medical Treatment
+
+Aspirin, prasugrel, P2Y12 inhibitors, ACE-I/ARB, Spironolactone, beta-blockers, Proton-Pump Inhibitors (PPI), IV inotropic agent and statins were more frequently used in patients with STEMI.
+Clopidogrel, CCB and nitrates were more frequently used among patients with non STEMI.
+
+<!-- I hashed the following line (taken from acsis18) because there are many meds who have the same percentage -->
+<!-- Both groups of patients were equally treated with aspirin, NOACS, beta blockers, digoxin, amiodarone, diuretics, colchicine, steroids, insulin and statins. -->
+All other recommended drugs were similarly given to both groups.
+
+
+```{r results='hide'}
+
+vars_inhosp_treat <- c("S21H1","HP2Y12", "S21H2","S21H3","S21H4",
+                       # ,"S21H5" #didn't find it in acsis21
+                       "oral_anticoag_hosp","S21H6","S21H7","S21H8","S21H9",
+                       # "S21H10","S21H11","S21H12","S21H13",
+                       # "S21HAAC1","S21HAAC3",
+                       "S21H14","S21H15","HACE_ARB","S21H16",
+                       "S21H17","S21H18","S21H19","S21H20","S21H21","S21H22","S21H23","S21H24","S21H25","S21H26","S21H27","S21H28",
+# "S21H31",#all "no"
+"S21H32","hosp_antihyperglycemic","hosp_STAT","S21H52")
+tab_inhosp_tr <- print(CreateTableOne(vars = vars_inhosp_treat, data = dat))
+tab_inhosp_tr_st <- print(CreateTableOne(vars = vars_inhosp_treat, strata = "ST_ELEV", data = dat))
+t_inhosp_tr <- cbind(tab_inhosp_tr, tab_inhosp_tr_st)[,-5]
+colnames(t_inhosp_tr) <- c("Total","Non STEMI","STEMI","p-value")
+row.names(t_inhosp_tr) <- c("n","Aspirin ($\\%$)",
+                            "P2Y12 inhibitors ($\\%$)",
+                            "Clopidogrel ($\\%$)","Prasugrel ($\\%$)","Ticagrelor ($\\%$)",
+                            # ,"llb/llla antagonists ($\\%$)"
+                            paste0("Oral anticoagulants",footnote_marker_number(1) ," ($\\%$)"),
+    "Warfarin ($\\%$)","Dabigatran ($\\%$)","Rivaroxaban ($\\%$)","Apixaban ($\\%$)",
+        # "LMWH ($\\%$)",
+    # "Unfractionated Heparin (UFH) ($\\%$)","Bivalirudin ($\\%$)",
+    # "Fondaparinux ($\\%$)",
+    "ACE-I ($\\%$)","ARB ($\\%$)","ACE-I/ARB ($\\%$)","Spironolactone ($\\%$)",
+    "Beta Blockers ($\\%$)","Digoxin ($\\%$)","CCB ($\\%$)","Amiodarone ($\\%$)","Other Anti-Arrhythmic ($\\%$)","Nitrates ($\\%$)","Diuretics ($\\%$)","Proton-Pump Inhibitors (PPI) ($\\%$)","H2 Blockers ($\\%$)","NSAIDS ($\\%$)","Colchicine ($\\%$)","Steroids ($\\%$)",
+    # "Hormonal replacement therapy ($\\%$)",
+    "IV inotropic agent ($\\%$)",paste0("Antihyperglycemic",footnote_marker_number(2) ," ($\\%$)"),"Statins ($\\%$)","Ezetimibe ($\\%$)")
+
+t_inhosp_tr <- t_inhosp_tr[-14,] #remove ace/arb
+```
+
+```{r}
+kable(t_inhosp_tr, align = "c", caption = "Table 1.27: In-Hospital Medical Treatment", booktabs=T, escape = F, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped"), font_size = 9.5) %>%
+  pack_rows("Anti-platelets",2,6) %>%
+  pack_rows("Anticoagulants",7,11) %>%
+  pack_rows("Other",12,nrow(t_inhosp_tr)) %>%
+  column_spec(1, width = "6cm") %>% 
+  column_spec(2:4, width = "2.5cm") %>% 
+  column_spec(5, width = "1cm") %>% 
+  footnote(number = c("Oral anticoagulants include warfarin, dabigatran, rivaroxaban and apixaban", "Only among diabetic patients"))
+```
+
+
+\pagebreak
+
+## 1.12 Duration of Hospitalization
+
+\  
+
+
+```{r results='hide'}
+tab_ishdays <- print(CreateTableOne(vars = c("CCUDAYS","ISHDAYS"), data = dat), nonnormal = c("CCUDAYS","ISHDAYS"))
+
+tab_ishdays_st <- print(CreateTableOne(vars = c("CCUDAYS","ISHDAYS"), strata = "ST_ELEV", data = dat), nonnormal = c("CCUDAYS","ISHDAYS"))
+t_ishdays <- cbind(tab_ishdays, tab_ishdays_st)[,-(4:5)]
+
+t_ishdays <- gsub(".00"," ", t_ishdays)
+t_ishdays[1,3] <- table(dat$ST_ELEV)["Yes"] #the row above somehow deleted it
+colnames(t_ishdays) <- c("Total","Non STEMI","STEMI")
+row.names(t_ishdays) <- c("n","No. of days in ICCU/Cardiology (median [IQR])","Total hospital days (median [IQR])")
+```
+
+```{r}
+
+kable(t_ishdays, align = "c", caption = "Table 1.28: Length of Stay in ICCU/Cardiology and Total Hospital Stay", booktabs=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>% 
+  column_spec(1, width = "8cm") %>% 
+  column_spec(2:4, width = "2cm")
+
+```
+
+\pagebreak
+
+## 1.13 Discharge
+
+## 1.13.1 Medical Treatment on Discharge
+
+Aspirin, P2Y12 inhibitors (mainly prasugrel), ACE-I/ARB, Spironolactone, beta-blockers and statins were more often prescribed for patients with STEMI.  
+Clopidogrel, oral anticoagulants, apixaban, CCB, nitrates, and diuretics were prescribed more often for patients with non STEMI.
+All other recommended drugs were similarly given to both groups.
+
+\  
+
+```{r results='hide'}
+vars_disch_treat <- c("S21D1",
+                      "DP2Y12",
+                      "S21D2","S21D3","S21D4", 
+                      "oral_anticoag_disch",
+                      "S21D6","S21D7","S21D8","S21D9",
+                      # "S21D10",
+                      "S21D14","S21D15","disch_ACEI_ARB",
+                      "S21D16","S21D17","S21D18","S21D19","S21D20","S21D21","S21D22","S21D23","S21D24","S21D25",
+                      # "S21D26", #all "no"
+                      "S21D27","S21D28",
+                      # "S21D31",
+                      "disch_antihyperglycemic",
+                      "disch_GLP1", "disch_SGLT2",
+                      "disch_STAT","S21D52")
+tab_disch_tr <- print(CreateTableOne(vars = vars_disch_treat, data = dat_surv))
+tab_disch_tr_st <- print(CreateTableOne(vars = vars_disch_treat, strata = "ST_ELEV", data = dat_surv))
+t_disch_tr <- cbind(tab_disch_tr, tab_disch_tr_st)[,-5]
+colnames(t_disch_tr) <- c("Total","Non STEMI","STEMI","p-value")
+
+row.names(t_disch_tr) <- c("n",
+                "Aspirin ($\\%$)",
+                 "P2Y12 inhibitors ($\\%$)",
+                "Clopidogrel ($\\%$)","Prasugrel ($\\%$)","Ticagrelor ($\\%$)",
+               paste0("Oral anticoagulants",footnote_marker_number(1)," ($\\%$)"),
+                "Warfarin ($\\%$)","Dabigatran ($\\%$)","Rivaroxaban ($\\%$)","Apixaban ($\\%$)",
+          # "LMWH ($\\%$)",
+          "ACE-I ($\\%$)","ARB ($\\%$)","ACE-I/ARB ($\\%$)",
+          "Spironolactone ($\\%$)","Beta Blockers ($\\%$)","Digoxin ($\\%$)","CCB ($\\%$)","Amiodarone ($\\%$)","Other Anti-Arrhythmic ($\\%$)","Nitrates ($\\%$)","Diuretics ($\\%$)","PPI ($\\%$)","H2 Blockers ($\\%$)",
+          # "NSAIDS ($\\%$)",
+          "Colchicine ($\\%$)","Steroids ($\\%$)",
+          # "Hormonal replacement therapy ($\\%$)",
+          paste0("Antihyperglycemic",footnote_marker_number(2)," ($\\%$)"),
+          paste0("Glucagon-Like Peptide-1 receptor agonists (GLP1-RA)",footnote_marker_number(2)," ($\\%$)"),
+          paste0("Sodium-Glucose Cotransporter-2 (SGLT2) Inhibitors",footnote_marker_number(2)," ($\\%$)"),
+          "Statins ($\\%$)","Ezetimibe ($\\%$)")
+
+t_disch_tr <- t_disch_tr[-14 ,] #remove ace/arb
+```
+
+```{r}
+kable(t_disch_tr, align = "c", caption = "Table 1.29.a: Medical Treatment on Discharge among Hospital Survivors", booktabs=T, linesep = '', escape = F) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  pack_rows("Anti-platelets",2,6) %>%
+  pack_rows("Anticoagulants",7,11) %>%
+  pack_rows("Other",12,nrow(t_disch_tr)) %>%
+  column_spec(1, width = "5.8cm") %>% 
+  column_spec(2:4, width = "2.5cm") %>% 
+  column_spec(5, width = "1.2cm") %>% 
+  footnote(number = c("Oral anticoagulants include warfarin, dabigatran, rivaroxaban and apixaban", "Only among diabetic patients"))
+```
+
+\pagebreak
+
+## 1.13.2 Discharge Destination
+
+\  
+
+```{r results='hide'}
+#v12 Roy asked to make this change:
+dat_surv$S21DISTO <- factor(ifelse(dat_surv$S21DISTO=="Recovery hotel (Convalescence facility)", "Home", as.character(dat_surv$S21DISTO)), levels = c( "Home",
+                                                                                                                                                       "Internal medicine"  ,
+                                                                                                                                                       "Cardiothoracic surgery",
+                                                                                                                                                       # "Recovery hotel (Convalescence facility)",
+                                                                                                                                                       "Other hospital" ,
+                                                                                                                                                       "Other ward"   ,
+                                                                                                                                                       "Nursing home" 
+                                                 ))
+tab_disto <- print(CreateTableOne(vars = "S21DISTO", data = dat_surv))
+tab_disto_st <- print(CreateTableOne(vars = "S21DISTO", strata = "ST_ELEV", data = dat_surv))
+t_disto <- cbind(tab_disto, tab_disto_st)[-2,1:3]
+
+colnames(t_disto) <- c("Total","Non STEMI","STEMI")
+```
+
+```{r}
+kable(t_disto, align = "c", caption = "Table 1.29.b: Discharge Destination", booktabs=T, linesep = '') %>% 
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  pack_rows("Discharged to:", 2, 7) %>% 
+  column_spec(1, width = "6cm") %>% 
+  column_spec(2:4, width = "3cm")
+```
+
+\pagebreak
+
+## 1.14 Mortality and Major Adverse Cardiac Event (MACE)
+
+
+
+### 1.14.1 Rates of Mortality and MACE by discharge diagnosis
+
+Unadjusted rates of in-hospital mortality, 7- and 30- days mortality were significantly higher for patients with STEMI compared to those with non STEMI.  
+MACE (Major Adverse Cardiac Events), which included recurrent MI or UAP, recurrent ischemia, stent thrombosis, ischemic stroke, urgent revascularization (follow-up) or death occurring within 30 days from hospitalization, was not significantly different in patients with and without STEMI.
+\  
+
+
+```{r results='hide'}
+vars_out <- c("S21DISDIE","DIED7","DIED30","MACE_OLD", "DIED365") 
+tab_out <- print(CreateTableOne(vars = vars_out, data = dat))
+tab_out_st <- print(CreateTableOne(vars = vars_out, strata = "ST_ELEV", data = dat))
+t_out <- cbind(tab_out, tab_out_st)[,-5]
+colnames(t_out) <- c("Total","Non STEMI","STEMI","p-value")
+row.names(t_out) <- c("n","In-hospital mortality ($\\%$)","7-day mortality ($\\%$)","30-day mortality ($\\%$)",paste0("MACE", footnote_marker_number(1)," ($\\%$)"), "1-year mortality ($\\%$)")
+```
+
+```{r}
+kable(t_out, align = "c", caption = paste0("Table 1.30: Unadjusted Rates of 7-Day, 30-Day and 1-year mortality, 30-Day MACE", footnote_marker_number(1)), booktabs=T, escape = F, longtable=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  footnote(number = c("Definition of MACE includes: recurrent MI, recurrent ischemia, stent thrombosis, ischemic stroke, urgent revascularization (follow-up), UAP or death occurring within 30 days from hospitalization"), threeparttable = T) %>%
+  column_spec(1, width = "5cm") %>% 
+  column_spec(2:4, width = "2.5cm") %>% 
+  column_spec(5, width = "2cm")
+```
+
+\  
+
+```{r fig.width=8}
+
+par(mfrow=c(1,1))
+par(mar=c(5,6,4,6))
+t_out_nst <- as.numeric(out_of_par(t_out[-1,2]))
+t_out_st <- as.numeric(out_of_par(t_out[-1,3]))
+mydata_out <- cbind(t_out_nst,t_out_st)
+colnames(mydata_out) <- c("Non STEMI","STEMI")
+row.names(mydata_out) <- c("In-Hospital \nmortality","7-Day \nmortality","30-Day \nmortality","30-Day \nMACE", "1-year \nmortality")
+xx_out <- barplot(t(as.matrix(mydata_out)), main = "Figure 1.23: Unadjusted Rates of In-Hospital, 7-Day & 30-Day Mortality \n and 30-Day MACE", col=c("cadetblue2","mediumpurple"), beside = T, ylim = c(0,20), ylab = "Percent (%)", font.main=1, cex.main=1.1)
+legend(2,20, c("Non STEMI","STEMI"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx_out, y = t(as.matrix(mydata_out)), label = t(as.matrix(mydata_out)), pos =3, cex = 1)
+```
+
+\pagebreak
+
+After adjustment for age and other risk factors, 7-day mortality rates were significantly higher for patients with STEMI compared to those with non STEMI. 
+
+\  
+
+```{r message=FALSE}
+
+
+#Age adjustment
+m0 <- glm(S21DISDIE~ST_ELEV+AGE, family = "binomial", data = dat)
+OR0 <- OR_CI(m0)$total[1] #STEMI is sig
+
+m1 <- glm(DIED7~ST_ELEV+AGE, family = "binomial", data = dat)
+OR1 <- OR_CI(m1)$total[1] #STEMI is sig
+
+m2 <- glm(DIED30~ST_ELEV+AGE, family = "binomial", data = dat)
+OR2 <- OR_CI(m2)$total[1] #STEMI is sig
+
+m3 <- glm(MACE_OLD~ST_ELEV+AGE, family = "binomial", data = dat)
+OR3 <- OR_CI(m3)$total[1] #STEMI is not sig
+
+m4 <- glm(DIED365~ST_ELEV+AGE, family = "binomial", data = dat)
+OR4 <- OR_CI(m4)$total[1] #STEMI is not sig
+
+OR_age <- c(OR0,OR1,OR2,OR3,OR4)
+
+#Full adjustment
+m0f <- glm(S21DISDIE~ST_ELEV+AGE+sex+S21PRIOR_ACS+S21PDIAB+S21HT+KILIP234+ANGIO, family = "binomial", data = dat)
+OR0f <- OR_CI(m0f)$total[1] #STEMI is not sig
+
+m1f <- glm(DIED7~ST_ELEV+AGE+sex+S21PRIOR_ACS+S21PDIAB+S21HT+KILIP234+ANGIO, family = "binomial", data = dat)
+OR1f <- OR_CI(m1f)$total[1] #STEMI is sig
+
+m2f <- glm(DIED30~ST_ELEV+AGE+sex+S21PRIOR_ACS+S21PDIAB+S21HT+KILIP234+ANGIO, family = "binomial", data = dat)
+OR2f <- OR_CI(m2f)$total[1] #STEMI is not sig
+
+m3f <- glm(MACE_OLD~ST_ELEV+AGE+sex+S21PRIOR_ACS+S21PDIAB+S21HT+KILIP234+ANGIO, family = "binomial", data = dat)
+OR3f <- OR_CI(m3f)$total[1] #STEMI is not sig
+
+m4f <- glm(DIED365~ST_ELEV+AGE+sex+S21PRIOR_ACS+S21PDIAB+S21HT+KILIP234+ANGIO, family = "binomial", data = dat)
+OR4f <- OR_CI(m4f)$total[1] #STEMI is not sig
+
+OR_full <- c(OR0f,OR1f,OR2f,OR3f,OR4f)
+
+OR_st <- cbind(OR_age, OR_full)
+
+colnames(OR_st) <- c("Age adjusted",paste0("Risk factors adjusted",footnote_marker_number(1)))
+row.names(OR_st) <- c("In-Hospital","7-Days","30-Days",paste0("MACE", footnote_marker_number(2)), "1-year")
+```
+
+```{r}
+kable(OR_st, align = "c", caption = "Table 1.31: Mortality Rates by Discharge Diagnosis Adjusted for Age and Other Risk Factors", booktabs=T, escape = F, longtable=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  add_header_above(c(" "=1, "Odds Ratio (OR) (STEMI vs. Non STEMI)\n with 95% Confidence Intervals (CI)"=2)) %>%
+  column_spec(1, width = "6.5cm") %>%
+  column_spec(2:3, width = "4cm") %>%
+  footnote(number = c("Adjusted for age, gender, past ACS, diabetes, hypertension, killip class $\\\\ge$ 2, any angiography","Definition includes: recurrent MI, recurrent ischemia, stent thrombosis, ischemic stroke, urgent
+revascularization (follow-up) or death occurring within 30 days from hospitalization"), escape=F, threeparttable=T)
+```
+
+
+\pagebreak
+
+### 1.14.2 Rates of Mortality and MACE by Gender
+
+\  
+
+```{r results='hide'}
+
+tab_out_gen <- print(CreateTableOne(vars = vars_out, strata = "S21SEX", data = dat))
+t_out_gen <- cbind(tab_out, tab_out_gen)[,-5]
+colnames(t_out_gen) <- c("Total","Women","Men","p-value")
+row.names(t_out_gen) <- c("n","In-hospital mortality ($\\%$)","7-day mortality ($\\%$)","30-day mortality ($\\%$)",paste0("MACE", footnote_marker_number(1)," ($\\%$)"),"1-year mortality ($\\%$)")
+```
+
+```{r}
+kable(t_out_gen, align = "c", caption = "Table 1.32: Unadjusted Rates of In-Hospital Mortality, 7-Day Mortality, 30-Day Mortality and 30-Day MACE, by Gender", booktabs=T, escape = F, longtable=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, "5cm") %>%
+  column_spec(2:4, "2.5cm") %>% 
+  column_spec(5, "2cm") %>% 
+  footnote(number = "Definition includes: recurrent MI, recurrent ischemia, stent thrombosis, ischemic stroke, urgent
+revascularization (follow-up), UAP or death occurring within 30 days from hospitalization", threeparttable=T, escape=F)
+```
+
+
+\  
+
+\  
+
+\  
+
+```{r message=FALSE}
+
+
+#Age adjustment
+ms0 <- glm(S21DISDIE~sex+AGE, family = "binomial", data = dat)
+ORs0 <- OR_CI(ms0)$total[1] #female is sig
+
+ms1 <- glm(DIED7~sex+AGE, family = "binomial", data = dat)
+ORs1 <- OR_CI(ms1)$total[1] #female is not sig
+
+ms2 <- glm(DIED30~sex+AGE, family = "binomial", data = dat)
+ORs2 <- OR_CI(ms2)$total[1] #female is not sig
+
+ms3 <- glm(MACE_OLD~sex+AGE, family = "binomial", data = dat)
+ORs3 <- OR_CI(ms3)$total[1] #female is not sig
+
+ms4 <- glm(DIED365~sex+AGE, family = "binomial", data = dat)
+ORs4 <- OR_CI(ms4)$total[1] #female is not sig
+
+OR_sage <- c(ORs0,ORs1,ORs2,ORs3,ORs4)
+
+#Full adjustment
+
+ms0f <- glm(S21DISDIE~sex+AGE+S21PRIOR_ACS+S21PDIAB+S21HT+KILIP234+ANGIO, family = "binomial", data = dat)
+ORs0f <- OR_CI(ms0f)$total[1] #female is not sig
+
+ms1f <- glm(DIED7~sex+AGE+S21PRIOR_ACS+S21PDIAB+S21HT+KILIP234+ANGIO, family = "binomial", data = dat)
+ORs1f <- OR_CI(ms1f)$total[1]
+
+ms2f <- glm(DIED30~sex+AGE+S21PRIOR_ACS+S21PDIAB+S21HT+KILIP234+ANGIO, family = "binomial", data = dat)
+ORs2f <- OR_CI(ms2f)$total[1]
+
+ms3f <- glm(MACE_OLD~sex+AGE+S21PRIOR_ACS+S21PDIAB+S21HT+KILIP234+ANGIO, family = "binomial", data = dat)
+ORs3f <- OR_CI(ms3f)$total[1]
+
+ms4f <- glm(DIED365~sex+AGE+S21PRIOR_ACS+S21PDIAB+S21HT+KILIP234+ANGIO, family = "binomial", data = dat)
+ORs4f <- OR_CI(ms4f)$total[1]
+
+OR_sfull <- c(ORs0f,ORs1f,ORs2f,ORs3f,ORs4f)
+
+OR_sex <- cbind(OR_sage, OR_sfull)
+
+colnames(OR_sex) <- c("Age Adjusted",paste0("Risk factors Adjusted", footnote_marker_number(1)))
+row.names(OR_sex) <- c("In-Hospital mortality","7-Days mortality","30-Days mortality",paste0("MACE",footnote_marker_number(2)), "1-year mortality")
+
+kable(OR_sex, align = "c", caption = "Table 1.33: Odds Ratios for Mortality and MACE by Gender Adjusted for Age and Other Risk Factors", booktabs=T, escape = F, longtable=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  footnote(number = c(paste("Adjusted for age, past ACS, diabetes, hypertension, killip class $\\\\geq$ 2, any angiography"),"Definition includes: recurrent MI, recurrent ischemia, stent thrombosis, ischemic stroke, urgent revascularization (follow-up), UAP or death occurring within 30 days from hospitalization."), threeparttable = T, escape = F) %>%
+  column_spec(1, "6.5cm") %>% 
+  column_spec(2:3, "4.3cm") %>% 
+  add_header_above(c("","OR (Women vs. Men) with 95% CI" = 2))
+
+# For symbols need to add escape=F to the kable function
+# For wide footnote need to add longtable=T to the kable function and threeparttable=T to the footnote function
+# To add a symbol to the footnote need to add escape=T to the footnote function and "\\\\" before the symbol
+```
+
+\pagebreak
+
+## 1.15 Re-Hospitalization within 90 Days of Admission
+
+Re-hospitalization rates for patients with STEMI and non STEMI were similar.
+Differences in reasons for re-hospitalization were not statistically significant.
+
+\  
+
+
+
+```{r results='hide'}
+tab_rehos <- print(CreateTableOne(vars = "S21FREHOS",data = dat_surv))
+tab_rehos_st <- print(CreateTableOne(vars = "S21FREHOS", strata = "ST_ELEV",data = dat_surv))
+t_rehos0 <- cbind(tab_rehos, tab_rehos_st)[,-5]
+
+# S21FREHT1	Scheduled
+# S21FREHT2	Cardiac
+#scheduled all:
+# S21FREHT1=="Yes"
+#scheduled cardiac:
+dat_rehos$scheduled_cardiac <- factor(ifelse(dat_rehos$S21FREHT1%in%c("No",NA), NA,
+  ifelse(dat_rehos$S21FREHT1=="Yes" & dat_rehos$S21FREHT2=="Yes","Yes","No" )))
+#non-scheduled all:
+dat_rehos$non_scheduled <- factor(dat_rehos$S21FREHT1, levels = c("Yes","No"))
+#non-scheduled cardiac:
+dat_rehos$non_scheduled_cardiac <- factor(ifelse(dat_rehos$S21FREHT1%in%c("Yes",NA), NA,
+  ifelse(dat_rehos$S21FREHT1=="No" & dat_rehos$S21FREHT2=="Yes","Yes","No" )))
+
+vars_rehosp <- c("S21FREHT1", "scheduled_cardiac","non_scheduled","non_scheduled_cardiac")
+tab_rehosp <- print(CreateTableOne(vars = vars_rehosp, data = dat_rehos))
+tab_rehosp_st <- print(CreateTableOne(vars = vars_rehosp, strata = "ST_ELEV", data = dat_rehos))
+t_rehosp0 <- cbind(tab_rehosp, tab_rehosp_st)[,-5]
+
+# tab_rehosp_cardiac_scehduled <- print(CreateTableOne(vars = "S21FREHT1", data = subset(dat_rehos, S21FREHT2=="Yes")))
+# tab_rehosp_cardiac_scehduled_st <- print(CreateTableOne(vars = "S21FREHT1", strata = "ST_ELEV", data = subset(dat_rehos, S21FREHT2=="Yes")))
+# t_rehosp_cardiac_scehduled <- cbind(tab_rehosp_cardiac_scehduled,tab_rehosp_cardiac_scehduled_st)[,-5]
+
+t_rehos <- rbind(t_rehos0, t_rehosp0)
+row.names(t_rehos) <- c("n",paste0("Re-hospitalization",
+                                   footnote_marker_number(1),
+                                   " ($\\%$)"),
+                        "n",
+                        "Scheduled ($\\%$)","Scheduled due to cardiac reason ($\\%$)",
+                         "Non-Scheduled ($\\%$)","Non-Scheduled due to cardiac reason ($\\%$)"
+                        # paste0("* Cardiac scheduled",footnote_marker_number(3)," ($\\%$)")
+                        )
+colnames(t_rehos) <- c("Total","Non STEMI","STEMI","p-value")
+```
+
+```{r}
+kable(t_rehos, align = "c", caption = "Table 1.34: Re-Hospitalization within 90 Days of Admission", booktabs=T, escape = F, longtable=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  add_indent(c(5,7), level_of_indent = 2) %>%
+  # pack_rows("All patients$\\^1$",1,2, escape = F) %>%
+  pack_rows("All patients",1,2, escape = F) %>%
+  pack_rows("Re-hospitalized patients only",3,nrow(t_rehos), escape = F) %>%
+  footnote(number = c("Re-hospitalization among hospital survivors"
+                      # "Patients who were re-hospitalized after more than 90 days of admission were excluded" #17.1.22 this is not true in 2021, and I think it was also wrong at 2018
+                      # ,"Percentages are calculated out of cardiac rehospitalizations"
+                      ), threeparttable = T) %>%
+  column_spec(1, width = "5cm") %>% 
+  column_spec(2:4, width = "2.5cm") %>% 
+  column_spec(5, width = "2cm")
+```
+
+\pagebreak
+
+## 1.16 Detailed 90-Day Follow-Up Clinical Data
+
+This is the first time we performed 90 days follow up survey. We performed this survey in order to evaluate patient’s adherence to treatment and life-style changes recommendations.
+
+<!-- Also, we aimed to evaluate whether patients after an ACS event are monitored closely  with -->
+<!-- repeated lipid profile and echocardiography evaluation to adjust or upgrade their medical treatment. -->
+
+Ninety-day follow-up was performed for `r nrow(dat_fu)` (`r round((nrow(dat_fu) / nrow(dat))*100)`%) patients. Of which `r table(dat_fu$S21FU_CONTACT)["Telephone"]` (`r  round(100*prop.table(table(dat_fu$S21FU_CONTACT))["Telephone"])`%) were contacted by phone, `r table(dat_fu$S21FU_CONTACT)["Clinic visit"]` (`r  round(100*prop.table(table(dat_fu$S21FU_CONTACT))["Clinic visit"])`%) by clinical visits and `r table(dat_fu$S21FU_CONTACT)["Virtual communication"]` (`r  round(100*prop.table(table(dat_fu$S21FU_CONTACT))["Virtual communication"])`%) by virtual communication. Most of the patients were asymptomatic and in NYHA Class I.
+
+Very few patients were treated with angiotensin receptor-neprilysin inhibitors (ARNI’S) or SGLT-2i (non-diabetic).
+Most of the patients were receiving potent statins and only 1% were on PCSK-9i.
+For diabetic patients, 35% of patients were receiving SGLT-2 but very few patients were on GLP1-RA.
+
+\  
+
+```{r, results='hide'}
+vars_med <- c(
+"S21F1"	#FU 90D TREAT. Aspirin
+,"S21F2"	#FU 90D TREAT. Clopidogrel
+,"S21F3"	#FU 90D TREAT. Prasugrel
+,"S21F4"	#FU 90D TREAT. Ticagrelor
+,"S21F9"	#FU 90D TREAT. Eliquis
+,"S21F7"	#FU 90D TREAT. Pradaxa
+,"S21F8"	#FU 90D TREAT. Xarelto 90 days
+,"S21F6"	#FU 90D TREAT. Coumadin
+,"S21F60"	#FU 90D TREAT. Clexane
+,"S21F14"	#FU 90D TREAT. ACE-I
+,"S21F15"	#FU 90D TREAT. ARB's
+,"S21F61"	#FU 90D TREAT. ARNI
+,"S21F16"	#FU 90D TREAT. Aldactone
+,"S21F17"	#FU 90D TREAT. Beta blockers
+,"S21F18"	#FU 90D TREAT. Digoxin
+,"S21F19"	#FU 90D TREAT. CCB
+# ,"S21F20"	#FU 90D TREAT. Amiodarone
+# ,"S21F21"	#FU 90D TREAT. Other anti-arrhythmic
+# ,"S21F22"	#FU 90D TREAT. Nitrates
+,"S21F23"	#FU 90D TREAT. Diuretics
+,"S21F24"	#FU 90D TREAT.PPI's
+# ,"S21F25"	#FU 90D TREAT. H2 blockers
+# ,"S21F26"	#FU 90D TREAT. NSAIDS
+# ,"S21F27"	#FU 90D TREAT. Colchine
+# ,"S21F28"	#FU 90D TREAT. Steroids
+,"FU_STAT"
+,"S21F58"	#FU 90D TREAT. Dapagliflozin (Farxiga) for non diabetic
+,"S21F59"	#FU 90D TREAT. Empagliflozin (Jardiance) for non diabetic
+
+
+
+)
+
+vars_med_names <- c(
+  "Aspirin"
+  , "Clopidogrel"
+  , "Prasugrel"
+  , "Ticagrelor"
+  , "Apixaban"  #"Eliquis" 
+  , "Dabigatran"  #"Pradaxa"
+  , "Rivaroxaban" #"Xarelto"
+  , "Warfarin"  #"Coumadin"
+  , "Enoxaparin" #"Clexane"
+  , "ACE-I"
+  , "ARB's"
+  , "ARNI"
+  , "Spironolactone" #"Aldactone"
+  , "Beta blockers"
+  , "Digoxin"
+  , "CCB"
+  # , "Amiodarone"
+  # , "Other anti-arrhythmic"
+  # , "Nitrates"
+  , "Diuretics"
+  , "PPI's"
+  # , "H2 blockers"
+  # , "NSAIDS"
+  # , "Colchine"
+  # , "Steroids"
+  ,paste0("Statins",footnote_marker_number(1))
+  ,"Dapagliflozin (Forxiga) for non diabetic"
+  ,"Empagliflozin (Jardiance) for non diabetic"
+  
+)
+
+tab1 <- print(CreateTableOne(vars = vars_med,data = dat_fu), missing=F, printToggle=F)
+rownames(tab1) <- c("n", paste0(vars_med_names, " ($\\%$)"))
+
+```
+
+```{r}
+kable(tab1, align = "c", caption = "Table 1.35: Medical Treatment at 90-Day Follow-Up", booktabs=T, escape = F 
+      ,longtable=T
+      ,linesep = ''
+      ) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "8cm") %>% 
+  column_spec(2, width = "6.5cm") %>%  
+  footnote(number = c("Statins include: Simvastatin, Pravastatin, Atorvastatin, Rosuvastatin")
+           , threeparttable = T
+           )
+
+
+```
+
+
+```{r}
+
+vars_med <- c(
+ "S21F33",	#FU 90D TREAT. Insulin SC
+"S21F34",	#FU 90D TREAT. Glibenclamide (Gluben)
+"S21F35",	#FU 90D TREAT. Glipizide (Gluco-Rite)
+"S21F36",	#FU 90D TREAT. Glimepiride (Amaryl)
+"S21F37",	#FU 90D TREAT. Metformin (Glucophage)
+"S21F38",	#FU 90D TREAT. Sitagliptine (Januvia)
+"S21F39",	#FU 90D TREAT. Saxagliptine (Onglyza)
+"S21F40",	#FU 90D TREAT. Vidagliptine (Galvus)
+"S21F41",	#FU 90D TREAT. Linagliptine (Trajenta)
+"S21F42",	#FU 90D TREAT. Exenatide (Byetta, Budyreon)
+"S21F43",	#FU 90D TREAT. Liraglutide (Victoza)
+"S21F62", #Dulaglutide (Trulicity)
+"S21F57", #Semaglutide (Ozempic)
+"S21F44",	#FU 90D TREAT. Dapagliflozin (Farxiga)
+"S21F56",	#FU 90D TREAT. Empagliflozin (Jardiance)
+"S21F45",	#FU 90D TREAT. Acrabose (Prandase)
+"S21F46",	#FU 90D TREAT. Meglinitides (Repaglinide, Novonorm)
+"S21F47"	#FU 90D TREAT. TZDs (Pioglitasone - actos, Rosiglitazone - Avandia)
+
+)
+
+dat$S21F39 <- factor(dat$S21F39, levels = c("NO","YES"))
+dat$S21F42 <- factor(dat$S21F42, levels = c("NO","YES"))
+
+
+vars_med_names <- c(
+  "Insulin SC",
+  "Glibenclamide (Gluben)",
+  "Glipizide (Gluco-Rite)",
+  "Glimepiride (Amaryl)",
+  "Metformin (Glucophage)",
+  "Sitagliptine (Januvia)",
+  "Saxagliptine (Onglyza)",
+  "Vidagliptine (Galvus)",
+  "Linagliptine (Trajenta)",
+  "Exenatide (Byetta, Budyreon)",
+  "Liraglutide (Victoza)",
+  "Dulaglutide (Trulicity)",
+  "Semaglutide (Ozempic)",
+  "Dapagliflozin (Forxiga)",
+  "Empagliflozin (Jardiance)",
+  "Acrabose (Prandase)",
+  "Meglinitides (Repaglinide, Novonorm)",
+  "TZDs (Pioglitasone - actos, Rosiglitazone - Avandia)"
+)
+
+tab1 <- print(CreateTableOne(vars = vars_med,data = subset(dat, S21PDIAB=="Yes")), missing=F, printToggle=F)
+rownames(tab1) <- c("n", paste0(vars_med_names, " (%)"))
+
+```
+
+
+```{r}
+kable(tab1, align = "c", caption = "Table 1.36: Diabetes Medications in 90-Day Follow-Up", booktabs=T) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "8cm") %>% 
+  column_spec(2, width = "6.5cm")
+
+```
+
+
+<!-- Data regarding laboratory results at 90-days was available for only 30% of patients. The main reason was that repeated blood tests were not performed by that time and not because of missing data. The same was true for repeated echocardiography which was performed in 253 (18.4%) patients. -->
+
+
+```{r eval=F}
+# Labs at 90 days
+
+vars_lab <- c(
+ "S21FCHO"	#Cholesterol - total 90 days (mg/dL or mg%)
+ ,"S21FLDL"	#Cholesterol - LDL 90 days (mg/dL or mg%)
+ ,"S21FHDL"	#Cholesterol - HDL 90 days (mg/dL or mg%)
+ ,"S21FTG"	#Triglycerides 90 days (mg/dL or mg%)
+ ,"S21FGLU"	#Glucose 90 days (mg/dL)
+ ,"S21FHB"	#HB 90 days (g/dL or g%)
+ ,"S21FCREV"	#Creatinine 90 days (mg/dL)
+ # ,"S21FPLT"	#Platelets 90 days (10e3/microL)
+ ,"S21FHBA1C"	#HbA1C 90 days (%)
+ # ,"S21FALBUM"#Albumin 90 days (g/dL)
+)
+
+tab1 <- print(CreateTableOne(vars = vars_lab,data = dat_fu ), missing=F, printToggle=F, nonnormal = vars_lab)
+labs_names <- c(
+                  "Cholesterol - total (mg/dL)"
+ ,"Cholesterol - LDL (mg/dL)"
+ ,"Cholesterol - HDL (mg/dL)"
+ ,"Triglycerides (mg/dL)"
+ ,"Glucose (mg/dL)"
+ ,"Hemoglobin (g/dL or g%)"
+ ,"Creatinine (mg/dL)"
+ # ,"Platelets (10e3/microL)"
+ ,"Hemoglobin A1C (%)"
+ # ,"Albumin (g/dL)"
+)
+rownames(tab1) <- c("n", labs_names)
+colnames(tab1) <- c( "Median [IQR]")
+
+```
+
+```{r, eval=F}
+kable(tab1, align = "c", caption = "Table 1.37: Laboratory Data in 90-Day Follow-Up", booktabs=T) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "8cm") %>% 
+  column_spec(2, width = "6.5cm")
+```
+
+\  
+
+Concerning life-style modification, `r round(100*(prop.table(table2(dat_fu$S21FREGULAR_EXERCISE))["Yes"]))`% of patients reported to perform regular weekly exercise and `r round(100*(prop.table(table2(dat_fu$S21FDIET))["Modified"]))`% patients reported about diet change. Smoking cessation was reported in `r table2(dat_fu[dat_fu$CURSMOK=="YES" & !is.na(dat_fu$S21FSMK),]$S21FSMK)["quit smoking"]` (`r round(100*(prop.table(table2(dat_fu[dat_fu$CURSMOK=="YES" & !is.na(dat_fu$S21FSMK),]$S21FSMK))["quit smoking"]))`%) of the patients who were active smokers during the index hospitalization.
+
+Despite the recommendation for cardiac rehabilitation programs, only `r round(prop.table(table2(dat_fu$S21FREHP))["Yes"]*100 + prop.table(table2(dat_fu$S21FREHP))["Scheduled to participate"]*100)`% of patients were actively participating or scheduled.
+
+\pagebreak
+
+# Chapter 2: Temporal Trends 2010-2021
+
+\  
+
+## Temporal Trends in Characteristics, Management, and Outcome of Patients with ACS in Cardiology: 2010-2021
+
+```{r}
+# source('W:/Users/Shared_Files/STAT/2021/ACSIS 2021 booklet/Data_ACSIS_Trends_00_21.R')
+source('C:/Users/talco/Documents/Statistics/ACSIS_21_PDF/Data_ACSIS_Trends_00_21.R')
+```
+
+<!-- \pagebreak -->
+
+```{r}
+trend_years <- c("2010","2013","2016","2018","2021","p for trend")
+```
+\  
+
+
+## 2.1 Patients' Characteristics
+
+\  
+
+```{r results='hide'}
+vars2.1 <- c("SEX","age5075","AGE")
+tab2.1 <- print(CreateTableOne(vars = vars2.1, strata = "SOURCE", data = dat))[,1:5]
+
+p2.1 <- apply(dat[,vars2.1[-3]],2,ptrend)
+#p for trend for age with linear regression
+pAGE <- lm(dat$AGE~dat$year)
+p_age <- ifelse(summary(pAGE)$coefficients["dat$year","Pr(>|t|)"]<0.001, "<0.001",round(summary(pAGE)$coefficients["dat$year","Pr(>|t|)"],3))
+p2.1[3] <- p_age
+t2.1 <- cbind(tab2.1,c("", p2.1[1:2],rep("",3),p2.1[3]))
+colnames(t2.1) <- trend_years
+row.names(t2.1) <- c("n","Gender (Male) ($\\%$)","Age ($\\%$)","$\\leq$ 50", "50-75", "> 75","Age (mean (sd))")
+```
+
+
+```{r}
+kable(t2.1, align = "c", caption = "Table 2.1: Patients' Characteristics", booktabs=T, linesep="", escape = F) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  add_indent(4:6) %>%
+  column_spec(1, width = "3cm") %>%
+  column_spec(2:6, "2cm") %>%
+  column_spec(7, "1cm")
+```
+
+\pagebreak
+
+## 2.2 Cardiovascular (CV) History and Risk Factors
+
+\  
+
+<!-- tbd -there are high percentages of missing in PFAMH in all years, maybe drop it? (8-19%) -->
+
+```{r results='hide'}
+vars2.2 <- c("PMI",
+             # "PAP", #no PAP in 2021
+             "PSPCI","PCABG","PCHF","PCVA","PRENAL","PPVD","PHT","PDIAB","PHLIP","CSMOK","PSMOK","PFAMH")
+tab2.2 <- print(CreateTableOne(vars = vars2.2, strata = "SOURCE", data = dat))[,1:5]
+
+tab2.2_0 <- tab2.2[-1,]
+tab2.2_1 <- substr(tab2.2_0, regexpr("(",tab2.2_0, fixed = T)+1, regexpr(")",tab2.2_0, fixed = T)-1)
+tab2.2_2 <- matrix(tab2.2_1, ncol = ncol(tab2.2_0), nrow = nrow(tab2.2_0))
+tab2.2_2 <- rbind(tab2.2[1,],tab2.2_2)
+
+p2.2 <- c("",apply(dat[,vars2.2], 2, ptrend))
+
+t2.2 <- cbind(tab2.2_2,p2.2)
+colnames(t2.2) <- trend_years
+row.names(t2.2) <- c("n","MI (%)",
+                     # "AP (%)",
+                     "Prior PCI (%)","CABG (%)","CHF (%)","Stroke/TIA (%)","Chronic renal failure (%)","Peripheral Vascular Disease (PVD) (%)","Hypertension (%)","Diabetes (%)","Dyslipidemia (%)","Current smoker (%)", "Past smoker (%)", "Family History of CAD (%)")
+```
+
+```{r}
+kable(t2.2, align = "c", caption = "Table 2.2.a: Cardiovascular History and Risk Factors", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  pack_rows("CV history",2,8) %>%
+  pack_rows("Risk factors",9,14) %>%
+  column_spec(1, width = "5cm") %>%
+  column_spec(2:7, "1.5cm")
+```
+
+\pagebreak
+ 
+ 
+```{r}
+vars_chr_treat <- c("ASA_CHR",
+              # "HHEP","HLMW", #not included in the CRF of 2021
+              "CP2Y12",
+             "BTICL", "CPRAS", "CTICGR",  
+              # "HANT", #not included in the CRF of 2021
+             "BBL_CHR","ACEARBCH","STAT_CHR","LLD_CHR","DIG_CHR","DIUR_CHR","NITR_CHR")
+
+# #change missing to no (beacuse in 2021 there is no missing data):
+vars_chr_treat_imp <- paste0(vars_chr_treat, "_imp")
+dat[,vars_chr_treat_imp] <- dat[,vars_chr_treat]
+dat[,vars_chr_treat_imp] <- lapply(dat[,vars_chr_treat_imp], fillna0)
+
+
+tab2.10 <- print(CreateTableOne(vars = vars_chr_treat_imp, strata = "year", data = dat), printToggle = F)[,1:5]
+
+tab2.10_0 <- tab2.10[-1,]
+tab2.10_1 <- substr(tab2.10_0, regexpr("(",tab2.10_0, fixed = T)+1, regexpr(")",tab2.10_0, fixed = T)-1)
+tab2.10_2 <- matrix(tab2.10_1, ncol = ncol(tab2.10_0), nrow = nrow(tab2.10_0))
+tab2.10_2 <- rbind(tab2.10[1,],tab2.10_2)
+
+p2.10 <- apply(dat[,vars_chr_treat_imp], 2, ptrend)
+t2.10 <- cbind(tab2.10_2, c("",p2.10))
+colnames(t2.10) <- trend_years
+row.names(t2.10) <- c("n","Aspirin (%)",
+                      # "Heparin (%)","LMWH (%)",
+                      "P2Y12 inhibitors (%)",
+                      "Clopidogrel (%)", "Prasugrel (%)", "Ticagrelor  (%)",
+                      # "IIb/IIIa antagonists (%)",
+                      "Beta Blockers (%)","ACE-I/ARB (%)","Statins (%)","Lipid Lowering Drugs (LLDs) (%)","Digoxin (%)","Diuretic (%)","Nitrates (%)")
+
+kable(t2.10, align = "c", caption = "Table 2.2.b: Prior Chronic Treatment", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "5cm") %>%
+  column_spec(2:7, "1.3cm")
+```
+
+\  
+
+```{r fig.height=6, fig.width=9}
+t_stat <- as.numeric(t2.10["Statins (%)",1:5])
+t_p2y12 <- as.numeric(t2.10["P2Y12 inhibitors (%)",1:5])
+t_asp <- as.numeric(t2.10["Aspirin (%)",1:5])
+t_bb <- as.numeric(t2.10["Beta Blockers (%)",1:5])
+t_acearb <- as.numeric(t2.10["ACE-I/ARB (%)",1:5])
+
+par(mar=c(5,4,4,2))
+years_graph <-c(2009,2010,2013,2016,2018,2021, 2022)
+plot(x=years_graph, y=c(NA,t_stat,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
+lines(x=years_graph,y=c(NA,t_p2y12,NA),type = "b", lwd=2, col="blue")
+lines(x=years_graph,y=c(NA,t_asp,NA),type = "b", lwd=2, col="green")
+lines(x=years_graph,y=c(NA,t_bb,NA),type = "b", lwd=2, col="orange")
+lines(x=years_graph,y=c(NA,t_acearb,NA),type = "b", lwd=2, col="magenta")
+abline(h=seq(0,100, by = 10), lty=3, col="gray")
+axis(1,c(2010,2013,2016,2018,2021))
+# text(c(2008,2010,2013,2016,2018),t_stat+3, t_stat, col = "red", font = 2)
+# text(c(2008,2010,2013,2016,2018),t_p2y12-3, t_p2y12, col = "blue", font = 2)
+# text(c(2008,2010,2013,2016,2018),t_asp+3, t_asp, col = "green", font = 2)
+# text(c(2008,2010,2013,2016,2018),t_bb+3, t_bb, col = "orange", font = 2)
+# text(c(2008,2010,2013,2016,2018),t_acearb-3, t_acearb, col = "magenta", font = 2)
+legend(2019,100, c("Statins","P2Y12 inhibitors","Aspirin","Beta Blockers","ACE-I/ARB"), col = c("red","blue","green","orange","magenta"), pch = 1, lwd = 2, bty = "n", horiz = F, y.intersp = 1)
+title("Figure 2.1: Trends in  Prior Chronic Treatment", font.main=1, cex.main=1.1)
+```
+
+
+\pagebreak
+
+## 2.3 Admission Information
+
+### 2.3.1 Initial Ward of Hospitalization
+
+```{r results='hide'}
+tab2.3 <- print(CreateTableOne(vars = "WARD1", strata = "year", data = dat))[,1:5]
+
+tab2.3_0 <- tab2.3[-1,]
+tab2.3_1 <- substr(tab2.3_0, regexpr("(",tab2.3_0, fixed = T)+1, regexpr(")",tab2.3_0, fixed = T)-1)
+tab2.3_2 <- matrix(tab2.3_1, ncol = ncol(tab2.3_0), nrow = nrow(tab2.3_0))
+tab2.3_2 <- rbind(tab2.3[1,],tab2.3_2)
+
+
+row.names(tab2.3_2) <- c("n", "Ward (%)","Cardiology/ICCU","Internal Medicine","Other")
+
+table.p2.3 <- cbind(expand.grid(Ward=levels(dat$WARD1),Year=levels(dat$SOURCE)),Count = c(table(dat$WARD1, dat$year)))
+# Change table to numeric
+dat$ward1 <- as.numeric(dat$WARD1)
+table.p2.3n <- cbind(expand.grid(Ward=1:3,Year=c(2008,2010,2013,2016,2018)),Count = c(table(dat$WARD1, dat$year)))
+rep.tbl <- table.p2.3n[,1:2][rep(1:nrow(table.p2.3n),table.p2.3n$Count),]
+p2.3s <- cor.test(rep.tbl[,1],rep.tbl[,2])
+p2.3 <- ifelse(p2.3s$p.value<0.001,"<0.001",round(p2.3s$p.value,3))
+```
+
+```{r}
+kable(tab2.3_2, align = "c", caption = "Table 2.3: Initial Ward of Hospitalization", booktabs=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  add_indent(3:5) %>%
+  column_spec(1, width = "4cm") %>%
+  column_spec(2:6, "2cm") %>%
+  footnote(general = paste("p for trend", p2.3), general_title = "")
+```
+
+
+
+
+### 2.3.2.a ECG on Admission
+
+```{r results='hide'}
+tab2.4 <- print(CreateTableOne(vars = "admecg", strata = "year", data = dat), showAllLevels = T)[,2:6]
+
+tab2.4_0 <- tab2.4[-1,]
+tab2.4_1 <- substr(tab2.4_0, regexpr("(",tab2.4_0, fixed = T)+1, regexpr(")",tab2.4_0, fixed = T)-1)
+tab2.4_2 <- matrix(tab2.4_1, ncol = ncol(tab2.4_0), nrow = nrow(tab2.4_0))
+tab2.4_2 <- rbind(tab2.4[1,],tab2.4_2)
+
+
+row.names(tab2.4_2) <- c("n",levels(dat$admecg))
+```
+
+```{r}
+kable(tab2.4_2, align = "c", caption = "Table 2.4: ECG on Admission", booktabs=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "4cm") %>%
+  column_spec(2:6, width = "2cm") %>%
+  footnote(general = paste("p for trend", ptrend(dat$admecg)), general_title = "")
+```
+
+
+### 2.3.2.b Diagnosis at Discharge
+
+```{r results='hide'}
+tab2.4 <- print(CreateTableOne(vars = "group", strata = "year", data = dat), showAllLevels = T)[,2:6]
+
+tab2.4_0 <- tab2.4[-1,]
+tab2.4_1 <- substr(tab2.4_0, regexpr("(",tab2.4_0, fixed = T)+1, regexpr(")",tab2.4_0, fixed = T)-1)
+tab2.4_2 <- matrix(tab2.4_1, ncol = ncol(tab2.4_0), nrow = nrow(tab2.4_0))
+tab2.4_2 <- rbind(tab2.4[1,],tab2.4_2)
+
+
+row.names(tab2.4_2) <- c("n","Non STEMI","STEMI")
+```
+
+```{r}
+kable(tab2.4_2, align = "c", caption = "Table 2.5: Diagnosis at Discharge", booktabs=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "4cm") %>%
+  column_spec(2:6, width = "2cm") %>%
+  footnote(general = paste("p for trend", ptrend(dat$group)), general_title = "")
+```
+
+
+
+### 2.3.3 Killip Class on Admission
+
+```{r}
+tab2.5 <- print(CreateTableOne(vars = "ADMKLP", strata = "year", data = dat), printToggle = F)[,1:5]
+
+tab2.5_0 <- tab2.5[-1,]
+tab2.5_1 <- substr(tab2.5_0, regexpr("(",tab2.5_0, fixed = T)+1, regexpr(")",tab2.5_0, fixed = T)-1)
+tab2.5_2 <- matrix(tab2.5_1, ncol = ncol(tab2.5_0), nrow = nrow(tab2.5_0))
+tab2.5_2 <- rbind(tab2.5[1,],tab2.5_2)
+
+
+row.names(tab2.5_2) <- c("n","Killip class (%)","1","2","3","4")
+
+dat$killip <- as.numeric(dat$ADMKLP)
+table.p2.5n <- cbind(expand.grid(Killip=1:4,Year=c(2008,2010,2013,2016,2018)),Count = c(table(dat$ADMKLP, dat$year)))
+rep.tbl <- table.p2.5n[,1:2][rep(1:nrow(table.p2.5n),table.p2.5n$Count),]
+p2.5s <- cor.test(rep.tbl[,1],rep.tbl[,2])
+p2.5 <- ifelse(p2.5s$p.value<0.001,"<0.001",round(p2.5s$p.value,3))
+
+kable(tab2.5_2, align = "c", caption = "Table 2.6: Killip Class on Admission", booktabs=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  add_indent(3:6) %>%
+  column_spec(1, width = "4cm") %>%
+  column_spec(2:6, width = "2cm") %>%
+  footnote(general = paste("p for trend", p2.5), general_title = "")
+```
+
+
+\pagebreak
+
+## 2.4 Primary Reperfusion Therapy in Patients with ST elevation
+
+```{r fig.height=5.8, fig.width=9}
+tab_rep <- addmargins(table(dat$REP, dat$year, dat$admecg),1)[,,"ST elevation"]
+# tab_rep <- addmargins(table(dat$REP, dat$year, dat$group),1)[,,"STE-ACS"]
+
+t_rep <- round(tab_rep["YES",]/tab_rep["Sum",],3)*100
+fig2.1 <- barplot(t_rep, col = "cadetblue2", xlab = "Year", ylab = "Percent (%)", main = "Figure 2.2: Primary Reperfusion among Patients with ST elevation", space = 0.8, ylim = c(0,100), font.main=1, cex.main=1.1)
+text(x = fig2.1, y = t_rep, labels =  t_rep, pos = 3, cex = 0.8, xpd=T)
+```
+
+```{r fig.height=5.8, fig.width=9}
+tab_rept <- addmargins(table(dat$rept, dat$year, dat$admecg, dat$REP),1)[,,"ST elevation","YES"]
+t_tlx <- round(tab_rept["TLX",]/tab_rept["Sum",],3)*100
+t_pci <- round(tab_rept["PCI",]/tab_rept["Sum",],3)*100
+t_rept <- rbind(t_tlx, t_pci)
+fig2.2 <- barplot(t_rept, main = "Figure 2.3: Type of Primary Reperfusion among Patients with ST Elevation", xlab = "Year", ylab = "Percent (%)", col = c("cadetblue2","mediumpurple"), ylim = c(0,110), space = 0.8, font.main=1, cex.main=1.1)
+legend("top", c("TLX","PCI"), cex=0.8, fill=c("cadetblue2","mediumpurple"),bty = "n", horiz = T)
+# text(x = fig2.2, y = (t_tlx+t_pci/2), label = t_pci, cex = 0.8)
+text(x = fig2.2, y = 102, label = t_pci, cex = 0.8)
+# text(x = fig2.2, y = (t_tlx/2)+1, label = t_tlx, cex = 0.8)
+text(x = fig2.2, y = 4, label = t_tlx, cex = 0.8)
+
+```
+
+\pagebreak
+
+### 2.4.1 Primary PCI / Coronary Angiography
+
+```{r results='hide'}
+dat_10_21$PCIVA <- factor(dat_10_21$PCIVA, levels = c("FEMORAL","RADIAL","BOTH"))
+tab_radial_ppci_trend <- print(CreateTableOne(vars = "PCIVA", strata = "year", data = subset(dat_10_21, admecg=="ST elevation" & REP=="YES")))[,1:5]
+row.names(tab_radial_ppci_trend) <- c("n","Vascular access, n (%):",capitalize(tolower(levels(dat_10_21$PCIVA))))
+```
+
+```{r}
+kable(tab_radial_ppci_trend, align = "c", caption = "Table 2.7.1: Vascular access during Primary Reperfusion", booktabs=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "4cm") %>%
+  column_spec(2:6, width = "2cm") %>%
+  add_indent(3:5)
+```
+
+
+
+### 2.4.2 Coronary angiography (***excluding*** *primary PCI*)
+
+
+```{r results='hide'}
+dat_fit <- subset(dat_10_21, PCI%in%c("NO",NA)) #n=6084
+
+
+dat_fit$HAVA <- factor(dat_fit$HAVA, levels = c("FEMORAL","RADIAL","BOTH"))
+tab_angio_trend <- print(CreateTableOne(vars = "HANGIO", strata = "year", data = dat_fit))[,1:5]
+tab_radial_angio_trend <- print(CreateTableOne(vars = "HAVA", strata = "year", data = subset(dat_fit, HANGIO=="YES")))[,1:5]
+t_radial_angio_trend <- rbind(tab_angio_trend, tab_radial_angio_trend)[-3,]
+
+row.names(t_radial_angio_trend) <- c("n (excluding primary PCI)","Coronary angiography, n (%)","Vascular access, n (%):", capitalize(tolower(levels(dat_fit$HAVA))))
+```
+
+```{r}
+kable(t_radial_angio_trend, align = "c", caption = "Table 2.7.2: Vascular access during coronary angiography", booktabs=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "4cm") %>%
+  column_spec(2:6, width = "2cm") %>%
+  add_indent(c(3,4:6,4:6))
+```
+
+
+\pagebreak
+
+## 2.5 Time Intervals in STEMI Patients
+
+\  
+<!-- tbd - I removed time to TLX due to missing data in 2021 -->
+
+
+```{r}
+#15.3.22 Beigel asked for number of patients in each year who had primary reperfusion:
+
+dat_fit <- subset(dat, group=="STE-ACS") #n= 3585
+
+tab1 <- print(CreateTableOne(vars = "REP",strata = "year",data = dat_fit, test = F),printToggle = F)
+rownames(tab1) <- c("n","Primary reperfusion, n (%)")
+
+
+
+kable(tab1, align = "c", caption = "Table 2.8.1: Primary reperfusion among STEMI patients", booktabs=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "6cm") %>%
+  column_spec(2:6, width = "2cm") 
+
+#check it 13.9.22
+```
+
+
+```{r}
+
+
+#=====================#
+# dat_fit <- subset(dat, REP=="YES" & ADMECG=="ST") #in 2018
+# dat_fit <- subset(dat, PCI=="YES" & ADMECG=="ST") #in 2021 #n=2787
+dat_fit <- subset(dat, PCI=="YES" & group=="STE-ACS") #n= 2719
+
+
+vars2.6 <- c("HEFT4","HEFT7",
+             # "HEFT6", #no data in 2021
+             "ONS_REP","door2b90")
+tab2.6 <- print(CreateTableOne(vars = vars2.6, strata = "year", data = dat_fit), printToggle = F, nonnormal = c(
+  "HEFT4", 
+"HEFT7",
+# "HEFT6",
+"ONS_REP"))[,1:5]
+
+# tab2.6_0 <- tab2.6[-1,]
+# tab2.6_1 <- substr(tab2.6_0, regexpr("(",tab2.6_0, fixed = T)+1, regexpr(")",tab2.6_0, fixed = T)-1)
+# tab2.6_2 <- matrix(tab2.6_1, ncol = ncol(tab2.6_0), nrow = nrow(tab2.6_0))
+# tab2.6_2 <- rbind(tab2.6[1,],tab2.6_2)
+
+
+# #~~~~~~~~~~~~~~~~ Normality Test + Transformation
+# qqnorm((subset(dat, REP=="YES" & ADMECG=="ST" & heft4<2000)$heft4), ylim = c(0,1000)); qqline((subset(dat, REP=="YES" & ADMECG=="ST" & heft4<2000)$heft4), col = "red")
+#
+# qqnorm((subset(dat, REP=="YES" & ADMECG=="ST" & heft4<2000)$heft4)^0.5, ylim = c(0,100)); qqline((subset(dat, REP=="YES" & ADMECG=="ST" & heft4<2000)$heft4)^0.5, col = "red")
+#
+# qqnorm(log(subset(dat, REP=="YES" & ADMECG=="ST" & heft4<2000)$heft4), ylim = c(0,20)); qqline(log(subset(dat, REP=="YES" & ADMECG=="ST" & heft4<2000)$heft4), col = "red")
+# #~~~~~~~~~~~~~~~~~~
+
+ph4 <- lm(log(heft4)~year, dat_fit)
+p_h4 <- round(summary(ph4)$coefficients["year","Pr(>|t|)"],3)
+
+ph7 <- lm((heft7)^0.5~year, dat_fit)
+p_h7 <- round(summary(ph7)$coefficients["year","Pr(>|t|)"],3)
+
+# ph6 <- lm((heft6)^0.5~year, subset(dat, REP=="YES" & ADMECG=="ST"))
+# p_h6 <- round(summary(ph6)$coefficients["year","Pr(>|t|)"],3)
+
+porep <- lm(log(ons_rep)~year, dat_fit)
+p_orep <- round(summary(porep)$coefficients["year","Pr(>|t|)"],3)
+
+pd2b90 <- ptrend(dat_fit$door2b90, dat_fit$year)
+
+p2.6 <- c(p_h4,p_h7,
+          # p_h6,
+          p_orep)
+p2.6 <- ifelse(p2.6<0.001,"<0.001",p2.6)
+p2.6 <- c("",p2.6, pd2b90)
+
+t2.6 <- cbind(tab2.6, p2.6)
+
+colnames(t2.6) <- trend_years
+row.names(t2.6) <- c("n","Symptom onset to ED arrival (median [IQR])","ED arrival to primary PCI (door to balloon) (median [IQR])",
+                     # "ER arrival to TLx  (median [IQR])",
+                     "Onset to balloon  (median [IQR])","Door to balloon $\\leq$ 90 min. ($\\%$)")
+
+kable(t2.6, align = "c", caption = "Table 2.8.2: Time Intervals in STEMI reperfused patients in PPCI (minutes)", booktabs=T, escape = F, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "3.8cm") %>%
+  column_spec(2:6, "2cm") %>%
+  column_spec(7, "1cm")
+```
+
+\pagebreak
+
+<!-- tbd - I removed time to TLX due to missing data in 2021 -->
+
+
+```{r}
+# Time interval for men
+# dat_fit <- subset(dat, PCI=="YES" & ADMECG=="ST" & SEX=="MALE") #n=2296
+dat_fit <- subset(dat, PCI=="YES" & group=="STE-ACS" & SEX=="MALE") #n=2241
+
+
+
+tab2.7m <- print(CreateTableOne(vars = vars2.6[-4], strata = "year", data = dat_fit), printToggle = F, nonnormal = c("HEFT4","HEFT7","HEFT6","ONS_REP"))[,1:5]
+# qqnorm(log(dat$ONS_REP)+1, ylim = c(0,15)); qqline(log(dat$ONS_REP)+1, col = "red")
+ph4 <- lm(log(heft4)~year, dat_fit)
+p_h4 <- round(summary(ph4)$coefficients["year","Pr(>|t|)"],3)
+
+ph7 <- lm((heft7)^0.5~year, dat_fit)
+p_h7 <- round(summary(ph7)$coefficients["year","Pr(>|t|)"],3)
+
+# ph6 <- lm(log(heft6)^0.5~year, subset(dat, REP=="YES" & ADMECG=="ST" & SEX=="MALE"))
+# p_h6 <- round(summary(ph6)$coefficients["year","Pr(>|t|)"],3)
+
+porep <- lm(log(ons_rep)~year, dat_fit)
+p_orep <- round(summary(porep)$coefficients["year","Pr(>|t|)"],3)
+
+p2.7m <- c(p_h4,p_h7,
+           # p_h6,
+           p_orep)
+p2.7m <- ifelse(p2.7m<0.001,"<0.001",p2.7m)
+p2.7m <- c("",p2.7m)
+
+t2.7m <- cbind(tab2.7m, p2.7m)
+
+colnames(t2.7m) <- trend_years
+row.names(t2.7m) <- c("n","Symptom onset to ED arrival (median [IQR])","ED arrival to primary PCI (door to balloon)  (median [IQR])",
+                      # "ER arrival to TLx  (median [IQR])",
+                      "Onset to balloon  (median [IQR])")
+
+# kable(t2.7m, align = "c", caption = "Men", booktabs) %>%
+#   kable_styling("striped")
+```
+
+```{r warning=F}
+# Time intervals for women
+# dat_fit <- subset(dat, PCI=="YES" & ADMECG=="ST" & SEX=="FEMALE") #n=491
+dat_fit <- subset(dat, PCI=="YES" & group=="STE-ACS" & SEX=="FEMALE") #n=478
+
+
+
+tab2.7f <- print(CreateTableOne(vars = vars2.6[-4], strata = "year", data = dat_fit), printToggle = F, nonnormal = c("HEFT4","HEFT7","HEFT6","ONS_REP"))[,1:5]
+# qqnorm(log(dat$ONS_REP)+1, ylim = c(0,15)); qqline(log(dat$ONS_REP)+1, col = "red")
+ph4 <- lm(log(heft4)~year, dat_fit)
+p_h4 <- round(summary(ph4)$coefficients["year","Pr(>|t|)"],3)
+
+ph7 <- lm((heft7)^0.5~year, dat_fit)
+p_h7 <- round(summary(ph7)$coefficients["year","Pr(>|t|)"],3)
+
+# ph6 <- lm((heft6)^0.5~year, subset(dat, REP=="YES" & ADMECG=="ST" & SEX=="FEMALE" & year!=2016))
+# p_h6 <- round(summary(ph6)$coefficients["year","Pr(>|t|)"],3)
+
+porep <- lm(log(ons_rep)~year, dat_fit)
+p_orep <- round(summary(porep)$coefficients["year","Pr(>|t|)"],3)
+
+p2.7f <- c(p_h4,p_h7,
+           # p_h6,
+           p_orep)
+p2.7f <- ifelse(p2.7f<0.001,"<0.001",p2.7f)
+p2.7f <- c("",p2.7f)
+
+t2.7f <- cbind(tab2.7f, p2.7f)
+
+colnames(t2.7f) <- trend_years
+row.names(t2.7f) <- c("n","Symptom onset to ED arrival (median [IQR])","ED arrival to primary PCI (door to balloon)  (median [IQR])",
+                      # "ER arrival to TLx  (median [IQR])",
+                      "Onset to balloon  (median [IQR])")
+
+# kable(t2.7f, align = "c", format = "html", caption = "Women") %>%
+#   kable_styling("striped")
+```
+
+```{r}
+t2.7 <- rbind(t2.7m,t2.7f)
+kable(t2.7, align = "c", caption = "Table 2.9: Time Intervals (minutes) in STEMI reperfused patient in PPCI, by gender", booktabs=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  pack_rows(index = c("Men"=4, "Women"=4), latex_gap_space = "1em", hline_after = T) %>%
+  column_spec(1, width = "4cm") %>%
+  column_spec(2:6, width = "1.7cm") %>%
+  column_spec(7, "1cm")
+```
+
+\pagebreak
+
+## 2.6 Procedures during Hospitalization
+
+\  
+```{r}
+
+
+vars2.8 <- c("ANGIO","ANYPCI","STENT","HCABG","HIOB"
+             # ,"HECHO" #v12
+             )
+tab2.8 <- print(CreateTableOne(vars = vars2.8, strata = "year", data = dat), printToggle = F)[,1:5]
+
+tab2.8_0 <- tab2.8[-1,]
+tab2.8_1 <- substr(tab2.8_0, regexpr("(",tab2.8_0, fixed = T)+1, regexpr(")",tab2.8_0, fixed = T)-1)
+tab2.8_2 <- matrix(tab2.8_1, ncol = ncol(tab2.8_0), nrow = nrow(tab2.8_0))
+tab2.8_2 <- rbind(tab2.8[1,],tab2.8_2)
+
+
+p2.8 <- apply(dat[,vars2.8], 2, ptrend)
+
+# tab2.8pci <- print(CreateTableOne(vars = "ANYPCI", strata = "year", data = subset(dat, ANGIO=="YES")), printToggle = F)[2,1:5]
+# 
+# tab2.8pci_1 <- substr(tab2.8pci, regexpr("(",tab2.8pci, fixed = T)+1, regexpr(")",tab2.8pci, fixed = T)-1)
+# 
+# p2.8pci <- ptrend(subset(dat, ANGIO=="YES")$ANYPCI, subset(dat, ANGIO=="YES")$year)
+# 
+# tab2.8_2[match("ANYPCI = YES (%)",rownames(tab2.8)),] <- tab2.8pci_1
+
+# p2.8["ANYPCI"] <- p2.8pci
+
+t2.8 <- cbind(tab2.8_2, c("",p2.8))
+
+colnames(t2.8) <- trend_years
+row.names(t2.8) <- c("n","Coronary Angiography (%)",
+                     # "Any PCI [note] (%)",
+                     "Any PCI (%)",
+                     "Stent (%)","CABG (%)","IABP (%)"
+                     # ,"Echocardiography (%)"
+                     )
+
+kable(t2.8, align = "c",caption = "Table 2.10 Procedures during Hospitalization", booktabs=T, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  # add_indent(3) %>%
+  # add_footnote("Percent of all patients undergoing angiography", notation = "number") %>%
+  column_spec(1, width = "4.3cm") %>%
+  column_spec(2:7, "1.5cm")
+```
+
+\  
+
+```{r fig.height=6, fig.width=9}
+
+t_angio <-as.numeric(t2.8["Coronary Angiography (%)",1:5])
+t_pci <- as.numeric(t2.8["Any PCI (%)",1:5])
+t_cabg <- as.numeric(t2.8["CABG (%)",1:5])
+t_stent <- as.numeric(t2.8["Stent (%)",1:5])
+
+par(mar=c(5,4,4,2))
+plot(x=c(2007,2008,2010,2013,2016,2018,2019), y=c(NA,t_angio,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
+lines(x=c(2007,2008,2010,2013,2016,2018,2019),y=c(NA,t_pci,NA),type = "b", lwd=2, col="blue")
+lines(x=c(2007,2008,2010,2013,2016,2018,2019),y=c(NA,t_cabg,NA),type = "b", lwd=2, col="green")
+lines(x=c(2007,2008,2010,2013,2016,2018,2019),y=c(NA,t_stent,NA),type = "b", lwd=2, col="orange")
+abline(h=seq(0,100, by = 10), lty=3, col="gray")
+axis(1,c(2008,2010,2013,2016,2018))
+text(c(2008,2010,2013,2016,2018),t_angio-3, t_angio, col = "red", font = 2)
+text(c(2008,2010,2013,2016,2018),t_pci-3, t_pci, col = "blue", font = 2)
+text(c(2008,2010,2013,2016,2018),t_cabg+3, t_cabg, col = "green", font = 2)
+text(c(2008,2010,2013,2016,2018),t_stent+3, t_stent, col = "orange", font = 2)
+legend(2010,60, c("Coronary Angiography","PCI","CABG","Stent"), col = c("red","blue","green","orange"), pch = 1, lwd = 2, bty = "n", horiz = F, y.intersp = 1.5)
+title("Figure 2.4: Trends in Procedures Performed During Hospitalization", font.main=1, cex.main=1.1)
+```
+
+\pagebreak
+
+## 2.7 In-Hospital Complications
+  
+\  
+
+```{r}
+
+vars2.9 <- c("COMP25","COMP26","COMP7","COMP1","COMP2","COMP3","COMP5","COMP9","COMP20","COMP11","COMPAVBH","COMP13","COMP14","COMP10","COMP21","COMP22","COMP24","COMP4")
+tab2.9 <- print(CreateTableOne(vars = vars2.9, strata = "year", data = dat), printToggle = F)[,1:5]
+
+tab2.9_0 <- tab2.9[-1,]
+tab2.9_1 <- substr(tab2.9_0, regexpr("(",tab2.9_0, fixed = T)+1, regexpr(")",tab2.9_0, fixed = T)-1)
+tab2.9_2 <- matrix(tab2.9_1, ncol = ncol(tab2.9_0), nrow = nrow(tab2.9_0))
+tab2.9_2 <- rbind(tab2.9[1,],tab2.9_2)
+
+p2.9 <- apply(dat[,vars2.9], 2, ptrend)
+t2.9 <- cbind(tab2.9_2, c("",p2.9))
+colnames(t2.9) <- trend_years
+row.names(t2.9) <- c("n","Re-MI ($\\%$)","Post MI angina/Re-ischemia ($\\%$)","Sub-Acute Stent Thrombosis ($\\%$)","Mild-moderate CHF (Killip 2) ($\\%$)","Pulmonary edema (Killip 3) ($\\%$)","Cardiogenic shock (Killip 4) ($\\%$)","Free wall rupture ($\\%$)","Tamponade ($\\%$)","Moderate-severe MR ($\\%$)","Sustained VT ($\\%$)","High degree (2nd / 3rd) AVB ($\\%$)","Primary VF ($\\%$)","Secondary VF ($\\%$)","Asystole ($\\%$)","TIA ($\\%$)","Stroke ($\\%$)","Acute renal injury ($\\%$)","Bleeding ($\\%$)")
+
+kable(t2.9, align = "c",caption = "Table 2.11: In-Hospital Complications", booktabs=T, escape = F, linesep = '') %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "5.5cm") %>%
+  column_spec(2:7, "1.35cm")
+```
+
+\pagebreak
+
+## 2.8 In-Hospital Treatment
+
+\  
+
+```{r}
+dat$HLIPID_new <- factor(ifelse(dat$HSTAT=="YES","YES", as.character(dat$HLIPID))) #according to Roy
+vars2.10 <- c("HASA",
+              # "HHEP","HLMW", #not included in the CRF of 2021
+              "HP2Y12_corrected",
+             "HTICL_corrected", "HPRAS_corrected", "HTICGR_corrected",
+              # "HANT", #not included in the CRF of 2021
+             "HBB","HACEARB","HSTAT","HLIPID_new","HDIGIT","HDIUR","HNIT"
+             #v13:
+             ,"oral_anticoag_hosp"
+             )
+
+# #change missing to no (beacuse in 2021 there is no missing data):
+vars2.10_imp <- paste0(vars2.10, "_imp")
+dat[,vars2.10_imp] <- dat[,vars2.10]
+dat[,vars2.10_imp] <- lapply(dat[,vars2.10_imp], fillna0)
+
+tab2.10 <- print(CreateTableOne(vars = vars2.10_imp, strata = "year", data = dat), printToggle = F)[,1:5]
+
+tab2.10_0 <- tab2.10[-1,]
+tab2.10_1 <- substr(tab2.10_0, regexpr("(",tab2.10_0, fixed = T)+1, regexpr(")",tab2.10_0, fixed = T)-1)
+tab2.10_2 <- matrix(tab2.10_1, ncol = ncol(tab2.10_0), nrow = nrow(tab2.10_0))
+tab2.10_2 <- rbind(tab2.10[1,],tab2.10_2)
+
+p2.10 <- apply(dat[,vars2.10_imp], 2, ptrend)
+t2.10 <- cbind(tab2.10_2, c("",p2.10))
+colnames(t2.10) <- trend_years
+row.names(t2.10) <- c("n","Aspirin ($\\%$)",
+                      # "Heparin (%)","LMWH (%)",
+                      "P2Y12 inhibitors ($\\%$)",
+                      "Clopidogrel ($\\%$)", "Prasugrel ($\\%$)", "Ticagrelor  ($\\%$)",
+                      # "IIb/IIIa antagonists ($\\%$)",
+                      "Beta Blockers ($\\%$)","ACE-I/ARB ($\\%$)","Statins ($\\%$)","LLDs ($\\%$)","Digoxin ($\\%$)","Diuretic ($\\%$)","Nitrates ($\\%$)"
+                      ,paste0("Anticoagulant",footnote_marker_number(1)," ($\\%$)")
+
+                      )
+
+kable(t2.10, align = "c", caption = "Table 2.12: In-Hospital Treatment", booktabs=T
+      ,linesep=""
+      ,  escape = F, longtable=T
+      ) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "4cm") %>%
+  column_spec(2:7, "1.5cm") %>%
+  footnote(number = "Anticoagulants include warfarin, LMWH and DOACs in the years applicable"
+           , threeparttable=T
+           )
+
+
+```
+
+
+```{r fig.height=6, fig.width=9}
+t_stat <- as.numeric(t2.10["Statins ($\\%$)",1:5])
+t_p2y12 <- as.numeric(t2.10["P2Y12 inhibitors ($\\%$)",1:5])
+t_asp <- as.numeric(t2.10["Aspirin ($\\%$)",1:5])
+t_bb <- as.numeric(t2.10["Beta Blockers ($\\%$)",1:5])
+t_acearb <- as.numeric(t2.10["ACE-I/ARB ($\\%$)",1:5])
+
+par(mar=c(5,4,4,2))
+years_graph <-c(2009,2010,2013,2016,2018,2021, 2022)
+plot(x=years_graph, y=c(NA,t_stat,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
+lines(x=years_graph,y=c(NA,t_p2y12,NA),type = "b", lwd=2, col="blue")
+lines(x=years_graph,y=c(NA,t_asp,NA),type = "b", lwd=2, col="green")
+lines(x=years_graph,y=c(NA,t_bb,NA),type = "b", lwd=2, col="orange")
+lines(x=years_graph,y=c(NA,t_acearb,NA),type = "b", lwd=2, col="magenta")
+abline(h=seq(0,100, by = 10), lty=3, col="gray")
+axis(1,c(2010,2013,2016,2018,2021))
+# text(c(2008,2010,2013,2016,2018),t_stat+3, t_stat, col = "red", font = 2)
+# text(c(2008,2010,2013,2016,2018),t_p2y12-3, t_p2y12, col = "blue", font = 2)
+# text(c(2008,2010,2013,2016,2018),t_asp+3, t_asp, col = "green", font = 2)
+# text(c(2008,2010,2013,2016,2018),t_bb+3, t_bb, col = "orange", font = 2)
+# text(c(2008,2010,2013,2016,2018),t_acearb-3, t_acearb, col = "magenta", font = 2)
+legend(2010,80, c("Statins","P2Y12 inhibitors","Aspirin","Beta Blockers","ACE-I/ARB"), col = c("red","blue","green","orange","magenta"), pch = 1, lwd = 2, bty = "n", horiz = F
+       , y.intersp = 1
+       )
+title("Figure 2.5: Trends in Hospital Treatment", font.main=1, cex.main=1.1)
+```
+
+\pagebreak
+
+## 2.9 Medical Treatment on Discharge
+
+\  
+
+
+```{r warning=FALSE}
+dat$GLP1_Disch_new <- factor(ifelse(dat$PDIAB=="NO",NA, as.character(dat$GLP1_Disch)))
+vars2.11 <- c("DASA","DBB","DP2Y12_corrected",
+              "DTICL_corrected", "DPRAS_corrected", "DTICGR_corrected", #v7
+              "DACEARB","DSTAT","DLIPID","DDIGIT","DDIUR","DNIT",
+              "GLP1_Disch_new"
+              ,"oral_anticoag_disch"
+              )
+
+# #change missing to no (beacuse in 2021 there is no missing data):
+vars2.11_imp <- paste0(vars2.11, "_imp")
+dat[,vars2.11_imp] <- dat[,vars2.11]
+dat[,vars2.11_imp] <- lapply(dat[,vars2.11_imp], fillna0)
+
+tab2.11 <- print(CreateTableOne(vars = vars2.11_imp, strata = "year", data = subset(dat, DISDIE=="ALIVE")), printToggle = F)[,1:5]
+
+tab2.11_0 <- tab2.11[-1,]
+tab2.11_1 <- substr(tab2.11_0, regexpr("(",tab2.11_0, fixed = T)+1, regexpr(")",tab2.11_0, fixed = T)-1)
+tab2.11_2 <- matrix(tab2.11_1, ncol = ncol(tab2.11_0), nrow = nrow(tab2.11_0))
+tab2.11_2 <- rbind(tab2.11[1,],tab2.11_2)
+
+ptrend_sub <- function(x,y=subset(dat, DISDIE=="ALIVE")$SOURCE,nrow=1) {
+  tabx <- addmargins(table(x, y),1)
+  pval <-round(prop.trend.test(tabx[nrow,], tabx["Sum",])$p.value, 3)
+  pval <- ifelse(pval<0.001,"<0.001",pval)
+  return(pval)
+}
+
+p2.11 <- apply(subset(dat, DISDIE=="ALIVE")[,vars2.11_imp], 2, ptrend_sub)
+
+t2.11 <- cbind(tab2.11_2, c("",p2.11))
+colnames(t2.11) <- trend_years
+row.names(t2.11) <- c("n","Aspirin ($\\%$)","Beta Blockers ($\\%$)","P2Y12 inhibitors ($\\%$)",
+                       "Clopidogrel ($\\%$)", "Prasugrel ($\\%$)", "Ticagrelor  ($\\%$)", #v7
+                      "ACE-I/ARB ($\\%$)","Statins ($\\%$)","LLDs ($\\%$)","Digoxin ($\\%$)","Diuretic ($\\%$)","Nitrates ($\\%$)",
+              paste0("GLP-1", footnote_marker_number(1), " ($\\%$)")
+             ,paste0("Anticoagulant", footnote_marker_number(2), " ($\\%$)")
+                      
+
+                      )
+
+kable(t2.11, align = "c", caption = "Table 2.13: Medical Treatment on Discharge among Hospital Survivors", booktabs=T
+      , linesep=""
+      ,  escape = F
+      , longtable=T
+      ) %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  column_spec(1, width = "4cm") %>%
+  column_spec(2:7, "1.5cm") %>%
+  footnote(number = c("Only among diabetic patients", "Anticoagulants include warfarin, LMWH and DOACs in the years applicable")
+           , threeparttable=T
+           )
+```
+
+
+```{r fig.height=6, fig.width=9}
+t_stat <- as.numeric(t2.11["Statins ($\\%$)",1:5])
+t_p2y12 <- as.numeric(t2.11["P2Y12 inhibitors ($\\%$)",1:5])
+t_asp <- as.numeric(t2.11["Aspirin ($\\%$)",1:5])
+t_bb <- as.numeric(t2.11["Beta Blockers ($\\%$)",1:5])
+t_acearb <- as.numeric(t2.11["ACE-I/ARB ($\\%$)",1:5])
+
+par(mar=c(5,4,4,2))
+plot(x=years_graph, y=c(NA,t_stat,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
+lines(x=years_graph,y=c(NA,t_p2y12,NA),type = "b", lwd=2, col="blue")
+lines(x=years_graph,y=c(NA,t_asp,NA),type = "b", lwd=2, col="green")
+lines(x=years_graph,y=c(NA,t_bb,NA),type = "b", lwd=2, col="orange")
+lines(x=years_graph,y=c(NA,t_acearb,NA),type = "b", lwd=2, col="magenta")
+abline(h=seq(0,100, by = 10), lty=3, col="gray")
+axis(1,c(2010,2013,2016,2018,2021))
+# text(c(2008,2010,2013,2016,2018),t_stat+3, t_stat, col = "red", font = 2)
+# text(c(2008,2010,2013,2016,2018),t_p2y12-3, t_p2y12, col = "blue", font = 2)
+# text(c(2008,2010,2013,2016,2018),t_asp+3, t_asp, col = "green", font = 2)
+# text(c(2008,2010,2013,2016,2018),t_bb+3, t_bb, col = "orange", font = 2)
+# text(c(2008,2010,2013,2016,2018),t_acearb-3, t_acearb, col = "magenta", font = 2)
+legend(2011,80, c("Statins","P2Y12 inhibitors","Aspirin","Beta Blockers","ACE-I/ARB"), col = c("red","blue","green","orange","magenta"), pch = 1, lwd = 2, bty = "n", horiz = F, y.intersp = 1)
+title("Figure 2.6: Medical Treatment in Discharge among Hospital Survivors", font.main=1, cex.main=1.1)
+```
+
+\pagebreak
+
+## 2.10 Short and long Term Outcomes
+
+\  
+<!-- tbd -many missing in MACE in 2021, and no 1-year mortality -->
+
+```{r}
+vars_out <- c("DISDIE","DIED7","DIED30","DIED365","MACE")
+tab2.12 <- print(CreateTableOne(vars = vars_out, strata = "year", data = dat), printToggle = F)[,1:5]
+
+tab2.12_0 <- tab2.12[-1,]
+tab2.12_1 <- substr(tab2.12_0, regexpr("(",tab2.12_0, fixed = T)+1, regexpr(")",tab2.12_0, fixed = T)-1)
+tab2.12_2 <- matrix(tab2.12_1, ncol = ncol(tab2.12_0), nrow = nrow(tab2.12_0))
+tab2.12_2 <- rbind(tab2.12[1,],tab2.12_2)
+
+
+p2.12 <- apply(dat[,vars_out], 2, ptrend)
+t2.12 <- cbind(tab2.12_2, c("",p2.12))
+colnames(t2.12) <- trend_years
+row.names(t2.12) <- c("n","In-hospital","7-day","30-day","1 year","30-day MACE")
+
+kable(t2.12, align = "c", caption = "Table 2.14: Rates of Mortality and MACE[note]", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  add_footnote("30 day MACE: Death/UAP/MI/Ischemia/CVA/Stent thrombosis/Follow-up urg. revasc.", notation = "number") %>%
+  pack_rows("Mortality",2,5) %>%
+  # pack_rows("MACE$\\^1$", 6,6, escape = F) %>%
+  # pack_rows("MACE (1)", 6,6, escape = F) %>%
+   pack_rows( paste0("MACE",footnote_marker_number(1)), 6,6, escape = F) %>%
+
+  column_spec(1, width = "4cm") %>%
+  column_spec(2:7, "1.5cm")
+```
+
+\  
+
+```{r fig.height=6, fig.width=9}
+out_7d <- as.numeric(t2.12["7-day",1:5])
+out_30d <- as.numeric(t2.12["30-day",1:5])
+out_1y <- as.numeric(t2.12["1 year",1:5])
+out_mace <- as.numeric(t2.12["30-day MACE",1:5])
+
+par(mar=c(5,4,4,2))
+plot(x=years_graph, y=c(NA,out_7d,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,30), xaxt="n")
+lines(x=years_graph,y=c(NA,out_30d,NA),type = "b", lwd=2, col="green")
+lines(x=years_graph,y=c(NA,out_1y,NA),type = "b", lwd=2, col="orange")
+lines(x=years_graph,y=c(NA,out_mace,NA),type = "b", lwd=2, col="blue")
+abline(h=seq(0,100, by = 5), lty=3, col="gray")
+axis(1,c(2010,2013,2016,2018,2021))
+legend(2019,28, c("7-day","30-day","1 year","30-day MACE"), col = c("red","green","orange","blue"), pch = 1, lwd = 2, bty = "n", horiz = F, y.intersp = 1)
+title("Figure 2.7: Rates of Mortality and 30-day MACE", font.main=1, cex.main=1.1)
+```
+
+\pagebreak
+
+<!-- tbd -many missing in MACE in 2021, and no 1-year mortality -->
+
+
+```{r}
+tab2.13m <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, SEX=="MALE")),printToggle = F)[,1:5]
+
+tab2.13m_0 <- tab2.13m[-1,]
+tab2.13m_1 <- substr(tab2.13m_0, regexpr("(",tab2.13m_0, fixed = T)+1, regexpr(")",tab2.13m_0, fixed = T)-1)
+tab2.13m_2 <- matrix(tab2.13m_1, ncol = ncol(tab2.13m_0), nrow = nrow(tab2.13m_0))
+tab2.13m_2 <- rbind(tab2.13m[1,],tab2.13m_2)
+
+tab2.13f <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, SEX=="FEMALE")), printToggle = F)[,1:5]
+
+tab2.13f_0 <- tab2.13f[-1,]
+tab2.13f_1 <- substr(tab2.13f_0, regexpr("(",tab2.13f_0, fixed = T)+1, regexpr(")",tab2.13f_0, fixed = T)-1)
+tab2.13f_2 <- matrix(tab2.13f_1, ncol = ncol(tab2.13f_0), nrow = nrow(tab2.13f_0))
+tab2.13f_2 <- rbind(tab2.13f[1,],tab2.13f_2)
+
+ptrend_m <- function(x,y=subset(dat, SEX=="MALE")$SOURCE,nrow=1) {
+  tabx <- addmargins(table(x, y),1)
+  pval <-round(prop.trend.test(tabx[nrow,], tabx["Sum",])$p.value, 3)
+  pval <- ifelse(pval<0.001,"<0.001",pval)
+  return(pval)
+}
+
+p2.13m <- apply(subset(dat, SEX=="MALE")[,vars_out], 2, ptrend_m)
+
+ptrend_f <- function(x,y=subset(dat, SEX=="FEMALE")$SOURCE,nrow=1) {
+  tabx <- addmargins(table(x, y),1)
+  pval <-round(prop.trend.test(tabx[nrow,], tabx["Sum",])$p.value, 3)
+  pval <- ifelse(pval<0.001,"<0.001",pval)
+  return(pval)
+}
+
+p2.13f <- apply(subset(dat, SEX=="FEMALE")[,vars_out], 2, ptrend_f)
+
+tab2.13 <- rbind(tab2.13m_2, tab2.13f_2)
+p2.13 <- c("",p2.13m,"",p2.13f)
+
+t2.13 <- cbind(tab2.13, p2.13)
+
+colnames(t2.13) <- trend_years
+row.names(t2.13) <- c("n","In-hospital","7-day","30-day","1 year","30-day","n","In-hospital","7-day","30-day","1 year","30-day")
+
+kable(t2.13, align = "c", caption = "Table 2.15: Rates of Mortality and MACE[note] by Gender", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  pack_rows("--Men--",1,1, latex_gap_space = "1em", hline_after = T) %>%
+  pack_rows("Mortality",2,5) %>%
+  # pack_rows("MACE$\\^1$", 6,6, escape = F) %>%
+   # pack_rows("MACE (1)", 6,6, escape = F) %>%
+  pack_rows( paste0("MACE",footnote_marker_number(1)), 6,6, escape = F) %>%
+  pack_rows("--Women--",7,7, latex_gap_space = "3em", hline_after = T) %>%
+  pack_rows("Mortality",8,11) %>%
+  # pack_rows("MACE$\\^1$", 12,12, escape = F) %>%
+  # pack_rows("MACE (1)", 12,12, escape = F) %>%
+  pack_rows( paste0("MACE",footnote_marker_number(1)), 12,12, escape = F) %>%
+  add_footnote("30 day MACE: Death/UAP/MI/Ischemia/CVA/Stent thrombosis/Follow-up urg. revasc.", notation = "number") %>%
+  column_spec(1, width = "4cm") %>%
+  column_spec(2:6, "1.5cm") %>%
+  column_spec(7, "2cm")
+```
+
+\  
+
+```{r fig.height=5, fig.width=9}
+out_7d_m <- as.numeric(t2.13[which(rownames(t2.13)=="7-day")[1],1:5])
+out_30d_m <- as.numeric(t2.13[which(rownames(t2.13)=="30-day")[1],1:5])
+out_1y_m <- as.numeric(t2.13[which(rownames(t2.13)=="1 year")[1],1:5])
+out_mace_m <- as.numeric(t2.13[which(rownames(t2.13)=="30-day")[2],1:5])
+
+out_7d_f <- as.numeric(t2.13[which(rownames(t2.13)=="7-day")[2],1:5])
+out_30d_f <- as.numeric(t2.13[which(rownames(t2.13)=="30-day")[3],1:5])
+out_1y_f <- as.numeric(t2.13[which(rownames(t2.13)=="1 year")[2],1:5])
+out_mace_f <- as.numeric(t2.13[which(rownames(t2.13)=="30-day")[4],1:5])
+
+par(mar=c(5,4,4,2))
+plot(x=years_graph, y=c(NA,out_7d_m,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,30), xaxt="n")
+lines(x=years_graph,y=c(NA,out_7d_f,NA),type = "b", lwd=2, col="red", lty="dashed")
+
+lines(x=years_graph,y=c(NA,out_30d_m,NA),type = "b", lwd=2, col="green")
+lines(x=years_graph,y=c(NA,out_30d_f,NA),type = "b", lwd=2, col="green", lty="dashed")
+
+lines(x=years_graph,y=c(NA,out_1y_m,NA),type = "b", lwd=2, col="orange")
+lines(x=years_graph,y=c(NA,out_1y_f,NA),type = "b", lwd=2, col="orange", lty="dashed")
+
+lines(x=years_graph,y=c(NA,out_mace_m,NA),type = "b", lwd=2, col="blue")
+lines(x=years_graph,y=c(NA,out_mace_f,NA),type = "b", lwd=2, col="blue", lty="dashed")
+
+abline(h=seq(0,100, by = 5), lty=3, col="gray")
+axis(1,c(2010,2013,2016,2018,2021))
+legend(2016, 30, c("7-day","30-day","1 year","30-day MACE"), col = c("red","green","orange","blue"), pch = 1, lwd = 2, bty = "n", horiz = F, y.intersp = 1.5)
+legend(2013, 30, c("Men", "Women"), lty = c("solid", "dashed"), lwd = 2, bty = "n")
+title("Figure 2.8: Rates of Mortality and 30-day MACE \nby gender", font.main=1, cex.main=1.1)
+```
+
+\pagebreak
+
+
+```{r}
+# tab2.14st <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, admecg=="ST elevation")),printToggle = F)[,1:5]
+tab2.14st <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, group=="STE-ACS")),printToggle = F)[,1:5]
+
+tab2.14st_0 <- tab2.14st[-1,]
+tab2.14st_1 <- substr(tab2.14st_0, regexpr("(",tab2.14st_0, fixed = T)+1, regexpr(")",tab2.14st_0, fixed = T)-1)
+tab2.14st_2 <- matrix(tab2.14st_1, ncol = ncol(tab2.14st_0), nrow = nrow(tab2.14st_0))
+tab2.14st_2 <- rbind(tab2.14st[1,],tab2.14st_2)
+
+
+# tab2.14nst <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, admecg=="Non ST elevation")), printToggle = F)[,1:5]
+tab2.14nst <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, group=="NSTE-ACS")), printToggle = F)[,1:5]
+
+tab2.14nst_0 <- tab2.14nst[-1,]
+tab2.14nst_1 <- substr(tab2.14nst_0, regexpr("(",tab2.14nst_0, fixed = T)+1, regexpr(")",tab2.14nst_0, fixed = T)-1)
+tab2.14nst_2 <- matrix(tab2.14nst_1, ncol = ncol(tab2.14nst_0), nrow = nrow(tab2.14nst_0))
+tab2.14nst_2 <- rbind(tab2.14nst[1,],tab2.14nst_2)
+
+
+# ptrend_st <- function(x,y=subset(dat, admecg=="ST elevation")$SOURCE,nrow=1) {
+#   tabx <- addmargins(table(x, y),1)
+#   pval <-round(prop.trend.test(tabx[nrow,], tabx["Sum",])$p.value, 3)
+#   pval <- ifelse(pval<0.001,"<0.001",pval)
+#   return(pval)
+# }
+ptrend_st <- function(x,y=subset(dat, group=="STE-ACS")$SOURCE,nrow=1) {
+  tabx <- addmargins(table(x, y),1)
+  pval <-round(prop.trend.test(tabx[nrow,], tabx["Sum",])$p.value, 3)
+  pval <- ifelse(pval<0.001,"<0.001",pval)
+  return(pval)
+}
+
+# p2.14st <- apply(subset(dat, admecg=="ST elevation")[,vars_out], 2, ptrend_st)
+p2.14st <- apply(subset(dat, group=="STE-ACS")[,vars_out], 2, ptrend_st)
+
+
+# ptrend_nst <- function(x,y=subset(dat, admecg=="Non ST elevation")$SOURCE,nrow=1) {
+#   tabx <- addmargins(table(x, y),1)
+#   pval <-round(prop.trend.test(tabx[nrow,], tabx["Sum",])$p.value, 3)
+#   pval <- ifelse(pval<0.001,"<0.001",pval)
+#   return(pval)
+# }
+ptrend_nst <- function(x,y=subset(dat, group=="NSTE-ACS")$SOURCE,nrow=1) {
+  tabx <- addmargins(table(x, y),1)
+  pval <-round(prop.trend.test(tabx[nrow,], tabx["Sum",])$p.value, 3)
+  pval <- ifelse(pval<0.001,"<0.001",pval)
+  return(pval)
+}
+
+# p2.14nst <- apply(subset(dat, admecg=="Non ST elevation")[,vars_out], 2, ptrend_nst)
+p2.14nst <- apply(subset(dat, group=="NSTE-ACS")[,vars_out], 2, ptrend_nst)
+
+
+tab2.14 <- rbind(tab2.14st_2, tab2.14nst_2)
+p2.14 <- c("",p2.14st,"",p2.14nst)
+
+t2.14 <- cbind(tab2.14, p2.14)
+
+colnames(t2.14) <- trend_years
+row.names(t2.14) <- c("n","In-hospital","7-day","30-day","1 year","30-day","n","In-hospital","7-day","30-day","1 year","30-day")
+
+kable(t2.14, align = "c", caption = "Table 2.16: Rates of Mortality and MACE[note] by Discharge Diagnosis", booktabs=T, linesep="") %>%
+  kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
+  pack_rows("STEMI",1,1,latex_gap_space = "1em", hline_after = T) %>%
+  pack_rows("Mortality",2,5) %>%
+  # pack_rows("MACE$\\^1$", 6,6, escape = F) %>%
+  # pack_rows("MACE (1)", 6,6, escape = F) %>%
+  pack_rows( paste0("MACE",footnote_marker_number(1)), 6,6, escape = F) %>%
+  pack_rows("Non STEMI",7,7,latex_gap_space = "3em", hline_after = T) %>%
+  pack_rows("Mortality",8,11) %>%
+  # pack_rows("MACE$\\^1$", 12,12, escape = F) %>%
+  # pack_rows("MACE (1)", 12,12, escape = F) %>%
+  pack_rows( paste0("MACE",footnote_marker_number(1)), 12,12, escape = F) %>%
+  add_footnote("30 day MACE: Death/UAP/MI/Ischemia/CVA/Stent thrombosis/Follow-up urg. revasc.", notation = "number") %>%
+  column_spec(1, width = "4cm") %>%
+  column_spec(2:6, "1.5cm") %>%
+  column_spec(7, "2cm")
+```
+
+\  
+
+```{r fig.height=5.5, fig.width=9}
+out_ecg_7d_st <- as.numeric(t2.14[which(rownames(t2.14)=="7-day")[1],1:5])
+out_ecg_30d_st <- as.numeric(t2.14[which(rownames(t2.14)=="30-day")[1],1:5])
+out_ecg_1y_st <- as.numeric(t2.14[which(rownames(t2.14)=="1 year")[1],1:5])
+out_ecg_mace_st <- as.numeric(t2.14[which(rownames(t2.14)=="30-day")[2],1:5])
+
+out_ecg_7d_nst <- as.numeric(t2.14[which(rownames(t2.14)=="7-day")[2],1:5])
+out_ecg_30d_nst <- as.numeric(t2.14[which(rownames(t2.14)=="30-day")[3],1:5])
+out_ecg_1y_nst <- as.numeric(t2.14[which(rownames(t2.14)=="1 year")[2],1:5])
+out_ecg_mace_nst <- as.numeric(t2.14[which(rownames(t2.14)=="30-day")[4],1:5])
+
+par(mar=c(5,4,4,2))
+plot(x=years_graph, y=c(NA,out_ecg_7d_st,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,25), xaxt="n")
+lines(x=years_graph,y=c(NA,out_ecg_7d_nst,NA),type = "b", lwd=2, col="red", lty="dashed")
+
+lines(x=years_graph,y=c(NA,out_ecg_30d_st,NA),type = "b", lwd=2, col="green")
+lines(x=years_graph,y=c(NA,out_ecg_30d_nst,NA),type = "b", lwd=2, col="green", lty="dashed")
+
+lines(x=years_graph,y=c(NA,out_ecg_1y_st,NA),type = "b", lwd=2, col="orange")
+lines(x=years_graph,y=c(NA,out_ecg_1y_nst,NA),type = "b", lwd=2, col="orange", lty="dashed")
+
+lines(x=years_graph,y=c(NA,out_ecg_mace_st,NA),type = "b", lwd=2, col="blue")
+lines(x=years_graph,y=c(NA,out_ecg_mace_nst,NA),type = "b", lwd=2, col="blue", lty="dashed")
+
+abline(h=seq(0,100, by = 5), lty=3, col="gray")
+axis(1,c(2008,2010,2013,2016,2018))
+legend(2016, 25, c("7-day","30-day","1 year","30-day MACE"), col = c("red","green","orange","blue"), pch = 1, lwd = 2, bty = "n", horiz = F, y.intersp = 1.5)
+legend(2012, 25, c("STEMI", "Non STEMI"), lty = c("solid", "dashed"), lwd = 2, bty = "n")
+title("Figure 2.9: Rates of Mortality and 30-day MACE \nby Discharge Diagnosis", font.main=1, cex.main=1.1)
+```
+
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
