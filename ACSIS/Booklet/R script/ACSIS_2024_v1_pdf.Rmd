@@ -1678,7 +1678,7 @@ All other recommended drugs were similarly given to both groups.
 
 ```{r results='hide'}
 vars_inhosp_treat <- c("S24H1","HP2Y12", "S24H2","S24H3","S24H4",
-                        "S24H5", #didn't find it in acsiS24
+                        "S24H5", 
                        "oral_anticoag_hosp","S24H6","S24H7","S24H8","S24H9",
                         "S24H10","S24H11","S24H12","S24H13",
                         "S24HAAC1","S24HAAC3",
@@ -1687,7 +1687,9 @@ vars_inhosp_treat <- c("S24H1","HP2Y12", "S24H2","S24H3","S24H4",
  "S24H31",#all "no"
 "S24H32","hosp_antihyperglycemic","hosp_STAT","S24H52")
 tab_inhosp_tr <- print(CreateTableOne(vars = vars_inhosp_treat, data = dat))
+tab_inhosp_tr = transform_tableone(tab_inhosp_tr)
 tab_inhosp_tr_st <- print(CreateTableOne(vars = vars_inhosp_treat, strata = "ST_ELEV", data = dat))
+tab_inhosp_tr_st = transform_tableone(tab_inhosp_tr_st, 2)
 t_inhosp_tr <- cbind(tab_inhosp_tr, tab_inhosp_tr_st)[,-5]
 colnames(t_inhosp_tr) <- c("Total","Non STEMI","STEMI","p-value")
 row.names(t_inhosp_tr) <- c("n","Aspirin ($\\%$)",
@@ -1776,7 +1778,9 @@ vars_disch_treat <- c("S24D1",
                       "disch_GLP1", "disch_SGLT2",
                       "disch_STAT","S24D52")
 tab_disch_tr <- print(CreateTableOne(vars = vars_disch_treat, data = dat_surv))
+tab_disch_tr = transform_tableone(tab_disch_tr)
 tab_disch_tr_st <- print(CreateTableOne(vars = vars_disch_treat, strata = "ST_ELEV", data = dat_surv))
+tab_disch_tr_st = transform_tableone(tab_disch_tr_st, 2)
 t_disch_tr <- cbind(tab_disch_tr, tab_disch_tr_st)[,-5]
 colnames(t_disch_tr) <- c("Total","Non STEMI","STEMI","p-value")
 
@@ -1857,7 +1861,7 @@ MACE (Major Adverse Cardiac Events), which included recurrent MI or UAP, recurre
 
 
 ```{r results='hide'}
-vars_out <- c("S24DISDIE","DIED7","DIED30","MACE_OLD") 
+vars_out <- c("S24DISDIE","DIED7","DIED30","MACE_OLD", "DIED365") 
 tab_out <- print(CreateTableOne(vars = vars_out, data = dat))
 tab_out_st <- print(CreateTableOne(vars = vars_out, strata = "ST_ELEV", data = dat))
 t_out <- cbind(tab_out, tab_out_st)[,-5]
