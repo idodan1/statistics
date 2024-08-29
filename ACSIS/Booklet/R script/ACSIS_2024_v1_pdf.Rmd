@@ -156,26 +156,23 @@ knitr::include_graphics("C:/Users/ido/sheba stats/ACSIS/Booklet/R script/updated
 ```{r vars}
 margins = c(2,2,2,2)
 
-transform_tableone <- function(table_one) {
+transform_tableone <- function(table_one, num_of_cols=1) {
   # Extract the data as a matrix
   mat <- as.matrix(table_one)
   
   # Iterate over each row in the matrix
   for (i in seq_len(nrow(mat))) {
     # Check if the row corresponds to a 'YES' or 'NO' percentage
-    if (grepl("= NO (%)", rownames(mat)[i])) {
+    if (grepl("= NO", rownames(mat)[i])) {
       # Extract the percentage and total count for the 'NO' row
-      no_percent <- as.numeric(gsub("[() %]", "", mat[i, 1]))
-      total <- as.numeric(gsub("[() %]", "", mat[i - 1, 1]))
-      
-      # Calculate YES percentage
-      yes_percent <- 100 - no_percent
-      
       # Replace the 'NO' row with 'YES' and the calculated percentage
       rownames(mat)[i] <- gsub("NO", "YES", rownames(mat)[i])
-      mat[i, 1] <- paste0(total, " ( ", yes_percent, ")")
+      for(j in 1:num_of_cols){
+        mat[i, j] <- paste0(" 0", " (   0.0)")
+      }
     }
   }
+  return(mat)
 }
 ```
 
@@ -1033,24 +1030,7 @@ with non ST elevation.
 
 ```{r results='hide'}
 vars_bhosp_tr <- c("S24TMED1","S24TMED2","S24TMED3","S24TMED4","S24TMED5","S24TMED6")
-transform_tableone <- function(table_one, num_of_cols=1) {
-  # Extract the data as a matrix
-  mat <- as.matrix(table_one)
-  
-  # Iterate over each row in the matrix
-  for (i in seq_len(nrow(mat))) {
-    # Check if the row corresponds to a 'YES' or 'NO' percentage
-    if (grepl("= NO", rownames(mat)[i])) {
-      # Extract the percentage and total count for the 'NO' row
-      # Replace the 'NO' row with 'YES' and the calculated percentage
-      rownames(mat)[i] <- gsub("NO", "YES", rownames(mat)[i])
-      for(j in 1:num_of_cols){
-        mat[i, j] <- paste0(" 0", " (   0.0)")
-      }
-    }
-  }
-  return(mat)
-}
+
 tab_bhosp_tr <- print(CreateTableOne(vars = vars_bhosp_tr, data = subset(dat, S24TMODE %in% c("Mobile ICU","Regular ambulance"))))
 tab_bhosp_tr = transform_tableone(tab_bhosp_tr)
 
@@ -1221,7 +1201,6 @@ title("Figure 1.18: Primary Reperfusion in Patients with ST Elevation", font.mai
 
 vars_arr_rep <- c(#"HEFT9_trim",
                   "ARR_TLX_trim","ARR_PPCI_trim")
-
 tab_arr_rep <- print(CreateTableOne(vars = vars_arr_rep, data = dat_st_rep), nonnormal = vars_arr_rep)
 n_arr_rep <- c(#length(na.omit(dat_st_rep$HEFT9)),
                length(na.omit(dat_st_rep$ARR_TLX)),length(na.omit(dat_st_rep$ARR_PPCI)))
