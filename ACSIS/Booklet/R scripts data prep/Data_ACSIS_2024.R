@@ -249,8 +249,8 @@ dat_st_nrep <- subset(dat, S24REP=="No" & !is.na(S24REP) & ST_ELEV=="Yes" & !is.
 
 
 dat_surv <- subset(dat, S24DISDIE=="Alive")
-# dat_rehos <- subset(dat, S24FREHOS=="Yes")
+dat_rehos <- subset(dat, S24FREHOS=="Yes")
 
 #Follow up
-# dat_fu <- subset(dat, !is.na(FU_FILLING_IN_BY)) #n=1469
+dat_fu <- subset(dat, !is.na(FU_FILLING_IN_BY)) #n=1469
 
