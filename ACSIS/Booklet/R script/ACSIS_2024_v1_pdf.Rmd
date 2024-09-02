@@ -48,33 +48,6 @@ source('C:/Users/ido/sheba stats/ACSIS/Booklet/R scripts data prep/Data_ACSIS_20
 
 ```
 
-```{r}
-# # Set a reliable CRAN mirror
-# options(repos = c(CRAN = "https://cran.rstudio.com/"))
-# 
-# # Set locale to avoid multibyte string issues
-# Sys.setlocale("LC_ALL", "English")
-# 
-# # Install packages one by one
-# tar_gz_file_path  <- "C:/Users/ido/sheba stats/ACSIS/packages/ModelGood_1.0.9.tar.gz"
-# 
-# # Install the package from the local zip file
-# install.packages(tar_gz_file_path , repos = NULL, type = "source")
-# 
-# # Load the installed packages
-# library(ModelGood)
-# 
-# # Install packages one by one
-# tar_gz_file_path  <- "C:/Users/ido/sheba stats/ACSIS/packages/UncertainInterval_0.7.0.tar.gz"
-# 
-# # Install the package from the local zip file
-# install.packages(tar_gz_file_path , repos = NULL, type = "source")
-# 
-# library(UncertainInterval)
-# install.packages('psych')
-```
-
-
 \pagebreak
 
 # Introduction
@@ -485,7 +458,7 @@ kable(t_hist, align = "c", caption = "Table 1.4: Prior Cardiovascular History", 
 
 
 ```{r fig.width=10, fig.height=8}
-par(mar=c(10,4,5,2))
+par(mar=c(20,4,5,2))
 par(mfrow=c(1,1))
 
 per_nst <- as.numeric(out_of_par(as.character(t_hist[-1,2])))
