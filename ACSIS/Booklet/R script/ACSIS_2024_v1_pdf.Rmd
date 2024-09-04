@@ -41,7 +41,7 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = F, message = F)
 options(knitr.table.format = "latex")
-
+ 
 # source('W:/Users/Shared_Files/STAT/2021/ACSIS 2021 booklet/Data_ACSIS_2021.R')
 # source('C:/Users/talco/Documents/Statistics/ACSIS_21_PDF/Data_ACSIS_2021.R')
 source('C:/Users/ido/sheba stats/ACSIS/Booklet/R scripts data prep/Data_ACSIS_2024.R')
@@ -1370,15 +1370,14 @@ kable(t_timi, align = "c", caption = "Table 1.22: TIMI Grade Flow of IRA Before 
 vars_norep <- c("S24NOREP2",
                   "S24NOREP_other",
                  "S24NOREP1",
-               
                 "S24NOREP5",
-   "S24NOREP3", "S24NOREP8"
-                # "S24NOREP6", #all NO
-                # "S24NOREP4", #all NO
-               
-                 
+                # "S24NOREP3", #all NO
+                "S24NOREP8",
+                # "S24NOREP6", 
+                "S24NOREP4" #all NO
                 )
 tab_norep <- print(CreateTableOne(vars = vars_norep, data = dat_st_nrep))
+# tab_norep = transform_tableone(tab_norep)
 t_norep <- tab_norep[-1]
 ```
 
@@ -1392,16 +1391,16 @@ xx_norep <- barplot(mydata_norep, horiz = T, xlim = c(0,50), xlab = "Percent (%)
     "Other",
     "Spontaneous reperfusion",
     "Considered not indicated/justified",
-   "Died before decision",
-   "Takotsubo syndrome"
+   # "Died before decision",
+   "Takotsubo syndrome",
   # "Patient refusal",
-  # "Contraindication to thrombolysis",
+  "Contraindication to thrombolysis"
   
    ),las=1, main = paste0("Figure 1.21: Reasons for Not Performing Primary Reperfusion \n Number of Patients = ", length(dat_st_nrep[,1])),  col="cadetblue2", font.main=1, cex.main=1.1)
 text(x = mydata_norep, y = xx_norep, label = mydata_norep, pos =4, cex = 1, font = 1, xpd=T)
 ```
 
-* There were no patients with contraindication to thrombolysis or patient refusal.
+* There were no patients that died before decision or any patient refusal.
 
 \pagebreak
 
@@ -1497,7 +1496,8 @@ kable(t_radial_angio, align = "c", caption = "Table 1.23: Vascular access during
 
 
 
-Patients with STEMI were more likely to receive Direct-Current (DC) shocks, resuscitation and therapeutic hypothermia than those with non STEMI.
+Patients with STEMI were more likely to receive Direct-Current (DC) shocks, resuscitation, mechanical ventilation, intra-aortic ballon pump (IABP) and temporary pacemaker than those with non STEMI.
+
 
 
 \  
@@ -1582,7 +1582,7 @@ kable(t_ef, align = "c", caption = "Table 1.25: Ejection Fraction", booktabs=T, 
 
 ## 1.10 In-Hospital Complications
 
-Cardiogenic shock, CHF mild-moderate, hemodynamically significant Right Ventricular (RV) infarction, ventricular fibrillation (VF), new Atrial fibrillation (AF) and high degree (2nd / 3rd) Atrioventricular Block (AVB) were more frequent in patients with STEMI.
+Cardiogenic shock, CHF mild-moderate, Stent thrombosis (definite/probable/possible), ventricular fibrillation (VF) were more frequent in patients with STEMI.
   
 \  
 
@@ -1643,8 +1643,8 @@ kable(t_comp, align = "c", caption = "Table 1.26: In-Hospital Complications", bo
 
 ## 1.11 In-Hospital Medical Treatment
 
-Aspirin, prasugrel, P2Y12 inhibitors, ACE-I/ARB, Spironolactone, beta-blockers, Proton-Pump Inhibitors (PPI), IV inotropic agent and statins were more frequently used in patients with STEMI.
-Clopidogrel, CCB and nitrates were more frequently used among patients with non STEMI.
+Aspirin, P2Y12 inhibitors, Prasugrel, Ticagrelor, Oral anticoagulants, ACE-I, Beta-Blockers, Digoxin, CCB, NSAIDS,  Statins, Ezetimbe and Antihyperglycemic (only among diabetic patients) were more frequently used in patients with STEMI.
+Clopidogrel was more frequently used among patients with non STEMI.
 
 <!-- I hashed the following line (taken from acsis18) because there are many meds who have the same percentage -->
 <!-- Both groups of patients were equally treated with aspirin, NOACS, beta blockers, digoxin, amiodarone, diuretics, colchicine, steroids, insulin and statins. -->
@@ -1706,7 +1706,10 @@ kable(t_inhosp_tr, align = "c", caption = "Table 1.27: In-Hospital Medical Treat
 
 ```{r results='hide'}
 tab_ishdays <- print(CreateTableOne(vars = c("CCUDAYS","ISHDAYS"), data = dat), nonnormal = c("CCUDAYS","ISHDAYS"))
-
+dat$CCUDAYS - dat$ISHDAYS
+dat$ISHDAYS[1:20]
+mean(dat$ISHDAYS, na.rm=TRUE)
+mean(dat$CCUDAYS, na.rm=TRUE)
 tab_ishdays_st <- print(CreateTableOne(vars = c("CCUDAYS","ISHDAYS"), strata = "ST_ELEV", data = dat), nonnormal = c("CCUDAYS","ISHDAYS"))
 t_ishdays <- cbind(tab_ishdays, tab_ishdays_st)[,-(4:5)]
 
