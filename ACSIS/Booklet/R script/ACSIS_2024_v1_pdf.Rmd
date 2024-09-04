@@ -432,7 +432,7 @@ mtext("Figure 1.4: Gender Distribution", side = 3, outer = TRUE, line = 1.5, cex
 
 ### 1.3.1 Cardiovascular History
 
-A history of ACS, cardiomyopathy, congestive heart failure (CHF), chronic renal failure, peripheral artery disease (PAD) and atrial fibrillation was significantly more frequent among patients with non STEMI. Similarly, more patients with non STEMI had undergone percutaneous coronary intervention (PCI) or coronary artery bypass grafting (CABG) prior to hospitalization.
+A history of ACS, cardiomyopathy, congestive heart failure (CHF), chronic renal failure, peripheral artery disease (PAD) and atrial fibrillation were significantly more frequent among patients with non STEMI. Similarly, more patients with non STEMI had undergone percutaneous coronary intervention (PCI) or coronary artery bypass grafting (CABG) prior to hospitalization.
 
 \  
 
@@ -458,7 +458,7 @@ kable(t_hist, align = "c", caption = "Table 1.4: Prior Cardiovascular History", 
 
 
 ```{r fig.width=10, fig.height=8}
-par(mar=c(20,4,5,2))
+par(mar=c(10,4,5,2))
 par(mfrow=c(1,1))
 
 per_nst <- as.numeric(out_of_par(as.character(t_hist[-1,2])))
@@ -466,7 +466,6 @@ per_st <- as.numeric(out_of_par(as.character(t_hist[-1,3])))
 mydata1 <- cbind(per_nst,per_st)[-c(length(per_nst)),]
 row.names(mydata1) <- c("ACS","CABG","PCI","Cardiomyopathy","CHF","CKD", "PAD", "Stroke/TIA", "COPD", "Atrial fibrillation/Flutter","ICD/CRT implant","Any malignancy")
 mydata1 <- mydata1[order(-mydata1[,1]),]
-par(mar = margins)
 
 xx <- barplot(as.matrix(t(mydata1)), main="Figure 1.5: Cardiovascular history", ylab="Percent (%)", beside=TRUE, col=c("cadetblue2","mediumpurple"), ylim = c(0,50), las=2, axisnames = F, font.main=1, cex.main=1.4)
 legend("topright", c("Non STEMI","STEMI"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
@@ -479,7 +478,7 @@ text(cex=1, x=xx[2,], y=-1.25, labels = row.names(mydata1), xpd=TRUE, srt=30, po
 ### 1.3.2 Risk Factors
 
 Current smoking was more prevalent among patients presenting with STEMI, while other risk factors were generally more prevalent among patients
-presenting with non STEMI. The rates of newly diagnosed diabetes were higher among those with STEMI. No difference was found in the prevalence of family history of coronary artery disease (CAD).
+presenting with non STEMI. No difference were found in the prevalence of family history of coronary artery disease (CAD) or in newly diagnosed diabetes.
 
 \  
 
@@ -510,7 +509,6 @@ per_st_risk <- as.numeric(out_of_par(t_risk[-c(1,4),3]))
 mydata_risk <- t(cbind(per_nst_risk,per_st_risk))
 colnames(mydata_risk) <- c("Hypertension","Diabetes","Dyslipidemia","Current smoker","Past smoker","Family history of CAD")
 mydata_risk <- mydata_risk[,order(-mydata_risk[1,])]
-par(mar = margins)
 
 xx_risk <- barplot(as.matrix(mydata_risk), main="Figure 1.6: Risk Factors", ylab="Percent (%)", beside=TRUE,        col=c("cadetblue2","mediumpurple"), ylim = c(0,100), las=2, axisnames = F, font.main=1, cex.main=1.1)
 legend("topright", c("Non STEMI","STEMI"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
@@ -592,7 +590,6 @@ per_st_chr_tr <- as.numeric(out_of_par(t_chr_treat[c("Aspirin ($\\%$)",
 mydata_chr_tr <- t(cbind(per_nst_chr_tr,per_st_chr_tr))
 colnames(mydata_chr_tr) <- c("Aspirin","Clopidogrel","ACE-I/ARB","Beta Blockers","Antihyperglycemic drugs","Statins")
 mydata_chr_tr <- mydata_chr_tr[,order(mydata_chr_tr[1,], decreasing = T)]
-par(mar = c(2,2,2,2))
 
 xx_chr_tr <- barplot(as.matrix(mydata_chr_tr), main="Figure 1.7: Prior Chronic Treatment", ylab="Percent (%)", beside=TRUE,        col=c("cadetblue2","mediumpurple"), ylim = c(0,100), las=2, axisnames = F, font.main=1, cex.main=1.1)
 legend("topright", c("Non STEMI","STEMI"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
@@ -647,7 +644,7 @@ text(x = xx_trans, y = as.matrix(mydata_trans), label = as.matrix(mydata_trans),
 
 ### 1.5.2 Mode of Transportation by Gender
 
-`r round(100*prop.table(table(droplevels(dat[dat$S24TMODE!="Not relevant (e.g. in-patient)",])$S24TMODE)),1)["Mobile ICCU"]`% of patients, both men and women, arrived by means of a MICU.
+`r round(100*prop.table(table(droplevels(dat[dat$S24TMODE!="Not relevant (e.g. in-patient)",])$S24TMODE)),1)["Mobile ICU"]`% of patients, both men and women, arrived by means of a MICU.
 Women were more frequently transported to hospital with regular ambulance and men arrived more frequently by means of  private transportation.
 
 \  
@@ -739,7 +736,6 @@ row.names(t_first) <- c("n",paste0(levels(dat$S24FIRST)," (%)"))
 
 #added in version 9:
 #Beigel asked to see the patients who arrived by MICU:
-dat$S24TMODE
 # tab_micu <- print(CreateTableOne(vars = "S24FIRST", data = subset(dat, S24TMODE=="Mobile ICCU")))
 # tab_micu_st <- print(CreateTableOne(vars = "S24FIRST", strata = "ST_ELEV_adm", data = subset(dat, S24TMODE=="Mobile ICCU")))
 # in the data there's only ICU and not ICCU so I changed this lines
@@ -757,7 +753,7 @@ kable(t_all, align = "c", caption = "Table 1.10: Ward of First Arrival by ECG on
   kable_styling(full_width = F, latex_options = c("HOLD_position", "striped"))%>%
   column_spec(1, width = "5.5cm") %>%
   column_spec(2:4,width = "3cm") %>% 
-  pack_rows("Patients arrived by MICU",6,nrow(t_all)) %>%
+  pack_rows("Patients arrived by MICU",8,nrow(t_all)) %>%
   footnote(general = paste("Difference in ward of first arrival, ST elevation vs. non ST elevation, p",tab_first_st[2,3]), general_title = "")
 ```
 
@@ -905,7 +901,7 @@ text(x = matrix(nrow = 3, byrow = F,  c((mydata_heft_gen1[,2]/2)+10,mydata_heft_
 
 
 `r round(100*prop.table(table(dat$S24MEASAT)),1)["ED"]`% of patients had the first medical contact at the ED and about `r round(100*prop.table(table(dat$S24MEASAT)),1)[2]`% at a Health maintenance organization (HMO) primary clinic/"Moked". For an additional `r round(100*prop.table(table(dat$S24MEASAT)),1)["Mobile ICU"]`% the primary medical contact was with MICU.
-Patients with ST elevation were more likely to have their first medical contact with a MICU (`r 100*round(prop.table(table(dat$S24MEASAT, dat$ST_ELEV_adm),2),1)["Mobile ICU","Yes"]`% than those with non ST elevation (`r round(100*prop.table(table(dat$S24MEASAT, dat$ST_ELEV_adm),2),1)["Mobile ICU","No"]`%).
+Patients with ST elevation were more likely to have their first medical contact with a MICU (`r round(100*prop.table(table(dat$S24MEASAT, dat$ST_ELEV_adm),2),1)["Mobile ICU","Yes"]`)% than those with non ST elevation (`r round(100*prop.table(table(dat$S24MEASAT, dat$ST_ELEV_adm),2),1)["Mobile ICU","No"]`%).
 
 
 
@@ -1050,7 +1046,7 @@ text(x = xx_bhosp, y = t(as.matrix(mydata_bhosp)), label = t(as.matrix(mydata_bh
 presenting with ST elevation had their first ECG recorded in the emergency department (ED).
 With respect to the remaining patients, `r round(100*prop.table(table(dat$S24ECGLOC, dat$ST_ELEV_adm),2),1)["Home","Yes"]+round(100*prop.table(table(dat$S24ECGLOC, dat$ST_ELEV_adm),2),1)["Ambulance","Yes"]`% of patients with ST elevation and
 `r round(100*prop.table(table(dat$S24ECGLOC, dat$ST_ELEV_adm),2),1)["Home","No"]+round(100*prop.table(table(dat$S24ECGLOC, dat$ST_ELEV_adm),2),1)["Ambulance","No"]`% of those with non ST elevation had the first ECG performed either at home or in
-an ambulance, and about 15% in both groups had it performed in a primary clinic.
+an ambulance, and about 11% in both groups had it performed in a primary clinic.
 
 
 
@@ -1172,15 +1168,17 @@ title("Figure 1.18: Primary Reperfusion in Patients with ST Elevation", font.mai
 #8.7.21: I trimmed outliers. 
 #v12 Roy asked to remove time to reperfusion because it is the same as time to prim.PCI
 
-vars_arr_rep <- c(#"HEFT9_trim",
+vars_arr_rep <- c("HEFT9_trim",
                   "ARR_TLX_trim","ARR_PPCI_trim")
 tab_arr_rep <- print(CreateTableOne(vars = vars_arr_rep, data = dat_st_rep), nonnormal = vars_arr_rep)
-n_arr_rep <- c(#length(na.omit(dat_st_rep$HEFT9)),
-               length(na.omit(dat_st_rep$ARR_TLX)),length(na.omit(dat_st_rep$ARR_PPCI)))
+n_arr_rep <- c(length(na.omit(dat_st_rep$HEFT9)),
+               #length(na.omit(dat_st_rep$ARR_TLX)),
+               length(na.omit(dat_st_rep$ARR_PPCI)))
 t_arr_rep <- cbind(n_arr_rep,tab_arr_rep[-1,])
 colnames(t_arr_rep) <- c("N","Time in minutes (median [IQR])")
-row.names(t_arr_rep) <- c(#"From arrival to reperfusion",
-                          "From arrival to  thrombolysis (TLx)","From arrival to primary PCI (PPCI)")
+row.names(t_arr_rep) <- c("From arrival to reperfusion",
+                         # "From arrival to  thrombolysis (TLx)",
+                          "From arrival to primary PCI (PPCI)")
 
 mydata_arr_rep <- as.numeric(substr(t_arr_rep[,2],1,5))
 ```
@@ -1188,6 +1186,7 @@ mydata_arr_rep <- as.numeric(substr(t_arr_rep[,2],1,5))
 
 The median time from arrival to primary reperfusion was less than one hour (`r mydata_arr_rep[1]` minutes).
 
+There were no patients who undergo thrombolysis.
 \  
 
 
@@ -1205,8 +1204,8 @@ par(mar=c(4,8,5,2))
 mydata_arr_rep <- as.numeric(substr(t_arr_rep[,2],1,5))
 mydata_arr_rep_l <- as.numeric(substr(t_arr_rep[,2],8,12))
 mydata_arr_rep_u <- as.numeric(substr(t_arr_rep[,2],15,19))
-xx_arr_rep <- barplot(t(as.matrix(mydata_arr_rep)), main="Figure 1.19: Length of Time from Arrival to Reperfusion \n(Median, 25%-75%)",  col=c("cadetblue2", "mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,100), names.arg = c(#"Arrival-Rep",
-                                                                                                                                                                                                                                           "Arrival-TLx","Arrival-PPCI"), xlab = "Time (minutes)", font.main=1, cex.main=1.1)
+xx_arr_rep <- barplot(t(as.matrix(mydata_arr_rep)), main="Figure 1.19: Length of Time from Arrival to Reperfusion \n(Median, 25%-75%)",  col=c("cadetblue2", "mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,100), names.arg = c("Arrival-Rep", #"Arrival-TLx",
+                                                                                                                                                                                                                                            "Arrival-PPCI"), xlab = "Time (minutes)", font.main=1, cex.main=1.1)
 segments(mydata_arr_rep_l,xx_arr_rep,mydata_arr_rep_u,xx_arr_rep, lwd = 3, col = "mediumpurple")
 segments(c(mydata_arr_rep_l,mydata_arr_rep_u),xx_arr_rep-0.05,c(mydata_arr_rep_l,mydata_arr_rep_u),xx_arr_rep+0.05, lwd = 3, col = "mediumpurple")
 text(x = mydata_arr_rep+3, y = xx_arr_rep, label = t(as.matrix(mydata_arr_rep)), pos =3, cex = 1, font = 2, col = "mediumpurple")
@@ -1216,7 +1215,7 @@ text(x = mydata_arr_rep+3, y = xx_arr_rep, label = t(as.matrix(mydata_arr_rep)),
 
 ### 1.7.3 Length of Time from Arrival to Primary Reperfusion, by Gender
 
-The time delay from arrival to primary reperfusion was shorter for men compared to women.
+The time delay from arrival to primary reperfusion was shorter for women compared to men.
 
 \  
 
@@ -1226,13 +1225,16 @@ tab_arr_rep_gen <- print(CreateTableOne(vars = vars_arr_rep, strata = "S24SEX", 
 tab_arr_rep_gen <- gsub(".00"," ", tab_arr_rep_gen)
 tab_arr_rep_gen <- gsub(".50",".5 ", tab_arr_rep_gen)
 
-n_arr_rep_w <- c(#length(na.omit(dat[dat$S24SEX=="Female","HEFT9"])),
-                 length(na.omit(dat[dat$S24SEX=="Female","ARR_TLX"])),length(na.omit(dat[dat$S24SEX=="Female","ARR_PPCI"])))
-n_arr_rep_m <- c(#length(na.omit(dat[dat$S24SEX=="Male","HEFT9"])),
-                 length(na.omit(dat[dat$S24SEX=="Male","ARR_TLX"])),length(na.omit(dat[dat$S24SEX=="Male","ARR_PPCI"])))
+n_arr_rep_w <- c(length(na.omit(dat[dat$S24SEX=="Female","HEFT9"])),
+                 #length(na.omit(dat[dat$S24SEX=="Female","ARR_TLX"])),
+                 length(na.omit(dat[dat$S24SEX=="Female","ARR_PPCI"])))
+n_arr_rep_m <- c(length(na.omit(dat[dat$S24SEX=="Male","HEFT9"])),
+                 #length(na.omit(dat[dat$S24SEX=="Male","ARR_TLX"])),
+                 length(na.omit(dat[dat$S24SEX=="Male","ARR_PPCI"])))
 t_arr_rep_gen <- cbind(tab_arr_rep_gen[-1,1],n_arr_rep_w,tab_arr_rep_gen[-1,2],n_arr_rep_m,tab_arr_rep_gen[-1,3])
-row.names(t_arr_rep_gen) <- c(#"From arrival to reperfusion",
-                              "From arrival to  thrombolysis","From arrival to primary PCI")
+row.names(t_arr_rep_gen) <- c("From arrival to reperfusion",
+                              #"From arrival to  thrombolysis",
+                              "From arrival to primary PCI")
 colnames(t_arr_rep_gen) <- c("Time in minutes (median [IQR])","N","Time in minutes (median [IQR])","N","p-value")
 ```
 
@@ -1254,8 +1256,8 @@ par(mfrow=c(1,2), oma=c(0,0,3,0),mar=c(4,8,5,2))
 mydata_arr_rep_w <- as.numeric(substr(t_arr_rep_gen[,1],1,3))
 mydata_arr_rep_l_w <- as.numeric(substr(t_arr_rep_gen[,1],6,10))
 mydata_arr_rep_u_w <- as.numeric(substr(t_arr_rep_gen[,1],13,17))
-xx_arr_rep_w <- barplot(t(as.matrix(mydata_arr_rep_w)), main="Women",  col=c("cadetblue2","mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,140), names.arg = c(#"Arrival-Rep",
-                                                                                                                                                                         "Arrival-TLx","Arrival-PPCI"), xlab = "Time (minutes)")
+xx_arr_rep_w <- barplot(t(as.matrix(mydata_arr_rep_w)), main="Women",  col=c("cadetblue2","mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,140), names.arg = c("Arrival-Rep", #"Arrival-TLx",
+                                                                                                                                                                         "Arrival-PPCI"), xlab = "Time (minutes)")
 segments(mydata_arr_rep_l_w,xx_arr_rep_w,mydata_arr_rep_u_w,xx_arr_rep_w, lwd = 3, col = "mediumpurple")
 segments(c(mydata_arr_rep_l_w,mydata_arr_rep_u_w),xx_arr_rep_w-0.05,c(mydata_arr_rep_l_w,mydata_arr_rep_u_w),xx_arr_rep_w+0.05, lwd = 3, col = "mediumpurple")
 text(x = mydata_arr_rep_w+15, y = xx_arr_rep_w, label = t(as.matrix(mydata_arr_rep_w)), pos =3, cex = 1, font = 2, col = "mediumpurple")
@@ -1267,8 +1269,8 @@ mydata_arr_rep_l_m <- as.numeric(c(substr(t_arr_rep_gen[1,3],11,13),
 mydata_arr_rep_u_m <- as.numeric(c(substr(t_arr_rep_gen[1,3],11,13),
                                  substr(t_arr_rep_gen[2,3],6,7))
                                  )
-xx_arr_rep_m <- barplot(t(as.matrix(mydata_arr_rep_m)), main="Men",  col=c("cadetblue2","mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,140), names.arg = c(#"Arrival-Rep",
-                                                                                                                                                                       "Arrival-TLx","Arrival-PPCI"), xlab = "Time (minutes)")
+xx_arr_rep_m <- barplot(t(as.matrix(mydata_arr_rep_m)), main="Men",  col=c("cadetblue2","mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,140), names.arg = c("Arrival-Rep",#"Arrival-TLx",
+  "Arrival-PPCI"), xlab = "Time (minutes)")
 segments(mydata_arr_rep_l_m,xx_arr_rep_m,mydata_arr_rep_u_m,xx_arr_rep_m, lwd = 3, col = "mediumpurple")
 segments(c(mydata_arr_rep_l_m,mydata_arr_rep_u_m),xx_arr_rep_m-0.05,c(mydata_arr_rep_l_m,mydata_arr_rep_u_m),xx_arr_rep_m+0.05, lwd = 3, col = "mediumpurple")
 text(x = mydata_arr_rep_m+15, y = xx_arr_rep_m, label = t(as.matrix(mydata_arr_rep_m)), pos =3, cex = 1, font = 2, col = "mediumpurple")

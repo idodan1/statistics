@@ -1,0 +1,57 @@
+---
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: true
+    latex_engine: pdflatex
+    toc: yes
+  html_document:
+    theme: cerulean
+header-includes:
+    - \usepackage{caption}
+    - \usepackage{fancyhdr}
+    - \pagestyle{fancy}
+    - \fancyhead{} % clear all header fields
+    - \fancyhead[C]{\nouppercase{\leftmark}}
+    - \fancyfoot{}
+    - \fancyfoot[C]{\thepage}
+    - \usepackage{float}
+    - \usepackage{threeparttable}
+    - \usepackage{titling}
+    - \pretitle{\begin{center}\LARGE\includegraphics[width=18cm,height=20.5cm,keepaspectratio]{cover_21.png}\\[\bigskipamount]}
+    - \posttitle{\end{center}}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = F, message = F)
+options(knitr.table.format = "latex")
+
+# source('W:/Users/Shared_Files/STAT/2021/ACSIS 2021 booklet/Data_ACSIS_2021.R')
+# source('C:/Users/talco/Documents/Statistics/ACSIS_21_PDF/Data_ACSIS_2021.R')
+source('C:/Users/ido/sheba stats/ACSIS/Booklet/R scripts data prep/Data_ACSIS_2024.R')
+
+```
+
+```{r fig.width=10, fig.height=8}
+par(mar=c(1000,1000,1000,1000))
+par(mfrow=c(1,1))
+
+vars_hist <- c("S24PRIOR_ACS","S24PRIOR_CABG","S24PRIOR_PCI","S24PRIOR_CARDIOMYOPATHY","S24PRIOR_CHF","S24PRIOR_RENAL","S24PRIOR_PVD","S24PRIOR_CVA","S24PRIOR_COPD","S24PRIOR_AFIB","S24PRIOR_AICD","S24PRIOR_CANC","S24THYROID")
+tab_hist_st <- print(CreateTableOne(vars = vars_hist, strata = "ST_ELEV", data = dat))
+tab_hist <- print(CreateTableOne(vars = vars_hist, data = dat))
+t_hist <- cbind(tab_hist, tab_hist_st)[,-5]
+
+per_nst <- as.numeric(out_of_par(as.character(t_hist[-1,2])))
+per_st <- as.numeric(out_of_par(as.character(t_hist[-1,3])))
+mydata1 <- cbind(per_nst,per_st)[-c(length(per_nst)),]
+row.names(mydata1) <- c("ACS","CABG","PCI","Cardiomyopathy","CHF","CKD", "PAD", "Stroke/TIA", "COPD", "Atrial fibrillation/Flutter","ICD/CRT implant","Any malignancy")
+mydata1 <- mydata1[order(-mydata1[,1]),]
+par(mar = margins)
+
+xx <- barplot(as.matrix(t(mydata1)), main="Figure 1.5: Cardiovascular history", ylab="Percent (%)", beside=TRUE, col=c("cadetblue2","mediumpurple"), ylim = c(0,50), las=2, axisnames = F, font.main=1, cex.main=1.4)
+legend("topright", c("Non STEMI","STEMI"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
+text(x = xx, y = as.matrix(t(mydata1)), label = as.matrix(t(mydata1)), pos = 3, cex = 0.8)
+text(cex=1, x=xx[2,], y=-1.25, labels = row.names(mydata1), xpd=TRUE, srt=30, pos=2)
+```
