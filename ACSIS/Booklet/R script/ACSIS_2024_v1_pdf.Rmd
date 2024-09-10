@@ -1054,7 +1054,7 @@ an ambulance, and about 11% in both groups had it performed in a primary clinic.
 \  
 
 ```{r fig.width=8}
-par(mar=c(4,4,4,2))
+par(mar=c(4,1,4,2))
 t_ecgloc <- addmargins(table(dat$S24ECGLOC, dat$ST_ELEV_adm))
 t_ecgloc_nst <- round(t_ecgloc[1:5,1]/t_ecgloc[6,1]*100,1)
 t_ecgloc_st <- round(t_ecgloc[1:5,2]/t_ecgloc[6,2]*100,1)
@@ -1168,16 +1168,16 @@ title("Figure 1.18: Primary Reperfusion in Patients with ST Elevation", font.mai
 #8.7.21: I trimmed outliers. 
 #v12 Roy asked to remove time to reperfusion because it is the same as time to prim.PCI
 
-vars_arr_rep <- c("HEFT9_trim",
+vars_arr_rep <- c(#"HEFT9_trim",
                   "ARR_TLX_trim","ARR_PPCI_trim")
 tab_arr_rep <- print(CreateTableOne(vars = vars_arr_rep, data = dat_st_rep), nonnormal = vars_arr_rep)
-n_arr_rep <- c(length(na.omit(dat_st_rep$HEFT9)),
-               #length(na.omit(dat_st_rep$ARR_TLX)),
+n_arr_rep <- c(#length(na.omit(dat_st_rep$HEFT9)),
+               length(na.omit(dat_st_rep$ARR_TLX)),
                length(na.omit(dat_st_rep$ARR_PPCI)))
 t_arr_rep <- cbind(n_arr_rep,tab_arr_rep[-1,])
 colnames(t_arr_rep) <- c("N","Time in minutes (median [IQR])")
-row.names(t_arr_rep) <- c("From arrival to reperfusion",
-                         # "From arrival to  thrombolysis (TLx)",
+row.names(t_arr_rep) <- c(#"From arrival to reperfusion",
+                         "From arrival to  thrombolysis (TLx)",
                           "From arrival to primary PCI (PPCI)")
 
 mydata_arr_rep <- as.numeric(substr(t_arr_rep[,2],1,5))
@@ -1204,7 +1204,8 @@ par(mar=c(4,8,5,2))
 mydata_arr_rep <- as.numeric(substr(t_arr_rep[,2],1,5))
 mydata_arr_rep_l <- as.numeric(substr(t_arr_rep[,2],8,12))
 mydata_arr_rep_u <- as.numeric(substr(t_arr_rep[,2],15,19))
-xx_arr_rep <- barplot(t(as.matrix(mydata_arr_rep)), main="Figure 1.19: Length of Time from Arrival to Reperfusion \n(Median, 25%-75%)",  col=c("cadetblue2", "mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,100), names.arg = c("Arrival-Rep", #"Arrival-TLx",
+xx_arr_rep <- barplot(t(as.matrix(mydata_arr_rep)), main="Figure 1.19: Length of Time from Arrival to Reperfusion \n(Median, 25%-75%)",  col=c("cadetblue2", "mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,100), names.arg = c(#"Arrival-Rep", 
+  "Arrival-TLx",
                                                                                                                                                                                                                                             "Arrival-PPCI"), xlab = "Time (minutes)", font.main=1, cex.main=1.1)
 segments(mydata_arr_rep_l,xx_arr_rep,mydata_arr_rep_u,xx_arr_rep, lwd = 3, col = "mediumpurple")
 segments(c(mydata_arr_rep_l,mydata_arr_rep_u),xx_arr_rep-0.05,c(mydata_arr_rep_l,mydata_arr_rep_u),xx_arr_rep+0.05, lwd = 3, col = "mediumpurple")
@@ -1225,15 +1226,15 @@ tab_arr_rep_gen <- print(CreateTableOne(vars = vars_arr_rep, strata = "S24SEX", 
 tab_arr_rep_gen <- gsub(".00"," ", tab_arr_rep_gen)
 tab_arr_rep_gen <- gsub(".50",".5 ", tab_arr_rep_gen)
 
-n_arr_rep_w <- c(length(na.omit(dat[dat$S24SEX=="Female","HEFT9"])),
-                 #length(na.omit(dat[dat$S24SEX=="Female","ARR_TLX"])),
+n_arr_rep_w <- c(#length(na.omit(dat[dat$S24SEX=="Female","HEFT9"])),
+                 length(na.omit(dat[dat$S24SEX=="Female","ARR_TLX"])),
                  length(na.omit(dat[dat$S24SEX=="Female","ARR_PPCI"])))
-n_arr_rep_m <- c(length(na.omit(dat[dat$S24SEX=="Male","HEFT9"])),
-                 #length(na.omit(dat[dat$S24SEX=="Male","ARR_TLX"])),
+n_arr_rep_m <- c(#length(na.omit(dat[dat$S24SEX=="Male","HEFT9"])),
+                 length(na.omit(dat[dat$S24SEX=="Male","ARR_TLX"])),
                  length(na.omit(dat[dat$S24SEX=="Male","ARR_PPCI"])))
 t_arr_rep_gen <- cbind(tab_arr_rep_gen[-1,1],n_arr_rep_w,tab_arr_rep_gen[-1,2],n_arr_rep_m,tab_arr_rep_gen[-1,3])
-row.names(t_arr_rep_gen) <- c("From arrival to reperfusion",
-                              #"From arrival to  thrombolysis",
+row.names(t_arr_rep_gen) <- c(#"From arrival to reperfusion",
+                              "From arrival to  thrombolysis",
                               "From arrival to primary PCI")
 colnames(t_arr_rep_gen) <- c("Time in minutes (median [IQR])","N","Time in minutes (median [IQR])","N","p-value")
 ```
@@ -1256,8 +1257,8 @@ par(mfrow=c(1,2), oma=c(0,0,3,0),mar=c(4,8,5,2))
 mydata_arr_rep_w <- as.numeric(substr(t_arr_rep_gen[,1],1,3))
 mydata_arr_rep_l_w <- as.numeric(substr(t_arr_rep_gen[,1],6,10))
 mydata_arr_rep_u_w <- as.numeric(substr(t_arr_rep_gen[,1],13,17))
-xx_arr_rep_w <- barplot(t(as.matrix(mydata_arr_rep_w)), main="Women",  col=c("cadetblue2","mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,140), names.arg = c("Arrival-Rep", #"Arrival-TLx",
-                                                                                                                                                                         "Arrival-PPCI"), xlab = "Time (minutes)")
+xx_arr_rep_w <- barplot(t(as.matrix(mydata_arr_rep_w)), main="Women",  col=c("cadetblue2","mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,140), names.arg = c(#"Arrival-Rep", 
+"Arrival-TLx", "Arrival-PPCI"), xlab = "Time (minutes)")
 segments(mydata_arr_rep_l_w,xx_arr_rep_w,mydata_arr_rep_u_w,xx_arr_rep_w, lwd = 3, col = "mediumpurple")
 segments(c(mydata_arr_rep_l_w,mydata_arr_rep_u_w),xx_arr_rep_w-0.05,c(mydata_arr_rep_l_w,mydata_arr_rep_u_w),xx_arr_rep_w+0.05, lwd = 3, col = "mediumpurple")
 text(x = mydata_arr_rep_w+15, y = xx_arr_rep_w, label = t(as.matrix(mydata_arr_rep_w)), pos =3, cex = 1, font = 2, col = "mediumpurple")
@@ -1269,7 +1270,8 @@ mydata_arr_rep_l_m <- as.numeric(c(substr(t_arr_rep_gen[1,3],11,13),
 mydata_arr_rep_u_m <- as.numeric(c(substr(t_arr_rep_gen[1,3],11,13),
                                  substr(t_arr_rep_gen[2,3],6,7))
                                  )
-xx_arr_rep_m <- barplot(t(as.matrix(mydata_arr_rep_m)), main="Men",  col=c("cadetblue2","mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,140), names.arg = c("Arrival-Rep",#"Arrival-TLx",
+xx_arr_rep_m <- barplot(t(as.matrix(mydata_arr_rep_m)), main="Men",  col=c("cadetblue2","mediumpurple","cadetblue2"), las=1, horiz = T, xlim = c(0,140), names.arg = c(#"Arrival-Rep",
+                                                                                                                                                                       "Arrival-TLx",
   "Arrival-PPCI"), xlab = "Time (minutes)")
 segments(mydata_arr_rep_l_m,xx_arr_rep_m,mydata_arr_rep_u_m,xx_arr_rep_m, lwd = 3, col = "mediumpurple")
 segments(c(mydata_arr_rep_l_m,mydata_arr_rep_u_m),xx_arr_rep_m-0.05,c(mydata_arr_rep_l_m,mydata_arr_rep_u_m),xx_arr_rep_m+0.05, lwd = 3, col = "mediumpurple")
@@ -1734,8 +1736,9 @@ kable(t_ishdays, align = "c", caption = "Table 1.28: Length of Stay in ICCU/Card
 
 ## 1.13.1 Medical Treatment on Discharge
 
-Aspirin, P2Y12 inhibitors (mainly prasugrel), ACE-I/ARB, Spironolactone, beta-blockers and statins were more often prescribed for patients with STEMI.  
-Clopidogrel, oral anticoagulants, apixaban, CCB, nitrates, and diuretics were prescribed more often for patients with non STEMI.
+Aspirin, P2Y12 inhibitors (mainly prasugrel), ACE-I, Spironolactone, beta-blockers, statins and ezetimibe were more often prescribed for patients with STEMI and Antihyperglycemic, Glucagon-Like Peptide-1 receptor
+agonists (GLP1-RA) were more often prescribed among diabetic STEMI patients.  
+Clopidogrel, CCB, nitrates, diuretics and PPI were prescribed more often for patients with non STEMI.
 All other recommended drugs were similarly given to both groups.
 
 \  
@@ -1833,13 +1836,15 @@ kable(t_disto, align = "c", caption = "Table 1.29.b: Discharge Destination", boo
 
 ### 1.14.1 Rates of Mortality and MACE by discharge diagnosis
 
-Unadjusted rates of in-hospital mortality, 7- and 30- days mortality were significantly higher for patients with STEMI compared to those with non STEMI.  
+7-days mortality was significantly higher for patients with STEMI compared to those with non STEMI.  
 MACE (Major Adverse Cardiac Events), which included recurrent MI or UAP, recurrent ischemia, stent thrombosis, ischemic stroke, urgent revascularization (follow-up) or death occurring within 30 days from hospitalization, was not significantly different in patients with and without STEMI.
 \  
 
 
 ```{r results='hide'}
-vars_out <- c("S24DISDIE","DIED7","DIED30","MACE_OLD", "DIED365") 
+vars_out <- c("S24DISDIE","DIED7","DIED30","MACE_OLD"
+              #,"DIED365"
+              ) 
 tab_out <- print(CreateTableOne(vars = vars_out, data = dat))
 tab_out_st <- print(CreateTableOne(vars = vars_out, strata = "ST_ELEV", data = dat))
 t_out <- cbind(tab_out, tab_out_st)[,-5]
@@ -2107,18 +2112,23 @@ kable(t_rehos, align = "c", caption = "Table 1.34: Re-Hospitalization within 90 
   column_spec(1, width = "5cm") %>% 
   column_spec(2:4, width = "2.5cm") %>% 
   column_spec(5, width = "2cm")
+
+unique(dat_fu$S24FU_CONTACT)
 ```
 
 \pagebreak
 
 ## 1.16 Detailed 90-Day Follow-Up Clinical Data
 
-This is the first time we performed 90 days follow up survey. We performed this survey in order to evaluate patient’s adherence to treatment and life-style changes recommendations.
+This is the second time we performed 90 days follow up survey. We performed this survey in order to evaluate patient’s adherence to treatment and life-style changes recommendations.
 
 <!-- Also, we aimed to evaluate whether patients after an ACS event are monitored closely  with -->
 <!-- repeated lipid profile and echocardiography evaluation to adjust or upgrade their medical treatment. -->
 
-Ninety-day follow-up was performed for `r nrow(dat_fu)` (`r round((nrow(dat_fu) / nrow(dat))*100)`%) patients. Of which `r table(dat_fu$S24FU_CONTACT)["Telephone"]` (`r  round(100*prop.table(table(dat_fu$S24FU_CONTACT))["Telephone"])`%) were contacted by phone, `r table(dat_fu$S24FU_CONTACT)["Clinic visit"]` (`r  round(100*prop.table(table(dat_fu$S24FU_CONTACT))["Clinic visit"])`%) by clinical visits and `r table(dat_fu$S24FU_CONTACT)["Virtual communication"]` (`r  round(100*prop.table(table(dat_fu$S24FU_CONTACT))["Virtual communication"])`%) by virtual communication. Most of the patients were asymptomatic and in NYHA Class I.
+Ninety-day follow-up were performed for `r nrow(dat_fu)` (`r round((nrow(dat_fu) / nrow(dat))*100)`%) patients. Of which `r table(dat_fu$S24FU_CONTACT)["Telephone"]` (`r  round(100*prop.table(table(dat_fu$S24FU_CONTACT))["Telephone"])`%) were contacted by phone, `r table(dat_fu$S24FU_CONTACT)["Clinic visit"]` (`r  round(100*prop.table(table(dat_fu$S24FU_CONTACT))["Clinic visit"])`%) by clinical visits 
+<!-- and `r table(dat_fu$S24FU_CONTACT)["Virtual communication"]` (`r  round(100*prop.table(table(dat_fu$S24FU_CONTACT))["Virtual communication"])`%) by virtual communication.
+-->
+Most of the patients were asymptomatic and in NYHA Class I.
 
 Very few patients were treated with angiotensin receptor-neprilysin inhibitors (ARNI’S) or SGLT-2i (non-diabetic).
 Most of the patients were receiving potent statins and only 1% were on PCSK-9i.
