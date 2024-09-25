@@ -48,6 +48,43 @@ source('C:/Users/ido/sheba stats/ACSIS/Booklet/R scripts data prep/Data_ACSIS_20
 
 ```
 
+```{r}
+# Initialize counters
+chapter_num <- 1
+section_num <- 0
+figure_num <- 1
+table_num <- 1
+
+# Function to increment and retrieve figure number
+next_figure <- function(sub = FALSE) {
+  if (sub) {
+    # For sub-figures like a, b, c
+    figure_num_sub <<- figure_num_sub + 1
+    return(paste0(figure_num, ".", letters[figure_num_sub]))
+  } else {
+    figure_num <<- figure_num + 1
+    figure_num_sub <<- 0
+    return(as.character(figure_num))
+  }
+}
+
+# Function to increment and retrieve table number
+next_table <- function() {
+  table_num <<- table_num + 1
+  return(as.character(table_num))
+}
+
+# Function to increment and retrieve section number
+next_section <- function() {
+  section_num <<- section_num + 1
+  return(paste0(chapter_num, ".", section_num))
+}
+
+# Initialize sub-figure counter
+figure_num_sub <- 1
+```
+
+
 \pagebreak
 
 # Introduction
@@ -182,6 +219,7 @@ labels[8] <- paste0("T inversion \n n =",table(dat$S24ADMECG=="T inversion")["TR
 # labels[10] <- paste0("Undetermined ECG findings \n (LBBB, Pacing, Severe LVH) \n n =",table(dat$S24ADMECG=="Undetermined ECG findings (LBBB, Pacing, Severe LVH)")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="Undetermined ECG findings (LBBB, Pacing, Severe LVH)")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
 
 for (i in 1:8) textround(elpos[i,],radx=0.15,rady=0.04,lab=labels[i], shadow.col = "mediumpurple", box.col = "aliceblue")
+
 title("Figure 1.1.a: Distribution of Patients with ACS by ECG on Admission", cex.main=1, font.main=1)
 ```
 

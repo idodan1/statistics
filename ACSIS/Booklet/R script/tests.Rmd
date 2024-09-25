@@ -1,26 +1,28 @@
 ---
 output:
   pdf_document:
-    fig_caption: yes
+    fig_caption: true
     keep_tex: true
     latex_engine: pdflatex
-    toc: yes
+    toc: true
   html_document:
     theme: cerulean
+  word_document:
+    toc: true
 header-includes:
-    - \usepackage{caption}
-    - \usepackage{fancyhdr}
-    - \pagestyle{fancy}
-    - \fancyhead{} % clear all header fields
-    - \fancyhead[C]{\nouppercase{\leftmark}}
-    - \fancyfoot{}
-    - \fancyfoot[C]{\thepage}
-    - \usepackage{float}
-    - \usepackage{threeparttable}
-    - \usepackage{titling}
-    - \pretitle{\begin{center}\LARGE\includegraphics[width=18cm,height=20.5cm,keepaspectratio]{cover_21.png}\\[\bigskipamount]}
-    - \posttitle{\end{center}}
-editor_options: 
+- \usepackage{caption}
+- \usepackage{fancyhdr}
+- \pagestyle{fancy}
+- \fancyhead{} % clear all header fields
+- \fancyhead[C]{\nouppercase{\leftmark}}
+- \fancyfoot{}
+- \fancyfoot[C]{\thepage}
+- \usepackage{float}
+- \usepackage{threeparttable}
+- \usepackage{titling}
+- \pretitle{\begin{center}\LARGE\includegraphics[width=18cm,height=20.5cm,keepaspectratio]{cover_21.png}\\[\bigskipamount]}
+- \posttitle{\end{center}}
+editor_options:
   chunk_output_type: console
 ---
 
@@ -28,30 +30,72 @@ editor_options:
 knitr::opts_chunk$set(echo = FALSE, warning = F, message = F)
 options(knitr.table.format = "latex")
 
-# source('W:/Users/Shared_Files/STAT/2021/ACSIS 2021 booklet/Data_ACSIS_2021.R')
-# source('C:/Users/talco/Documents/Statistics/ACSIS_21_PDF/Data_ACSIS_2021.R')
 source('C:/Users/ido/sheba stats/ACSIS/Booklet/R scripts data prep/Data_ACSIS_2024.R')
 
+
+dat0 <- read.csv('C:/Users/ido/sheba stats/ACSIS/data/ACSIS24_1_trend.csv',
+                 header = TRUE, na.strings = c(""," ","NA","UNKNOWN","UNK","N/A","A","N"),
+                 stringsAsFactors = T) #n=20494
+
 ```
 
-```{r fig.width=10, fig.height=8}
-par(mar=c(1000,1000,1000,1000))
-par(mfrow=c(1,1))
+```{r results='hide'}
+vars_to_include <- setdiff(names(dat0), "HAKZAA")
 
-vars_hist <- c("S24PRIOR_ACS","S24PRIOR_CABG","S24PRIOR_PCI","S24PRIOR_CARDIOMYOPATHY","S24PRIOR_CHF","S24PRIOR_RENAL","S24PRIOR_PVD","S24PRIOR_CVA","S24PRIOR_COPD","S24PRIOR_AFIB","S24PRIOR_AICD","S24PRIOR_CANC","S24THYROID")
-tab_hist_st <- print(CreateTableOne(vars = vars_hist, strata = "ST_ELEV", data = dat))
-tab_hist <- print(CreateTableOne(vars = vars_hist, data = dat))
-t_hist <- cbind(tab_hist, tab_hist_st)[,-5]
-
-per_nst <- as.numeric(out_of_par(as.character(t_hist[-1,2])))
-per_st <- as.numeric(out_of_par(as.character(t_hist[-1,3])))
-mydata1 <- cbind(per_nst,per_st)[-c(length(per_nst)),]
-row.names(mydata1) <- c("ACS","CABG","PCI","Cardiomyopathy","CHF","CKD", "PAD", "Stroke/TIA", "COPD", "Atrial fibrillation/Flutter","ICD/CRT implant","Any malignancy")
-mydata1 <- mydata1[order(-mydata1[,1]),]
-par(mar = margins)
-
-xx <- barplot(as.matrix(t(mydata1)), main="Figure 1.5: Cardiovascular history", ylab="Percent (%)", beside=TRUE, col=c("cadetblue2","mediumpurple"), ylim = c(0,50), las=2, axisnames = F, font.main=1, cex.main=1.4)
-legend("topright", c("Non STEMI","STEMI"), cex=1.2, fill=c("cadetblue2","mediumpurple"),bty = "n")
-text(x = xx, y = as.matrix(t(mydata1)), label = as.matrix(t(mydata1)), pos = 3, cex = 0.8)
-text(cex=1, x=xx[2,], y=-1.25, labels = row.names(mydata1), xpd=TRUE, srt=30, pos=2)
+tab1 = print(CreateTableOne(vars = vars_to_include, strata = "SOURCE", data = dat0))
+tab1 = tab1[, -13]
 ```
+
+```{r, results='asis'}
+# kable(tab1, align = "c", caption = "Table 1: All vars except HAKZAA by source",
+#       booktabs = TRUE, escape = TRUE, linesep = "") %>%
+#   kable_styling(full_width = FALSE, latex_options = c("HOLD_position", "striped", "repeat_header")) %>%
+#   column_spec(2:13, bold = FALSE, width = "1cm") # Customize width for the first column
+
+library(kableExtra)
+
+chunk_size <- 20
+
+# Get the number of rows in the data
+num_rows <- nrow(tab1)
+part = 1
+
+for (i in seq(1, num_rows, by = chunk_size)) {
+  
+  rows_subset <- tab1[i:min(i + chunk_size - 1, num_rows), ]
+
+  table1 = kable(rows_subset[, 1:6],
+        align = "c",
+        caption = paste("table part", part, "All vars except HAKZAA by source 2000-2010"),
+        booktabs = TRUE,
+        escape = TRUE,
+        linesep = "") %>%
+    kable_styling(
+      full_width = FALSE,
+      latex_options = c("HOLD_position", "striped", "repeat_header", "longtable")
+    ) %>%
+    column_spec(1, bold = TRUE, width = "2cm") %>%
+    column_spec(2:6, bold = FALSE, width = "1cm")
+  
+  cat(table1) 
+  
+  table2 = kable(rows_subset[, 7:12],
+        align = "c",
+        caption = paste("table part", part, ": All vars except HAKZAA by source 2013-2024"),
+        booktabs = TRUE,
+        escape = TRUE,
+        linesep = "") %>%
+    kable_styling(
+      full_width = FALSE,
+      latex_options = c("HOLD_position", "striped", "repeat_header", "longtable")
+    ) %>%
+    column_spec(1, bold = TRUE, width = "2cm") %>%
+    column_spec(2:6, bold = FALSE, width = "1cm")
+  
+  cat(table2)
+  
+  part = part + 1
+}
+
+```
+
