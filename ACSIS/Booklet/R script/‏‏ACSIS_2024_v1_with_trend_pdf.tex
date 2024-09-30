@@ -1,0 +1,2256 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{caption}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{} % clear all header fields
+\fancyhead[C]{\nouppercase{\leftmark}}
+\fancyfoot{}
+\fancyfoot[C]{\thepage}
+\usepackage{float}
+\usepackage{threeparttable}
+\usepackage{titling}
+\pretitle{\begin{center}\LARGE\includegraphics[width=18cm,height=20.5cm,keepaspectratio]{cover_21.png}\\[\bigskipamount]}
+\posttitle{\end{center}}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Booklet ACSIS 2024},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Booklet ACSIS 2024}
+\author{}
+\date{\vspace{-2.5em}September 2024}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\captionsetup[table]{labelformat=empty}
+
+\pagebreak
+
+\section{Introduction}\label{introduction}
+
+We are proud to present you with the ACSIS 2024 survey results. This
+survey, is a biennial tradition since it was launched in 1992 by
+Prof.~Shlomo Behar.
+
+The ACSIS survey provides a state-of-the-art representation of the
+characteristics, management, and outcome of patients presenting with an
+acute coronary syndrome (ACS) in Israel. This survey is a source of
+pride for the Israeli cardiology community.
+
+ACSIS 2024 was carried out during March-April 2024 by the Israeli
+working group on Acute Cardiac Care of the Israel Heart Society, and the
+Israeli Center for Cardiovascular Research (ICCR) in cooperation with
+the Israeli Center for Disease Control (ICDC) and Israel Society of
+Intensive Care Nursing.
+
+During this 2-month period, detailed data was collected in all intensive
+cardiac care units (ICCU) and cardiology wards in all public hospitals
+in Israel, and included 1801 consecutive ACS patients admitted and
+diagnosed with ACS.
+
+The ACSIS 2024 findings expand on prior surveys by showing a continuous
+improvement in in-hospital, 1 month, as well as 1-year mortality
+throughout the last decade.
+
+ACSIS data is used continuously for high-quality scientific research
+which is published in the major journals in the field.
+
+We thank the Israeli Center for Disease Control (ICDC) as well as the
+pharmaceutical industry in their continuing unconditional support of
+this important survey.
+
+Finally, we would like to thank and recommend the dedication of all the
+study coordinators and staff members of all ICCU's and Cardiology wards
+for their dedicated time and effort in collecting the data.
+
+~
+
+~
+
+\begin{tabu} to \linewidth {>{\raggedright\arraybackslash}p{13cm}>{\raggedright}X}
+\toprule
+Prof. Roy Beigel & Dr. Katia Orvin\\
+\midrule
+Chairman & Secretary\\
+\bottomrule
+\end{tabu}
+
+\emph{Israeli working-group on Acute Cardiac Care}
+
+\pagebreak
+
+\section{Message from the Israel Heart
+Society}\label{message-from-the-israel-heart-society}
+
+The Israel Heart Society is proud to present the final results of the
+ACSIS 2024 survey.
+
+ACSIS is a biannual survey conducted over a 2 months period in all
+coronary care units operating in Israel and includes all ACS patients
+admitted during the survey period. The survey has been conducted since
+2000. Over this long period it has provided invaluable insights into the
+characteristics, management and outcome of our patients. The survey
+allows quality indicators for individual centers, has produced numerous
+scientific papers and allows important analyses of long-term trends in
+ACS.\\
+The 2024 ACSIS survey follows in the footsteps of previous surveys and
+extends the observations yet more. The data presented here are of great
+interest to anyone interested in the epidemiology and management of ACS
+in Israel and globally. We would like to thank the ACSIS steering
+committee, led by the ACC WG for their very thorough work in organizing
+this survey and preparing the data for presentation and for our many
+industry partners who supported this great effort.
+
+We trust you will find these data important and interesting.
+
+~
+
+~
+
+\begin{tabu} to \linewidth {>{\raggedright\arraybackslash}p{9cm}>{\raggedright}X}
+\toprule
+Prof. Ofer Amir & Dr. Arik Wolak\\
+\midrule
+President & Secretary General\\
+\bottomrule
+\end{tabu}
+
+\emph{The Israel Heart Society}
+
+\pagebreak
+
+The ACSIS 2024 survey was generously supported by an unrestricted grant
+by the following companies:
+
+\begin{figure}
+\includegraphics[width=1.2\linewidth]{updated logo page} \end{figure}
+
+\pagebreak
+
+\section{Chapter 1: Acute Coronary Syndrome (ACS) in
+Cardiology}\label{chapter-1-acute-coronary-syndrome-acs-in-cardiology}
+
+\subsection{1.1 Distribution of Patients with ACS by Electrocardiogram
+(ECG) on
+Admission}\label{distribution-of-patients-with-acs-by-electrocardiogram-ecg-on-admission}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\pagebreak
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\pagebreak
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\pagebreak
+
+\subsection{1.2 Demographic
+Characteristics}\label{demographic-characteristics}
+
+\subsubsection{1.2.1 Age Distribution by ECG on
+Admission}\label{age-distribution-by-ecg-on-admission}
+
+~
+
+Patients with ST elevation were younger (mean age: 62.6 \(\pm\) 12.1)
+than those with non ST elevation (mean age: 66.1 \(\pm\) 11.9), and the
+age distribution of patients with ST elevation indicated a greater
+proportion of younger patients (55.4\% were aged \textless{} 65 years)
+than that of patients with non ST elevation (44.4\% aged \textless{} 65
+years).
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-10}Table 1.1: Age Distribution by ECG on Admission}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{2.5cm}}
+\toprule
+  & Total & Non ST elevation & ST elevation & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1098} & \cellcolor{gray!10}{675} & \cellcolor{gray!10}{}\\
+Age groups ($\%$) &  &  &  & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{< 50} & \cellcolor{gray!10}{206 (11.4)} & \cellcolor{gray!10}{96 ( 8.7)} & \cellcolor{gray!10}{105 (15.6)} & \cellcolor{gray!10}{}\\
+\hspace{1em}50-64 & 669 (37.1) & 391 (35.6) & 269 (39.9) & \\
+\hspace{1em}\cellcolor{gray!10}{65-79} & \cellcolor{gray!10}{723 (40.1)} & \cellcolor{gray!10}{463 (42.2)} & \cellcolor{gray!10}{251 (37.2)} & \cellcolor{gray!10}{}\\
+\hspace{1em}$\geq$ 80 & 203 (11.3) & 148 (13.5) & 50 ( 7.4) & \\
+\cellcolor{gray!10}{Age (mean(sd))} & \cellcolor{gray!10}{64.75 (12.11)} & \cellcolor{gray!10}{66.07 (11.87)} & \cellcolor{gray!10}{62.64 (12.13)} & \cellcolor{gray!10}{<0.001}\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}Percentages are calculated out of available data}\\
+\end{tabular}
+\end{table}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.2.2 Age Distribution by
+Gender}\label{age-distribution-by-gender}
+
+~
+
+The age distribution of male patients was significantly different from
+that of female patients. The majority of men (52.6\%) were in the
+younger age groups (\textless{} 65) and only 9.2\% were aged 80 or
+above. 12.8\% of men were less than 50 years old. By contrast, the
+majority of the female patients were in the older age groups \(\geq 65\)
+(68.7\%). The number of women under the age of 50 was significantly
+lower than of their male counterparts (5.6\%), and 20.4\% were aged 80
+or above.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-13}Table 1.2: Age Distribution by Gender}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{2.5cm}}
+\toprule
+  & Total & Women & Men & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{339} & \cellcolor{gray!10}{1461} & \cellcolor{gray!10}{}\\
+Age groups ($\%$) &  &  &  & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{< 50} & \cellcolor{gray!10}{206 (11.4)} & \cellcolor{gray!10}{19 ( 5.6)} & \cellcolor{gray!10}{187 (12.8)} & \cellcolor{gray!10}{}\\
+\hspace{1em}50-64 & 669 (37.1) & 87 (25.7) & 581 (39.8) & \\
+\hspace{1em}\cellcolor{gray!10}{65-79} & \cellcolor{gray!10}{723 (40.1)} & \cellcolor{gray!10}{164 (48.4)} & \cellcolor{gray!10}{559 (38.3)} & \cellcolor{gray!10}{}\\
+\hspace{1em}$\geq$ 80 & 203 (11.3) & 69 (20.4) & 134 ( 9.2) & \\
+\cellcolor{gray!10}{Age (mean(sd))} & \cellcolor{gray!10}{64.75 (12.11)} & \cellcolor{gray!10}{69.87 (11.63)} & \cellcolor{gray!10}{63.57 (11.91)} & \cellcolor{gray!10}{<0.001}\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}Percentages are calculated out of available data}\\
+\end{tabular}
+\end{table}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.2.3 Gender Distribution}\label{gender-distribution}
+
+~
+
+For both STEMI and Non STEMI patients we observed a clear male
+predominance.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-16}Table 1.3: Gender Distribution}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{2.5cm}}
+\toprule
+  & Total & Non STEMI & STEMI & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1136} & \cellcolor{gray!10}{665} & \cellcolor{gray!10}{}\\
+Women (\%) & 339 (18.8) & 222 (19.6) & 117 (17.6) & 0.334\\
+\cellcolor{gray!10}{Men (\%)} & \cellcolor{gray!10}{1461 (81.2)} & \cellcolor{gray!10}{913 (80.4)} & \cellcolor{gray!10}{548 (82.4)} & \cellcolor{gray!10}{}\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}Percentages are calculated out of available data}\\
+\end{tabular}
+\end{table}
+
+~
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+\pagebreak
+
+\subsection{1.3 Cardiovascular History}\label{cardiovascular-history}
+
+\subsubsection{1.3.1 Cardiovascular
+History}\label{cardiovascular-history-1}
+
+A history of ACS, cardiomyopathy, congestive heart failure (CHF),
+chronic renal failure, peripheral artery disease (PAD) and atrial
+fibrillation were significantly more frequent among patients with non
+STEMI. Similarly, more patients with non STEMI had undergone
+percutaneous coronary intervention (PCI) or coronary artery bypass
+grafting (CABG) prior to hospitalization.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-19}Table 1.4: Prior Cardiovascular History}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{7cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}}
+\toprule
+  & Total & Non STEMI & STEMI & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1136} & \cellcolor{gray!10}{665} & \cellcolor{gray!10}{}\\
+ACS ($\%$) & 659 (37.2) & 490 (44.2) & 169 (25.5) & <0.001\\
+\cellcolor{gray!10}{CABG ($\%$)} & \cellcolor{gray!10}{100 ( 5.6)} & \cellcolor{gray!10}{86 ( 7.7)} & \cellcolor{gray!10}{14 ( 2.1)} & \cellcolor{gray!10}{<0.001}\\
+PCI ($\%$) & 640 (36.0) & 480 (43.2) & 160 (24.1) & <0.001\\
+\cellcolor{gray!10}{Cardiomyopathy ($\%$)} & \cellcolor{gray!10}{97 ( 5.5)} & \cellcolor{gray!10}{78 ( 7.0)} & \cellcolor{gray!10}{19 ( 2.9)} & \cellcolor{gray!10}{<0.001}\\
+CHF ($\%$) & 156 ( 8.8) & 127 (11.4) & 29 ( 4.4) & <0.001\\
+\cellcolor{gray!10}{Chronic Kidney Disease (CKD) ($\%$)} & \cellcolor{gray!10}{183 (10.3)} & \cellcolor{gray!10}{139 (12.5)} & \cellcolor{gray!10}{44 ( 6.6)} & \cellcolor{gray!10}{<0.001}\\
+PAD ($\%$) & 100 ( 5.7) & 76 ( 6.9) & 24 ( 3.7) & 0.007\\
+\cellcolor{gray!10}{Stroke/Transient ischemic attack (TIA) ($\%$)} & \cellcolor{gray!10}{158 ( 8.9)} & \cellcolor{gray!10}{105 ( 9.5)} & \cellcolor{gray!10}{53 ( 8.0)} & \cellcolor{gray!10}{0.330}\\
+Chronic Obstructive Pulmonary Disease (COPD) ($\%$) & 113 ( 6.4) & 81 ( 7.3) & 32 ( 4.8) & 0.049\\
+\cellcolor{gray!10}{Atrial fibrillation/Flutter ($\%$)} & \cellcolor{gray!10}{106 ( 6.0)} & \cellcolor{gray!10}{87 ( 7.8)} & \cellcolor{gray!10}{19 ( 2.9)} & \cellcolor{gray!10}{<0.001}\\
+Implantable cardioverter-defibrillators (ICD)/Cardiac resynchronization therapy (CRT) implant ($\%$) & 34 ( 2.1) & 28 ( 2.7) & 6 ( 1.0) & 0.021\\
+\cellcolor{gray!10}{Any malignancy ($\%$)} & \cellcolor{gray!10}{108 ( 6.5)} & \cellcolor{gray!10}{76 ( 7.5)} & \cellcolor{gray!10}{32 ( 5.0)} & \cellcolor{gray!10}{0.066}\\
+Thyroid disease ($\%$) & 72 ( 4.4) & 52 ( 5.1) & 20 ( 3.2) & 0.080\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}Percentages are calculated out of available data}\\
+\end{tabular}
+\end{table}
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.3.2 Risk Factors}\label{risk-factors}
+
+Current smoking was more prevalent among patients presenting with STEMI,
+while other risk factors were generally more prevalent among patients
+presenting with non STEMI. No difference were found in the prevalence of
+family history of coronary artery disease (CAD) or in newly diagnosed
+diabetes.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-22}Table 1.5: Risk Factors}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2cm}}
+\toprule
+  & Total & Non STEMI & STEMI & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1136} & \cellcolor{gray!10}{665} & \cellcolor{gray!10}{}\\
+Hypertension (\%) & 1159 (65.4) & 811 (73.2) & 348 (52.5) & <0.001\\
+\cellcolor{gray!10}{Diabetes (\%)} & \cellcolor{gray!10}{764 (43.0)} & \cellcolor{gray!10}{531 (47.7)} & \cellcolor{gray!10}{233 (35.0)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}* Newly diagnosed (\%) & 31 ( 4.1) & 18 ( 3.4) & 13 ( 5.6) & 0.225\\
+\cellcolor{gray!10}{Dyslipidemia (\%)} & \cellcolor{gray!10}{1341 (75.8)} & \cellcolor{gray!10}{876 (79.1)} & \cellcolor{gray!10}{465 (70.2)} & \cellcolor{gray!10}{<0.001}\\
+Current smoker (\%) & 699 (38.8) & 383 (33.7) & 316 (47.5) & <0.001\\
+\cellcolor{gray!10}{Past smoker (\%)} & \cellcolor{gray!10}{317 (17.6)} & \cellcolor{gray!10}{221 (19.5)} & \cellcolor{gray!10}{96 (14.4)} & \cellcolor{gray!10}{0.008}\\
+Family history of CAD (\%) & 449 (30.4) & 271 (29.4) & 178 (32.0) & 0.309\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}Percentages are calculated out of available data}\\
+\multicolumn{5}{l}{\rule{0pt}{1em}Newly diagnosed expressed as percentage of total patients with specific risk factor}\\
+\end{tabular}
+\end{table}
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\pagebreak
+
+\subsection{1.4 Prior Chronic Treatment}\label{prior-chronic-treatment}
+
+Prior to the index hospitalization, a higher proportion of patients with
+non STEMI (41.5\%) were being treated with aspirin compared to those
+with STEMI (26.9\%). Other drugs in common use were
+Angiotensin-Converting-Enzyme (ACE) Inhibitors and Angiotensin Receptor
+Blockers (ARB), Beta Blockers, lipid-lowering drugs (primarily statins)
+and diuretics all of which were in use more frequently among patients
+presenting with non STEMI. 7.9\% of patients with non STEMI and 2.4\% of
+those with STEMI were being treated with clopidogrel.
+
+~
+
+\begin{ThreePartTable}
+\begin{TableNotes}
+\item[1] Oral anticoagulants include: Warfarin, Dabigatran, Rivaroxaban, Apixaban
+\item[2] Direct Oral anticoagulants include: Dabigatran, Rivaroxaban, Apixaban
+\item[3] Antihyperglycemic drugs include: Glibenclamide, Glipizide, Glimepiride, Metformin, Sitagliptine, Saxagliptine, Vidagliptine, Linagliptine, Exenatide, Liraglutide, Dapagliflozin, Acarbose, Meglinitides, TZDs, Rosiglitazone
+\item[4] Statins include: Simvastatin, Pravastatin, Atorvastatin, Rosuvastatin
+\item[*] Percentages are calculated out of available data
+\end{TableNotes}
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2cm}}
+\caption{\label{tab:unnamed-chunk-25}Table 1.6: Prior Chronic Treatment}\\
+\toprule
+  & Total & Non STEMI & STEMI & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1136} & \cellcolor{gray!10}{665} & \cellcolor{gray!10}{}\\
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Anti-platelets}}\\
+\hspace{1em}Aspirin ($\%$) & 651 (36.1) & 472 (41.5) & 179 (26.9) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{P2Y12 ($\%$)} & \cellcolor{gray!10}{166 ( 9.2)} & \cellcolor{gray!10}{135 (11.9)} & \cellcolor{gray!10}{31 ( 4.7)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Clopidogrel ($\%$) & 106 ( 5.9) & 90 ( 7.9) & 16 ( 2.4) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{Prasugrel ($\%$)} & \cellcolor{gray!10}{28 ( 1.6)} & \cellcolor{gray!10}{20 ( 1.8)} & \cellcolor{gray!10}{8 ( 1.2)} & \cellcolor{gray!10}{0.468}\\
+\hspace{1em}Ticagrelor ($\%$) & 32 ( 1.8) & 25 ( 2.2) & 7 ( 1.1) & 0.111\\
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Anticoagulants}}\\
+\hspace{1em}\cellcolor{gray!10}{Oral anticoagulants\textsuperscript{1}($\%$)} & \cellcolor{gray!10}{88 ( 4.9)} & \cellcolor{gray!10}{71 ( 6.2)} & \cellcolor{gray!10}{17 ( 2.6)} & \cellcolor{gray!10}{0.001}\\
+\hspace{1em}Direct oral anticoagulation (DOAC)\textsuperscript{2}($\%$) & 80 ( 4.4) & 64 ( 5.6) & 16 ( 2.4) & 0.002\\
+\hspace{1em}\cellcolor{gray!10}{Warfarin ($\%$)} & \cellcolor{gray!10}{9 ( 0.5)} & \cellcolor{gray!10}{8 ( 0.7)} & \cellcolor{gray!10}{1 ( 0.2)} & \cellcolor{gray!10}{0.207}\\
+\hspace{1em}Dabigatran ($\%$) & 4 ( 0.2) & 2 ( 0.2) & 2 ( 0.3) & 0.981\\
+\hspace{1em}\cellcolor{gray!10}{Rivaroxaban ($\%$)} & \cellcolor{gray!10}{14 ( 0.8)} & \cellcolor{gray!10}{9 ( 0.8)} & \cellcolor{gray!10}{5 ( 0.8)} & \cellcolor{gray!10}{1.000}\\
+\hspace{1em}Apixaban ($\%$) & 62 ( 3.4) & 53 ( 4.7) & 9 ( 1.4) & <0.001\\
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Other}}\\
+\hspace{1em}\cellcolor{gray!10}{ACE-I ($\%$)} & \cellcolor{gray!10}{336 (18.7)} & \cellcolor{gray!10}{249 (21.9)} & \cellcolor{gray!10}{87 (13.1)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}ARB ($\%$) & 248 (13.8) & 175 (15.4) & 73 (11.0) & 0.010\\
+\hspace{1em}\cellcolor{gray!10}{Beta Blockers ($\%$)} & \cellcolor{gray!10}{447 (24.8)} & \cellcolor{gray!10}{335 (29.5)} & \cellcolor{gray!10}{112 (16.8)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Calcium channel blockers (CCB) ($\%$) & 223 (12.4) & 171 (15.1) & 52 ( 7.8) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{Nitrates ($\%$)} & \cellcolor{gray!10}{23 ( 1.3)} & \cellcolor{gray!10}{22 ( 1.9)} & \cellcolor{gray!10}{1 ( 0.2)} & \cellcolor{gray!10}{0.002}\\
+\hspace{1em}Diuretics ($\%$) & 116 ( 6.4) & 98 ( 8.6) & 18 ( 2.7) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{Antihyperglycemic drugs\textsuperscript{3} ($\%$)} & \cellcolor{gray!10}{275 (15.3)} & \cellcolor{gray!10}{196 (17.3)} & \cellcolor{gray!10}{79 (11.9)} & \cellcolor{gray!10}{0.003}\\
+\hspace{1em}Statins\textsuperscript{4} ($\%$) & 670 (37.2) & 480 (42.3) & 190 (28.6) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{Ezetimibe ($\%$)} & \cellcolor{gray!10}{167 ( 9.3)} & \cellcolor{gray!10}{130 (11.4)} & \cellcolor{gray!10}{37 ( 5.6)} & \cellcolor{gray!10}{<0.001}\\
+\bottomrule
+\insertTableNotes
+\end{longtable}
+\end{ThreePartTable}
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-26-1.pdf}
+
+\pagebreak
+
+\subsection{1.5 Transportation, Pre-Admission and Admission
+Information}\label{transportation-pre-admission-and-admission-information}
+
+\subsubsection{1.5.1 Mode of Transportation by ECG on
+Admission}\label{mode-of-transportation-by-ecg-on-admission}
+
+41.4\% of all patients arrived at the hospital by means of private
+transportation. Patients with ST elevation were more frequently
+transported to hospital with mobile intensive care unit (MICU), and
+patients with non ST elevation arrived more frequently by means of
+private transportation.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-28}Table 1.7: Mode of Transportation by ECG on Admission}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4.9cm}>{\centering\arraybackslash}p{3.2cm}>{\centering\arraybackslash}p{3.2cm}>{\centering\arraybackslash}p{3.2cm}}
+\toprule
+  & Total & Non ST elevation & ST elevation\\
+\midrule
+\cellcolor{gray!10}{n\textsuperscript{1}} & \cellcolor{gray!10}{1475} & \cellcolor{gray!10}{875} & \cellcolor{gray!10}{597}\\
+MICU ($\%$) & 634 (43.0) & 247 (28.2) & 387 (64.8)\\
+\cellcolor{gray!10}{Private car/ independently ($\%$)} & \cellcolor{gray!10}{610 (41.4)} & \cellcolor{gray!10}{475 (54.3)} & \cellcolor{gray!10}{134 (22.4)}\\
+Regular ambulance ($\%$) & 231 (15.7) & 153 (17.5) & 76 (12.7)\\
+\bottomrule
+\multicolumn{4}{l}{\rule{0pt}{1em}p-value <0.001}\\
+\multicolumn{4}{l}{\rule{0pt}{1em}\textsuperscript{1} Excluded in-patients}\\
+\end{tabular}
+\end{table}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-29-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.5.2 Mode of Transportation by
+Gender}\label{mode-of-transportation-by-gender}
+
+43\% of patients, both men and women, arrived by means of a MICU. Women
+were more frequently transported to hospital with regular ambulance and
+men arrived more frequently by means of private transportation.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-31}Table 1.8: Mode of Transportation by Gender}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4.9cm}>{\centering\arraybackslash}p{3.2cm}>{\centering\arraybackslash}p{3.2cm}>{\centering\arraybackslash}p{3.2cm}}
+\toprule
+  & Total & Women & Men\\
+\midrule
+\cellcolor{gray!10}{n\textsuperscript{1}} & \cellcolor{gray!10}{1475} & \cellcolor{gray!10}{272} & \cellcolor{gray!10}{1202}\\
+MICU ($\%$) & 634 (43.0) & 122 (44.9) & 511 (42.5)\\
+\cellcolor{gray!10}{Private car/ independently ($\%$)} & \cellcolor{gray!10}{610 (41.4)} & \cellcolor{gray!10}{102 (37.5)} & \cellcolor{gray!10}{508 (42.3)}\\
+Regular ambulance ($\%$) & 231 (15.7) & 48 (17.6) & 183 (15.2)\\
+\bottomrule
+\multicolumn{4}{l}{\rule{0pt}{1em}p-value = 0.312}\\
+\multicolumn{4}{l}{\rule{0pt}{1em}\textsuperscript{1} Excluded in-patients}\\
+\end{tabular}
+\end{table}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.5.3 Drugs administered at the Emergency Department
+(ED)}\label{drugs-administered-at-the-emergency-department-ed}
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-34}Table 1.9: Drugs administered at the ED}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{8cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}}
+\toprule
+  & Total & Non ST elevation & ST elevation & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1098} & \cellcolor{gray!10}{675} & \cellcolor{gray!10}{}\\
+Aspirin (\%) & 655 (49.8) & 464 (45.6) & 191 (64.7) & <0.001\\
+\cellcolor{gray!10}{Clopidogrel (\%)} & \cellcolor{gray!10}{69 ( 5.2)} & \cellcolor{gray!10}{51 ( 5.0)} & \cellcolor{gray!10}{18 ( 6.1)} & \cellcolor{gray!10}{0.554}\\
+Prasugrel (\%) & 44 ( 3.3) & 15 ( 1.5) & 29 ( 9.8) & <0.001\\
+\cellcolor{gray!10}{Ticagrelor (\%)} & \cellcolor{gray!10}{43 ( 3.3)} & \cellcolor{gray!10}{20 ( 2.0)} & \cellcolor{gray!10}{23 ( 7.8)} & \cellcolor{gray!10}{<0.001}\\
+Heparin (\%) & 284 (21.6) & 142 (13.9) & 142 (48.1) & <0.001\\
+\cellcolor{gray!10}{Low Molecular Weight Heparin (LMWH) (\%)} & \cellcolor{gray!10}{75 ( 5.7)} & \cellcolor{gray!10}{61 ( 6.0)} & \cellcolor{gray!10}{14 ( 4.7)} & \cellcolor{gray!10}{0.503}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-35-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.5.4 Ward of First Arrival by ECG on
+Admission}\label{ward-of-first-arrival-by-ecg-on-admission}
+
+Most patients with ACS present to the ED. However, a higher number of
+patients with ST elevation presented directly to the intensive cardiac
+care unit (ICCU) and the catheterization laboratory than those with non
+ST elevation.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-37}Table 1.10: Ward of First Arrival by ECG on Admission}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{5.5cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}}
+\toprule
+  & Total & Non ST elevation & ST elevation\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1098} & \cellcolor{gray!10}{675}\\
+Directly to cardiology ward (\%) & 20 ( 1.1) & 19 ( 1.7) & 0 ( 0.0)\\
+\cellcolor{gray!10}{Directly to cath lab (\%)} & \cellcolor{gray!10}{200 (11.3)} & \cellcolor{gray!10}{16 ( 1.5)} & \cellcolor{gray!10}{183 (27.1)}\\
+Directly to ICCU (\%) & 227 (12.8) & 34 ( 3.1) & 193 (28.6)\\
+\cellcolor{gray!10}{Directly to internal medicine ward (\%)} & \cellcolor{gray!10}{5 ( 0.3)} & \cellcolor{gray!10}{4 ( 0.4)} & \cellcolor{gray!10}{1 ( 0.1)}\\
+ED (\%) & 1315 (74.0) & 1018 (92.7) & 295 (43.7)\\
+\cellcolor{gray!10}{Other (\%)} & \cellcolor{gray!10}{10 ( 0.6)} & \cellcolor{gray!10}{7 ( 0.6)} & \cellcolor{gray!10}{3 ( 0.4)}\\
+\addlinespace[0.3em]
+\multicolumn{4}{l}{\textbf{Patients arrived by MICU}}\\
+\hspace{1em}n & 634 & 247 & 387\\
+\hspace{1em}\cellcolor{gray!10}{Directly to cardiology ward (\%)} & \cellcolor{gray!10}{1 ( 0.2)} & \cellcolor{gray!10}{1 ( 0.4)} & \cellcolor{gray!10}{0 ( 0.0)}\\
+\hspace{1em}Directly to cath lab (\%) & 146 (23.0) & 3 ( 1.2) & 143 (37.0)\\
+\hspace{1em}\cellcolor{gray!10}{Directly to ICCU (\%)} & \cellcolor{gray!10}{167 (26.3)} & \cellcolor{gray!10}{13 ( 5.3)} & \cellcolor{gray!10}{154 (39.8)}\\
+\hspace{1em}Directly to internal medicine ward (\%) & 2 ( 0.3) & 1 ( 0.4) & 1 ( 0.3)\\
+\hspace{1em}\cellcolor{gray!10}{ED (\%)} & \cellcolor{gray!10}{316 (49.8)} & \cellcolor{gray!10}{229 (92.7)} & \cellcolor{gray!10}{87 (22.5)}\\
+\hspace{1em}Other (\%) & 2 ( 0.3) & 0 ( 0.0) & 2 ( 0.5)\\
+\bottomrule
+\multicolumn{4}{l}{\rule{0pt}{1em}Difference in ward of first arrival, ST elevation vs. non ST elevation, p <0.001}\\
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsubsection{1.5.5 First Ward of
+Admission}\label{first-ward-of-admission}
+
+As expected, the majority of patients presenting with ST elevation were
+hospitalized in the ICCU (95.4\%). 46.1\% of the patients who presented
+with non ST elevation were admitted to the ICCU and an additional 40.3\%
+to a cardiology department, with the remaining 12.7\% being admitted to
+internal medicine departments.
+
+\hfill\break
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-39}Table 1.11: First Ward of Hospitalization}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4.9cm}>{\centering\arraybackslash}p{3.2cm}>{\centering\arraybackslash}p{3.2cm}>{\centering\arraybackslash}p{3.2cm}}
+\toprule
+  & Total & Non ST elevation & ST elevation\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1098} & \cellcolor{gray!10}{675}\\
+ICCU (\%) & 1152 (64.8) & 506 (46.1) & 644 (95.4)\\
+\cellcolor{gray!10}{Cardiology (\%)} & \cellcolor{gray!10}{468 (26.3)} & \cellcolor{gray!10}{442 (40.3)} & \cellcolor{gray!10}{26 ( 3.9)}\\
+Internal medicine (\%) & 144 ( 8.1) & 139 (12.7) & 3 ( 0.4)\\
+\cellcolor{gray!10}{Chest pain unit (\%)} & \cellcolor{gray!10}{1 ( 0.1)} & \cellcolor{gray!10}{1 ( 0.1)} & \cellcolor{gray!10}{0 ( 0.0)}\\
+Other (\%) & 12 ( 0.7) & 10 ( 0.9) & 2 ( 0.3)\\
+\bottomrule
+\multicolumn{4}{l}{\rule{0pt}{1em}Difference in first ward of hospitalization, ST elevation vs. non ST elevation, p <0.001}\\
+\end{tabular}
+\end{table}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-40-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.5.6 Time from Symptom Onset to Hospital Arrival, by ECG
+on
+Admission}\label{time-from-symptom-onset-to-hospital-arrival-by-ecg-on-admission}
+
+All time frames were significantly shorter for patients with ST
+elevation. Patients with ST elevation sought help earlier when compared
+to patients with non ST elevation.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-42}Table 1.12: Time (minutes) from Symptom Onset to Admission, by ECG on Admission}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{3.7cm}>{\centering\arraybackslash}p{3.5cm}>{\centering\arraybackslash}p{3.5cm}>{\centering\arraybackslash}p{3.5cm}>{\centering\arraybackslash}p{1.2cm}}
+\toprule
+  & Total & Non ST elevation & ST elevation & p-value\\
+\midrule
+\cellcolor{gray!10}{n\textsuperscript{1}} & \cellcolor{gray!10}{1037} & \cellcolor{gray!10}{509} & \cellcolor{gray!10}{503} & \cellcolor{gray!10}{}\\
+Onset to first medical contact, minutes (median [IQR]) & 95.00 [40.00, 287.00] & 120.00 [49.75, 483.25] & 82.00 [30.00, 191.50] & <0.001\\
+\cellcolor{gray!10}{First medical contact to arrival, minutes (median [IQR])} & \cellcolor{gray!10}{49.00 [32.00, 75.00]} & \cellcolor{gray!10}{50.00 [34.00, 86.75]} & \cellcolor{gray!10}{46.50 [30.00, 70.00]} & \cellcolor{gray!10}{0.007}\\
+Onset to arrival, minutes (median [IQR]) & 153.00 [86.00, 380.00] & 186.00 [96.75, 587.50] & 138.00 [78.00, 257.00] & <0.001\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}\textsuperscript{1} Excluded in-patients or patients whose first medical contact was in ED}\\
+\end{tabular}
+\end{table}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-43-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.5.7 Time from Symptom Onset to Hospital Arrival, by
+gender}\label{time-from-symptom-onset-to-hospital-arrival-by-gender}
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-45}Table 1.13: Time (minutes) from Symptom Onset to Admission by gender}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{3.7cm}>{\centering\arraybackslash}p{3.3cm}>{\centering\arraybackslash}p{3.3cm}>{\centering\arraybackslash}p{3.3cm}>{\centering\arraybackslash}p{1.5cm}}
+\toprule
+  & Total & Women & Men & p-value\\
+\midrule
+\cellcolor{gray!10}{n\textsuperscript{1}} & \cellcolor{gray!10}{1037} & \cellcolor{gray!10}{199} & \cellcolor{gray!10}{837} & \cellcolor{gray!10}{}\\
+Onset to first medical contact, minutes (median [IQR]) & 95.00 [40.00, 287.00] & 117.00 [38.25, 389.50] & 90.00 [40.00, 270.00] & 0.501\\
+\cellcolor{gray!10}{First medical contact to arrival, minutes (median [IQR])} & \cellcolor{gray!10}{49.00 [32.00, 75.00]} & \cellcolor{gray!10}{52.00 [38.00, 73.00]} & \cellcolor{gray!10}{48.00 [31.00, 76.00]} & \cellcolor{gray!10}{0.193}\\
+Onset to arrival, minutes (median [IQR]) & 153.00 [86.00, 380.00] & 172.00 [92.00, 414.75] & 148.00 [86.00, 371.00] & 0.348\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}\textsuperscript{1} Excluded in-patients or patients whose first medical contact was in ED}\\
+\end{tabular}
+\end{table}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-46-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.5.8 First Medical Contact}\label{first-medical-contact}
+
+41.3\% of patients had the first medical contact at the ED and about
+21.6\% at a Health maintenance organization (HMO) primary
+clinic/``Moked''. For an additional 22.2\% the primary medical contact
+was with MICU. Patients with ST elevation were more likely to have their
+first medical contact with a MICU (37)\% than those with non ST
+elevation (13.1\%).
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-48}Table 1.14: First Medical Contact}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{5.5cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}}
+\toprule
+  & Total & Non ST elevation & ST elevation\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1098} & \cellcolor{gray!10}{675}\\
+ED (\%) & 734 (41.3) & 569 (51.8) & 163 (24.1)\\
+\cellcolor{gray!10}{HMO Out Pts. clinic / 'Moked' (\%)} & \cellcolor{gray!10}{384 (21.6)} & \cellcolor{gray!10}{236 (21.5)} & \cellcolor{gray!10}{147 (21.8)}\\
+Home visit (\%) & 28 ( 1.6) & 14 ( 1.3) & 14 ( 2.1)\\
+\cellcolor{gray!10}{In-patient (\%)} & \cellcolor{gray!10}{30 ( 1.7)} & \cellcolor{gray!10}{20 ( 1.8)} & \cellcolor{gray!10}{9 ( 1.3)}\\
+Mobile ICU (\%) & 394 (22.2) & 144 (13.1) & 250 (37.0)\\
+\cellcolor{gray!10}{Other hospital (\%)} & \cellcolor{gray!10}{29 ( 1.6)} & \cellcolor{gray!10}{17 ( 1.5)} & \cellcolor{gray!10}{12 ( 1.8)}\\
+Regular ambulance (\%) & 178 (10.0) & 98 ( 8.9) & 80 (11.9)\\
+\bottomrule
+\multicolumn{4}{l}{\rule{0pt}{1em}Difference in location of first medical contact, ST elevation vs. non ST elevation, p <0.001}\\
+\end{tabular}
+\end{table}
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-49-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.5.9 Presenting Symptoms and Killip
+Class}\label{presenting-symptoms-and-killip-class}
+
+Typical angina was significantly more frequent in patients presenting
+with ST elevation (81.9\%) than those presenting with non ST elevation
+(69\%). However, atypical chest pain was more common in patients
+presenting with non ST elevation (11.1\%) than in those with ST
+elevation (8.3\%). Also dyspnea was more common in patients with non ST
+elevation (21.9\%) than those with ST elevation (14.8\%).
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-51}Table 1.15: Presenting Symptoms at First Medical Contact}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{6cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{1.5cm}}
+\toprule
+  & Total & Non ST elevation & ST elevation & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1098} & \cellcolor{gray!10}{675} & \cellcolor{gray!10}{}\\
+Typical angina (\%) & 1315 (73.0) & 758 (69.0) & 553 (81.9) & <0.001\\
+\cellcolor{gray!10}{Atypical chest pain (\%)} & \cellcolor{gray!10}{178 ( 9.9)} & \cellcolor{gray!10}{122 (11.1)} & \cellcolor{gray!10}{56 ( 8.3)} & \cellcolor{gray!10}{0.067}\\
+Syncope (\%) & 39 ( 2.2) & 22 ( 2.0) & 17 ( 2.5) & 0.582\\
+\cellcolor{gray!10}{Aborted Sudden Cardiac Death (SCD) (\%)} & \cellcolor{gray!10}{10 ( 0.6)} & \cellcolor{gray!10}{3 ( 0.3)} & \cellcolor{gray!10}{7 ( 1.0)} & \cellcolor{gray!10}{0.079}\\
+Palpitations (\%) & 30 ( 1.7) & 23 ( 2.1) & 6 ( 0.9) & 0.080\\
+\cellcolor{gray!10}{Dyspnea (\%)} & \cellcolor{gray!10}{342 (19.0)} & \cellcolor{gray!10}{240 (21.9)} & \cellcolor{gray!10}{100 (14.8)} & \cellcolor{gray!10}{<0.001}\\
+Abdominal pain (\%) & 87 ( 4.8) & 46 ( 4.2) & 41 ( 6.1) & 0.095\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-52-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.5.10 Pre-Hospital Treatment (before ED
+arrival)}\label{pre-hospital-treatment-before-ed-arrival}
+
+At first medical contact, patients with ST elevation were significantly
+more likely to receive therapy with aspirin and heparin than patients
+with non ST elevation.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-54}Table 1.16 Pre-Hospitalization Treatment}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{1.5cm}}
+\toprule
+  & Total & Non ST elevation & ST elevation & p-value\\
+\midrule
+\cellcolor{gray!10}{n\textsuperscript{1}} & \cellcolor{gray!10}{865} & \cellcolor{gray!10}{400} & \cellcolor{gray!10}{463} & \cellcolor{gray!10}{}\\
+Aspirin ($\%$) & 504 ( 79.5) & 166 ( 67.2) & 338 ( 87.3) & <0.001\\
+\cellcolor{gray!10}{Clopidogrel ($\%$)} & \cellcolor{gray!10}{5 (  0.8)} & \cellcolor{gray!10}{0 (  0.0)} & \cellcolor{gray!10}{5 (  1.3)} & \cellcolor{gray!10}{0.182}\\
+Prasugrel ($\%$) & 2 (  0.3) & 0 (  0.0) & 2 (  0.5) & 0.685\\
+\cellcolor{gray!10}{Ticagrelor ($\%$)} & \cellcolor{gray!10}{0 (   0.0)} & \cellcolor{gray!10}{0 (   0.0)} & \cellcolor{gray!10}{0 (   0.0)} & \cellcolor{gray!10}{NA}\\
+Heparin ($\%$) & 275 ( 43.4) & 24 (  9.7) & 251 ( 64.9) & <0.001\\
+\cellcolor{gray!10}{LMWH ($\%$)} & \cellcolor{gray!10}{9 (  1.4)} & \cellcolor{gray!10}{1 (  0.4)} & \cellcolor{gray!10}{8 (  2.1)} & \cellcolor{gray!10}{0.167}\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}\textsuperscript{1} Only MICU and regular ambulance patients were included}\\
+\end{tabular}
+\end{table}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-55-1.pdf}
+
+\pagebreak
+
+\subsection{1.6 First Recorded ECG}\label{first-recorded-ecg}
+
+\subsubsection{1.6.1 Location of First ECG
+Recording}\label{location-of-first-ecg-recording}
+
+68.4\% of patients presenting with non ST elevation and 35.1\% of
+patients presenting with ST elevation had their first ECG recorded in
+the emergency department (ED). With respect to the remaining patients,
+46.2\% of patients with ST elevation and 17.4\% of those with non ST
+elevation had the first ECG performed either at home or in an ambulance,
+and about 11\% in both groups had it performed in a primary clinic.
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-56-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.6.2 First ECG Rhythm}\label{first-ecg-rhythm}
+
+About 93\% of patients presented with a normal sinus rhythm (NSR). 3.1\%
+of patients with ST elevation and 3.8\% of those without ST elevation,
+presented with atrial fibrillation.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-58}Table 1.17: First ECG Rhythm}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{5cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}}
+\toprule
+  & Total & Non ST elevation & ST elevation\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1098} & \cellcolor{gray!10}{675}\\
+NSR (\%) & 1554 (93.4) & 977 (94.0) & 575 (92.4)\\
+\cellcolor{gray!10}{Atrial fibrillation (\%)} & \cellcolor{gray!10}{59 ( 3.5)} & \cellcolor{gray!10}{40 ( 3.8)} & \cellcolor{gray!10}{19 ( 3.1)}\\
+Ventricular Tachycardia (VT)/ Ventricular Fibrillation (VF) (\%) & 21 ( 1.3) & 7 ( 0.7) & 14 ( 2.3)\\
+\cellcolor{gray!10}{High degree (2nd / 3rd) Atrioventricular (AV) Block (\%)} & \cellcolor{gray!10}{15 ( 0.9)} & \cellcolor{gray!10}{6 ( 0.6)} & \cellcolor{gray!10}{9 ( 1.4)}\\
+Asystole (\%) & 1 ( 0.1) & 0 ( 0.0) & 1 ( 0.2)\\
+\cellcolor{gray!10}{Other (\%)} & \cellcolor{gray!10}{13 ( 0.8)} & \cellcolor{gray!10}{9 ( 0.9)} & \cellcolor{gray!10}{4 ( 0.6)}\\
+\bottomrule
+\multicolumn{4}{l}{\rule{0pt}{1em}Difference in first ECG rhythm, ST elevation vs. non ST elevation, p  0.018}\\
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{1.7 Primary Reperfusion}\label{primary-reperfusion}
+
+\subsubsection{1.7.1 Primary Reperfusion Therapy in Patients with
+STEMI}\label{primary-reperfusion-therapy-in-patients-with-stemi}
+
+87.5\% of patients with STEMI underwent primary reperfusion within 12
+hours from onset of symptoms, mainly primary PCI. In 88.4\% of these
+cases, stents were deployed. Of the remaining 12.5`\% which did not
+undergo primary reperfusion, 88\% eventually underwent coronary
+angiography. Of these, 90\% underwent revascularization.
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-59-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.7.2 Length of Time from Arrival to Primary
+Reperfusion}\label{length-of-time-from-arrival-to-primary-reperfusion}
+
+The median time from arrival to primary reperfusion was less than one
+hour (38 minutes).
+
+There were no patients who undergo thrombolysis. ~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-61}Table 1.18: Length of Time (minutes) from Arrival to Reperfusion}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{5.9cm}>{\centering\arraybackslash}p{4.3cm}>{\centering\arraybackslash}p{4.3cm}}
+\toprule
+  & N & Time in minutes (median [IQR])\\
+\midrule
+\cellcolor{gray!10}{From arrival to  thrombolysis (TLx)} & \cellcolor{gray!10}{5} & \cellcolor{gray!10}{38.00 [37.00, 45.00]}\\
+From arrival to primary PCI (PPCI) & 483 & 32.00 [14.50, 65.50]\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-62-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.7.3 Length of Time from Arrival to Primary Reperfusion,
+by
+Gender}\label{length-of-time-from-arrival-to-primary-reperfusion-by-gender}
+
+The time delay from arrival to primary reperfusion was shorter for women
+compared to men.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-64}Table 1.19: Length of Time (minutes) from Arrival to Reperfusion, by gender}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4.5cm}>{\centering\arraybackslash}p{3.5cm}>{\centering\arraybackslash}p{1cm}>{\centering\arraybackslash}p{3.5cm}>{\centering\arraybackslash}p{1cm}>{\centering\arraybackslash}p{1cm}}
+\toprule
+\multicolumn{1}{c}{} & \multicolumn{2}{c}{Women} & \multicolumn{2}{c}{Men} & \multicolumn{1}{c}{} \\
+\cmidrule(l{3pt}r{3pt}){2-3} \cmidrule(l{3pt}r{3pt}){4-5}
+  & Time in minutes (median [IQR]) & N & Time in minutes (median [IQR]) & N & p-value\\
+\midrule
+\cellcolor{gray!10}{From arrival to  thrombolysis} & \cellcolor{gray!10}{63.24 [63.24, 63.24]} & \cellcolor{gray!10}{1} & \cellcolor{gray!10}{37.5  [31.5 , 39.75]} & \cellcolor{gray!10}{4} & \cellcolor{gray!10}{0.157}\\
+From arrival to primary PCI & 38  [14.25, 70.75] & 90 & 41  [16.5 , 78 ] & 451 & 0.517\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+~
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-65-1.pdf}
+
+\pagebreak
+
+\subsubsection{1.7.4 Use of drugs and protective devices during Primary
+PCI}\label{use-of-drugs-and-protective-devices-during-primary-pci}
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-67}Table 1.20: Drugs and Protective Devices during Primary Reperfusion}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{8cm}>{\centering\arraybackslash}p{6.5cm}}
+\toprule
+  & Overall\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{582}\\
+IIb/IIIa antagonists (\%) & 145 (24.9)\\
+\cellcolor{gray!10}{Bivalirudin (\%)} & \cellcolor{gray!10}{13 ( 2.2)}\\
+Aspiration device (\%) & 44 ( 7.6)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+~
+
+~
+
+\subsubsection{1.7.5 Primary PCI / Coronary
+Angiography}\label{primary-pci-coronary-angiography}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-69}Table 1.21: Vascular access during Primary Reperfusion}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{8cm}>{\centering\arraybackslash}p{6.5cm}}
+\toprule
+  & Overall\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{582}\\
+Vascular access & \\
+\hspace{1em}\cellcolor{gray!10}{Femoral} & \cellcolor{gray!10}{46 ( 8.3)}\\
+\hspace{1em}Radial & 506 (91.0)\\
+\hspace{1em}\cellcolor{gray!10}{Both} & \cellcolor{gray!10}{4 ( 0.7)}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+~
+
+~
+
+\subsubsection{1.7.6 Thrombolysis in Myocardial Infarction (TIMI) Grade
+Flow of Infarct-Related Artery (IRA) During Primary
+PCI}\label{thrombolysis-in-myocardial-infarction-timi-grade-flow-of-infarct-related-artery-ira-during-primary-pci}
+
+In 61.5\% of cases, a TIMI flow grade of zero was observed on first
+injection to the Infarct Related Artery (IRA). Following
+revascularization, a TIMI grade flow of 3 was achieved in the majority
+of patients (93\%).
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-71}Table 1.22: TIMI Grade Flow of IRA Before and After Revascularization}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{5.5cm}>{\centering\arraybackslash}p{5.5cm}>{\centering\arraybackslash}p{5.5cm}}
+\toprule
+  & Before revascularization ($\%$) & After revascularization ($\%$)\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{488} & \cellcolor{gray!10}{542}\\
+\hspace{2em}0 & 300 (61.5) & 11 ( 2.0)\\
+\hspace{2em}\cellcolor{gray!10}{1} & \cellcolor{gray!10}{71 (14.5)} & \cellcolor{gray!10}{3 ( 0.6)}\\
+\hspace{2em}2 & 53 (10.9) & 24 ( 4.4)\\
+\hspace{2em}\cellcolor{gray!10}{3} & \cellcolor{gray!10}{64 (13.1)} & \cellcolor{gray!10}{504 (93.0)}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsubsection{1.7.7 Reasons for Not Performing Primary
+Reperfusion}\label{reasons-for-not-performing-primary-reperfusion}
+
+12.5\% of patients presenting with STEMI did not receive primary
+reperfusion therapy. In 21.7\% the reason was spontaneous reperfusion,
+in 46.7\% the reason was late arrival at the hospital, and in 20\% of
+cases primary reperfusion was considered not indicated.
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-73-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  There were no patients that died before decision or any patient
+  refusal.
+\end{itemize}
+
+\pagebreak
+
+\subsection{1.8 Coronary Interventions and Procedures during
+Hospitalization}\label{coronary-interventions-and-procedures-during-hospitalization}
+
+\subsubsection{1.8.1 Coronary Angiography and
+Interventions}\label{coronary-angiography-and-interventions}
+
+Patients with STEMI were more likely than those with non STEMI to
+undergo coronary angiography and PCI. CABG during hospitalization was
+performed more frequently in patients with non STEMI.
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-74-1.pdf}
+
+*2 patients underwent both CABG and PCI;\\
+** 2 patients underwent both CABG and PCI.
+
+\pagebreak
+
+\subsubsection{\texorpdfstring{1.8.2 Coronary Angiography
+(\textbf{\emph{excluding}} \emph{primary
+PCI})}{1.8.2 Coronary Angiography (excluding primary PCI)}}\label{coronary-angiography-excluding-primary-pci}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-76}Table 1.23: Vascular access during coronary angiography}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{8cm}>{\centering\arraybackslash}p{6.5cm}}
+\toprule
+  & Overall\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1191}\\
+Coronary angiography & 1045 (89.6)\\
+\hspace{1em}\cellcolor{gray!10}{Vascular access:} & \cellcolor{gray!10}{}\\
+\hspace{1em}\hspace{1em}Femoral & 50 ( 5.0)\\
+\hspace{1em}\hspace{1em}\cellcolor{gray!10}{Radial} & \cellcolor{gray!10}{950 (94.4)}\\
+\addlinespace
+\hspace{1em}\hspace{1em}Both & 6 ( 0.6)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+~
+
+~
+
+\subsubsection{1.8.3 Other Procedures During
+Hospitalization}\label{other-procedures-during-hospitalization}
+
+Patients with STEMI were more likely to receive Direct-Current (DC)
+shocks, resuscitation, mechanical ventilation, intra-aortic ballon pump
+(IABP) and temporary pacemaker than those with non STEMI.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-79}Table 1.24: Other Procedures}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{5.2cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{1.5cm}}
+\toprule
+  & Total & Non STEMI & STEMI & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1136} & \cellcolor{gray!10}{665} & \cellcolor{gray!10}{}\\
+DC shock (\%) & 55 ( 3.1) & 18 ( 1.6) & 37 ( 5.6) & <0.001\\
+\cellcolor{gray!10}{Resuscitation (\%)} & \cellcolor{gray!10}{39 ( 2.2)} & \cellcolor{gray!10}{13 ( 1.2)} & \cellcolor{gray!10}{26 ( 3.9)} & \cellcolor{gray!10}{<0.001}\\
+Mechanical ventilation (\%) &  &  &  & 0.018\\
+\hspace{1em}\cellcolor{gray!10}{Invasive} & \cellcolor{gray!10}{48 ( 2.7)} & \cellcolor{gray!10}{21 ( 1.9)} & \cellcolor{gray!10}{27 ( 4.1)} & \cellcolor{gray!10}{}\\
+\hspace{1em}Non invasive & 43 ( 2.4) & 25 ( 2.3) & 18 ( 2.7) & \\
+\cellcolor{gray!10}{Intra-Aortic Balloon Pump (IABP) (\%)} & \cellcolor{gray!10}{18 ( 1.1)} & \cellcolor{gray!10}{4 ( 0.4)} & \cellcolor{gray!10}{14 ( 2.2)} & \cellcolor{gray!10}{0.001}\\
+Dialysis (\%) & 9 ( 0.5) & 8 ( 0.7) & 1 ( 0.2) & 0.197\\
+\cellcolor{gray!10}{ICD/CRT (\%)} & \cellcolor{gray!10}{13 ( 0.7)} & \cellcolor{gray!10}{8 ( 0.7)} & \cellcolor{gray!10}{5 ( 0.8)} & \cellcolor{gray!10}{1.000}\\
+Permanent pacemaker (\%) & 10 ( 0.6) & 8 ( 0.7) & 2 ( 0.3) & 0.413\\
+\cellcolor{gray!10}{Temporary pacemaker (\%)} & \cellcolor{gray!10}{14 ( 0.8)} & \cellcolor{gray!10}{3 ( 0.3)} & \cellcolor{gray!10}{11 ( 1.7)} & \cellcolor{gray!10}{0.004}\\
+Temperature control (\%) & 3 ( 0.2) & 0 ( 0.0) & 3 ( 0.5) & 0.099\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{1.9 Ejection Fraction}\label{ejection-fraction}
+
+Ejection fraction (EF) was determined in 98.6\% of patients with STEMI
+and in 91.1\% of those with non STEMI. EF was normal in a larger
+proportion of patients with non STEMI (50.7\%) than in patients with
+STEMI (20.9\%). 29.8\% of patients with STEMI and 15.1\% of patients
+with non STEMI presented with an EF \textless{} 40\%.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-81}Table 1.25: Ejection Fraction}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4.9cm}>{\centering\arraybackslash}p{2.7cm}>{\centering\arraybackslash}p{2.7cm}>{\centering\arraybackslash}p{2.7cm}>{\centering\arraybackslash}p{1.5cm}}
+\toprule
+  & Total & Non STEMI & STEMI & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1136} & \cellcolor{gray!10}{665} & \cellcolor{gray!10}{}\\
+EF determined ($\%$) & 1592 (94.0) & 957 (91.1) & 635 (98.6) & <0.001\\
+\hspace{0.6em}\cellcolor{gray!10}{EF (range) ($\%$)} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1.2em}Normal (55-65$\%$) & 617 (38.9) & 485 (50.7) & 132 (20.9) & \\
+\hspace{1.2em}\cellcolor{gray!10}{Preserved (50-54$\%$)} & \cellcolor{gray!10}{195 (12.3)} & \cellcolor{gray!10}{115 (12.0)} & \cellcolor{gray!10}{80 (12.7)} & \cellcolor{gray!10}{}\\
+\hspace{1.2em}Mild (40-49$\%$) & 444 (28.0) & 212 (22.2) & 232 (36.7) & \\
+\hspace{1.2em}\cellcolor{gray!10}{Moderate (30-39$\%$)} & \cellcolor{gray!10}{240 (15.1)} & \cellcolor{gray!10}{101 (10.6)} & \cellcolor{gray!10}{139 (22.0)} & \cellcolor{gray!10}{}\\
+\hspace{1.2em}Severe (< 30$\%$) & 92 ( 5.8) & 43 ( 4.5) & 49 ( 7.8) & \\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{5}{l}{\rule{0pt}{1em}EF range percentages are calculated out of patients who had documented EF}\\
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{1.10 In-Hospital
+Complications}\label{in-hospital-complications}
+
+Cardiogenic shock, CHF mild-moderate, Stent thrombosis
+(definite/probable/possible), ventricular fibrillation (VF) were more
+frequent in patients with STEMI.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-83}Table 1.26: In-Hospital Complications}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{8cm}>{\centering\arraybackslash}p{1.7cm}>{\centering\arraybackslash}p{1.7cm}>{\centering\arraybackslash}p{1.7cm}>{\centering\arraybackslash}p{1.4cm}}
+\toprule
+  & Total & Non STEMI & STEMI & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1136} & \cellcolor{gray!10}{665} & \cellcolor{gray!10}{}\\
+CHF mild-moderate (Killip-2) (\%) & 178 (10.1) & 90 (8.2) & 88 (13.3) & 0.001\\
+\cellcolor{gray!10}{Pulmonary edema (Killip-3) (\%)} & \cellcolor{gray!10}{60 ( 3.4)} & \cellcolor{gray!10}{33 (3.0)} & \cellcolor{gray!10}{27 ( 4.1)} & \cellcolor{gray!10}{0.275}\\
+Cardiogenic shock (Killip-4) (\%) & 43 ( 2.4) & 12 (1.1) & 31 ( 4.7) & <0.001\\
+\cellcolor{gray!10}{Hemodynamically significant RV infarction (\%)} & \cellcolor{gray!10}{7 ( 0.4)} & \cellcolor{gray!10}{3 (0.3)} & \cellcolor{gray!10}{4 ( 0.6)} & \cellcolor{gray!10}{0.493}\\
+Re-MI (\%) & 11 ( 0.6) & 7 (0.6) & 4 ( 0.6) & 1.000\\
+\cellcolor{gray!10}{Post MI angina/re-ischemia (\%)} & \cellcolor{gray!10}{19 ( 1.1)} & \cellcolor{gray!10}{13 (1.2)} & \cellcolor{gray!10}{6 ( 0.9)} & \cellcolor{gray!10}{0.769}\\
+Stent thrombosis (definite/probable/possible) (\%) & 11 ( 0.6) & 3 (0.3) & 8 ( 1.2) & 0.035\\
+\cellcolor{gray!10}{Free wall rupture (\%)} & \cellcolor{gray!10}{3 ( 0.2)} & \cellcolor{gray!10}{1 (0.1)} & \cellcolor{gray!10}{2 ( 0.3)} & \cellcolor{gray!10}{0.654}\\
+Tamponade (\%) & 1 ( 0.1) & 1 (0.1) & 0 ( 0.0) & 1.000\\
+\cellcolor{gray!10}{MR Moderate-severe (\%)} & \cellcolor{gray!10}{25 ( 1.4)} & \cellcolor{gray!10}{11 (1.0)} & \cellcolor{gray!10}{14 ( 2.1)} & \cellcolor{gray!10}{0.086}\\
+Pericarditis (\%) & 12 ( 0.7) & 5 (0.5) & 7 ( 1.1) & 0.231\\
+\cellcolor{gray!10}{Sustained VT (>125 bpm) (\%)} & \cellcolor{gray!10}{16 ( 0.9)} & \cellcolor{gray!10}{8 (0.7)} & \cellcolor{gray!10}{8 ( 1.2)} & \cellcolor{gray!10}{0.434}\\
+VF (\%) & 33 ( 1.9) & 7 (0.6) & 26 ( 3.9) & <0.001\\
+\cellcolor{gray!10}{New AF (\%)} & \cellcolor{gray!10}{59 ( 3.3)} & \cellcolor{gray!10}{36 (3.2)} & \cellcolor{gray!10}{23 ( 3.5)} & \cellcolor{gray!10}{0.919}\\
+High degree (2nd / 3rd) AVB (\%) & 22 ( 1.2) & 10 (0.9) & 12 ( 1.8) & 0.148\\
+\cellcolor{gray!10}{Asystole (\%)} & \cellcolor{gray!10}{13 ( 0.7)} & \cellcolor{gray!10}{7 (0.6)} & \cellcolor{gray!10}{6 ( 0.9)} & \cellcolor{gray!10}{0.719}\\
+TIA (\%) & 4 ( 0.2) & 3 (0.3) & 1 ( 0.2) & 1.000\\
+\cellcolor{gray!10}{Stroke (\%)} & \cellcolor{gray!10}{6 ( 0.3)} & \cellcolor{gray!10}{3 (0.3)} & \cellcolor{gray!10}{3 ( 0.5)} & \cellcolor{gray!10}{0.831}\\
+CVA/TIA in hospital (\%) & 10 ( 0.6) & 6 (0.5) & 4 ( 0.6) & 1.000\\
+\cellcolor{gray!10}{Acute renal injury (\%)} & \cellcolor{gray!10}{72 ( 4.3)} & \cellcolor{gray!10}{46 (4.5)} & \cellcolor{gray!10}{26 ( 4.0)} & \cellcolor{gray!10}{0.786}\\
+Sepsis (\%) & 24 ( 1.4) & 13 (1.3) & 11 ( 1.7) & 0.589\\
+\cellcolor{gray!10}{Bleeding (\%)} & \cellcolor{gray!10}{11 ( 0.7)} & \cellcolor{gray!10}{7 (0.7)} & \cellcolor{gray!10}{4 ( 0.6)} & \cellcolor{gray!10}{1.000}\\
+Minor bleeding (\%) & 9 ( 0.5) & 5 (0.5) & 4 ( 0.6) & 0.980\\
+\cellcolor{gray!10}{Blood transfusions (\%)} & \cellcolor{gray!10}{6 ( 0.4)} & \cellcolor{gray!10}{5 (0.5)} & \cellcolor{gray!10}{1 ( 0.2)} & \cellcolor{gray!10}{0.497}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{1.11 In-Hospital Medical
+Treatment}\label{in-hospital-medical-treatment}
+
+Aspirin, P2Y12 inhibitors, Prasugrel, Ticagrelor, Oral anticoagulants,
+ACE-I, Beta-Blockers, Digoxin, CCB, NSAIDS, Statins, Ezetimbe and
+Antihyperglycemic (only among diabetic patients) were more frequently
+used in patients with STEMI. Clopidogrel was more frequently used among
+patients with non STEMI.
+
+All other recommended drugs were similarly given to both groups.
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-85}Table 1.27: In-Hospital Medical Treatment}
+\centering
+\fontsize{9.5}{11.5}\selectfont
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{6cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{1cm}}
+\toprule
+  & Total & Non STEMI & STEMI & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1136} & \cellcolor{gray!10}{665} & \cellcolor{gray!10}{}\\
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Anti-platelets}}\\
+\hspace{1em}Aspirin ($\%$) & 1412 ( 78.4) & 853 ( 75.1) & 559 ( 84.1) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{P2Y12 inhibitors ($\%$)} & \cellcolor{gray!10}{1237 ( 68.7)} & \cellcolor{gray!10}{703 ( 61.9)} & \cellcolor{gray!10}{534 ( 80.3)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Clopidogrel ($\%$) & 395 ( 21.9) & 304 ( 26.8) & 91 ( 13.7) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{Prasugrel ($\%$)} & \cellcolor{gray!10}{491 ( 27.3)} & \cellcolor{gray!10}{186 ( 16.4)} & \cellcolor{gray!10}{305 ( 45.9)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Ticagrelor ($\%$) & 384 ( 21.3) & 226 ( 19.9) & 158 ( 23.8) & 0.061\\
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Anticoagulants}}\\
+\hspace{1em}\cellcolor{gray!10}{Oral anticoagulants\textsuperscript{1} ($\%$)} & \cellcolor{gray!10}{109 (  6.1)} & \cellcolor{gray!10}{57 (  5.0)} & \cellcolor{gray!10}{52 (  7.8)} & \cellcolor{gray!10}{0.021}\\
+\hspace{1em}Warfarin ($\%$) & 22 (  1.2) & 12 (  1.1) & 10 (  1.5) & 0.541\\
+\hspace{1em}\cellcolor{gray!10}{Dabigatran ($\%$)} & \cellcolor{gray!10}{0 (   0.0)} & \cellcolor{gray!10}{0 (   0.0)} & \cellcolor{gray!10}{0 (   0.0)} & \cellcolor{gray!10}{NA}\\
+\hspace{1em}Rivaroxaban ($\%$) & 10 (  0.6) & 4 (  0.4) & 6 (  0.9) & 0.235\\
+\hspace{1em}\cellcolor{gray!10}{Apixaban ($\%$)} & \cellcolor{gray!10}{81 (  4.5)} & \cellcolor{gray!10}{44 (  3.9)} & \cellcolor{gray!10}{37 (  5.6)} & \cellcolor{gray!10}{0.120}\\
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Other}}\\
+\hspace{1em}ACE-I ($\%$) & 850 ( 76.9) & 706 ( 74.6) & 144 ( 90.0) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{ARB ($\%$)} & \cellcolor{gray!10}{34 (  3.0)} & \cellcolor{gray!10}{31 (  3.2)} & \cellcolor{gray!10}{3 (  1.9)} & \cellcolor{gray!10}{0.486}\\
+\hspace{1em}Spironolactone ($\%$) & 217 ( 12.0) & 139 ( 12.2) & 78 ( 11.7) & 0.807\\
+\hspace{1em}\cellcolor{gray!10}{Beta Blockers ($\%$)} & \cellcolor{gray!10}{787 ( 43.7)} & \cellcolor{gray!10}{413 ( 36.4)} & \cellcolor{gray!10}{374 ( 56.2)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Digoxin ($\%$) & 227 ( 12.6) & 100 (  8.8) & 127 ( 19.1) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{CCB ($\%$)} & \cellcolor{gray!10}{796 ( 44.2)} & \cellcolor{gray!10}{415 ( 36.5)} & \cellcolor{gray!10}{381 ( 57.3)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Amiodarone ($\%$) & 5 (  0.3) & 2 (  0.2) & 3 (  0.5) & 0.544\\
+\hspace{1em}\cellcolor{gray!10}{Other Anti-Arrhythmic ($\%$)} & \cellcolor{gray!10}{148 (  8.2)} & \cellcolor{gray!10}{103 (  9.1)} & \cellcolor{gray!10}{45 (  6.8)} & \cellcolor{gray!10}{0.104}\\
+\hspace{1em}Nitrates ($\%$) & 52 (  2.9) & 28 (  2.5) & 24 (  3.6) & 0.210\\
+\hspace{1em}\cellcolor{gray!10}{Diuretics ($\%$)} & \cellcolor{gray!10}{7 (  0.4)} & \cellcolor{gray!10}{2 (  0.2)} & \cellcolor{gray!10}{5 (  0.8)} & \cellcolor{gray!10}{0.133}\\
+\hspace{1em}Proton-Pump Inhibitors (PPI) ($\%$) & 86 (  4.8) & 60 (  5.3) & 26 (  3.9) & 0.229\\
+\hspace{1em}\cellcolor{gray!10}{H2 Blockers ($\%$)} & \cellcolor{gray!10}{186 ( 10.3)} & \cellcolor{gray!10}{117 ( 10.3)} & \cellcolor{gray!10}{69 ( 10.4)} & \cellcolor{gray!10}{1.000}\\
+\hspace{1em}NSAIDS ($\%$) & 815 ( 45.3) & 450 ( 39.6) & 365 ( 54.9) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{Colchicine ($\%$)} & \cellcolor{gray!10}{20 (  1.1)} & \cellcolor{gray!10}{15 (  1.3)} & \cellcolor{gray!10}{5 (  0.8)} & \cellcolor{gray!10}{0.380}\\
+\hspace{1em}Steroids ($\%$) & 29 (  1.6) & 19 (  1.7) & 10 (  1.5) & 0.936\\
+\hspace{1em}\cellcolor{gray!10}{IV inotropic agent ($\%$)} & \cellcolor{gray!10}{3 (  0.9)} & \cellcolor{gray!10}{1 (  0.4)} & \cellcolor{gray!10}{2 (  1.7)} & \cellcolor{gray!10}{0.568}\\
+\hspace{1em}Antihyperglycemic\textsuperscript{2} ($\%$) & 175 ( 22.2) & 96 ( 17.9) & 79 ( 31.3) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{Statins ($\%$)} & \cellcolor{gray!10}{1033 ( 57.4)} & \cellcolor{gray!10}{576 ( 50.7)} & \cellcolor{gray!10}{457 ( 68.7)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Ezetimibe ($\%$) & 379 ( 21.0) & 194 ( 17.1) & 185 ( 27.8) & <0.001\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}\textsuperscript{1} Oral anticoagulants include warfarin, dabigatran, rivaroxaban and apixaban}\\
+\multicolumn{5}{l}{\rule{0pt}{1em}\textsuperscript{2} Only among diabetic patients}\\
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{1.12 Duration of
+Hospitalization}\label{duration-of-hospitalization}
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-87}Table 1.28: Length of Stay in ICCU/Cardiology and Total Hospital Stay}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{8cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}}
+\toprule
+  & Total & Non STEMI & STEMI\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1136} & \cellcolor{gray!10}{665}\\
+No. of days in ICCU/Cardiology (median [IQR]) & 3  [2 , 4 ] & 3  [2 , 4 ] & 3  [3 , 5 ]\\
+\cellcolor{gray!10}{Total hospital days (median [IQR])} & \cellcolor{gray!10}{3  [2 , 5 ]} & \cellcolor{gray!10}{3  [2 , 4 ]} & \cellcolor{gray!10}{3  [3 , 5 ]}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{1.13 Discharge}\label{discharge}
+
+\subsection{1.13.1 Medical Treatment on
+Discharge}\label{medical-treatment-on-discharge}
+
+Aspirin, P2Y12 inhibitors (mainly prasugrel), ACE-I, Spironolactone,
+beta-blockers, statins and ezetimibe were more often prescribed for
+patients with STEMI and Antihyperglycemic, Glucagon-Like Peptide-1
+receptor agonists (GLP1-RA) were more often prescribed among diabetic
+STEMI patients.\\
+Clopidogrel, CCB, nitrates, diuretics and PPI were prescribed more often
+for patients with non STEMI. All other recommended drugs were similarly
+given to both groups.
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-89}Table 1.29.a: Medical Treatment on Discharge among Hospital Survivors}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{5.8cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{1.2cm}}
+\toprule
+  & Total & Non STEMI & STEMI & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1751} & \cellcolor{gray!10}{1099} & \cellcolor{gray!10}{652} & \cellcolor{gray!10}{}\\
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Anti-platelets}}\\
+\hspace{1em}Aspirin ($\%$) & 1347 ( 76.9) & 819 ( 74.5) & 528 ( 81.0) & 0.002\\
+\hspace{1em}\cellcolor{gray!10}{P2Y12 inhibitors ($\%$)} & \cellcolor{gray!10}{1300 ( 74.2)} & \cellcolor{gray!10}{761 ( 69.2)} & \cellcolor{gray!10}{539 ( 82.7)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Clopidogrel ($\%$) & 403 ( 23.0) & 323 ( 29.4) & 80 ( 12.3) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{Prasugrel ($\%$)} & \cellcolor{gray!10}{514 ( 29.4)} & \cellcolor{gray!10}{206 ( 18.7)} & \cellcolor{gray!10}{308 ( 47.2)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Ticagrelor ($\%$) & 383 ( 21.9) & 232 ( 21.1) & 151 ( 23.2) & 0.346\\
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Anticoagulants}}\\
+\hspace{1em}\cellcolor{gray!10}{Oral anticoagulants\textsuperscript{1} ($\%$)} & \cellcolor{gray!10}{131 (  7.5)} & \cellcolor{gray!10}{84 (  7.6)} & \cellcolor{gray!10}{47 (  7.2)} & \cellcolor{gray!10}{0.810}\\
+\hspace{1em}Warfarin ($\%$) & 8 (  0.5) & 6 (  0.5) & 2 (  0.3) & 0.726\\
+\hspace{1em}\cellcolor{gray!10}{Dabigatran ($\%$)} & \cellcolor{gray!10}{0 (   0.0)} & \cellcolor{gray!10}{0 (   0.0)} & \cellcolor{gray!10}{0 (   0.0)} & \cellcolor{gray!10}{NA}\\
+\hspace{1em}Rivaroxaban ($\%$) & 12 (  0.7) & 7 (  0.6) & 5 (  0.8) & 0.985\\
+\hspace{1em}\cellcolor{gray!10}{Apixaban ($\%$)} & \cellcolor{gray!10}{111 (  6.3)} & \cellcolor{gray!10}{71 (  6.5)} & \cellcolor{gray!10}{40 (  6.1)} & \cellcolor{gray!10}{0.866}\\
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Other}}\\
+\hspace{1em}ACE-I ($\%$) & 759 ( 43.3) & 417 ( 37.9) & 342 ( 52.5) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{ARB ($\%$)} & \cellcolor{gray!10}{344 ( 19.6)} & \cellcolor{gray!10}{231 ( 21.0)} & \cellcolor{gray!10}{113 ( 17.3)} & \cellcolor{gray!10}{0.069}\\
+\hspace{1em}Spironolactone ($\%$) & 257 ( 14.7) & 122 ( 11.1) & 135 ( 20.7) & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{Beta Blockers ($\%$)} & \cellcolor{gray!10}{1072 ( 61.2)} & \cellcolor{gray!10}{623 ( 56.7)} & \cellcolor{gray!10}{449 ( 68.9)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Digoxin ($\%$) & 5 (  0.3) & 2 (  0.2) & 3 (  0.5) & 0.554\\
+\hspace{1em}\cellcolor{gray!10}{CCB ($\%$)} & \cellcolor{gray!10}{257 ( 14.7)} & \cellcolor{gray!10}{194 ( 17.7)} & \cellcolor{gray!10}{63 (  9.7)} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Amiodarone ($\%$) & 52 (  3.0) & 35 (  3.2) & 17 (  2.6) & 0.588\\
+\hspace{1em}\cellcolor{gray!10}{Other Anti-Arrhythmic ($\%$)} & \cellcolor{gray!10}{6 (  0.3)} & \cellcolor{gray!10}{3 (  0.3)} & \cellcolor{gray!10}{3 (  0.5)} & \cellcolor{gray!10}{0.822}\\
+\hspace{1em}Nitrates ($\%$) & 49 (  2.8) & 42 (  3.8) & 7 (  1.1) & 0.001\\
+\hspace{1em}\cellcolor{gray!10}{Diuretics ($\%$)} & \cellcolor{gray!10}{230 ( 13.1)} & \cellcolor{gray!10}{163 ( 14.8)} & \cellcolor{gray!10}{67 ( 10.3)} & \cellcolor{gray!10}{0.008}\\
+\hspace{1em}PPI ($\%$) & 1046 ( 59.7) & 625 ( 56.9) & 421 ( 64.6) & 0.002\\
+\hspace{1em}\cellcolor{gray!10}{H2 Blockers ($\%$)} & \cellcolor{gray!10}{23 (  1.3)} & \cellcolor{gray!10}{18 (  1.6)} & \cellcolor{gray!10}{5 (  0.8)} & \cellcolor{gray!10}{0.183}\\
+\hspace{1em}Colchicine ($\%$) & 34 (  1.9) & 19 (  1.7) & 15 (  2.3) & 0.510\\
+\hspace{1em}\cellcolor{gray!10}{Steroids ($\%$)} & \cellcolor{gray!10}{4 (  1.2)} & \cellcolor{gray!10}{2 (  0.9)} & \cellcolor{gray!10}{2 (  1.8)} & \cellcolor{gray!10}{0.890}\\
+\hspace{1em}Antihyperglycemic\textsuperscript{2} ($\%$) & 315 ( 40.4) & 201 ( 37.7) & 114 ( 46.3) & 0.028\\
+\hspace{1em}\cellcolor{gray!10}{Glucagon-Like Peptide-1 receptor agonists (GLP1-RA)\textsuperscript{2} ($\%$)} & \cellcolor{gray!10}{40 (  5.3)} & \cellcolor{gray!10}{21 (  4.0)} & \cellcolor{gray!10}{19 (  8.4)} & \cellcolor{gray!10}{0.023}\\
+\hspace{1em}Sodium-Glucose Cotransporter-2 (SGLT2) Inhibitors\textsuperscript{2} ($\%$) & 312 ( 17.8) & 186 ( 16.9) & 126 ( 19.3) & 0.228\\
+\hspace{1em}\cellcolor{gray!10}{Statins ($\%$)} & \cellcolor{gray!10}{1426 ( 81.4)} & \cellcolor{gray!10}{878 ( 79.9)} & \cellcolor{gray!10}{548 ( 84.0)} & \cellcolor{gray!10}{0.036}\\
+\hspace{1em}Ezetimibe ($\%$) & 504 ( 28.8) & 289 ( 26.3) & 215 ( 33.0) & 0.003\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}\textsuperscript{1} Oral anticoagulants include warfarin, dabigatran, rivaroxaban and apixaban}\\
+\multicolumn{5}{l}{\rule{0pt}{1em}\textsuperscript{2} Only among diabetic patients}\\
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{1.13.2 Discharge Destination}\label{discharge-destination}
+
+~
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-91}Table 1.29.b: Discharge Destination}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{6cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{3cm}}
+\toprule
+  & Total & Non STEMI & STEMI\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1751} & \cellcolor{gray!10}{1099} & \cellcolor{gray!10}{652}\\
+\addlinespace[0.3em]
+\multicolumn{4}{l}{\textbf{Discharged to:}}\\
+\hspace{1em}Home & 1555 (89.0) & 980 (89.3) & 575 (88.3)\\
+\hspace{1em}\cellcolor{gray!10}{Internal medicine} & \cellcolor{gray!10}{65 ( 3.7)} & \cellcolor{gray!10}{34 ( 3.1)} & \cellcolor{gray!10}{31 ( 4.8)}\\
+\hspace{1em}Cardiothoracic surgery & 75 ( 4.3) & 59 ( 5.4) & 16 ( 2.5)\\
+\hspace{1em}\cellcolor{gray!10}{Other hospital} & \cellcolor{gray!10}{26 ( 1.5)} & \cellcolor{gray!10}{17 ( 1.5)} & \cellcolor{gray!10}{9 ( 1.4)}\\
+\hspace{1em}Other ward & 20 ( 1.1) & 4 ( 0.4) & 16 ( 2.5)\\
+\hspace{1em}\cellcolor{gray!10}{Nursing home} & \cellcolor{gray!10}{7 ( 0.4)} & \cellcolor{gray!10}{3 ( 0.3)} & \cellcolor{gray!10}{4 ( 0.6)}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{1.14 Mortality and Major Adverse Cardiac Event
+(MACE)}\label{mortality-and-major-adverse-cardiac-event-mace}
+
+\subsubsection{1.14.1 Rates of Mortality and MACE by discharge
+diagnosis}\label{rates-of-mortality-and-mace-by-discharge-diagnosis}
+
+7-days mortality was significantly higher for patients with STEMI
+compared to those with non STEMI.\\
+MACE (Major Adverse Cardiac Events), which included recurrent MI or UAP,
+recurrent ischemia, stent thrombosis, ischemic stroke, urgent
+revascularization (follow-up) or death occurring within 30 days from
+hospitalization, was not significantly different in patients with and
+without STEMI. ~
+
+\begin{ThreePartTable}
+\begin{TableNotes}
+\item[1] Definition of MACE includes: recurrent MI, recurrent ischemia, stent thrombosis, ischemic stroke, urgent revascularization (follow-up), UAP or death occurring within 30 days from hospitalization
+\end{TableNotes}
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2cm}}
+\caption{\label{tab:unnamed-chunk-93}Table 1.30: Unadjusted Rates of 7-Day, 30-Day and 1-year mortality, 30-Day MACE\textsuperscript{1}}\\
+\toprule
+  & Total & Non STEMI & STEMI & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{1136} & \cellcolor{gray!10}{665} & \cellcolor{gray!10}{}\\
+In-hospital mortality ($\%$) & 23 (1.3) & 11 (1.0) & 12 (1.8) & 0.210\\
+\cellcolor{gray!10}{7-day mortality ($\%$)} & \cellcolor{gray!10}{18 (1.4)} & \cellcolor{gray!10}{6 (0.8)} & \cellcolor{gray!10}{12 (2.4)} & \cellcolor{gray!10}{0.037}\\
+30-day mortality ($\%$) & 32 (2.7) & 14 (2.0) & 18 (3.7) & 0.109\\
+\cellcolor{gray!10}{MACE\textsuperscript{1} ($\%$)} & \cellcolor{gray!10}{88 (7.3)} & \cellcolor{gray!10}{48 (6.8)} & \cellcolor{gray!10}{40 (8.1)} & \cellcolor{gray!10}{0.427}\\
+\bottomrule
+\insertTableNotes
+\end{longtable}
+\end{ThreePartTable}
+
+~
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-94-1.pdf}
+
+\pagebreak
+
+After adjustment for age and other risk factors, 7-day mortality rates
+were significantly higher for patients with STEMI compared to those with
+non STEMI.
+
+~
+
+\begin{ThreePartTable}
+\begin{TableNotes}
+\item[1] Adjusted for age, gender, past ACS, diabetes, hypertension, killip class $\ge$ 2, any angiography
+\item[2] Definition includes: recurrent MI, recurrent ischemia, stent thrombosis, ischemic stroke, urgent
+revascularization (follow-up) or death occurring within 30 days from hospitalization
+\end{TableNotes}
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{6.5cm}>{\centering\arraybackslash}p{4cm}>{\centering\arraybackslash}p{4cm}}
+\caption{\label{tab:unnamed-chunk-96}Table 1.31: Mortality Rates by Discharge Diagnosis Adjusted for Age and Other Risk Factors}\\
+\toprule
+\multicolumn{1}{c}{ } & \multicolumn{2}{c}{\makecell[c]{Odds Ratio (OR) (STEMI vs. Non STEMI)\\ with 95\% Confidence Intervals (CI)}} \\
+\cmidrule(l{3pt}r{3pt}){2-3}
+  & Age adjusted & Risk factors adjusted\textsuperscript{1}\\
+\midrule
+\cellcolor{gray!10}{In-Hospital} & \cellcolor{gray!10}{1.98 (0.86,4.61)} & \cellcolor{gray!10}{3.31 (0.74,17.66)}\\
+7-Days & 3.13 (1.19,9.1) & 6.04 (1.25,45.01)\\
+\cellcolor{gray!10}{30-Days} & \cellcolor{gray!10}{2.12 (1.04,4.42)} & \cellcolor{gray!10}{4.9 (1.68,16.66)}\\
+MACE\textsuperscript{2} & 1.3 (0.84,2.03) & 1.4 (0.81,2.43)\\
+\bottomrule
+\insertTableNotes
+\end{longtable}
+\end{ThreePartTable}
+
+\pagebreak
+
+\subsubsection{1.14.2 Rates of Mortality and MACE by
+Gender}\label{rates-of-mortality-and-mace-by-gender}
+
+~
+
+\begin{ThreePartTable}
+\begin{TableNotes}
+\item[1] Definition includes: recurrent MI, recurrent ischemia, stent thrombosis, ischemic stroke, urgent
+revascularization (follow-up), UAP or death occurring within 30 days from hospitalization
+\end{TableNotes}
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2cm}}
+\caption{\label{tab:unnamed-chunk-98}Table 1.32: Unadjusted Rates of In-Hospital Mortality, 7-Day Mortality, 30-Day Mortality and 30-Day MACE, by Gender}\\
+\toprule
+  & Total & Women & Men & p-value\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1801} & \cellcolor{gray!10}{339} & \cellcolor{gray!10}{1461} & \cellcolor{gray!10}{}\\
+In-hospital mortality ($\%$) & 23 (1.3) & 5 ( 1.5) & 18 (1.3) & 0.933\\
+\cellcolor{gray!10}{7-day mortality ($\%$)} & \cellcolor{gray!10}{18 (1.4)} & \cellcolor{gray!10}{4 ( 1.7)} & \cellcolor{gray!10}{14 (1.4)} & \cellcolor{gray!10}{0.954}\\
+30-day mortality ($\%$) & 32 (2.7) & 6 ( 2.7) & 26 (2.7) & 1.000\\
+\cellcolor{gray!10}{MACE\textsuperscript{1} ($\%$)} & \cellcolor{gray!10}{88 (7.3)} & \cellcolor{gray!10}{25 (11.0)} & \cellcolor{gray!10}{63 (6.5)} & \cellcolor{gray!10}{0.026}\\
+\bottomrule
+\insertTableNotes
+\end{longtable}
+\end{ThreePartTable}
+
+~
+
+~
+
+~
+
+\begin{ThreePartTable}
+\begin{TableNotes}
+\item[1] Adjusted for age, past ACS, diabetes, hypertension, killip class $\geq$ 2, any angiography
+\item[2] Definition includes: recurrent MI, recurrent ischemia, stent thrombosis, ischemic stroke, urgent revascularization (follow-up), UAP or death occurring within 30 days from hospitalization.
+\end{TableNotes}
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{6.5cm}>{\centering\arraybackslash}p{4.3cm}>{\centering\arraybackslash}p{4.3cm}}
+\caption{\label{tab:unnamed-chunk-99}Table 1.33: Odds Ratios for Mortality and MACE by Gender Adjusted for Age and Other Risk Factors}\\
+\toprule
+\multicolumn{1}{c}{} & \multicolumn{2}{c}{OR (Women vs. Men) with 95\% CI} \\
+\cmidrule(l{3pt}r{3pt}){2-3}
+  & Age Adjusted & Risk factors Adjusted\textsuperscript{1}\\
+\midrule
+\cellcolor{gray!10}{In-Hospital mortality} & \cellcolor{gray!10}{1.06 (0.34,2.74)} & \cellcolor{gray!10}{1.15 (0.16,5.64)}\\
+7-Days mortality & 1.23 (0.34,3.59) & 1.36 (0.18,6.7)\\
+\cellcolor{gray!10}{30-Days mortality} & \cellcolor{gray!10}{0.81 (0.29,1.92)} & \cellcolor{gray!10}{0.32 (0.05,1.26)}\\
+MACE\textsuperscript{2} & 1.63 (0.97,2.67) & 1.42 (0.75,2.59)\\
+\bottomrule
+\insertTableNotes
+\end{longtable}
+\end{ThreePartTable}
+
+\pagebreak
+
+\subsection{1.15 Re-Hospitalization within 90 Days of
+Admission}\label{re-hospitalization-within-90-days-of-admission}
+
+Re-hospitalization rates for patients with STEMI and non STEMI were
+similar. Differences in reasons for re-hospitalization were not
+statistically significant.
+
+~
+
+\begin{ThreePartTable}
+\begin{TableNotes}
+\item[1] Re-hospitalization among hospital survivors
+\end{TableNotes}
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{2cm}}
+\caption{\label{tab:unnamed-chunk-101}Table 1.34: Re-Hospitalization within 90 Days of Admission}\\
+\toprule
+  & Total & Non STEMI & STEMI & p-value\\
+\midrule
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{All patients}}\\
+\hspace{1em}\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1751} & \cellcolor{gray!10}{1099} & \cellcolor{gray!10}{652} & \cellcolor{gray!10}{}\\
+\hspace{1em}Re-hospitalization\textsuperscript{1} ($\%$) & 319 (27.8) & 190 (27.9) & 129 (27.6) & 0.954\\
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Re-hospitalized patients only}}\\
+\hspace{1em}\cellcolor{gray!10}{n} & \cellcolor{gray!10}{320} & \cellcolor{gray!10}{191} & \cellcolor{gray!10}{129} & \cellcolor{gray!10}{}\\
+\hspace{1em}Scheduled ($\%$) & 143 (45.7) & 85 (45.2) & 58 ( 46.4) & 0.928\\
+\hspace{1em}\hspace{2em}\cellcolor{gray!10}{Scheduled due to cardiac reason ($\%$)} & \cellcolor{gray!10}{138 (97.2)} & \cellcolor{gray!10}{81 (95.3)} & \cellcolor{gray!10}{57 (100.0)} & \cellcolor{gray!10}{0.253}\\
+\hspace{1em}Non-Scheduled ($\%$) & 170 (54.3) & 103 (54.8) & 67 ( 53.6) & 0.928\\
+\hspace{1em}\hspace{2em}\cellcolor{gray!10}{Non-Scheduled due to cardiac reason ($\%$)} & \cellcolor{gray!10}{91 (53.5)} & \cellcolor{gray!10}{61 (59.2)} & \cellcolor{gray!10}{30 ( 44.8)} & \cellcolor{gray!10}{0.091}\\
+\bottomrule
+\insertTableNotes
+\end{longtable}
+\end{ThreePartTable}
+
+\begin{verbatim}
+## [1] Telephone      Clinic visit   Medical record
+## Levels: Clinic visit Medical record Telephone
+\end{verbatim}
+
+\pagebreak
+
+\subsection{1.16 Detailed 90-Day Follow-Up Clinical
+Data}\label{detailed-90-day-follow-up-clinical-data}
+
+This is the second time we performed 90 days follow up survey. We
+performed this survey in order to evaluate patient's adherence to
+treatment and life-style changes recommendations.
+
+Ninety-day follow-up were performed for 1168 (65\%) patients. Of which
+644 (55\%) were contacted by phone, 96 (8\%) by clinical visits Most of
+the patients were asymptomatic and in NYHA Class I.
+
+Very few patients were treated with angiotensin receptor-neprilysin
+inhibitors (ARNI'S) or SGLT-2i (non-diabetic). Most of the patients were
+receiving potent statins and only 1\% were on PCSK-9i. For diabetic
+patients, 35\% of patients were receiving SGLT-2 but very few patients
+were on GLP1-RA.
+
+~
+
+\begin{ThreePartTable}
+\begin{TableNotes}
+\item[1] Statins include: Simvastatin, Pravastatin, Atorvastatin, Rosuvastatin
+\end{TableNotes}
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{8cm}>{\centering\arraybackslash}p{6.5cm}}
+\caption{\label{tab:unnamed-chunk-103}Table 1.35: Medical Treatment at 90-Day Follow-Up}\\
+\toprule
+  & Overall\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1168}\\
+Aspirin ($\%$) & 875 ( 79.6)\\
+\cellcolor{gray!10}{Clopidogrel ($\%$)} & \cellcolor{gray!10}{277 ( 25.2)}\\
+Prasugrel ($\%$) & 371 ( 33.8)\\
+\cellcolor{gray!10}{Ticagrelor ($\%$)} & \cellcolor{gray!10}{246 ( 22.4)}\\
+Apixaban ($\%$) & 86 (  7.8)\\
+\cellcolor{gray!10}{Dabigatran ($\%$)} & \cellcolor{gray!10}{1099 (100.0)}\\
+Rivaroxaban ($\%$) & 7 (  0.6)\\
+\cellcolor{gray!10}{Warfarin ($\%$)} & \cellcolor{gray!10}{7 (  0.6)}\\
+Enoxaparin ($\%$) & 14 (  1.3)\\
+\cellcolor{gray!10}{ACE-I ($\%$)} & \cellcolor{gray!10}{480 ( 43.7)}\\
+ARB's ($\%$) & 240 ( 21.8)\\
+\cellcolor{gray!10}{ARNI ($\%$)} & \cellcolor{gray!10}{28 (  2.5)}\\
+Spironolactone ($\%$) & 184 ( 16.7)\\
+\cellcolor{gray!10}{Beta blockers ($\%$)} & \cellcolor{gray!10}{707 ( 64.3)}\\
+Digoxin ($\%$) & 4 (  0.4)\\
+\cellcolor{gray!10}{CCB ($\%$)} & \cellcolor{gray!10}{177 ( 16.1)}\\
+Diuretics ($\%$) & 159 ( 14.5)\\
+\cellcolor{gray!10}{PPI's ($\%$)} & \cellcolor{gray!10}{689 ( 62.7)}\\
+Dapagliflozin (Forxiga) for non diabetic ($\%$) & 37 (  5.8)\\
+\cellcolor{gray!10}{Empagliflozin (Jardiance) for non diabetic ($\%$)} & \cellcolor{gray!10}{34 (  5.3)}\\
+\bottomrule
+\insertTableNotes
+\end{longtable}
+\end{ThreePartTable}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-105}Table 1.36: Diabetes Medications in 90-Day Follow-Up}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{8cm}>{\centering\arraybackslash}p{6.5cm}}
+\toprule
+  & Overall\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{764}\\
+Insulin SC (\%) & 112 ( 24.3)\\
+\cellcolor{gray!10}{Glibenclamide (Gluben) (\%)} & \cellcolor{gray!10}{461 (100.0)}\\
+Glipizide (Gluco-Rite) (\%) & 461 (100.0)\\
+\cellcolor{gray!10}{Glimepiride (Amaryl) (\%)} & \cellcolor{gray!10}{2 (  0.4)}\\
+\addlinespace
+Metformin (Glucophage) (\%) & 127 ( 27.5)\\
+\cellcolor{gray!10}{Sitagliptine (Januvia) (\%)} & \cellcolor{gray!10}{16 (  3.5)}\\
+Saxagliptine (Onglyza) (\%) & 461 (100.0)\\
+\cellcolor{gray!10}{Vidagliptine (Galvus) (\%)} & \cellcolor{gray!10}{3 (  0.7)}\\
+Linagliptine (Trajenta) (\%) & 5 (  1.1)\\
+\addlinespace
+\cellcolor{gray!10}{Exenatide (Byetta, Budyreon) (\%)} & \cellcolor{gray!10}{461 (100.0)}\\
+Liraglutide (Victoza) (\%) & 5 (  1.1)\\
+\cellcolor{gray!10}{Dulaglutide (Trulicity) (\%)} & \cellcolor{gray!10}{28 (  6.1)}\\
+Semaglutide (Ozempic) (\%) & 25 (  5.4)\\
+\cellcolor{gray!10}{Dapagliflozin (Forxiga) (\%)} & \cellcolor{gray!10}{55 ( 11.9)}\\
+\addlinespace
+Empagliflozin (Jardiance) (\%) & 110 ( 23.9)\\
+\cellcolor{gray!10}{Acrabose (Prandase) (\%)} & \cellcolor{gray!10}{461 (100.0)}\\
+Meglinitides (Repaglinide, Novonorm) (\%) & 3 (  0.7)\\
+\cellcolor{gray!10}{TZDs (Pioglitasone - actos, Rosiglitazone - Avandia) (\%)} & \cellcolor{gray!10}{3 (  0.7)}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+~
+
+Concerning life-style modification, 24\% of patients reported to perform
+regular weekly exercise and 39\% patients reported about diet change.
+Smoking cessation was reported in 183 (42\%) of the patients who were
+active smokers during the index hospitalization.
+
+Despite the recommendation for cardiac rehabilitation programs, only
+39\% of patients were actively participating or scheduled. \pagebreak
+
+\section{Chapter 2: Temporal Trends
+2010-2021}\label{chapter-2-temporal-trends-2010-2021}
+
+\hfill\break
+
+\subsection{Temporal Trends in Characteristics, Management, and Outcome
+of Patients with ACS in Cardiology:
+2010-2021}\label{temporal-trends-in-characteristics-management-and-outcome-of-patients-with-acs-in-cardiology-2010-2021}
+
+\hfill\break
+
+\subsection{2.1 Patients'
+Characteristics}\label{patients-characteristics}
+
+\hfill\break
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-111}Table 2.1: Patients' Characteristics}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{3cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{1cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & p for trend\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1779} & \cellcolor{gray!10}{1885} & \cellcolor{gray!10}{1791} & \cellcolor{gray!10}{1778} & \cellcolor{gray!10}{1750} & \cellcolor{gray!10}{}\\
+Gender (Male) ($\%$) & 1378 (77.5) & 1453 (77.1) & 1414 (79.0) & 1427 (80.3) & 1391 (79.5) & <0.001\\
+\cellcolor{gray!10}{Age ($\%$)} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{0.01}\\
+\hspace{1em}$\leq$ 50 & 272 (15.3) & 297 (15.8) & 246 (13.7) & 260 (14.6) & 244 (13.9) & \\
+\hspace{1em}\cellcolor{gray!10}{50-75} & \cellcolor{gray!10}{1158 (65.1)} & \cellcolor{gray!10}{1195 (63.4)} & \cellcolor{gray!10}{1162 (64.9)} & \cellcolor{gray!10}{1158 (65.2)} & \cellcolor{gray!10}{1200 (68.6)} & \cellcolor{gray!10}{}\\
+\hspace{1em}> 75 & 349 (19.6) & 393 (20.8) & 382 (21.3) & 357 (20.1) & 306 (17.5) & \\
+\cellcolor{gray!10}{Age (mean (sd))} & \cellcolor{gray!10}{63.64 (12.67)} & \cellcolor{gray!10}{63.97 (12.91)} & \cellcolor{gray!10}{64.67 (12.82)} & \cellcolor{gray!10}{64.28 (12.69)} & \cellcolor{gray!10}{64.20 (12.31)} & \cellcolor{gray!10}{0.011}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{2.2 Cardiovascular (CV) History and Risk
+Factors}\label{cardiovascular-cv-history-and-risk-factors}
+
+\hfill\break
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-113}Table 2.2.a: Cardiovascular History and Risk Factors}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & p for trend\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1779} & \cellcolor{gray!10}{1885} & \cellcolor{gray!10}{1791} & \cellcolor{gray!10}{1778} & \cellcolor{gray!10}{1750} & \cellcolor{gray!10}{}\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\textbf{CV history}}\\
+\hspace{1em}MI (\%) & 32.0 & 30.4 & 37.2 & 38.8 & 37.3 & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{Prior PCI (\%)} & \cellcolor{gray!10}{33.8} & \cellcolor{gray!10}{34.2} & \cellcolor{gray!10}{33.4} & \cellcolor{gray!10}{35.2} & \cellcolor{gray!10}{34.9} & \cellcolor{gray!10}{0.104}\\
+\hspace{1em}CABG (\%) & 10.0 & 9.1 & 8.8 & 9.1 & 7.3 & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{CHF (\%)} & \cellcolor{gray!10}{8.5} & \cellcolor{gray!10}{7.9} & \cellcolor{gray!10}{6.7} & \cellcolor{gray!10}{10.4} & \cellcolor{gray!10}{7.1} & \cellcolor{gray!10}{0.577}\\
+\hspace{1em}Stroke/TIA (\%) & 8.2 & 8.4 & 8.2 & 9.2 & 8.8 & 0.196\\
+\hspace{1em}\cellcolor{gray!10}{Chronic renal failure (\%)} & \cellcolor{gray!10}{12.0} & \cellcolor{gray!10}{12.6} & \cellcolor{gray!10}{11.4} & \cellcolor{gray!10}{11.4} & \cellcolor{gray!10}{10.5} & \cellcolor{gray!10}{0.024}\\
+\hspace{1em}Peripheral Vascular Disease (PVD) (\%) & 8.2 & 7.1 & 6.0 & 7.8 & 7.3 & 0.073\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\textbf{Risk factors}}\\
+\hspace{1em}\cellcolor{gray!10}{Hypertension (\%)} & \cellcolor{gray!10}{66.0} & \cellcolor{gray!10}{66.1} & \cellcolor{gray!10}{64.7} & \cellcolor{gray!10}{67.3} & \cellcolor{gray!10}{63.4} & \cellcolor{gray!10}{0.403}\\
+\hspace{1em}Diabetes (\%) & 38.0 & 39.1 & 41.5 & 41.8 & 42.4 & <0.001\\
+\hspace{1em}\cellcolor{gray!10}{Dyslipidemia (\%)} & \cellcolor{gray!10}{75.3} & \cellcolor{gray!10}{75.9} & \cellcolor{gray!10}{72.7} & \cellcolor{gray!10}{71.0} & \cellcolor{gray!10}{70.4} & \cellcolor{gray!10}{0.096}\\
+\hspace{1em}Current smoker (\%) & 38.4 & 39.3 & 38.5 & 43.0 & 41.3 & 0.152\\
+\hspace{1em}\cellcolor{gray!10}{Past smoker (\%)} & \cellcolor{gray!10}{24.7} & \cellcolor{gray!10}{20.6} & \cellcolor{gray!10}{21.1} & \cellcolor{gray!10}{18.7} & \cellcolor{gray!10}{18.9} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Family History of CAD (\%) & 31.2 & 28.8 & 33.4 & 34.0 & 28.9 & 0.806\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-114}Table 2.2.b: Prior Chronic Treatment}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{5cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.3cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & p for trend\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1779} & \cellcolor{gray!10}{1885} & \cellcolor{gray!10}{1791} & \cellcolor{gray!10}{1778} & \cellcolor{gray!10}{1750} & \cellcolor{gray!10}{}\\
+Aspirin (\%) & 49.7 & 49.5 & 44.9 & 41.2 & 39.3 & <0.001\\
+\cellcolor{gray!10}{P2Y12 inhibitors (\%)} & \cellcolor{gray!10}{12.8} & \cellcolor{gray!10}{14.9} & \cellcolor{gray!10}{13.5} & \cellcolor{gray!10}{14.7} & \cellcolor{gray!10}{12.0} & \cellcolor{gray!10}{<0.001}\\
+Clopidogrel (\%) & 25.2 & 22.9 & 16.4 & 16.6 & 10.5 & <0.001\\
+\cellcolor{gray!10}{Prasugrel (\%)} & \cellcolor{gray!10}{0.0} & \cellcolor{gray!10}{1.0} & \cellcolor{gray!10}{1.3} & \cellcolor{gray!10}{1.1} & \cellcolor{gray!10}{1.5} & \cellcolor{gray!10}{<0.001}\\
+Ticagrelor  (\%) & 0.0 & 0.5 & 1.5 & 3.0 & 1.7 & <0.001\\
+\cellcolor{gray!10}{Beta Blockers (\%)} & \cellcolor{gray!10}{38.9} & \cellcolor{gray!10}{37.1} & \cellcolor{gray!10}{34.8} & \cellcolor{gray!10}{31.2} & \cellcolor{gray!10}{28.6} & \cellcolor{gray!10}{<0.001}\\
+ACE-I/ARB (\%) & 42.5 & 41.7 & 42.2 & 38.3 & 35.5 & <0.001\\
+\cellcolor{gray!10}{Statins (\%)} & \cellcolor{gray!10}{52.7} & \cellcolor{gray!10}{51.2} & \cellcolor{gray!10}{50.7} & \cellcolor{gray!10}{42.4} & \cellcolor{gray!10}{41.1} & \cellcolor{gray!10}{<0.001}\\
+Lipid Lowering Drugs (LLDs) (\%) & 53.5 & 51.8 & 50.7 & 43.0 & 41.5 & <0.001\\
+\cellcolor{gray!10}{Digoxin (\%)} & \cellcolor{gray!10}{0.7} & \cellcolor{gray!10}{0.7} & \cellcolor{gray!10}{0.3} & \cellcolor{gray!10}{0.2} & \cellcolor{gray!10}{0.2} & \cellcolor{gray!10}{<0.001}\\
+Diuretic (\%) & 18.4 & 15.6 & 13.5 & 10.7 & 6.6 & <0.001\\
+\cellcolor{gray!10}{Nitrates (\%)} & \cellcolor{gray!10}{7.8} & \cellcolor{gray!10}{5.5} & \cellcolor{gray!10}{3.7} & \cellcolor{gray!10}{3.5} & \cellcolor{gray!10}{1.1} & \cellcolor{gray!10}{<0.001}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hfill\break
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-115-1.pdf}
+
+\pagebreak
+
+\subsection{2.3 Admission Information}\label{admission-information}
+
+\subsubsection{2.3.1 Initial Ward of
+Hospitalization}\label{initial-ward-of-hospitalization}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-117}Table 2.3: Initial Ward of Hospitalization}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}c}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & 2024\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1779} & \cellcolor{gray!10}{1885} & \cellcolor{gray!10}{1791} & \cellcolor{gray!10}{1778} & \cellcolor{gray!10}{1750} & \cellcolor{gray!10}{1755}\\
+Ward (\%) &  &  &  &  &  & \\
+\hspace{1em}\cellcolor{gray!10}{Cardiology/ICCU} & \cellcolor{gray!10}{89.0} & \cellcolor{gray!10}{84.8} & \cellcolor{gray!10}{86.8} & \cellcolor{gray!10}{86.4} & \cellcolor{gray!10}{88.3} & \cellcolor{gray!10}{91.0}\\
+\hspace{1em}Internal Medicine & 9.4 & 13.5 & 12.3 & 12.4 & 10.5 & 0.0\\
+\hspace{1em}\cellcolor{gray!10}{internal Medicine Ward} & \cellcolor{gray!10}{0.0} & \cellcolor{gray!10}{0.0} & \cellcolor{gray!10}{0.0} & \cellcolor{gray!10}{0.0} & \cellcolor{gray!10}{0.0} & \cellcolor{gray!10}{8.3}\\
+Other & 1.5 & 1.8 & 0.9 & 1.1 & 1.2 & 0.7\\
+\bottomrule
+\multicolumn{7}{l}{\rule{0pt}{1em}p for trend 0.272}\\
+\end{tabular}
+\end{table}
+
+\subsubsection{2.3.2.a ECG on Admission}\label{a-ecg-on-admission}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-119}Table 2.4: ECG on Admission}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1779} & \cellcolor{gray!10}{1885} & \cellcolor{gray!10}{1791} & \cellcolor{gray!10}{1778} & \cellcolor{gray!10}{1750}\\
+ST elevation & 43.6 & 39.7 & 39.8 & 39.7 & 40.3\\
+\cellcolor{gray!10}{Non ST elevation} & \cellcolor{gray!10}{56.4} & \cellcolor{gray!10}{60.3} & \cellcolor{gray!10}{60.2} & \cellcolor{gray!10}{60.3} & \cellcolor{gray!10}{59.7}\\
+\bottomrule
+\multicolumn{6}{l}{\rule{0pt}{1em}p for trend 0.023}\\
+\end{tabular}
+\end{table}
+
+\subsubsection{2.3.2.b Diagnosis at
+Discharge}\label{b-diagnosis-at-discharge}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-121}Table 2.5: Diagnosis at Discharge}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1779} & \cellcolor{gray!10}{1885} & \cellcolor{gray!10}{1791} & \cellcolor{gray!10}{1778} & \cellcolor{gray!10}{1750}\\
+Non STEMI & 57.3 & 61.4 & 60.5 & 61.2 & 60.0\\
+\cellcolor{gray!10}{STEMI} & \cellcolor{gray!10}{42.7} & \cellcolor{gray!10}{38.6} & \cellcolor{gray!10}{39.5} & \cellcolor{gray!10}{38.8} & \cellcolor{gray!10}{40.0}\\
+\bottomrule
+\multicolumn{6}{l}{\rule{0pt}{1em}p for trend 0.036}\\
+\end{tabular}
+\end{table}
+
+\subsubsection{2.3.3 Killip Class on
+Admission}\label{killip-class-on-admission}
+
+\begin{verbatim}
+## [1] 2010 2013 2016 2018 2021 2024
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 1    4    2    3    <NA>
+## Levels: 1 2 3 4
+\end{verbatim}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-122}Table 2.6: Killip Class on Admission}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1779} & \cellcolor{gray!10}{1885} & \cellcolor{gray!10}{1791} & \cellcolor{gray!10}{1778} & \cellcolor{gray!10}{1750}\\
+Killip class (\%) &  &  &  &  & \\
+\hspace{1em}\cellcolor{gray!10}{1} & \cellcolor{gray!10}{87.2} & \cellcolor{gray!10}{87.6} & \cellcolor{gray!10}{90.5} & \cellcolor{gray!10}{87.4} & \cellcolor{gray!10}{85.2}\\
+\hspace{1em}2 & 6.7 & 7.1 & 5.6 & 6.8 & 10.0\\
+\hspace{1em}\cellcolor{gray!10}{3} & \cellcolor{gray!10}{4.3} & \cellcolor{gray!10}{3.3} & \cellcolor{gray!10}{2.5} & \cellcolor{gray!10}{3.7} & \cellcolor{gray!10}{3.0}\\
+\hspace{1em}4 & 1.8 & 1.9 & 1.4 & 2.1 & 1.7\\
+\bottomrule
+\multicolumn{6}{l}{\rule{0pt}{1em}p for trend 0.02}\\
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{2.4 Primary Reperfusion Therapy in Patients with ST
+elevation}\label{primary-reperfusion-therapy-in-patients-with-st-elevation}
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-123-1.pdf}
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-124-1.pdf}
+
+\pagebreak
+
+\subsubsection{2.4.1 Primary PCI / Coronary
+Angiography}\label{primary-pci-coronary-angiography-1}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-126}Table 2.7.1: Vascular access during Primary Reperfusion}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{555} & \cellcolor{gray!10}{596} & \cellcolor{gray!10}{603} & \cellcolor{gray!10}{574} & \cellcolor{gray!10}{635}\\
+Vascular access, n (\%): &  &  &  &  & \\
+\hspace{1em}\cellcolor{gray!10}{Femoral} & \cellcolor{gray!10}{374 (72.3)} & \cellcolor{gray!10}{225 (39.5)} & \cellcolor{gray!10}{126 (21.6)} & \cellcolor{gray!10}{113 (20.2)} & \cellcolor{gray!10}{89 (14.4)}\\
+\hspace{1em}Radial & 143 (27.7) & 345 (60.5) & 449 (76.9) & 437 (78.2) & 519 (83.8)\\
+\hspace{1em}\cellcolor{gray!10}{Both} & \cellcolor{gray!10}{0 ( 0.0)} & \cellcolor{gray!10}{0 ( 0.0)} & \cellcolor{gray!10}{9 ( 1.5)} & \cellcolor{gray!10}{9 ( 1.6)} & \cellcolor{gray!10}{11 ( 1.8)}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{\texorpdfstring{2.4.2 Coronary angiography
+(\textbf{\emph{excluding}} \emph{primary
+PCI})}{2.4.2 Coronary angiography (excluding primary PCI)}}\label{coronary-angiography-excluding-primary-pci-1}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-128}Table 2.7.2: Vascular access during coronary angiography}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021\\
+\midrule
+\cellcolor{gray!10}{n (excluding primary PCI)} & \cellcolor{gray!10}{1260} & \cellcolor{gray!10}{1317} & \cellcolor{gray!10}{1226} & \cellcolor{gray!10}{1229} & \cellcolor{gray!10}{1048}\\
+Coronary angiography, n (\%) & 1057 (84.0) & 1080 (82.1) & 1079 (88.2) & 1093 (88.9) & 913 (87.2)\\
+\hspace{1em}\cellcolor{gray!10}{Vascular access, n (\%):} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{}\\
+\hspace{1em}\hspace{1em}Femoral & 0 (NaN) & 0 (NaN) & 176 (16.4) & 91 (11.5) & 79 ( 8.8)\\
+\hspace{1em}\hspace{1em}\cellcolor{gray!10}{Radial} & \cellcolor{gray!10}{0 (NaN)} & \cellcolor{gray!10}{0 (NaN)} & \cellcolor{gray!10}{882 (82.0)} & \cellcolor{gray!10}{679 (85.5)} & \cellcolor{gray!10}{811 (90.1)}\\
+\hspace{1em}\hspace{1em}Both & 0 (NaN) & 0 (NaN) & 18 ( 1.7) & 24 ( 3.0) & 10 ( 1.1)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{2.5 Time Intervals in STEMI
+Patients}\label{time-intervals-in-stemi-patients}
+
+\hfill\break
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-129}Table 2.8.1: Primary reperfusion among STEMI patients}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{6cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}c}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & 2024\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{760} & \cellcolor{gray!10}{727} & \cellcolor{gray!10}{708} & \cellcolor{gray!10}{690} & \cellcolor{gray!10}{700} & \cellcolor{gray!10}{665}\\
+Primary reperfusion, n (\%) & 540 (71.1) & 573 (78.8) & 582 (82.2) & 550 (79.7) & 635 (90.7) & 582 (87.5)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-130}Table 2.8.2: Time Intervals in STEMI reperfused patients in PPCI (minutes)}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{3.8cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{1cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & p for trend\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{503} & \cellcolor{gray!10}{536} & \cellcolor{gray!10}{544} & \cellcolor{gray!10}{526} & \cellcolor{gray!10}{610} & \cellcolor{gray!10}{}\\
+Symptom onset to ED arrival (median [IQR]) & 111.00 [68.50, 213.50] & 129.00 [74.00, 242.25] & 117.00 [70.00, 195.00] & 120.00 [75.00, 212.00] & 121.50 [71.00, 324.75] & 0.005\\
+\cellcolor{gray!10}{ED arrival to primary PCI (door to balloon) (median [IQR])} & \cellcolor{gray!10}{65.00 [36.50, 109.50]} & \cellcolor{gray!10}{66.00 [35.00, 101.00]} & \cellcolor{gray!10}{50.00 [25.25, 84.75]} & \cellcolor{gray!10}{48.00 [25.25, 79.00]} & \cellcolor{gray!10}{39.00 [14.00, 74.25]} & \cellcolor{gray!10}{<0.001}\\
+Onset to balloon  (median [IQR]) & 195.00 [130.00, 331.00] & 196.50 [140.00, 350.00] & 170.00 [120.00, 287.00] & 178.00 [120.00, 277.50] & 175.00 [104.00, 422.00] & 0.336\\
+\cellcolor{gray!10}{Door to balloon $\leq$ 90 min. ($\%$)} & \cellcolor{gray!10}{326 (66.9)} & \cellcolor{gray!10}{345 (70.6)} & \cellcolor{gray!10}{406 (79.0)} & \cellcolor{gray!10}{367 (82.3)} & \cellcolor{gray!10}{456 (82.0)} & \cellcolor{gray!10}{<0.001}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-133}Table 2.9: Time Intervals (minutes) in STEMI reperfused patient in PPCI, by gender}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{1.7cm}>{\centering\arraybackslash}p{1.7cm}>{\centering\arraybackslash}p{1.7cm}>{\centering\arraybackslash}p{1.7cm}>{\centering\arraybackslash}p{1.7cm}>{\centering\arraybackslash}p{1cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & p for trend\\
+\midrule
+\addlinespace[1em]
+\multicolumn{7}{l}{\textbf{Men}}\\
+\hline
+\hspace{1em}\cellcolor{gray!10}{n} & \cellcolor{gray!10}{409} & \cellcolor{gray!10}{449} & \cellcolor{gray!10}{440} & \cellcolor{gray!10}{442} & \cellcolor{gray!10}{501} & \cellcolor{gray!10}{}\\
+\hspace{1em}Symptom onset to ED arrival (median [IQR]) & 110.00 [66.00, 210.00] & 126.00 [70.00, 239.00] & 117.00 [65.00, 191.00] & 119.50 [70.75, 214.00] & 119.50 [68.00, 297.50] & 0.016\\
+\hspace{1em}\cellcolor{gray!10}{ED arrival to primary PCI (door to balloon)  (median [IQR])} & \cellcolor{gray!10}{64.00 [36.00, 101.00]} & \cellcolor{gray!10}{66.00 [35.00, 101.50]} & \cellcolor{gray!10}{49.00 [25.00, 83.00]} & \cellcolor{gray!10}{46.50 [25.00, 73.00]} & \cellcolor{gray!10}{36.00 [11.25, 71.75]} & \cellcolor{gray!10}{<0.001}\\
+\hspace{1em}Onset to balloon  (median [IQR]) & 188.00 [124.75, 322.25] & 195.00 [135.00, 345.00] & 165.00 [115.00, 270.00] & 172.00 [116.00, 269.75] & 166.00 [100.00, 375.50] & 0.666\\
+\addlinespace[1em]
+\multicolumn{7}{l}{\textbf{Women}}\\
+\hline
+\hspace{1em}\cellcolor{gray!10}{n} & \cellcolor{gray!10}{94} & \cellcolor{gray!10}{87} & \cellcolor{gray!10}{104} & \cellcolor{gray!10}{84} & \cellcolor{gray!10}{109} & \cellcolor{gray!10}{}\\
+\hspace{1em}Symptom onset to ED arrival (median [IQR]) & 127.00 [86.00, 240.00] & 147.00 [87.00, 330.00] & 118.00 [91.00, 227.75] & 125.00 [79.00, 200.00] & 162.50 [91.75, 411.25] & 0.139\\
+\hspace{1em}\cellcolor{gray!10}{ED arrival to primary PCI (door to balloon)  (median [IQR])} & \cellcolor{gray!10}{78.50 [40.00, 133.50]} & \cellcolor{gray!10}{62.00 [30.75, 98.25]} & \cellcolor{gray!10}{58.50 [29.25, 92.00]} & \cellcolor{gray!10}{58.00 [28.00, 104.00]} & \cellcolor{gray!10}{50.50 [19.25, 85.00]} & \cellcolor{gray!10}{0.002}\\
+\hspace{1em}Onset to balloon  (median [IQR]) & 249.00 [154.00, 369.00] & 212.00 [152.00, 385.00] & 188.00 [144.00, 385.00] & 190.00 [150.00, 300.00] & 227.00 [137.00, 549.75] & 0.217\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{2.6 Procedures during
+Hospitalization}\label{procedures-during-hospitalization}
+
+\hfill\break
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-134}Table 2.10 Procedures during Hospitalization}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4.3cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & p for trend\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1779} & \cellcolor{gray!10}{1885} & \cellcolor{gray!10}{1791} & \cellcolor{gray!10}{1778} & \cellcolor{gray!10}{1750} & \cellcolor{gray!10}{}\\
+Coronary Angiography (\%) & 89.7 & 88.9 & 93.3 & 93.1 & 94.5 & <0.001\\
+\cellcolor{gray!10}{Any PCI (\%)} & \cellcolor{gray!10}{71.3} & \cellcolor{gray!10}{69.2} & \cellcolor{gray!10}{72.0} & \cellcolor{gray!10}{63.6} & \cellcolor{gray!10}{78.9} & \cellcolor{gray!10}{<0.001}\\
+Stent (\%) & 90.8 & 91.9 & 94.0 & 95.2 & 93.9 & 0.101\\
+\cellcolor{gray!10}{CABG (\%)} & \cellcolor{gray!10}{1.7} & \cellcolor{gray!10}{4.7} & \cellcolor{gray!10}{3.5} & \cellcolor{gray!10}{3.5} & \cellcolor{gray!10}{6.7} & \cellcolor{gray!10}{<0.001}\\
+IABP (\%) & 4.6 & 2.3 & 2.2 & 2.0 & 1.9 & <0.001\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hfill\break
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-135-1.pdf}
+
+\pagebreak
+
+\subsection{2.7 In-Hospital
+Complications}\label{in-hospital-complications-1}
+
+\hfill\break
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-136}Table 2.11: In-Hospital Complications}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{5.5cm}>{\centering\arraybackslash}p{1.35cm}>{\centering\arraybackslash}p{1.35cm}>{\centering\arraybackslash}p{1.35cm}>{\centering\arraybackslash}p{1.35cm}>{\centering\arraybackslash}p{1.35cm}>{\centering\arraybackslash}p{1.35cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & p for trend\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1779} & \cellcolor{gray!10}{1885} & \cellcolor{gray!10}{1791} & \cellcolor{gray!10}{1778} & \cellcolor{gray!10}{1750} & \cellcolor{gray!10}{}\\
+Re-MI ($\%$) & 1.1 & 1.0 & 0.5 & 0.6 & 1.1 & 0.407\\
+\cellcolor{gray!10}{Post MI angina/Re-ischemia ($\%$)} & \cellcolor{gray!10}{2.0} & \cellcolor{gray!10}{2.0} & \cellcolor{gray!10}{1.3} & \cellcolor{gray!10}{1.2} & \cellcolor{gray!10}{1.3} & \cellcolor{gray!10}{0.003}\\
+Sub-Acute Stent Thrombosis ($\%$) & 0.6 & 0.8 & 0.7 & 0.3 & 0.6 & 0.694\\
+\cellcolor{gray!10}{Mild-moderate CHF (Killip 2) ($\%$)} & \cellcolor{gray!10}{7.8} & \cellcolor{gray!10}{6.1} & \cellcolor{gray!10}{5.9} & \cellcolor{gray!10}{7.4} & \cellcolor{gray!10}{8.5} & \cellcolor{gray!10}{<0.001}\\
+Pulmonary edema (Killip 3) ($\%$) & 4.9 & 4.4 & 3.1 & 3.3 & 3.7 & 0.012\\
+\cellcolor{gray!10}{Cardiogenic shock (Killip 4) ($\%$)} & \cellcolor{gray!10}{3.1} & \cellcolor{gray!10}{3.3} & \cellcolor{gray!10}{2.0} & \cellcolor{gray!10}{3.1} & \cellcolor{gray!10}{3.2} & \cellcolor{gray!10}{0.44}\\
+Free wall rupture ($\%$) & 0.1 & 0.1 & 0.2 & 0.1 & 0.2 & 0.392\\
+\cellcolor{gray!10}{Tamponade ($\%$)} & \cellcolor{gray!10}{0.3} & \cellcolor{gray!10}{0.0} & \cellcolor{gray!10}{0.2} & \cellcolor{gray!10}{0.2} & \cellcolor{gray!10}{0.4} & \cellcolor{gray!10}{0.882}\\
+Moderate-severe MR ($\%$) & 1.7 & 2.1 & 1.1 & 0.8 & 1.8 & 0.275\\
+\cellcolor{gray!10}{Sustained VT ($\%$)} & \cellcolor{gray!10}{1.3} & \cellcolor{gray!10}{1.3} & \cellcolor{gray!10}{1.1} & \cellcolor{gray!10}{1.1} & \cellcolor{gray!10}{1.3} & \cellcolor{gray!10}{0.381}\\
+High degree (2nd / 3rd) AVB ($\%$) & 2.1 & 1.5 & 1.4 & 1.5 & 1.0 & 0.016\\
+\cellcolor{gray!10}{Primary VF ($\%$)} & \cellcolor{gray!10}{1.9} & \cellcolor{gray!10}{1.2} & \cellcolor{gray!10}{1.3} & \cellcolor{gray!10}{1.3} & \cellcolor{gray!10}{1.4} & \cellcolor{gray!10}{0.257}\\
+Secondary VF ($\%$) & 0.6 & 0.5 & 0.6 & 0.5 & 0.7 & 0.709\\
+\cellcolor{gray!10}{Asystole ($\%$)} & \cellcolor{gray!10}{1.9} & \cellcolor{gray!10}{1.9} & \cellcolor{gray!10}{1.3} & \cellcolor{gray!10}{2.0} & \cellcolor{gray!10}{1.9} & \cellcolor{gray!10}{0.058}\\
+TIA ($\%$) & 0.1 & 0.2 & 0.1 & 0.3 & 0.2 & 0.205\\
+\cellcolor{gray!10}{Stroke ($\%$)} & \cellcolor{gray!10}{0.5} & \cellcolor{gray!10}{0.6} & \cellcolor{gray!10}{0.5} & \cellcolor{gray!10}{0.5} & \cellcolor{gray!10}{0.3} & \cellcolor{gray!10}{0.24}\\
+Acute renal injury ($\%$) & 6.1 & 4.6 & 5.1 & 4.9 & 6.7 & 0.662\\
+\cellcolor{gray!10}{Bleeding ($\%$)} & \cellcolor{gray!10}{2.4} & \cellcolor{gray!10}{0.9} & \cellcolor{gray!10}{1.8} & \cellcolor{gray!10}{2.8} & \cellcolor{gray!10}{2.3} & \cellcolor{gray!10}{0.294}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pagebreak
+
+\subsection{2.8 In-Hospital Treatment}\label{in-hospital-treatment}
+
+\hfill\break
+
+\begin{ThreePartTable}
+\begin{TableNotes}
+\item[1] Anticoagulants include warfarin, LMWH and DOACs in the years applicable
+\end{TableNotes}
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}}
+\caption{\label{tab:unnamed-chunk-137}Table 2.12: In-Hospital Treatment}\\
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & p for trend\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1779} & \cellcolor{gray!10}{1885} & \cellcolor{gray!10}{1791} & \cellcolor{gray!10}{1778} & \cellcolor{gray!10}{1750} & \cellcolor{gray!10}{}\\
+Aspirin ($\%$) & 98.2 & 97.8 & 97.3 & 94.2 & 92.5 & <0.001\\
+\cellcolor{gray!10}{P2Y12 inhibitors ($\%$)} & \cellcolor{gray!10}{95.5} & \cellcolor{gray!10}{93.9} & \cellcolor{gray!10}{92.1} & \cellcolor{gray!10}{90.9} & \cellcolor{gray!10}{88.7} & \cellcolor{gray!10}{<0.001}\\
+Clopidogrel ($\%$) & 94.9 & 45.4 & 31.6 & 26.7 & 25.3 & <0.001\\
+\cellcolor{gray!10}{Prasugrel ($\%$)} & \cellcolor{gray!10}{0.3} & \cellcolor{gray!10}{30.1} & \cellcolor{gray!10}{25.6} & \cellcolor{gray!10}{19.5} & \cellcolor{gray!10}{26.9} & \cellcolor{gray!10}{<0.001}\\
+Ticagrelor  ($\%$) & 0.3 & 18.4 & 35.0 & 44.7 & 36.6 & <0.001\\
+\cellcolor{gray!10}{Beta Blockers ($\%$)} & \cellcolor{gray!10}{98.2} & \cellcolor{gray!10}{97.8} & \cellcolor{gray!10}{97.3} & \cellcolor{gray!10}{94.2} & \cellcolor{gray!10}{92.5} & \cellcolor{gray!10}{<0.001}\\
+ACE-I/ARB ($\%$) & 95.5 & 93.9 & 92.1 & 90.9 & 88.7 & <0.001\\
+\cellcolor{gray!10}{Statins ($\%$)} & \cellcolor{gray!10}{94.9} & \cellcolor{gray!10}{45.4} & \cellcolor{gray!10}{31.6} & \cellcolor{gray!10}{26.7} & \cellcolor{gray!10}{25.3} & \cellcolor{gray!10}{<0.001}\\
+LLDs ($\%$) & 0.3 & 30.1 & 25.6 & 19.5 & 26.9 & <0.001\\
+\cellcolor{gray!10}{Digoxin ($\%$)} & \cellcolor{gray!10}{0.3} & \cellcolor{gray!10}{18.4} & \cellcolor{gray!10}{35.0} & \cellcolor{gray!10}{44.7} & \cellcolor{gray!10}{36.6} & \cellcolor{gray!10}{<0.001}\\
+Diuretic ($\%$) & 98.2 & 97.8 & 97.3 & 94.2 & 92.5 & <0.001\\
+\cellcolor{gray!10}{Nitrates ($\%$)} & \cellcolor{gray!10}{95.5} & \cellcolor{gray!10}{93.9} & \cellcolor{gray!10}{92.1} & \cellcolor{gray!10}{90.9} & \cellcolor{gray!10}{88.7} & \cellcolor{gray!10}{<0.001}\\
+\bottomrule
+\insertTableNotes
+\end{longtable}
+\end{ThreePartTable}
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-138-1.pdf}
+
+\pagebreak
+
+\subsection{2.9 Medical Treatment on
+Discharge}\label{medical-treatment-on-discharge-1}
+
+\hfill\break
+
+\begin{ThreePartTable}
+\begin{TableNotes}
+\item[1] Only among diabetic patients
+\item[2] Anticoagulants include warfarin, LMWH and DOACs in the years applicable
+\end{TableNotes}
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}}
+\caption{\label{tab:unnamed-chunk-139}Table 2.13: Medical Treatment on Discharge among Hospital Survivors}\\
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & p for trend\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1741} & \cellcolor{gray!10}{1848} & \cellcolor{gray!10}{1761} & \cellcolor{gray!10}{1726} & \cellcolor{gray!10}{1709} & \cellcolor{gray!10}{}\\
+Aspirin ($\%$) & 96.7 & 95.5 & 95.0 & 95.0 & 90.6 & <0.001\\
+\cellcolor{gray!10}{Beta Blockers ($\%$)} & \cellcolor{gray!10}{82.0} & \cellcolor{gray!10}{78.4} & \cellcolor{gray!10}{76.1} & \cellcolor{gray!10}{73.6} & \cellcolor{gray!10}{74.0} & \cellcolor{gray!10}{<0.001}\\
+P2Y12 inhibitors ($\%$) & 86.5 & 85.6 & 88.0 & 91.5 & 87.4 & <0.001\\
+\cellcolor{gray!10}{Clopidogrel ($\%$)} & \cellcolor{gray!10}{85.9} & \cellcolor{gray!10}{42.5} & \cellcolor{gray!10}{31.9} & \cellcolor{gray!10}{26.4} & \cellcolor{gray!10}{25.6} & \cellcolor{gray!10}{<0.001}\\
+Prasugrel ($\%$) & 0.3 & 27.7 & 24.9 & 20.0 & 27.0 & <0.001\\
+\cellcolor{gray!10}{Ticagrelor  ($\%$)} & \cellcolor{gray!10}{0.3} & \cellcolor{gray!10}{15.4} & \cellcolor{gray!10}{31.2} & \cellcolor{gray!10}{45.1} & \cellcolor{gray!10}{34.8} & \cellcolor{gray!10}{<0.001}\\
+ACE-I/ARB ($\%$) & 80.5 & 76.8 & 74.1 & 75.6 & 73.3 & <0.001\\
+\cellcolor{gray!10}{Statins ($\%$)} & \cellcolor{gray!10}{96.0} & \cellcolor{gray!10}{93.3} & \cellcolor{gray!10}{93.3} & \cellcolor{gray!10}{95.9} & \cellcolor{gray!10}{93.7} & \cellcolor{gray!10}{<0.001}\\
+LLDs ($\%$) & 96.2 & 93.5 & 93.3 & 94.6 & 94.6 & <0.001\\
+\cellcolor{gray!10}{Digoxin ($\%$)} & \cellcolor{gray!10}{1.0} & \cellcolor{gray!10}{0.9} & \cellcolor{gray!10}{1.1} & \cellcolor{gray!10}{0.5} & \cellcolor{gray!10}{0.2} & \cellcolor{gray!10}{<0.001}\\
+Diuretic ($\%$) & 22.5 & 19.6 & 18.5 & 16.5 & 13.8 & <0.001\\
+\cellcolor{gray!10}{Nitrates ($\%$)} & \cellcolor{gray!10}{6.7} & \cellcolor{gray!10}{7.6} & \cellcolor{gray!10}{4.4} & \cellcolor{gray!10}{5.6} & \cellcolor{gray!10}{3.3} & \cellcolor{gray!10}{<0.001}\\
+GLP-1\textsuperscript{1} ($\%$) & 0.0 & 0.0 & 0.5 & 1.0 & 2.0 & <0.001\\
+\bottomrule
+\insertTableNotes
+\end{longtable}
+\end{ThreePartTable}
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-140-1.pdf}
+
+\pagebreak
+
+\subsection{2.10 Short and long Term
+Outcomes}\label{short-and-long-term-outcomes}
+
+\hfill\break
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-141}Table 2.14: Rates of Mortality and MACE\textsuperscript{1}}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & p for trend\\
+\midrule
+\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1779} & \cellcolor{gray!10}{1885} & \cellcolor{gray!10}{1791} & \cellcolor{gray!10}{1778} & \cellcolor{gray!10}{1750} & \cellcolor{gray!10}{}\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\textbf{Mortality}}\\
+\hspace{1em}In-hospital & 2.1 & 2.0 & 1.7 & 2.9 & 2.2 & 0.506\\
+\hspace{1em}\cellcolor{gray!10}{7-day} & \cellcolor{gray!10}{2.2} & \cellcolor{gray!10}{1.8} & \cellcolor{gray!10}{1.6} & \cellcolor{gray!10}{2.7} & \cellcolor{gray!10}{1.9} & \cellcolor{gray!10}{0.59}\\
+\hspace{1em}30-day & 4.2 & 3.7 & 3.0 & 4.3 & 2.5 & 0.012\\
+\hspace{1em}\cellcolor{gray!10}{1 year} & \cellcolor{gray!10}{8.1} & \cellcolor{gray!10}{8.3} & \cellcolor{gray!10}{7.8} & \cellcolor{gray!10}{8.9} & \cellcolor{gray!10}{5.4} & \cellcolor{gray!10}{0.011}\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\textbf{MACE\textsuperscript{1}}}\\
+\hspace{1em}30-day MACE & 10.3 & 10.4 & 8.9 & 8.4 & 9.8 & 0.01\\
+\bottomrule
+\multicolumn{7}{l}{\textsuperscript{1} 30 day MACE: Death/UAP/MI/Ischemia/CVA/Stent thrombosis/Follow-up urg. revasc.}\\
+\end{tabular}
+\end{table}
+
+\hfill\break
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-142-1.pdf}
+
+\pagebreak
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-143}Table 2.15: Rates of Mortality and MACE\textsuperscript{1} by Gender}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{2cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & p for trend\\
+\midrule
+\addlinespace[1em]
+\multicolumn{7}{l}{\textbf{--Men--}}\\
+\hline
+\hspace{1em}\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1378} & \cellcolor{gray!10}{1453} & \cellcolor{gray!10}{1414} & \cellcolor{gray!10}{1427} & \cellcolor{gray!10}{1391} & \cellcolor{gray!10}{}\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\textbf{Mortality}}\\
+\hspace{1em}In-hospital & 2.0 & 1.5 & 1.3 & 2.5 & 1.8 & 0.579\\
+\hspace{1em}\cellcolor{gray!10}{7-day} & \cellcolor{gray!10}{1.9} & \cellcolor{gray!10}{1.3} & \cellcolor{gray!10}{1.2} & \cellcolor{gray!10}{2.1} & \cellcolor{gray!10}{1.7} & \cellcolor{gray!10}{0.948}\\
+\hspace{1em}30-day & 3.6 & 2.7 & 2.2 & 3.5 & 2.3 & 0.224\\
+\hspace{1em}\cellcolor{gray!10}{1 year} & \cellcolor{gray!10}{6.9} & \cellcolor{gray!10}{6.9} & \cellcolor{gray!10}{6.8} & \cellcolor{gray!10}{7.2} & \cellcolor{gray!10}{4.7} & \cellcolor{gray!10}{0.042}\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\textbf{MACE\textsuperscript{1}}}\\
+\hspace{1em}30-day & 9.2 & 9.3 & 7.9 & 7.3 & 9.7 & 0.085\\
+\addlinespace[3em]
+\multicolumn{7}{l}{\textbf{--Women--}}\\
+\hline
+\hspace{1em}\cellcolor{gray!10}{n} & \cellcolor{gray!10}{401} & \cellcolor{gray!10}{432} & \cellcolor{gray!10}{377} & \cellcolor{gray!10}{351} & \cellcolor{gray!10}{359} & \cellcolor{gray!10}{}\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\textbf{Mortality}}\\
+\hspace{1em}In-hospital & 2.5 & 3.5 & 3.2 & 4.6 & 3.9 & 0.923\\
+\hspace{1em}\cellcolor{gray!10}{7-day} & \cellcolor{gray!10}{3.2} & \cellcolor{gray!10}{3.3} & \cellcolor{gray!10}{2.9} & \cellcolor{gray!10}{5.1} & \cellcolor{gray!10}{2.8} & \cellcolor{gray!10}{0.572}\\
+\hspace{1em}30-day & 6.2 & 7.0 & 6.1 & 7.6 & 3.3 & 0.023\\
+\hspace{1em}\cellcolor{gray!10}{1 year} & \cellcolor{gray!10}{12.3} & \cellcolor{gray!10}{12.9} & \cellcolor{gray!10}{11.6} & \cellcolor{gray!10}{15.8} & \cellcolor{gray!10}{8.1} & \cellcolor{gray!10}{0.237}\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\textbf{MACE\textsuperscript{1}}}\\
+\hspace{1em}30-day & 14.2 & 14.1 & 12.7 & 13.1 & 10.3 & 0.084\\
+\bottomrule
+\multicolumn{7}{l}{\textsuperscript{1} 30 day MACE: Death/UAP/MI/Ischemia/CVA/Stent thrombosis/Follow-up urg. revasc.}\\
+\end{tabular}
+\end{table}
+
+\hfill\break
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-144-1.pdf}
+
+\pagebreak
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-145}Table 2.16: Rates of Mortality and MACE\textsuperscript{1} by Discharge Diagnosis}
+\centering
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{2cm}}
+\toprule
+  & 2010 & 2013 & 2016 & 2018 & 2021 & p for trend\\
+\midrule
+\addlinespace[1em]
+\multicolumn{7}{l}{\textbf{STEMI}}\\
+\hline
+\hspace{1em}\cellcolor{gray!10}{n} & \cellcolor{gray!10}{760} & \cellcolor{gray!10}{727} & \cellcolor{gray!10}{708} & \cellcolor{gray!10}{690} & \cellcolor{gray!10}{700} & \cellcolor{gray!10}{}\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\textbf{Mortality}}\\
+\hspace{1em}In-hospital & 3.3 & 3.3 & 3.1 & 3.8 & 3.3 & 0.236\\
+\hspace{1em}\cellcolor{gray!10}{7-day} & \cellcolor{gray!10}{3.6} & \cellcolor{gray!10}{3.6} & \cellcolor{gray!10}{3.3} & \cellcolor{gray!10}{3.6} & \cellcolor{gray!10}{3.1} & \cellcolor{gray!10}{0.297}\\
+\hspace{1em}30-day & 5.3 & 5.0 & 5.0 & 5.7 & 4.0 & 0.177\\
+\hspace{1em}\cellcolor{gray!10}{1 year} & \cellcolor{gray!10}{8.8} & \cellcolor{gray!10}{8.7} & \cellcolor{gray!10}{8.1} & \cellcolor{gray!10}{10.8} & \cellcolor{gray!10}{5.6} & \cellcolor{gray!10}{0.138}\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\textbf{MACE\textsuperscript{1}}}\\
+\hspace{1em}30-day & 11.6 & 12.2 & 10.9 & 9.2 & 8.7 & 0.003\\
+\addlinespace[3em]
+\multicolumn{7}{l}{\textbf{Non STEMI}}\\
+\hline
+\hspace{1em}\cellcolor{gray!10}{n} & \cellcolor{gray!10}{1019} & \cellcolor{gray!10}{1158} & \cellcolor{gray!10}{1083} & \cellcolor{gray!10}{1088} & \cellcolor{gray!10}{1050} & \cellcolor{gray!10}{}\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\textbf{Mortality}}\\
+\hspace{1em}In-hospital & 1.3 & 1.1 & 0.7 & 2.4 & 1.5 & 0.56\\
+\hspace{1em}\cellcolor{gray!10}{7-day} & \cellcolor{gray!10}{1.2} & \cellcolor{gray!10}{0.6} & \cellcolor{gray!10}{0.5} & \cellcolor{gray!10}{2.1} & \cellcolor{gray!10}{1.1} & \cellcolor{gray!10}{0.495}\\
+\hspace{1em}30-day & 3.4 & 2.9 & 1.8 & 3.4 & 1.5 & 0.025\\
+\hspace{1em}\cellcolor{gray!10}{1 year} & \cellcolor{gray!10}{7.6} & \cellcolor{gray!10}{8.0} & \cellcolor{gray!10}{7.6} & \cellcolor{gray!10}{7.7} & \cellcolor{gray!10}{5.3} & \cellcolor{gray!10}{0.042}\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\textbf{MACE\textsuperscript{1}}}\\
+\hspace{1em}30-day & 9.4 & 9.2 & 7.6 & 8.0 & 10.6 & 0.431\\
+\bottomrule
+\multicolumn{7}{l}{\textsuperscript{1} 30 day MACE: Death/UAP/MI/Ischemia/CVA/Stent thrombosis/Follow-up urg. revasc.}\\
+\end{tabular}
+\end{table}
+
+\hfill\break
+
+\includegraphics{‏‏ACSIS_2024_v1_with_trend_pdf_files/figure-latex/unnamed-chunk-146-1.pdf}
+
+\end{document}

@@ -174,42 +174,42 @@ dat$group <- factor(ifelse(is.na(dat$DISDINEW) & dat$ARR_DIAG=="STE MI","STE-ACS
                                          ifelse(dat$DISDINEW  %in% c("STE MI"),"STE-ACS","NSTE-ACS")))))
 
 
-# #20.03.22 (version 9 of the booklet):
-# #Beigel said that if the patient has REP==YES and REPT=NA so make REPT=PRIMARY PCI:
+#20.03.22 (version 9 of the booklet):
+#Beigel said that if the patient has REP==YES and REPT=NA so make REPT=PRIMARY PCI:
 # dat$REPT <- as.factor(ifelse(is.na(dat$REPT) & dat$REP=="YES", "PRIMARY PCI", as.character(dat$REPT)))
 # 
 # #Anticoagulants: read files of previous years because it is not yet in the unified acsis:
-# dat_10 <- read.csv("C:/Users/talco/Documents/Statistics/ACSIS_24_PDF/previous years acsis files/REG10_8.csv", 
-#                  header = TRUE, na.strings = c(""," ","NA","UNKNOWN","UNK","N/A","A","N"), 
-#                  stringsAsFactors = T) 
+# dat_10 <- read.csv("C:/Users/talco/Documents/Statistics/ACSIS_24_PDF/previous years acsis files/REG10_8.csv",
+#                  header = TRUE, na.strings = c(""," ","NA","UNKNOWN","UNK","N/A","A","N"),
+#                  stringsAsFactors = T)
 # dat_10$SOURCE <- c("S2010")
 # dat_10 <- dat_10[,c("HAKZAA","SOURCE", "S10H2", "S10D2" #warfarin
 #                     )]
 # 
-# dat_13 <- read.csv("C:/Users/talco/Documents/Statistics/ACSIS_24_PDF/previous years acsis files/REG13_4_save_utf.csv", 
-#                    header = TRUE, na.strings = c(""," ","NA","UNKNOWN","UNK","N/A","A","N"), 
-#                    stringsAsFactors = T) 
+# dat_13 <- read.csv("C:/Users/talco/Documents/Statistics/ACSIS_24_PDF/previous years acsis files/REG13_4_save_utf.csv",
+#                    header = TRUE, na.strings = c(""," ","NA","UNKNOWN","UNK","N/A","A","N"),
+#                    stringsAsFactors = T)
 # dat_13$SOURCE <- c("S2013")
 # dat_13 <- dat_13[,c("HAKZAA","SOURCE", "S13H5", "S13D5" #warfarin
 #                     ,"S13H10", "S13D10" #dabigatran
 #                     ,"S13H11", "S13D11" #rivaroxaban
-#                     
+# 
 # )]
 # 
-# dat_16 <- read.csv("C:/Users/talco/Documents/Statistics/ACSIS_24_PDF/previous years acsis files/REG16_5_save_utf.csv", 
-#                    header = TRUE, na.strings = c(""," ","NA","UNKNOWN","UNK","N/A","A","N"), 
-#                    stringsAsFactors = T) 
+# dat_16 <- read.csv("C:/Users/talco/Documents/Statistics/ACSIS_24_PDF/previous years acsis files/REG16_5_save_utf.csv",
+#                    header = TRUE, na.strings = c(""," ","NA","UNKNOWN","UNK","N/A","A","N"),
+#                    stringsAsFactors = T)
 # dat_16$SOURCE <- c("S2016")
 # dat_16 <- dat_16[,c("HAKZAA","SOURCE", "S16H6", "S16D6" #warfarin
 #                     ,"S16H7", "S16D7" #dabigatran
 #                     ,"S16H8","S16D8" #rivaroxaban
 #                     ,"S16H9" ,"S16D9" #apixaban
-#                     
+# 
 # )]
 # 
-# dat_18 <- read.csv("C:/Users/talco/Documents/Statistics/ACSIS_24_PDF/previous years acsis files/ACSIS18_5_save_utf.csv", 
-#                    header = TRUE, na.strings = c(""," ","NA","UNKNOWN","UNK","N/A","A","N"), 
-#                    stringsAsFactors = T) 
+# dat_18 <- read.csv("C:/Users/talco/Documents/Statistics/ACSIS_24_PDF/previous years acsis files/ACSIS18_5_save_utf.csv",
+#                    header = TRUE, na.strings = c(""," ","NA","UNKNOWN","UNK","N/A","A","N"),
+#                    stringsAsFactors = T)
 # dat_18$SOURCE <- c("S2018")
 # dat_18 <- dat_18[,c("HAKZAA","SOURCE", "S18H6", "S18D6" #warfarin
 #                     ,"S18H7","S18D7" #dabigatran
@@ -217,7 +217,7 @@ dat$group <- factor(ifelse(is.na(dat$DISDINEW) & dat$ARR_DIAG=="STE MI","STE-ACS
 #                     ,"S18H9" ,"S18D9" #apixaban
 # )]
 # 
-# dat_21 <- read.csv("C:/Users/talco/Documents/Statistics/ACSIS_24_PDF/ACSIS21_3_save_utf_updated.csv", header = TRUE, 
+# dat_21 <- read.csv("C:/Users/talco/Documents/Statistics/ACSIS_24_PDF/ACSIS21_3_save_utf_updated.csv", header = TRUE,
 #                  na.strings = c(""," ","NA","UNKNoWN","UNK","N/A","nan"), stringsAsFactors = T) #n=1851
 # dat_21$SOURCE <- c("S2021")
 # dat_21 <- dat_21[,c("HAKZAA","SOURCE", "S21H6", "S21D6" #warfarin
@@ -226,7 +226,7 @@ dat$group <- factor(ifelse(is.na(dat$DISDINEW) & dat$ARR_DIAG=="STE MI","STE-ACS
 #                     ,"S21H9","S21D9" #apixaban
 # )]
 # 
-# dat_24 <- read.csv("C:/Users/talco/Documents/Statistics/ACSIS_24_PDF/ACSIS24_3_save_utf_updated.csv", header = TRUE, 
+# dat_24 <- read.csv("C:/Users/talco/Documents/Statistics/ACSIS_24_PDF/ACSIS24_3_save_utf_updated.csv", header = TRUE,
 #                    na.strings = c(""," ","NA","UNKNoWN","UNK","N/A","nan"), stringsAsFactors = T) #n=1851
 # dat_24$SOURCE <- c("S2024")
 # dat_21 <- dat_21[,c("HAKZAA","SOURCE", "S24H6", "S24D6" #warfarin
@@ -241,23 +241,23 @@ dat$group <- factor(ifelse(is.na(dat$DISDINEW) & dat$ARR_DIAG=="STE MI","STE-ACS
 # dat <- merge(dat, dat_18, by = c("HAKZAA","SOURCE"), all.x = T)
 # dat <- merge(dat, dat_21, by = c("HAKZAA","SOURCE"), all.x = T)
 # dat <- merge(dat, dat_24, by = c("HAKZAA","SOURCE"), all.x = T)
-# 
-# 
-# 
-# #anticoag - hosp and disch: (Roy asked)
+
+
+
+# anticoag - hosp and disch: (Roy asked)
 # dat$oral_anticoag_hosp <- factor(ifelse(dat$HLMW%in%"YES" |
 #                                         dat$S10H2 %in% "YES" |
-#                             dat$S13H5 %in% "YES" | dat$S13H10 %in% "YES" |  dat$S13H11 %in% "YES" |    
-#                             dat$S16H6 %in% "YES" | dat$S16H7 %in% "YES" |  dat$S16H8 %in% "YES" |  dat$S16H9 %in% "YES" | 
-#                             dat$S18H6 %in% "Yes" | dat$S18H7 %in% "Yes" |  dat$S18H8 %in% "Yes" |  dat$S18H9 %in% "Yes" | 
-#                             dat$S21H6 %in% "YES" | dat$S21H7 %in% "YES" |  dat$S21H8 %in% "YES" |  dat$S21H9 %in% "YES" ,
+#                             dat$S13H5 %in% "YES" | dat$S13H10 %in% "YES" |  dat$S13H11 %in% "YES" |
+#                             dat$S16H6 %in% "YES" | dat$S16H7 %in% "YES" |  dat$S16H8 %in% "YES" |  dat$S16H9 %in% "YES" |
+#                             dat$S18H6 %in% "Yes" | dat$S18H7 %in% "Yes" |  dat$S18H8 %in% "Yes" |  dat$S18H9 %in% "Yes" |
+#                             dat$S21H6 %in% "YES" | dat$S21H7 %in% "YES" |  dat$S21H8 %in% "YES" |  dat$S21H9 %in% "YES" |
 #                             dat$S24H6 %in% "YES" | dat$S24H7 %in% "YES" |  dat$S24H8 %in% "YES" |  dat$S24H9 %in% "YES" ,
 #                             "YES",
 #                             ifelse((dat$SOURCE=="S2010" & is.na(dat$S10H2)) |
 #             (dat$SOURCE=="S2013" & is.na(dat$S13H5)  & is.na(dat$S13H10) & is.na(dat$S13H11)) |
 #               (dat$SOURCE=="S2016" & is.na(dat$S16H6)  & is.na(dat$S16H7) & is.na(dat$S16H8) & is.na(dat$S16H9)) |
 #               (dat$SOURCE=="S2018" & is.na(dat$S18H6)  & is.na(dat$S18H7) & is.na(dat$S18H8) & is.na(dat$S18H9)) |
-#               (dat$SOURCE=="S2021" & is.na(dat$S21H6)  & is.na(dat$S21H7) & is.na(dat$S21H8) & is.na(dat$S21H9)) ,
+#               (dat$SOURCE=="S2021" & is.na(dat$S21H6)  & is.na(dat$S21H7) & is.na(dat$S21H8) & is.na(dat$S21H9)) |
 #               (dat$SOURCE=="S2024" & is.na(dat$S24H6)  & is.na(dat$S24H7) & is.na(dat$S24H8) & is.na(dat$S24H9)) ,
 #             NA, "NO")))
 # #many missing in 2018 - turn to "no":
@@ -266,9 +266,9 @@ dat$group <- factor(ifelse(is.na(dat$DISDINEW) & dat$ARR_DIAG=="STE MI","STE-ACS
 # #
 # dat$oral_anticoag_disch <- factor(ifelse(dat$DLMW%in%"YES" |
 #                                           dat$S10D2 %in% "YES" |
-#                                           dat$S13D5 %in% "YES" | dat$S13D10 %in% "YES" |  dat$S13D11 %in% "YES" |    
-#                                           dat$S16D6 %in% "YES" | dat$S16D7 %in% "YES" |  dat$S16D8 %in% "YES" |  dat$S16D9 %in% "YES" | 
-#                                           dat$S18D6 %in% "Yes" | dat$S18D7 %in% "Yes" |  dat$S18D8 %in% "Yes" |  dat$S18D9 %in% "Yes" | 
+#                                           dat$S13D5 %in% "YES" | dat$S13D10 %in% "YES" |  dat$S13D11 %in% "YES" |
+#                                           dat$S16D6 %in% "YES" | dat$S16D7 %in% "YES" |  dat$S16D8 %in% "YES" |  dat$S16D9 %in% "YES" |
+#                                           dat$S18D6 %in% "Yes" | dat$S18D7 %in% "Yes" |  dat$S18D8 %in% "Yes" |  dat$S18D9 %in% "Yes" |
 #                                           dat$S21D6 %in% "YES" | dat$S21D7 %in% "YES" |  dat$S21D8 %in% "YES" |  dat$S21D9 %in% "YES" ,
 #                                           dat$S24D6 %in% "YES" | dat$S24D7 %in% "YES" |  dat$S24D8 %in% "YES" |  dat$S24D9 %in% "YES" ,
 #                                          "YES",
@@ -281,8 +281,7 @@ dat$group <- factor(ifelse(is.na(dat$DISDINEW) & dat$ARR_DIAG=="STE MI","STE-ACS
 #                                                NA, "NO")))
 # #many missing in 2018 - turn to "no":
 # dat$oral_anticoag_disch <- factor(ifelse(is.na(dat$oral_anticoag_disch), "NO", as.character(dat$oral_anticoag_disch)))
-# 
-# 
-# 
-# dat_10_24 <- dat
 
+
+
+dat_10_24 <- dat

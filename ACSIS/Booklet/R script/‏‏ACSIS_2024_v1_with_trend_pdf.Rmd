@@ -45,7 +45,7 @@ options(knitr.table.format = "latex")
 # source('W:/Users/Shared_Files/STAT/2021/ACSIS 2021 booklet/Data_ACSIS_2021.R')
 # source('C:/Users/talco/Documents/Statistics/ACSIS_21_PDF/Data_ACSIS_2021.R')
 source('C:/Users/ido/sheba stats/ACSIS/Booklet/R scripts data prep/Data_ACSIS_2024.R')
-
+setwd("C:/Users/ido/sheba stats/ACSIS/Booklet/R script")
 ```
 
 ```{r}
@@ -2380,11 +2380,11 @@ Concerning life-style modification, `r round(100*(prop.table(table2(dat_fu$S24FR
 Despite the recommendation for cardiac rehabilitation programs, only `r round(prop.table(table2(dat_fu$S24FREHP))["Yes"]*100 + prop.table(table2(dat_fu$S24FREHP))["Scheduled to participate"]*100)`% of patients were actively participating or scheduled.
 \pagebreak
 
-# Chapter 2: Temporal Trends 2010-2021
+# Chapter 2: Temporal Trends 2010-2024
 
 \
 
-## Temporal Trends in Characteristics, Management, and Outcome of Patients with ACS in Cardiology: 2010-2021
+## Temporal Trends in Characteristics, Management, and Outcome of Patients with ACS in Cardiology: 2010-2024
 
 ```{r}
 # source('W:/Users/Shared_Files/STAT/2021/ACSIS 2021 booklet/Data_ACSIS_Trends_00_21.R')
@@ -2398,7 +2398,8 @@ source('C:/Users/ido/sheba stats/ACSIS/Booklet/R scripts data prep/Data_ACSIS_Tr
 
 
 ```{r}
-trend_years <- c("2010","2013","2016","2018","2021", "p for trend")
+trend_years <- c("2010","2013","2016","2018","2021", "2024", "p for trend")
+num_of_years = length(trend_years) - 1
 ```
 \
 
@@ -2409,7 +2410,7 @@ trend_years <- c("2010","2013","2016","2018","2021", "p for trend")
 
 ```{r results='hide'}
 vars2.1 <- c("SEX","age5075","AGE")
-tab2.1 <- print(CreateTableOne(vars = vars2.1, strata = "SOURCE", data = dat))[,1:5]
+tab2.1 <- print(CreateTableOne(vars = vars2.1, strata = "SOURCE", data = dat))[,1:num_of_years]
 
 p2.1 <- apply(dat[,vars2.1[-3]],2,ptrend)
 #p for trend for age with linear regression
@@ -2444,7 +2445,7 @@ kable(t2.1, align = "c", caption = "Table 2.1: Patients' Characteristics", bookt
 vars2.2 <- c("PMI",
              # "PAP", #no PAP in 2021
              "PSPCI","PCABG","PCHF","PCVA","PRENAL","PPVD","PHT","PDIAB","PHLIP","CSMOK","PSMOK","PFAMH")
-tab2.2 <- print(CreateTableOne(vars = vars2.2, strata = "SOURCE", data = dat))[,1:5]
+tab2.2 <- print(CreateTableOne(vars = vars2.2, strata = "SOURCE", data = dat))[,1:num_of_years]
 
 tab2.2_0 <- tab2.2[-1,]
 tab2.2_1 <- substr(tab2.2_0, regexpr("(",tab2.2_0, fixed = T)+1, regexpr(")",tab2.2_0, fixed = T)-1)
@@ -2486,7 +2487,7 @@ dat[,vars_chr_treat_imp] <- dat[,vars_chr_treat]
 dat[,vars_chr_treat_imp] <- lapply(dat[,vars_chr_treat_imp], fillna0)
 
 
-tab2.10 <- print(CreateTableOne(vars = vars_chr_treat_imp, strata = "year", data = dat), printToggle = F)[,1:5]
+tab2.10 <- print(CreateTableOne(vars = vars_chr_treat_imp, strata = "year", data = dat), printToggle = F)[,1:num_of_years]
 
 tab2.10_0 <- tab2.10[-1,]
 tab2.10_1 <- substr(tab2.10_0, regexpr("(",tab2.10_0, fixed = T)+1, regexpr(")",tab2.10_0, fixed = T)-1)
@@ -2512,21 +2513,21 @@ kable(t2.10, align = "c", caption = "Table 2.2.b: Prior Chronic Treatment", book
 \
 
 ```{r fig.height=6, fig.width=9}
-t_stat <- as.numeric(t2.10["Statins (%)",1:5])
-t_p2y12 <- as.numeric(t2.10["P2Y12 inhibitors (%)",1:5])
-t_asp <- as.numeric(t2.10["Aspirin (%)",1:5])
-t_bb <- as.numeric(t2.10["Beta Blockers (%)",1:5])
-t_acearb <- as.numeric(t2.10["ACE-I/ARB (%)",1:5])
+t_stat <- as.numeric(t2.10["Statins (%)",1:num_of_years])
+t_p2y12 <- as.numeric(t2.10["P2Y12 inhibitors (%)",1:num_of_years])
+t_asp <- as.numeric(t2.10["Aspirin (%)",1:num_of_years])
+t_bb <- as.numeric(t2.10["Beta Blockers (%)",1:num_of_years])
+t_acearb <- as.numeric(t2.10["ACE-I/ARB (%)",1:num_of_years])
 
 par(mar=c(5,4,4,2))
-years_graph <-c(2009,2010,2013,2016,2018,2021, 2022)
+years_graph <-c(2009,2010,2013,2016,2018,2021,2024, 2025)
 plot(x=years_graph, y=c(NA,t_stat,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
 lines(x=years_graph,y=c(NA,t_p2y12,NA),type = "b", lwd=2, col="blue")
 lines(x=years_graph,y=c(NA,t_asp,NA),type = "b", lwd=2, col="green")
 lines(x=years_graph,y=c(NA,t_bb,NA),type = "b", lwd=2, col="orange")
 lines(x=years_graph,y=c(NA,t_acearb,NA),type = "b", lwd=2, col="magenta")
 abline(h=seq(0,100, by = 10), lty=3, col="gray")
-axis(1,c(2010,2013,2016,2018,2021))
+axis(1,c(2010,2013,2016,2018,2021, 2024))
 # text(c(2008,2010,2013,2016,2018),t_stat+3, t_stat, col = "red", font = 2)
 # text(c(2008,2010,2013,2016,2018),t_p2y12-3, t_p2y12, col = "blue", font = 2)
 # text(c(2008,2010,2013,2016,2018),t_asp+3, t_asp, col = "green", font = 2)
@@ -2552,12 +2553,12 @@ tab2.3_2 <- matrix(tab2.3_1, ncol = ncol(tab2.3_0), nrow = nrow(tab2.3_0))
 tab2.3_2 <- rbind(tab2.3[1,],tab2.3_2)
 
 
-row.names(tab2.3_2) <- c("n", "Ward (%)","Cardiology/ICCU","Internal Medicine","Other")
+row.names(tab2.3_2) <- c("n", "Ward (%)","Cardiology/ICCU","Internal Medicine", "internal Medicine Ward", "Other")
 
 table.p2.3 <- cbind(expand.grid(Ward=levels(dat$WARD1),Year=levels(dat$SOURCE)),Count = c(table(dat$WARD1, dat$year)))
 # Change table to numeric
 dat$ward1 <- as.numeric(dat$WARD1)
-table.p2.3n <- cbind(expand.grid(Ward=1:3,Year=c(2008,2010,2013,2016,2018)),Count = c(table(dat$WARD1, dat$year)))
+table.p2.3n <- cbind(expand.grid(Ward=1:4,Year=c(2010,2013,2016,2018, 2021, 2024)),Count = c(table(dat$WARD1, dat$year)))
 rep.tbl <- table.p2.3n[,1:2][rep(1:nrow(table.p2.3n),table.p2.3n$Count),]
 p2.3s <- cor.test(rep.tbl[,1],rep.tbl[,2])
 p2.3 <- ifelse(p2.3s$p.value<0.001,"<0.001",round(p2.3s$p.value,3))
@@ -2578,7 +2579,7 @@ kable(tab2.3_2, align = "c", caption = "Table 2.3: Initial Ward of Hospitalizati
 ### 2.3.2.a ECG on Admission
 
 ```{r results='hide'}
-tab2.4 <- print(CreateTableOne(vars = "admecg", strata = "year", data = dat), showAllLevels = T)[,2:6]
+tab2.4 <- print(CreateTableOne(vars = "admecg", strata = "year", data = dat), showAllLevels = T)[,2:7]
 
 tab2.4_0 <- tab2.4[-1,]
 tab2.4_1 <- substr(tab2.4_0, regexpr("(",tab2.4_0, fixed = T)+1, regexpr(")",tab2.4_0, fixed = T)-1)
@@ -2601,7 +2602,7 @@ kable(tab2.4_2, align = "c", caption = "Table 2.4: ECG on Admission", booktabs=T
 ### 2.3.2.b Diagnosis at Discharge
 
 ```{r results='hide'}
-tab2.4 <- print(CreateTableOne(vars = "group", strata = "year", data = dat), showAllLevels = T)[,2:6]
+tab2.4 <- print(CreateTableOne(vars = "group", strata = "year", data = dat), showAllLevels = T)[,2:7]
 
 tab2.4_0 <- tab2.4[-1,]
 tab2.4_1 <- substr(tab2.4_0, regexpr("(",tab2.4_0, fixed = T)+1, regexpr(")",tab2.4_0, fixed = T)-1)
@@ -2625,7 +2626,7 @@ kable(tab2.4_2, align = "c", caption = "Table 2.5: Diagnosis at Discharge", book
 ### 2.3.3 Killip Class on Admission
 
 ```{r}
-tab2.5 <- print(CreateTableOne(vars = "ADMKLP", strata = "year", data = dat), printToggle = F)[,1:5]
+tab2.5 <- print(CreateTableOne(vars = "ADMKLP", strata = "year", data = dat), printToggle = F)[,1:num_of_years]
 
 tab2.5_0 <- tab2.5[-1,]
 tab2.5_1 <- substr(tab2.5_0, regexpr("(",tab2.5_0, fixed = T)+1, regexpr(")",tab2.5_0, fixed = T)-1)
@@ -2636,11 +2637,15 @@ tab2.5_2 <- rbind(tab2.5[1,],tab2.5_2)
 row.names(tab2.5_2) <- c("n","Killip class (%)","1","2","3","4")
 
 dat$killip <- as.numeric(dat$ADMKLP)
-table.p2.5n <- cbind(expand.grid(Killip=1:4,Year=c(2008,2010,2013,2016,2018)),Count = c(table(dat$ADMKLP, dat$year)))
+unique(dat$year)
+unique(dat$ADMKLP)
+table.p2.5n <- cbind(expand.grid(Killip=1:4,Year=c(2010,2013,2016,2018, 2021, 2024)),Count = c(table(dat$ADMKLP, dat$year)))
 rep.tbl <- table.p2.5n[,1:2][rep(1:nrow(table.p2.5n),table.p2.5n$Count),]
 p2.5s <- cor.test(rep.tbl[,1],rep.tbl[,2])
 p2.5 <- ifelse(p2.5s$p.value<0.001,"<0.001",round(p2.5s$p.value,3))
+```
 
+```{r results='hide'}
 kable(tab2.5_2, align = "c", caption = "Table 2.6: Killip Class on Admission", booktabs=T, linesep = '') %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
   add_indent(3:6) %>%
@@ -2682,9 +2687,9 @@ text(x = fig2.2, y = 4, label = t_tlx, cex = 0.8)
 ### 2.4.1 Primary PCI / Coronary Angiography
 
 ```{r results='hide'}
-dat_10_21$PCIVA <- factor(dat_10_21$PCIVA, levels = c("FEMORAL","RADIAL","BOTH"))
-tab_radial_ppci_trend <- print(CreateTableOne(vars = "PCIVA", strata = "year", data = subset(dat_10_21, admecg=="ST elevation" & REP=="YES")))[,1:5]
-row.names(tab_radial_ppci_trend) <- c("n","Vascular access, n (%):",capitalize(tolower(levels(dat_10_21$PCIVA))))
+dat_10_24$PCIVA <- factor(dat_10_24$PCIVA, levels = c("FEMORAL","RADIAL","BOTH"))
+tab_radial_ppci_trend <- print(CreateTableOne(vars = "PCIVA", strata = "year", data = subset(dat_10_24, admecg=="ST elevation" & REP=="YES")))[,1:5]
+row.names(tab_radial_ppci_trend) <- c("n","Vascular access, n (%):",capitalize(tolower(levels(dat_10_24$PCIVA))))
 ```
 
 ```{r}
@@ -2701,12 +2706,12 @@ kable(tab_radial_ppci_trend, align = "c", caption = "Table 2.7.1: Vascular acces
 
 
 ```{r results='hide'}
-dat_fit <- subset(dat_10_21, PCI%in%c("NO",NA)) #n=6084
+dat_fit <- subset(dat_10_24, PCI%in%c("NO",NA)) #n=6084
 
 
 dat_fit$HAVA <- factor(dat_fit$HAVA, levels = c("FEMORAL","RADIAL","BOTH"))
-tab_angio_trend <- print(CreateTableOne(vars = "HANGIO", strata = "year", data = dat_fit))[,1:5]
-tab_radial_angio_trend <- print(CreateTableOne(vars = "HAVA", strata = "year", data = subset(dat_fit, HANGIO=="YES")))[,1:5]
+tab_angio_trend <- print(CreateTableOne(vars = "HANGIO", strata = "year", data = dat_fit))[,1:num_of_years]
+tab_radial_angio_trend <- print(CreateTableOne(vars = "HAVA", strata = "year", data = subset(dat_fit, HANGIO=="YES")))[,1:num_of_years]
 t_radial_angio_trend <- rbind(tab_angio_trend, tab_radial_angio_trend)[-3,]
 
 row.names(t_radial_angio_trend) <- c("n (excluding primary PCI)","Coronary angiography, n (%)","Vascular access, n (%):", capitalize(tolower(levels(dat_fit$HAVA))))
@@ -2727,7 +2732,6 @@ kable(t_radial_angio_trend, align = "c", caption = "Table 2.7.2: Vascular access
 
 \
 <!-- tbd - I removed time to TLX due to missing data in 2021 -->
-<!--
 
 
 ```{r}
@@ -2765,7 +2769,7 @@ tab2.6 <- print(CreateTableOne(vars = vars2.6, strata = "year", data = dat_fit),
   "HEFT4",
 "HEFT7",
 # "HEFT6",
-"ONS_REP"))[,1:5]
+"ONS_REP"))[,1:num_of_years]
 
 # tab2.6_0 <- tab2.6[-1,]
 # tab2.6_1 <- substr(tab2.6_0, regexpr("(",tab2.6_0, fixed = T)+1, regexpr(")",tab2.6_0, fixed = T)-1)
@@ -2816,10 +2820,9 @@ kable(t2.6, align = "c", caption = "Table 2.8.2: Time Intervals in STEMI reperfu
 ```
 
 \pagebreak
--->
 
 <!-- tbd - I removed time to TLX due to missing data in 2021 -->
-<!--
+
 
 
 ```{r}
@@ -2829,7 +2832,7 @@ dat_fit <- subset(dat, PCI=="YES" & group=="STE-ACS" & SEX=="MALE") #n=2241
 
 
 
-tab2.7m <- print(CreateTableOne(vars = vars2.6[-4], strata = "year", data = dat_fit), printToggle = F, nonnormal = c("HEFT4","HEFT7","HEFT6","ONS_REP"))[,1:5]
+tab2.7m <- print(CreateTableOne(vars = vars2.6[-4], strata = "year", data = dat_fit), printToggle = F, nonnormal = c("HEFT4","HEFT7","HEFT6","ONS_REP"))[,1:num_of_years]
 # qqnorm(log(dat$ONS_REP)+1, ylim = c(0,15)); qqline(log(dat$ONS_REP)+1, col = "red")
 ph4 <- lm(log(heft4)~year, dat_fit)
 p_h4 <- round(summary(ph4)$coefficients["year","Pr(>|t|)"],3)
@@ -2867,7 +2870,7 @@ dat_fit <- subset(dat, PCI=="YES" & group=="STE-ACS" & SEX=="FEMALE") #n=478
 
 
 
-tab2.7f <- print(CreateTableOne(vars = vars2.6[-4], strata = "year", data = dat_fit), printToggle = F, nonnormal = c("HEFT4","HEFT7","HEFT6","ONS_REP"))[,1:5]
+tab2.7f <- print(CreateTableOne(vars = vars2.6[-4], strata = "year", data = dat_fit), printToggle = F, nonnormal = c("HEFT4","HEFT7","HEFT6","ONS_REP"))[,1:num_of_years]
 # qqnorm(log(dat$ONS_REP)+1, ylim = c(0,15)); qqline(log(dat$ONS_REP)+1, col = "red")
 ph4 <- lm(log(heft4)~year, dat_fit)
 p_h4 <- round(summary(ph4)$coefficients["year","Pr(>|t|)"],3)
@@ -2919,7 +2922,7 @@ kable(t2.7, align = "c", caption = "Table 2.9: Time Intervals (minutes) in STEMI
 vars2.8 <- c("ANGIO","ANYPCI","STENT","HCABG","HIOB"
              # ,"HECHO" #v12
              )
-tab2.8 <- print(CreateTableOne(vars = vars2.8, strata = "year", data = dat), printToggle = F)[,1:5]
+tab2.8 <- print(CreateTableOne(vars = vars2.8, strata = "year", data = dat), printToggle = F)[,1:num_of_years]
 
 tab2.8_0 <- tab2.8[-1,]
 tab2.8_1 <- substr(tab2.8_0, regexpr("(",tab2.8_0, fixed = T)+1, regexpr(")",tab2.8_0, fixed = T)-1)
@@ -2961,22 +2964,22 @@ kable(t2.8, align = "c",caption = "Table 2.10 Procedures during Hospitalization"
 
 ```{r fig.height=6, fig.width=9}
 
-t_angio <-as.numeric(t2.8["Coronary Angiography (%)",1:5])
-t_pci <- as.numeric(t2.8["Any PCI (%)",1:5])
-t_cabg <- as.numeric(t2.8["CABG (%)",1:5])
-t_stent <- as.numeric(t2.8["Stent (%)",1:5])
+t_angio <-as.numeric(t2.8["Coronary Angiography (%)",1:num_of_years])
+t_pci <- as.numeric(t2.8["Any PCI (%)",1:num_of_years])
+t_cabg <- as.numeric(t2.8["CABG (%)",1:num_of_years])
+t_stent <- as.numeric(t2.8["Stent (%)",1:num_of_years])
 
 par(mar=c(5,4,4,2))
-plot(x=c(2007,2008,2010,2013,2016,2018,2019), y=c(NA,t_angio,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
-lines(x=c(2007,2008,2010,2013,2016,2018,2019),y=c(NA,t_pci,NA),type = "b", lwd=2, col="blue")
-lines(x=c(2007,2008,2010,2013,2016,2018,2019),y=c(NA,t_cabg,NA),type = "b", lwd=2, col="green")
-lines(x=c(2007,2008,2010,2013,2016,2018,2019),y=c(NA,t_stent,NA),type = "b", lwd=2, col="orange")
+plot(x=c(2009,2010,2013,2016,2018,2021,2024, 2025), y=c(NA,t_angio,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
+lines(x=c(2009,2010,2013,2016,2018,2021,2024, 2025),y=c(NA,t_pci,NA),type = "b", lwd=2, col="blue")
+lines(x=c(2009,2010,2013,2016,2018,2021,2024, 2025),y=c(NA,t_cabg,NA),type = "b", lwd=2, col="green")
+lines(x=c(2009,2010,2013,2016,2018,2021,2024, 2025),y=c(NA,t_stent,NA),type = "b", lwd=2, col="orange")
 abline(h=seq(0,100, by = 10), lty=3, col="gray")
-axis(1,c(2008,2010,2013,2016,2018))
-text(c(2008,2010,2013,2016,2018),t_angio-3, t_angio, col = "red", font = 2)
-text(c(2008,2010,2013,2016,2018),t_pci-3, t_pci, col = "blue", font = 2)
-text(c(2008,2010,2013,2016,2018),t_cabg+3, t_cabg, col = "green", font = 2)
-text(c(2008,2010,2013,2016,2018),t_stent+3, t_stent, col = "orange", font = 2)
+axis(1,c(2010,2013,2016,2018, 2021, 2024))
+text(c(2008,2010,2013,2016,2018, 2021, 2024),t_angio-3, t_angio, col = "red", font = 2)
+text(c(2008,2010,2013,2016,2018, 2021, 2024),t_pci-3, t_pci, col = "blue", font = 2)
+text(c(2008,2010,2013,2016,2018, 2021, 2024),t_cabg+3, t_cabg, col = "green", font = 2)
+text(c(2008,2010,2013,2016,2018, 2021, 2024),t_stent+3, t_stent, col = "orange", font = 2)
 legend(2010,60, c("Coronary Angiography","PCI","CABG","Stent"), col = c("red","blue","green","orange"), pch = 1, lwd = 2, bty = "n", horiz = F, y.intersp = 1.5)
 title("Figure 2.4: Trends in Procedures Performed During Hospitalization", font.main=1, cex.main=1.1)
 ```
@@ -2990,7 +2993,7 @@ title("Figure 2.4: Trends in Procedures Performed During Hospitalization", font.
 ```{r}
 
 vars2.9 <- c("COMP25","COMP26","COMP7","COMP1","COMP2","COMP3","COMP5","COMP9","COMP20","COMP11","COMPAVBH","COMP13","COMP14","COMP10","COMP21","COMP22","COMP24","COMP4")
-tab2.9 <- print(CreateTableOne(vars = vars2.9, strata = "year", data = dat), printToggle = F)[,1:5]
+tab2.9 <- print(CreateTableOne(vars = vars2.9, strata = "year", data = dat), printToggle = F)[,1:num_of_years]
 
 tab2.9_0 <- tab2.9[-1,]
 tab2.9_1 <- substr(tab2.9_0, regexpr("(",tab2.9_0, fixed = T)+1, regexpr(")",tab2.9_0, fixed = T)-1)
@@ -3023,15 +3026,14 @@ vars2.10 <- c("HASA",
               # "HANT", #not included in the CRF of 2021
              "HBB","HACEARB","HSTAT","HLIPID_new","HDIGIT","HDIUR","HNIT"
              #v13:
-             ,"oral_anticoag_hosp"
+            #missing ,"oral_anticoag_hosp"
              )
-
-# #change missing to no (beacuse in 2021 there is no missing data):
+#change missing to no (beacuse in 2021 there is no missing data):
 vars2.10_imp <- paste0(vars2.10, "_imp")
-dat[,vars2.10_imp] <- dat[,vars2.10]
+dat[,vars2.10_imp] <- dat[,vars2.10[1:num_of_years]]
 dat[,vars2.10_imp] <- lapply(dat[,vars2.10_imp], fillna0)
 
-tab2.10 <- print(CreateTableOne(vars = vars2.10_imp, strata = "year", data = dat), printToggle = F)[,1:5]
+tab2.10 <- print(CreateTableOne(vars = vars2.10_imp, strata = "year", data = dat), printToggle = F)[,1:num_of_years]
 
 tab2.10_0 <- tab2.10[-1,]
 tab2.10_1 <- substr(tab2.10_0, regexpr("(",tab2.10_0, fixed = T)+1, regexpr(")",tab2.10_0, fixed = T)-1)
@@ -3047,7 +3049,7 @@ row.names(t2.10) <- c("n","Aspirin ($\\%$)",
                       "Clopidogrel ($\\%$)", "Prasugrel ($\\%$)", "Ticagrelor  ($\\%$)",
                       # "IIb/IIIa antagonists ($\\%$)",
                       "Beta Blockers ($\\%$)","ACE-I/ARB ($\\%$)","Statins ($\\%$)","LLDs ($\\%$)","Digoxin ($\\%$)","Diuretic ($\\%$)","Nitrates ($\\%$)"
-                      ,paste0("Anticoagulant",footnote_marker_number(1)," ($\\%$)")
+                     # ,paste0("Anticoagulant",footnote_marker_number(1)," ($\\%$)")
 
                       )
 
@@ -3067,21 +3069,21 @@ kable(t2.10, align = "c", caption = "Table 2.12: In-Hospital Treatment", booktab
 
 
 ```{r fig.height=6, fig.width=9}
-t_stat <- as.numeric(t2.10["Statins ($\\%$)",1:5])
-t_p2y12 <- as.numeric(t2.10["P2Y12 inhibitors ($\\%$)",1:5])
-t_asp <- as.numeric(t2.10["Aspirin ($\\%$)",1:5])
-t_bb <- as.numeric(t2.10["Beta Blockers ($\\%$)",1:5])
-t_acearb <- as.numeric(t2.10["ACE-I/ARB ($\\%$)",1:5])
+t_stat <- as.numeric(t2.10["Statins ($\\%$)",1:num_of_years])
+t_p2y12 <- as.numeric(t2.10["P2Y12 inhibitors ($\\%$)",1:num_of_years])
+t_asp <- as.numeric(t2.10["Aspirin ($\\%$)",1:num_of_years])
+t_bb <- as.numeric(t2.10["Beta Blockers ($\\%$)",1:num_of_years])
+t_acearb <- as.numeric(t2.10["ACE-I/ARB ($\\%$)",1:num_of_years])
 
 par(mar=c(5,4,4,2))
-years_graph <-c(2009,2010,2013,2016,2018,2021, 2022)
+years_graph <-c(2009,2010,2013,2016,2018,2021,2024,2025)
 plot(x=years_graph, y=c(NA,t_stat,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
 lines(x=years_graph,y=c(NA,t_p2y12,NA),type = "b", lwd=2, col="blue")
 lines(x=years_graph,y=c(NA,t_asp,NA),type = "b", lwd=2, col="green")
 lines(x=years_graph,y=c(NA,t_bb,NA),type = "b", lwd=2, col="orange")
 lines(x=years_graph,y=c(NA,t_acearb,NA),type = "b", lwd=2, col="magenta")
 abline(h=seq(0,100, by = 10), lty=3, col="gray")
-axis(1,c(2010,2013,2016,2018,2021))
+axis(1,c(2010,2013,2016,2018,2021, 2024))
 # text(c(2008,2010,2013,2016,2018),t_stat+3, t_stat, col = "red", font = 2)
 # text(c(2008,2010,2013,2016,2018),t_p2y12-3, t_p2y12, col = "blue", font = 2)
 # text(c(2008,2010,2013,2016,2018),t_asp+3, t_asp, col = "green", font = 2)
@@ -3106,7 +3108,7 @@ vars2.11 <- c("DASA","DBB","DP2Y12_corrected",
               "DTICL_corrected", "DPRAS_corrected", "DTICGR_corrected", #v7
               "DACEARB","DSTAT","DLIPID","DDIGIT","DDIUR","DNIT",
               "GLP1_Disch_new"
-              ,"oral_anticoag_disch"
+            # missing  ,"oral_anticoag_disch"
               )
 
 # #change missing to no (beacuse in 2021 there is no missing data):
@@ -3114,7 +3116,7 @@ vars2.11_imp <- paste0(vars2.11, "_imp")
 dat[,vars2.11_imp] <- dat[,vars2.11]
 dat[,vars2.11_imp] <- lapply(dat[,vars2.11_imp], fillna0)
 
-tab2.11 <- print(CreateTableOne(vars = vars2.11_imp, strata = "year", data = subset(dat, DISDIE=="ALIVE")), printToggle = F)[,1:5]
+tab2.11 <- print(CreateTableOne(vars = vars2.11_imp, strata = "year", data = subset(dat, DISDIE=="ALIVE")), printToggle = F)[,1:num_of_years]
 
 tab2.11_0 <- tab2.11[-1,]
 tab2.11_1 <- substr(tab2.11_0, regexpr("(",tab2.11_0, fixed = T)+1, regexpr(")",tab2.11_0, fixed = T)-1)
@@ -3136,7 +3138,7 @@ row.names(t2.11) <- c("n","Aspirin ($\\%$)","Beta Blockers ($\\%$)","P2Y12 inhib
                        "Clopidogrel ($\\%$)", "Prasugrel ($\\%$)", "Ticagrelor  ($\\%$)", #v7
                       "ACE-I/ARB ($\\%$)","Statins ($\\%$)","LLDs ($\\%$)","Digoxin ($\\%$)","Diuretic ($\\%$)","Nitrates ($\\%$)",
               paste0("GLP-1", footnote_marker_number(1), " ($\\%$)")
-             ,paste0("Anticoagulant", footnote_marker_number(2), " ($\\%$)")
+            # missing ,paste0("Anticoagulant", footnote_marker_number(2), " ($\\%$)")
 
 
                       )
@@ -3156,11 +3158,11 @@ kable(t2.11, align = "c", caption = "Table 2.13: Medical Treatment on Discharge 
 
 
 ```{r fig.height=6, fig.width=9}
-t_stat <- as.numeric(t2.11["Statins ($\\%$)",1:5])
-t_p2y12 <- as.numeric(t2.11["P2Y12 inhibitors ($\\%$)",1:5])
-t_asp <- as.numeric(t2.11["Aspirin ($\\%$)",1:5])
-t_bb <- as.numeric(t2.11["Beta Blockers ($\\%$)",1:5])
-t_acearb <- as.numeric(t2.11["ACE-I/ARB ($\\%$)",1:5])
+t_stat <- as.numeric(t2.11["Statins ($\\%$)",1:num_of_years])
+t_p2y12 <- as.numeric(t2.11["P2Y12 inhibitors ($\\%$)",1:num_of_years])
+t_asp <- as.numeric(t2.11["Aspirin ($\\%$)",1:num_of_years])
+t_bb <- as.numeric(t2.11["Beta Blockers ($\\%$)",1:num_of_years])
+t_acearb <- as.numeric(t2.11["ACE-I/ARB ($\\%$)",1:num_of_years])
 
 par(mar=c(5,4,4,2))
 plot(x=years_graph, y=c(NA,t_stat,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
@@ -3169,7 +3171,7 @@ lines(x=years_graph,y=c(NA,t_asp,NA),type = "b", lwd=2, col="green")
 lines(x=years_graph,y=c(NA,t_bb,NA),type = "b", lwd=2, col="orange")
 lines(x=years_graph,y=c(NA,t_acearb,NA),type = "b", lwd=2, col="magenta")
 abline(h=seq(0,100, by = 10), lty=3, col="gray")
-axis(1,c(2010,2013,2016,2018,2021))
+axis(1,c(2010,2013,2016,2018,2021,2024))
 # text(c(2008,2010,2013,2016,2018),t_stat+3, t_stat, col = "red", font = 2)
 # text(c(2008,2010,2013,2016,2018),t_p2y12-3, t_p2y12, col = "blue", font = 2)
 # text(c(2008,2010,2013,2016,2018),t_asp+3, t_asp, col = "green", font = 2)
@@ -3182,15 +3184,14 @@ title("Figure 2.6: Medical Treatment in Discharge among Hospital Survivors", fon
 \pagebreak
 
 ## 2.10 Short and long Term Outcomes
--->
+
 
 \
 <!-- tbd -many missing in MACE in 2021, and no 1-year mortality -->
-<!--
 
 ```{r}
 vars_out <- c("DISDIE","DIED7","DIED30","DIED365","MACE")
-tab2.12 <- print(CreateTableOne(vars = vars_out, strata = "year", data = dat), printToggle = F)[,1:5]
+tab2.12 <- print(CreateTableOne(vars = vars_out, strata = "year", data = dat), printToggle = F)[,1:num_of_years]
 
 tab2.12_0 <- tab2.12[-1,]
 tab2.12_1 <- substr(tab2.12_0, regexpr("(",tab2.12_0, fixed = T)+1, regexpr(")",tab2.12_0, fixed = T)-1)
@@ -3218,10 +3219,10 @@ kable(t2.12, align = "c", caption = "Table 2.14: Rates of Mortality and MACE[not
 \
 
 ```{r fig.height=6, fig.width=9}
-out_7d <- as.numeric(t2.12["7-day",1:5])
-out_30d <- as.numeric(t2.12["30-day",1:5])
-out_1y <- as.numeric(t2.12["1 year",1:5])
-out_mace <- as.numeric(t2.12["30-day MACE",1:5])
+out_7d <- as.numeric(t2.12["7-day",1:num_of_years])
+out_30d <- as.numeric(t2.12["30-day",1:num_of_years])
+out_1y <- as.numeric(t2.12["1 year",1:num_of_years])
+out_mace <- as.numeric(t2.12["30-day MACE",1:num_of_years])
 
 par(mar=c(5,4,4,2))
 plot(x=years_graph, y=c(NA,out_7d,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,30), xaxt="n")
@@ -3229,27 +3230,25 @@ lines(x=years_graph,y=c(NA,out_30d,NA),type = "b", lwd=2, col="green")
 lines(x=years_graph,y=c(NA,out_1y,NA),type = "b", lwd=2, col="orange")
 lines(x=years_graph,y=c(NA,out_mace,NA),type = "b", lwd=2, col="blue")
 abline(h=seq(0,100, by = 5), lty=3, col="gray")
-axis(1,c(2010,2013,2016,2018,2021))
+axis(1,c(2010,2013,2016,2018,2021,2024))
 legend(2019,28, c("7-day","30-day","1 year","30-day MACE"), col = c("red","green","orange","blue"), pch = 1, lwd = 2, bty = "n", horiz = F, y.intersp = 1)
 title("Figure 2.7: Rates of Mortality and 30-day MACE", font.main=1, cex.main=1.1)
 ```
 
 \pagebreak
--->
 
 <!-- tbd -many missing in MACE in 2021, and no 1-year mortality -->
-<!--
 
 
 ```{r}
-tab2.13m <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, SEX=="MALE")),printToggle = F)[,1:5]
+tab2.13m <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, SEX=="MALE")),printToggle = F)[,1:num_of_years]
 
 tab2.13m_0 <- tab2.13m[-1,]
 tab2.13m_1 <- substr(tab2.13m_0, regexpr("(",tab2.13m_0, fixed = T)+1, regexpr(")",tab2.13m_0, fixed = T)-1)
 tab2.13m_2 <- matrix(tab2.13m_1, ncol = ncol(tab2.13m_0), nrow = nrow(tab2.13m_0))
 tab2.13m_2 <- rbind(tab2.13m[1,],tab2.13m_2)
 
-tab2.13f <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, SEX=="FEMALE")), printToggle = F)[,1:5]
+tab2.13f <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, SEX=="FEMALE")), printToggle = F)[,1:num_of_years]
 
 tab2.13f_0 <- tab2.13f[-1,]
 tab2.13f_1 <- substr(tab2.13f_0, regexpr("(",tab2.13f_0, fixed = T)+1, regexpr(")",tab2.13f_0, fixed = T)-1)
@@ -3303,15 +3302,15 @@ kable(t2.13, align = "c", caption = "Table 2.15: Rates of Mortality and MACE[not
 \
 
 ```{r fig.height=5, fig.width=9}
-out_7d_m <- as.numeric(t2.13[which(rownames(t2.13)=="7-day")[1],1:5])
-out_30d_m <- as.numeric(t2.13[which(rownames(t2.13)=="30-day")[1],1:5])
-out_1y_m <- as.numeric(t2.13[which(rownames(t2.13)=="1 year")[1],1:5])
-out_mace_m <- as.numeric(t2.13[which(rownames(t2.13)=="30-day")[2],1:5])
+out_7d_m <- as.numeric(t2.13[which(rownames(t2.13)=="7-day")[1],1:num_of_years])
+out_30d_m <- as.numeric(t2.13[which(rownames(t2.13)=="30-day")[1],1:num_of_years])
+out_1y_m <- as.numeric(t2.13[which(rownames(t2.13)=="1 year")[1],1:num_of_years])
+out_mace_m <- as.numeric(t2.13[which(rownames(t2.13)=="30-day")[2],1:num_of_years])
 
-out_7d_f <- as.numeric(t2.13[which(rownames(t2.13)=="7-day")[2],1:5])
-out_30d_f <- as.numeric(t2.13[which(rownames(t2.13)=="30-day")[3],1:5])
-out_1y_f <- as.numeric(t2.13[which(rownames(t2.13)=="1 year")[2],1:5])
-out_mace_f <- as.numeric(t2.13[which(rownames(t2.13)=="30-day")[4],1:5])
+out_7d_f <- as.numeric(t2.13[which(rownames(t2.13)=="7-day")[2],1:num_of_years])
+out_30d_f <- as.numeric(t2.13[which(rownames(t2.13)=="30-day")[3],1:num_of_years])
+out_1y_f <- as.numeric(t2.13[which(rownames(t2.13)=="1 year")[2],1:num_of_years])
+out_mace_f <- as.numeric(t2.13[which(rownames(t2.13)=="30-day")[4],1:num_of_years])
 
 par(mar=c(5,4,4,2))
 plot(x=years_graph, y=c(NA,out_7d_m,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,30), xaxt="n")
@@ -3327,7 +3326,7 @@ lines(x=years_graph,y=c(NA,out_mace_m,NA),type = "b", lwd=2, col="blue")
 lines(x=years_graph,y=c(NA,out_mace_f,NA),type = "b", lwd=2, col="blue", lty="dashed")
 
 abline(h=seq(0,100, by = 5), lty=3, col="gray")
-axis(1,c(2010,2013,2016,2018,2021))
+axis(1,c(2010,2013,2016,2018,2021,2024))
 legend(2016, 30, c("7-day","30-day","1 year","30-day MACE"), col = c("red","green","orange","blue"), pch = 1, lwd = 2, bty = "n", horiz = F, y.intersp = 1.5)
 legend(2013, 30, c("Men", "Women"), lty = c("solid", "dashed"), lwd = 2, bty = "n")
 title("Figure 2.8: Rates of Mortality and 30-day MACE \nby gender", font.main=1, cex.main=1.1)
@@ -3338,7 +3337,7 @@ title("Figure 2.8: Rates of Mortality and 30-day MACE \nby gender", font.main=1,
 
 ```{r}
 # tab2.14st <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, admecg=="ST elevation")),printToggle = F)[,1:5]
-tab2.14st <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, group=="STE-ACS")),printToggle = F)[,1:5]
+tab2.14st <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, group=="STE-ACS")),printToggle = F)[,1:num_of_years]
 
 tab2.14st_0 <- tab2.14st[-1,]
 tab2.14st_1 <- substr(tab2.14st_0, regexpr("(",tab2.14st_0, fixed = T)+1, regexpr(")",tab2.14st_0, fixed = T)-1)
@@ -3347,7 +3346,7 @@ tab2.14st_2 <- rbind(tab2.14st[1,],tab2.14st_2)
 
 
 # tab2.14nst <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, admecg=="Non ST elevation")), printToggle = F)[,1:5]
-tab2.14nst <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, group=="NSTE-ACS")), printToggle = F)[,1:5]
+tab2.14nst <- print(CreateTableOne(vars = vars_out, strata = "year", data = subset(dat, group=="NSTE-ACS")), printToggle = F)[,1:num_of_years]
 
 tab2.14nst_0 <- tab2.14nst[-1,]
 tab2.14nst_1 <- substr(tab2.14nst_0, regexpr("(",tab2.14nst_0, fixed = T)+1, regexpr(")",tab2.14nst_0, fixed = T)-1)
@@ -3414,21 +3413,19 @@ kable(t2.14, align = "c", caption = "Table 2.16: Rates of Mortality and MACE[not
   column_spec(2:6, "1.5cm") %>%
   column_spec(7, "2cm")
 ```
--->
 
 \
-<!--
 
 ```{r fig.height=5.5, fig.width=9}
-out_ecg_7d_st <- as.numeric(t2.14[which(rownames(t2.14)=="7-day")[1],1:5])
-out_ecg_30d_st <- as.numeric(t2.14[which(rownames(t2.14)=="30-day")[1],1:5])
-out_ecg_1y_st <- as.numeric(t2.14[which(rownames(t2.14)=="1 year")[1],1:5])
-out_ecg_mace_st <- as.numeric(t2.14[which(rownames(t2.14)=="30-day")[2],1:5])
+out_ecg_7d_st <- as.numeric(t2.14[which(rownames(t2.14)=="7-day")[1],1:num_of_years])
+out_ecg_30d_st <- as.numeric(t2.14[which(rownames(t2.14)=="30-day")[1],1:num_of_years])
+out_ecg_1y_st <- as.numeric(t2.14[which(rownames(t2.14)=="1 year")[1],1:num_of_years])
+out_ecg_mace_st <- as.numeric(t2.14[which(rownames(t2.14)=="30-day")[2],1:num_of_years])
 
-out_ecg_7d_nst <- as.numeric(t2.14[which(rownames(t2.14)=="7-day")[2],1:5])
-out_ecg_30d_nst <- as.numeric(t2.14[which(rownames(t2.14)=="30-day")[3],1:5])
-out_ecg_1y_nst <- as.numeric(t2.14[which(rownames(t2.14)=="1 year")[2],1:5])
-out_ecg_mace_nst <- as.numeric(t2.14[which(rownames(t2.14)=="30-day")[4],1:5])
+out_ecg_7d_nst <- as.numeric(t2.14[which(rownames(t2.14)=="7-day")[2],1:num_of_years])
+out_ecg_30d_nst <- as.numeric(t2.14[which(rownames(t2.14)=="30-day")[3],1:num_of_years])
+out_ecg_1y_nst <- as.numeric(t2.14[which(rownames(t2.14)=="1 year")[2],1:num_of_years])
+out_ecg_mace_nst <- as.numeric(t2.14[which(rownames(t2.14)=="30-day")[4],1:num_of_years])
 
 par(mar=c(5,4,4,2))
 plot(x=years_graph, y=c(NA,out_ecg_7d_st,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,25), xaxt="n")
@@ -3444,7 +3441,7 @@ lines(x=years_graph,y=c(NA,out_ecg_mace_st,NA),type = "b", lwd=2, col="blue")
 lines(x=years_graph,y=c(NA,out_ecg_mace_nst,NA),type = "b", lwd=2, col="blue", lty="dashed")
 
 abline(h=seq(0,100, by = 5), lty=3, col="gray")
-axis(1,c(2008,2010,2013,2016,2018))
+axis(1,c(2010,2013,2016,2018,2021,2024))
 legend(2016, 25, c("7-day","30-day","1 year","30-day MACE"), col = c("red","green","orange","blue"), pch = 1, lwd = 2, bty = "n", horiz = F, y.intersp = 1.5)
 legend(2012, 25, c("STEMI", "Non STEMI"), lty = c("solid", "dashed"), lwd = 2, bty = "n")
 title("Figure 2.9: Rates of Mortality and 30-day MACE \nby Discharge Diagnosis", font.main=1, cex.main=1.1)
@@ -3453,5 +3450,4 @@ title("Figure 2.9: Rates of Mortality and 30-day MACE \nby Discharge Diagnosis",
 ```{r, include=FALSE}
 options(tinytex.verbose = TRUE)
 ```
--->
 
