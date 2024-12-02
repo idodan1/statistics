@@ -243,6 +243,8 @@ dat$group <- factor(ifelse(is.na(dat$DISDINEW) & dat$ARR_DIAG=="STE MI","STE-ACS
 # dat <- merge(dat, dat_24, by = c("HAKZAA","SOURCE"), all.x = T)
 
 
+# dat_past = read.csv("C:/Users/ido/sheba stats/ACSIS/data/R00_24_1.csv", header = TRUE,
+#                                        na.strings = c(""," ","NA","UNKNoWN","UNK","N/A","nan"), stringsAsFactors = T)
 
 # anticoag - hosp and disch: (Roy asked)
 # dat$oral_anticoag_hosp <- factor(ifelse(dat$HLMW%in%"YES" |

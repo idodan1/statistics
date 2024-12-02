@@ -59,11 +59,14 @@ dat$chr_oral_anticoag <- factor(ifelse(dat$S24C6=="YES" | dat$S24C7=="YES" | dat
 #Outliers:
 outlier_trim_func <- function(x, trim_up_at=0.99, trim_low_at=0) {x <- as.numeric(ifelse(x>quantile(x, probs = trim_up_at, na.rm = T), quantile(x, probs = trim_up_at, na.rm = T), 
                                               ifelse(x<trim_low_at, trim_low_at, as.character(x))))}
+dat$HEFT1 = as.numeric(dat$HEFT1)
 dat$HEFT1_trim <- outlier_trim_func(dat$HEFT1)
 dat$HEFT2_trim <- outlier_trim_func(dat$HEFT2)
 dat$HEFT4_trim <- outlier_trim_func(dat$HEFT4)
 dat$HEFT9_trim <- outlier_trim_func(dat$HEFT9)
+dat$ARR_TLX = as.numeric(dat$ARR_TLX)
 dat$ARR_TLX_trim <- outlier_trim_func(dat$ARR_TLX)
+dat$ARR_PPCI = as.numeric(dat$ARR_PPCI)
 dat$ARR_PPCI_trim <- outlier_trim_func(dat$ARR_PPCI)
 
 # ECG:

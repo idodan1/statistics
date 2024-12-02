@@ -45,45 +45,7 @@ options(knitr.table.format = "latex")
 # source('W:/Users/Shared_Files/STAT/2021/ACSIS 2021 booklet/Data_ACSIS_2021.R')
 # source('C:/Users/talco/Documents/Statistics/ACSIS_21_PDF/Data_ACSIS_2021.R')
 source('C:/Users/ido/sheba stats/ACSIS/Booklet/R scripts data prep/Data_ACSIS_2024.R')
-setwd("C:/Users/ido/sheba stats/ACSIS/Booklet/R script")
 ```
-
-```{r}
-# Initialize counters
-chapter_num <- 1
-section_num <- 0
-figure_num <- 1
-table_num <- 1
-
-# Function to increment and retrieve figure number
-next_figure <- function(sub = FALSE) {
-  if (sub) {
-    # For sub-figures like a, b, c
-    figure_num_sub <<- figure_num_sub + 1
-    return(paste0(figure_num, ".", letters[figure_num_sub]))
-  } else {
-    figure_num <<- figure_num + 1
-    figure_num_sub <<- 0
-    return(as.character(figure_num))
-  }
-}
-
-# Function to increment and retrieve table number
-next_table <- function() {
-  table_num <<- table_num + 1
-  return(as.character(table_num))
-}
-
-# Function to increment and retrieve section number
-next_section <- function() {
-  section_num <<- section_num + 1
-  return(paste0(chapter_num, ".", section_num))
-}
-
-# Initialize sub-figure counter
-figure_num_sub <- 1
-```
-
 
 \pagebreak
 
@@ -191,41 +153,41 @@ transform_tableone <- function(table_one, num_of_cols=1) {
 par(mfrow=c(1,1))
 par(mar=c(0,0,1,0))
 openplotmat()
-elpos <- coordinates(c(1, 2, 1,1,1,1,1))
-treearrow(from=elpos[1,],to=elpos[2:3,],lwd=4) 
-treearrow(from=elpos[3,],to=elpos[3:8,],lwd=4, path = "V") 
+
+elpos <- coordinates(c(1, 3, 1,1,1,1,1))
+treearrow(from=elpos[1,],to=elpos[2:4,],lwd=4) 
+treearrow(from=elpos[3,],to=elpos[c(3, 5:9),],lwd=4, path = "V") 
 labels <- vector(length = 10)
 labels[1] <- paste("Total Number of Patients \n n =",nrow(dat))
-
 labels[2] <- paste0("ST elevation \n n = ",table(dat$ST_ELEV_adm=="Yes")["TRUE"]," (",round(100*(table(dat$ST_ELEV_adm=="Yes")["TRUE"]/nrow(dat)),1),"%)")
-
 labels[3] <- paste0("Non ST elevation \n n = ", table(dat$ST_ELEV_adm=="No")["TRUE"], " (",round(100*(table(dat$ST_ELEV_adm=="No")["TRUE"]/nrow(dat)),1),"%)")
+labels[4] <- paste0("ADMECG=NA \n n = ",sum(is.na(dat$ST_ELEV_adm))," (",round(100*(sum(is.na(dat$ST_ELEV_adm))/nrow(dat)),1),"%)")
+# textrect(elpos, lab = labels, radx = 0.1, rady = 0.05, cex = 0.8)
+
 
 dat_nst_adm <- subset(dat,ST_ELEV_adm=="No")
 
-labels[4] <- paste0("New onset of LBBB \n n =",table(dat$S24ADMECG=="New onset of LBBB")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="New onset of LBBB")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+labels[5] <- paste0("New onset of LBBB \n n =",table(dat$S24ADMECG=="New onset of LBBB")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="New onset of LBBB")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
 
-labels[5] <- paste0("No new ST-T changes \n n =",table(dat$S24ADMECG=="No new ST-T changes")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="No new ST-T changes")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+labels[6] <- paste0("No new ST-T changes \n n =",table(dat$S24ADMECG=="No new ST-T changes")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="No new ST-T changes")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
 
-labels[6] <- paste0("Normal \n n =",table(dat$S24ADMECG=="Normal")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="Normal")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+labels[7] <- paste0("Normal \n n =",table(dat$S24ADMECG=="Normal")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="Normal")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
 
-labels[7] <- paste0("ST-Depression \n n =",table(dat$S24ADMECG=="ST depression")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="ST depression")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+labels[8] <- paste0("ST-Depression \n n =",table(dat$S24ADMECG=="ST depression")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="ST depression")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
 
-labels[8] <- paste0("T inversion \n n =",table(dat$S24ADMECG=="T inversion")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="T inversion")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
+labels[9] <- paste0("T inversion \n n =",table(dat$S24ADMECG=="T inversion")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="T inversion")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
 
 #v12 Roy asked to remove these:
 # labels[9] <- paste0("New onset of RBBB \n n =",table(dat$S24ADMECG=="New onset of RBBB")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="New onset of RBBB")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
 
 # labels[10] <- paste0("Undetermined ECG findings \n (LBBB, Pacing, Severe LVH) \n n =",table(dat$S24ADMECG=="Undetermined ECG findings (LBBB, Pacing, Severe LVH)")["TRUE"], " (",round(100*(table(dat$S24ADMECG=="Undetermined ECG findings (LBBB, Pacing, Severe LVH)")["TRUE"]/nrow(dat_nst_adm)),1),"%)")
 
-for (i in 1:8) textround(elpos[i,],radx=0.15,rady=0.04,lab=labels[i], shadow.col = "mediumpurple", box.col = "aliceblue")
+for (i in 1:8) textround(elpos[i,],radx=0.15,rady=0.029,lab=labels[i], shadow.col = "mediumpurple", box.col = "aliceblue", cex=0.8)
 
 title("Figure 1.1.a: Distribution of Patients with ACS by ECG on Admission", cex.main=1, font.main=1)
 ```
 
 \pagebreak
-
-\  
 
 ```{r fig.width=8}
 par(mfrow=c(1,1))
@@ -525,7 +487,7 @@ vars_risk <- c("S24HT","S24PDIAB","S24NEW_DIAB","S24DYSLIP","CURSMOK","PASTSMOK"
 tab_risk_st <- print(CreateTableOne(vars = vars_risk, strata = "ST_ELEV", data = dat))
 tab_risk <- print(CreateTableOne(vars = vars_risk, data = dat))
 t_risk <- cbind(tab_risk, tab_risk_st)[,-5]
-row.names(t_risk) <- c("n","Hypertension (%)", "Diabetes (%)", "* Newly diagnosed (%)", "Dyslipidemia (%)",  "Current smoker (%)", "Past smoker (%)", "Family history of CAD (%)")
+row.names(t_risk) <- c("n","Hypertension (%)", "Diabetes (%)", "Newly diagnosed (%)*", "Dyslipidemia (%)",  "Current smoker (%)", "Past smoker (%)", "Family history of CAD (%)")
 colnames(t_risk) <- c("Total","Non STEMI","STEMI","p-value")
 ```
 
@@ -536,7 +498,7 @@ kable(t_risk, align = "c", caption = "Table 1.5: Risk Factors", booktabs=T, line
   column_spec(1, width = "5cm") %>%
   column_spec(2:4,width = "2.5cm") %>% 
   column_spec(5,width = "2cm") %>%
-  footnote(general = c("Percentages are calculated out of available data", "Newly diagnosed expressed as percentage of total patients with specific risk factor"), general_title = "")
+  footnote(general = c("Percentages are calculated out of available data", "* Newly diagnosed expressed as percentage of total patients with specific risk factor"), general_title = "")
 ```
 
 
@@ -581,6 +543,7 @@ vars_chr_treat <- c("S24C1", "CP2Y12", "S24C2","S24C3","S24C4","chr_oral_anticoa
 # fillna_no_NO <- function(x) {x <- factor(ifelse("YES" %in% levels(factor(x)) & is.na(x),"NO",ifelse("Yes" %in% levels(factor(x)) & is.na(x), "No", as.character(x))))}
 # dat[,vars_chr_treat_imp] <- lapply(dat[,vars_chr_treat_imp], as.character)
 # dat[,vars_chr_treat_imp] <- lapply(dat[,vars_chr_treat_imp], fillna_no_NO)
+dat$S24C9 <- ifelse(dat$S24C9 %in% c("YES", "NO"), dat$S24C9, NA)
 
 tab_chr_treat <- print(CreateTableOne(vars = vars_chr_treat, data = dat))
 tab_chr_treat_st <- print(CreateTableOne(vars = vars_chr_treat, strata = "ST_ELEV", data = dat))
@@ -1417,7 +1380,6 @@ vars_norep <- c("S24NOREP2",
                 "S24NOREP4" #all NO
                 )
 tab_norep <- print(CreateTableOne(vars = vars_norep, data = dat_st_nrep))
-# tab_norep = transform_tableone(tab_norep)
 t_norep <- tab_norep[-1]
 ```
 
@@ -1745,11 +1707,9 @@ kable(t_inhosp_tr, align = "c", caption = "Table 1.27: In-Hospital Medical Treat
 
 
 ```{r results='hide'}
+dat$CCUDAYS = as.numeric(dat$CCUDAYS)
+dat$ISHDAYS = as.numeric(dat$ISHDAYS)
 tab_ishdays <- print(CreateTableOne(vars = c("CCUDAYS","ISHDAYS"), data = dat), nonnormal = c("CCUDAYS","ISHDAYS"))
-dat$CCUDAYS - dat$ISHDAYS
-dat$ISHDAYS[1:20]
-mean(dat$ISHDAYS, na.rm=TRUE)
-mean(dat$CCUDAYS, na.rm=TRUE)
 tab_ishdays_st <- print(CreateTableOne(vars = c("CCUDAYS","ISHDAYS"), strata = "ST_ELEV", data = dat), nonnormal = c("CCUDAYS","ISHDAYS"))
 t_ishdays <- cbind(tab_ishdays, tab_ishdays_st)[,-(4:5)]
 
@@ -1883,6 +1843,12 @@ MACE (Major Adverse Cardiac Events), which included recurrent MI or UAP, recurre
 vars_out <- c("S24DISDIE","DIED7","DIED30","MACE_OLD"
               #,"DIED365"
               ) 
+
+# this col had values that are not YES, NO or nan
+dat$MACE_OLD <- ifelse(as.character(dat$MACE_OLD) %in% c("Yes", "No"), 
+                         as.character(dat$MACE_OLD), 
+                         NA)
+
 tab_out <- print(CreateTableOne(vars = vars_out, data = dat))
 tab_out_st <- print(CreateTableOne(vars = vars_out, strata = "ST_ELEV", data = dat))
 t_out <- cbind(tab_out, tab_out_st)[,-5]
@@ -1940,6 +1906,7 @@ OR1 <- OR_CI(m1)$total[1] #STEMI is sig
 m2 <- glm(DIED30~ST_ELEV+AGE, family = "binomial", data = dat)
 OR2 <- OR_CI(m2)$total[1] #STEMI is sig
 
+dat$MACE_OLD <- factor(dat$MACE_OLD, levels = c("No", "Yes"))
 m3 <- glm(MACE_OLD~ST_ELEV+AGE, family = "binomial", data = dat)
 OR3 <- OR_CI(m3)$total[1] #STEMI is not sig
 
@@ -2150,8 +2117,6 @@ kable(t_rehos, align = "c", caption = "Table 1.34: Re-Hospitalization within 90 
   column_spec(1, width = "5cm") %>% 
   column_spec(2:4, width = "2.5cm") %>% 
   column_spec(5, width = "2cm")
-
-unique(dat_fu$S24FU_CONTACT)
 ```
 
 \pagebreak
@@ -2207,8 +2172,10 @@ vars_med <- c(
 
 )
 
+# vars have other values that not YES or NO
 for (col in vars_med){
-  dat_fu[col][dat_fu[col] == "Unknown"] = NA
+  dat_fu[[col]] <- ifelse(as.character(dat_fu[[col]]) %in% c("YES", "NO"), as.character(dat_fu[[col]]), NA)
+  # dat_fu[col][dat_fu[col] == "Unknown"] = NA
   dat_fu[col] <- droplevels(dat_fu[col])
 }
 
@@ -2288,8 +2255,10 @@ vars_med <- c(
 "S24F47"	#FU 90D TREAT. TZDs (Pioglitasone - actos, Rosiglitazone - Avandia)
 
 )
+
+# vars have other values that not YES or NO
 for (col in vars_med){
-  dat[col][dat[col] == "Unknown"] = NA
+  dat[[col]] <- ifelse(as.character(dat[[col]]) %in% c("YES", "NO"), as.character(dat[[col]]), NA)
   dat[col] <- droplevels(dat[col])
 }
 
@@ -2347,6 +2316,9 @@ vars_lab <- c(
  ,"S24FHBA1C"	#HbA1C 90 days (%)
  # ,"S24FALBUM"#Albumin 90 days (g/dL)
 )
+for (var in vars_lab){
+  dat_fu[[var]] = as.numeric(dat_fu[[var]])
+}
 
 tab1 <- print(CreateTableOne(vars = vars_lab,data = dat_fu ), missing=F, printToggle=F, nonnormal = vars_lab)
 labs_names <- c(
@@ -2424,12 +2396,15 @@ row.names(t2.1) <- c("n","Gender (Male) ($\\%$)","Age ($\\%$)","$\\leq$ 50", "50
 
 
 ```{r}
+
 kable(t2.1, align = "c", caption = "Table 2.1: Patients' Characteristics", booktabs=T, linesep="", escape = F) %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
   add_indent(4:6) %>%
-  column_spec(1, width = "3cm") %>%
-  column_spec(2:6, "2cm") %>%
-  column_spec(7, "1cm")
+  column_spec(1, width = "2.5cm") %>%
+  column_spec(2:7, "1.7cm") %>%
+  column_spec(8, "1cm") 
+
+
 ```
 
 \pagebreak
@@ -2466,8 +2441,8 @@ kable(t2.2, align = "c", caption = "Table 2.2.a: Cardiovascular History and Risk
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
   pack_rows("CV history",2,8) %>%
   pack_rows("Risk factors",9,14) %>%
-  column_spec(1, width = "5cm") %>%
-  column_spec(2:7, "1.5cm")
+  column_spec(1, width = "4.3cm") %>%
+  column_spec(2:7, "1.4cm")
 ```
 
 \pagebreak
@@ -2506,7 +2481,7 @@ row.names(t2.10) <- c("n","Aspirin (%)",
 
 kable(t2.10, align = "c", caption = "Table 2.2.b: Prior Chronic Treatment", booktabs=T, linesep="") %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
-  column_spec(1, width = "5cm") %>%
+  column_spec(1, width = "4.7cm") %>%
   column_spec(2:7, "1.3cm")
 ```
 
@@ -2521,7 +2496,7 @@ t_acearb <- as.numeric(t2.10["ACE-I/ARB (%)",1:num_of_years])
 
 par(mar=c(5,4,4,2))
 years_graph <-c(2009,2010,2013,2016,2018,2021,2024, 2025)
-plot(x=years_graph, y=c(NA,t_stat,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
+plot(x=years_graph, y=c(NA,t_stat,NA),xlab = "Survey years", ylab = "Percent (%)", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
 lines(x=years_graph,y=c(NA,t_p2y12,NA),type = "b", lwd=2, col="blue")
 lines(x=years_graph,y=c(NA,t_asp,NA),type = "b", lwd=2, col="green")
 lines(x=years_graph,y=c(NA,t_bb,NA),type = "b", lwd=2, col="orange")
@@ -2568,7 +2543,7 @@ p2.3 <- ifelse(p2.3s$p.value<0.001,"<0.001",round(p2.3s$p.value,3))
 kable(tab2.3_2, align = "c", caption = "Table 2.3: Initial Ward of Hospitalization", booktabs=T, linesep = '') %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
   add_indent(3:5) %>%
-  column_spec(1, width = "4cm") %>%
+  column_spec(1, width = "3.8cm") %>%
   column_spec(2:6, "2cm") %>%
   footnote(general = paste("p for trend", p2.3), general_title = "")
 ```
@@ -2593,7 +2568,7 @@ row.names(tab2.4_2) <- c("n",levels(dat$admecg))
 ```{r}
 kable(tab2.4_2, align = "c", caption = "Table 2.4: ECG on Admission", booktabs=T, linesep = '') %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
-  column_spec(1, width = "4cm") %>%
+  column_spec(1, width = "3.7cm") %>%
   column_spec(2:6, width = "2cm") %>%
   footnote(general = paste("p for trend", ptrend(dat$admecg)), general_title = "")
 ```
@@ -2616,11 +2591,10 @@ row.names(tab2.4_2) <- c("n","Non STEMI","STEMI")
 ```{r}
 kable(tab2.4_2, align = "c", caption = "Table 2.5: Diagnosis at Discharge", booktabs=T, linesep = '') %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
-  column_spec(1, width = "4cm") %>%
+  column_spec(1, width = "3.7cm") %>%
   column_spec(2:6, width = "2cm") %>%
   footnote(general = paste("p for trend", ptrend(dat$group)), general_title = "")
 ```
-
 
 
 ### 2.3.3 Killip Class on Admission
@@ -2637,19 +2611,17 @@ tab2.5_2 <- rbind(tab2.5[1,],tab2.5_2)
 row.names(tab2.5_2) <- c("n","Killip class (%)","1","2","3","4")
 
 dat$killip <- as.numeric(dat$ADMKLP)
-unique(dat$year)
-unique(dat$ADMKLP)
 table.p2.5n <- cbind(expand.grid(Killip=1:4,Year=c(2010,2013,2016,2018, 2021, 2024)),Count = c(table(dat$ADMKLP, dat$year)))
 rep.tbl <- table.p2.5n[,1:2][rep(1:nrow(table.p2.5n),table.p2.5n$Count),]
 p2.5s <- cor.test(rep.tbl[,1],rep.tbl[,2])
 p2.5 <- ifelse(p2.5s$p.value<0.001,"<0.001",round(p2.5s$p.value,3))
 ```
 
-```{r results='hide'}
+```{r}
 kable(tab2.5_2, align = "c", caption = "Table 2.6: Killip Class on Admission", booktabs=T, linesep = '') %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
   add_indent(3:6) %>%
-  column_spec(1, width = "4cm") %>%
+  column_spec(1, width = "3.7cm") %>%
   column_spec(2:6, width = "2cm") %>%
   footnote(general = paste("p for trend", p2.5), general_title = "")
 ```
@@ -2688,14 +2660,14 @@ text(x = fig2.2, y = 4, label = t_tlx, cex = 0.8)
 
 ```{r results='hide'}
 dat_10_24$PCIVA <- factor(dat_10_24$PCIVA, levels = c("FEMORAL","RADIAL","BOTH"))
-tab_radial_ppci_trend <- print(CreateTableOne(vars = "PCIVA", strata = "year", data = subset(dat_10_24, admecg=="ST elevation" & REP=="YES")))[,1:5]
+tab_radial_ppci_trend <- print(CreateTableOne(vars = "PCIVA", strata = "year", data = subset(dat_10_24, admecg=="ST elevation" & REP=="YES")))[,1:num_of_years]
 row.names(tab_radial_ppci_trend) <- c("n","Vascular access, n (%):",capitalize(tolower(levels(dat_10_24$PCIVA))))
 ```
 
 ```{r}
 kable(tab_radial_ppci_trend, align = "c", caption = "Table 2.7.1: Vascular access during Primary Reperfusion", booktabs=T, linesep = '') %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
-  column_spec(1, width = "4cm") %>%
+  column_spec(1, width = "3.7cm") %>%
   column_spec(2:6, width = "2cm") %>%
   add_indent(3:5)
 ```
@@ -2720,7 +2692,7 @@ row.names(t_radial_angio_trend) <- c("n (excluding primary PCI)","Coronary angio
 ```{r}
 kable(t_radial_angio_trend, align = "c", caption = "Table 2.7.2: Vascular access during coronary angiography", booktabs=T, linesep = '') %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
-  column_spec(1, width = "4cm") %>%
+  column_spec(1, width = "3.7cm") %>%
   column_spec(2:6, width = "2cm") %>%
   add_indent(c(3,4:6,4:6))
 ```
@@ -2746,8 +2718,8 @@ rownames(tab1) <- c("n","Primary reperfusion, n (%)")
 
 kable(tab1, align = "c", caption = "Table 2.8.1: Primary reperfusion among STEMI patients", booktabs=T, linesep = '') %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
-  column_spec(1, width = "6cm") %>%
-  column_spec(2:6, width = "2cm")
+  column_spec(1, width = "5cm") %>%
+  column_spec(2:6, width = "1.8cm")
 
 #check it 13.9.22
 ```
@@ -2814,8 +2786,8 @@ row.names(t2.6) <- c("n","Symptom onset to ED arrival (median [IQR])","ED arriva
 
 kable(t2.6, align = "c", caption = "Table 2.8.2: Time Intervals in STEMI reperfused patients in PPCI (minutes)", booktabs=T, escape = F, linesep="") %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
-  column_spec(1, width = "3.8cm") %>%
-  column_spec(2:6, "2cm") %>%
+  column_spec(1, width = "3.7cm") %>%
+  column_spec(2:6, "1.7cm") %>%
   column_spec(7, "1cm")
 ```
 
@@ -2906,8 +2878,8 @@ t2.7 <- rbind(t2.7m,t2.7f)
 kable(t2.7, align = "c", caption = "Table 2.9: Time Intervals (minutes) in STEMI reperfused patient in PPCI, by gender", booktabs=T, linesep = '') %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
   pack_rows(index = c("Men"=4, "Women"=4), latex_gap_space = "1em", hline_after = T) %>%
-  column_spec(1, width = "4cm") %>%
-  column_spec(2:6, width = "1.7cm") %>%
+  column_spec(1, width = "3.9cm") %>%
+  column_spec(2:6, width = "1.6cm") %>%
   column_spec(7, "1cm")
 ```
 
@@ -2956,7 +2928,7 @@ kable(t2.8, align = "c",caption = "Table 2.10 Procedures during Hospitalization"
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
   # add_indent(3) %>%
   # add_footnote("Percent of all patients undergoing angiography", notation = "number") %>%
-  column_spec(1, width = "4.3cm") %>%
+  column_spec(1, width = "4.1cm") %>%
   column_spec(2:7, "1.5cm")
 ```
 
@@ -2970,7 +2942,7 @@ t_cabg <- as.numeric(t2.8["CABG (%)",1:num_of_years])
 t_stent <- as.numeric(t2.8["Stent (%)",1:num_of_years])
 
 par(mar=c(5,4,4,2))
-plot(x=c(2009,2010,2013,2016,2018,2021,2024, 2025), y=c(NA,t_angio,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
+plot(x=c(2009,2010,2013,2016,2018,2021,2024, 2025), y=c(NA,t_angio,NA),xlab = "Survey years", ylab = "Percent (5%)", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
 lines(x=c(2009,2010,2013,2016,2018,2021,2024, 2025),y=c(NA,t_pci,NA),type = "b", lwd=2, col="blue")
 lines(x=c(2009,2010,2013,2016,2018,2021,2024, 2025),y=c(NA,t_cabg,NA),type = "b", lwd=2, col="green")
 lines(x=c(2009,2010,2013,2016,2018,2021,2024, 2025),y=c(NA,t_stent,NA),type = "b", lwd=2, col="orange")
@@ -3007,8 +2979,8 @@ row.names(t2.9) <- c("n","Re-MI ($\\%$)","Post MI angina/Re-ischemia ($\\%$)","S
 
 kable(t2.9, align = "c",caption = "Table 2.11: In-Hospital Complications", booktabs=T, escape = F, linesep = '') %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
-  column_spec(1, width = "5.5cm") %>%
-  column_spec(2:7, "1.35cm")
+  column_spec(1, width = "5.4cm") %>%
+  column_spec(2:7, "1.2cm")
 ```
 
 \pagebreak
@@ -3058,8 +3030,8 @@ kable(t2.10, align = "c", caption = "Table 2.12: In-Hospital Treatment", booktab
       ,  escape = F, longtable=T
       ) %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
-  column_spec(1, width = "4cm") %>%
-  column_spec(2:7, "1.5cm") %>%
+  column_spec(1, width = "3.8cm") %>%
+  column_spec(2:7, "1.4cm") %>%
   footnote(number = "Anticoagulants include warfarin, LMWH and DOACs in the years applicable"
            , threeparttable=T
            )
@@ -3077,7 +3049,7 @@ t_acearb <- as.numeric(t2.10["ACE-I/ARB ($\\%$)",1:num_of_years])
 
 par(mar=c(5,4,4,2))
 years_graph <-c(2009,2010,2013,2016,2018,2021,2024,2025)
-plot(x=years_graph, y=c(NA,t_stat,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
+plot(x=years_graph, y=c(NA,t_stat,NA),xlab = "Survey years", ylab = "Percent (%)", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
 lines(x=years_graph,y=c(NA,t_p2y12,NA),type = "b", lwd=2, col="blue")
 lines(x=years_graph,y=c(NA,t_asp,NA),type = "b", lwd=2, col="green")
 lines(x=years_graph,y=c(NA,t_bb,NA),type = "b", lwd=2, col="orange")
@@ -3149,7 +3121,7 @@ kable(t2.11, align = "c", caption = "Table 2.13: Medical Treatment on Discharge 
       , longtable=T
       ) %>%
   kable_styling(full_width = F, latex_options = c("HOLD_position","striped")) %>%
-  column_spec(1, width = "4cm") %>%
+  column_spec(1, width = "3.5cm") %>%
   column_spec(2:7, "1.5cm") %>%
   footnote(number = c("Only among diabetic patients", "Anticoagulants include warfarin, LMWH and DOACs in the years applicable")
            , threeparttable=T
@@ -3165,7 +3137,7 @@ t_bb <- as.numeric(t2.11["Beta Blockers ($\\%$)",1:num_of_years])
 t_acearb <- as.numeric(t2.11["ACE-I/ARB ($\\%$)",1:num_of_years])
 
 par(mar=c(5,4,4,2))
-plot(x=years_graph, y=c(NA,t_stat,NA),xlab = "Survey years", ylab = "Percent", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
+plot(x=years_graph, y=c(NA,t_stat,NA),xlab = "Survey years", ylab = "Percent (%)", type = "b", lwd=3, col="red", ylim = c(0,100), xaxt="n")
 lines(x=years_graph,y=c(NA,t_p2y12,NA),type = "b", lwd=2, col="blue")
 lines(x=years_graph,y=c(NA,t_asp,NA),type = "b", lwd=2, col="green")
 lines(x=years_graph,y=c(NA,t_bb,NA),type = "b", lwd=2, col="orange")
@@ -3212,8 +3184,8 @@ kable(t2.12, align = "c", caption = "Table 2.14: Rates of Mortality and MACE[not
   # pack_rows("MACE (1)", 6,6, escape = F) %>%
    pack_rows( paste0("MACE",footnote_marker_number(1)), 6,6, escape = F) %>%
 
-  column_spec(1, width = "4cm") %>%
-  column_spec(2:7, "1.5cm")
+  column_spec(1, width = "3.5cm") %>%
+  column_spec(2:7, "1.4cm")
 ```
 
 \
@@ -3294,7 +3266,7 @@ kable(t2.13, align = "c", caption = "Table 2.15: Rates of Mortality and MACE[not
   # pack_rows("MACE (1)", 12,12, escape = F) %>%
   pack_rows( paste0("MACE",footnote_marker_number(1)), 12,12, escape = F) %>%
   add_footnote("30 day MACE: Death/UAP/MI/Ischemia/CVA/Stent thrombosis/Follow-up urg. revasc.", notation = "number") %>%
-  column_spec(1, width = "4cm") %>%
+  column_spec(1, width = "3cm") %>%
   column_spec(2:6, "1.5cm") %>%
   column_spec(7, "2cm")
 ```
@@ -3409,7 +3381,7 @@ kable(t2.14, align = "c", caption = "Table 2.16: Rates of Mortality and MACE[not
   # pack_rows("MACE (1)", 12,12, escape = F) %>%
   pack_rows( paste0("MACE",footnote_marker_number(1)), 12,12, escape = F) %>%
   add_footnote("30 day MACE: Death/UAP/MI/Ischemia/CVA/Stent thrombosis/Follow-up urg. revasc.", notation = "number") %>%
-  column_spec(1, width = "4cm") %>%
+  column_spec(1, width = "3cm") %>%
   column_spec(2:6, "1.5cm") %>%
   column_spec(7, "2cm")
 ```
